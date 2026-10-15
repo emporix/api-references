@@ -7,10 +7,6 @@ info:
     streams; each stream extracts from a source connection, maps fields to an Emporix target type, and
     upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
-    {% hint style="danger" %}
-    This functionality is in preview mode - some of the features may not be fully operational yet.
-    {% endhint %}
-
     This reference covers the operational surface available with the `importtool.import_trigger` scope:
     triggering, scheduling, monitoring, and cancelling import runs, reading configurations, streams,
     schedules, runs, and imported data, and reading the import analytics that summarise them.
@@ -44,12 +40,6 @@ paths:
     get:
       summary: Retrieving all import configurations
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves all import configurations defined for the tenant.
 
       operationId: GET-importtool-list-configs
@@ -83,12 +73,6 @@ paths:
     get:
       summary: Retrieving an import configuration
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves a single import configuration by its identifier.
 
       operationId: GET-importtool-get-config
@@ -122,12 +106,6 @@ paths:
     get:
       summary: Retrieving all streams of a configuration
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the streams belonging to a configuration, ordered by sequence.
 
       operationId: GET-importtool-list-streams
@@ -161,12 +139,6 @@ paths:
     get:
       summary: Retrieving a stream
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves a single stream by its identifier, including its resolved target types.
 
       operationId: GET-importtool-get-stream
@@ -200,12 +172,6 @@ paths:
     get:
       summary: Retrieving a schedule
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the cron schedule for a configuration.
 
       operationId: GET-importtool-get-schedule
@@ -235,12 +201,6 @@ paths:
     put:
       summary: Scheduling an import job
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Creates or updates the cron schedule (cron expression, time zone, and enabled flag) that runs a configuration automatically.
 
       operationId: PUT-importtool-schedule-job
@@ -290,12 +250,6 @@ paths:
     delete:
       summary: Removing a schedule
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Removes the schedule. The configuration then runs only when it is triggered.
 
         The request is idempotent. Removing a schedule that does not exist also returns `204`.
@@ -316,6 +270,74 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/configs/{configId}/stream-order':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_configId'
+    get:
+      summary: Retrieving the stream run order
+      description: |-
+        Retrieves the order in which the configuration's streams run, and the dependencies behind that order.
+
+        Dependencies between streams decide the order. Sequence breaks ties.
+
+        Dependencies come from four sources:
+
+        * an explicit dependency on another stream
+        * a mapping that references a type another stream produces
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `EMBED` – runs before the parent that embeds it
+        * a `COMPOSITE_CHILD` stream with `childStrategy` set to `PATCH`, or a `COMPOSITE_MERGE` stream – run after the parent they update
+
+        Use this endpoint rather than calculating the order yourself. Mapping transformations add
+        dependencies that a single stream definition does not show. An order calculated without those
+        dependencies can differ from the order used at run time.
+      operationId: GET-importtool-stream-order
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The stream order is returned.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order:
+                    type: array
+                    items:
+                      type: string
+                    description: Stream names in the order they run.
+                  prereqs:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+                    description: >-
+                      For each stream name, the streams that must run before it. A stream with no
+                      dependencies has an empty list.
+              examples:
+                Stream order:
+                  value:
+                    order:
+                      - vendor
+                      - purchaseOrder
+                      - purchaseOrderLine
+                    prereqs:
+                      vendor: []
+                      purchaseOrder:
+                        - vendor
+                      purchaseOrderLine:
+                        - purchaseOrder
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
   '/importtool/{tenant}/configs/{configId}/runs':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -323,14 +345,39 @@ paths:
     post:
       summary: Triggering an import run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+        Requests an import run for the configuration and returns immediately with the run in the `QUEUED`
+        status. The run starts when a worker of the Import Service is free, usually within moments, and then
+        has the `RUNNING` status. If `maxConcurrentImports` runs are already executing for the tenant, the run
+        waits until one of them finishes. `queueWaitingFor` says what a queued run waits for. To follow the
+        run's progress, retrieve the run or stream its progress events.
 
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
+        A configuration has at most one run executing and at most one run queued. The service rejects a
+        request with a `409 Conflict` response while the configuration has a run in the `QUEUED`, `RUNNING`, or
+        `RESUMABLE` status.
 
-        Starts an import run for the configuration and returns immediately with the run in a running state;
-        progress is streamed over Server-Sent Events. At most one run is active per configuration.
+        A scheduled run is not rejected. It is queued behind the configuration's current run and starts when
+        that run finishes. If the schedule requests another run while the configuration's run is still
+        queued, the service adds the request to the queued run instead of queuing a second run, and counts it
+        in `supersededRequests`. The service does this only when the queued run is a real run of the whole
+        configuration. If the queued run is a dry run, a run of selected streams, or a retry, the scheduled run
+        waits until that run starts and is then queued behind it.
+
+        A run executes each stream's published mappings. Saved mapping changes that are not published yet are
+        the draft mappings, and they take effect only after they are published. Publishing mappings is an
+        administrative operation that requires the `importtool.import_manage` scope and is not covered in this
+        reference. A real run, or a dry run that uses the published mappings, fixes the published mapping version of
+        each stream when it starts, so a version published during the run applies from the next run. The run
+        reports these versions in `mappingVersions`. A dry run of the draft mappings does not use published
+        versions and does not report `mappingVersions`.
+
+        A stream whose mappings have never been published is not run. Its entry in the run details (`streams` in
+        the response of retrieving a run) has the `ABORTED` status and a `message` that gives the reason, and the
+        run finishes with the `PARTIAL` status. The service refuses the whole run when `streamIds` names a stream
+        whose mappings have never been published, or when every enabled stream is in that state.
+
+        The refusal does not change the response to this request: the service still returns `200` with the run,
+        and the run then finishes with the `ABORTED` status and a `message` that names the streams. Retrieve the
+        run to check its final status.
       operationId: POST-importtool-trigger-run
       tags:
         - Runs
@@ -354,6 +401,19 @@ paths:
                   type: boolean
                   description: When `true`, the run maps and validates but performs no remote writes.
                   example: false
+                mappings:
+                  type: string
+                  enum:
+                    - published
+                    - draft
+                  default: published
+                  description: >-
+                    Dry-run only. Which mappings the dry run uses. `published` uses each stream's published
+                    mappings, which is what a real run executes. `draft` uses the draft mappings, so you can check
+                    them before publishing. When omitted, defaults to `published`. A dry run with `published`
+                    handles streams whose mappings have never been published in the same way as a real run. The field
+                    has no effect when `dryRun` is `false`, because a real run always uses the published mappings.
+                  example: published
                 force:
                   type: boolean
                   description: >-
@@ -377,6 +437,26 @@ paths:
                     value. The service rejects values longer than 40 characters and values that contain control
                     characters. It does not shorten them.
                   example: Make scenario 42
+                streamIds:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: >-
+                    The stream identifiers to run. Omit the field to run every stream in the configuration.
+                    Send a list of stream IDs to run only those streams. Do not send stream names; use the
+                    `id` values from the stream resource.
+
+                    The service rejects an empty list. It also rejects a list that includes no stream from
+                    this configuration. Listed streams still run in the computed stream order, not in list
+                    order.
+
+                    The service also rejects a stream that cannot produce data on its own. A `COMPOSITE_CHILD`
+                    stream with `childStrategy` set to `EMBED` is written by its parent. A child that reads
+                    values captured during the parent run also cannot run alone. Either stream without its
+                    parent would complete successfully without importing records.
+                  example:
+                    - 8f1b6a5c-2d7e-4a91-9c33-0b5e4d2a7f10
             examples:
               Full run:
                 value:
@@ -386,9 +466,20 @@ paths:
                 value:
                   mode: DELTA
                   dryRun: true
+              Dry run of unpublished mapping changes:
+                value:
+                  mode: FULL
+                  dryRun: true
+                  mappings: draft
+              Run only two streams:
+                value:
+                  mode: DELTA
+                  streamIds:
+                    - 8f1b6a5c-2d7e-4a91-9c33-0b5e4d2a7f10
+                    - 1c9d3e77-45ab-4f02-8e6d-77a1b0c9e254
       responses:
         '200':
-          description: The request was successful. The run has been started.
+          description: The request was successful. The run has been queued.
           content:
             application/json:
               schema:
@@ -396,6 +487,35 @@ paths:
               examples:
                 Run response:
                   $ref: '#/components/examples/ImportRun_Example'
+        '400':
+          description: >-
+            The request is invalid. For example, `dryRun` is `true` and `mappings` has a value other than
+            `published` or `draft`.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: When the error occurred.
+                  status:
+                    type: integer
+                    description: HTTP status code.
+                  error:
+                    type: string
+                    description: HTTP status reason phrase.
+                  path:
+                    type: string
+                    description: The request path.
+              examples:
+                Invalid mappings value:
+                  value:
+                    timestamp: '2026-09-28T09:15:02.118+00:00'
+                    status: 400
+                    error: Bad Request
+                    path: /importtool/mytenant/configs/7c9e6679-7425-40de-944b-e07fc1f90ae7/runs
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -407,12 +527,6 @@ paths:
     get:
       summary: Retrieving run history
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the run history for a configuration, most recent first.
 
       operationId: GET-importtool-list-runs
@@ -447,12 +561,6 @@ paths:
     get:
       summary: Retrieving a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves a run's status together with its per-stream progress.
 
       operationId: GET-importtool-get-run
@@ -486,12 +594,6 @@ paths:
     get:
       summary: Streaming run progress
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Streams a run's progress as Server-Sent Events: an initial `snapshot` (run and streams), then a
         `stream` event per processed batch, and a final `run` event when the run finishes.
       operationId: GET-importtool-stream-run-events
@@ -529,14 +631,12 @@ paths:
     post:
       summary: Cancelling a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Requests cancellation of an active run. By default the cancellation is cooperative; with
         `force=true` the run is stopped immediately and its configuration is unblocked.
+
+        A run in the `QUEUED` status has not started, so it is cancelled immediately and gets the `CANCELLED`
+        status, with or without `force`. A run in the `RESUMABLE` status can be stopped only with
+        `force=true`. Without `force`, the request returns a `409 Conflict` response.
       operationId: POST-importtool-cancel-run
       tags:
         - Runs
@@ -577,12 +677,6 @@ paths:
     get:
       summary: Retrieving run errors
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the errors recorded during a run, paginated.
 
       operationId: GET-importtool-list-run-errors
@@ -610,18 +704,120 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}/diagnostics':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    get:
+      summary: Retrieving run diagnostics
+      description: |-
+        Retrieves the source rows represented by a run's feed-quality counters.
+
+        A run reports how many source rows repeated a natural key (`duplicateKeys`) and how many child
+        lines had no parent to attach to (`unresolvedParents`). This endpoint identifies the affected rows
+        and returns each record's key, its parent-linking field and value, and the number of lines waiting
+        for each missing parent.
+
+        Neither counter is a failure, so these rows are kept separately from run errors.
+
+        The rows are a capped SAMPLE, not necessarily the whole set — `recorded` gives how many were
+        stored and `sampleTruncated` says whether a stream hit the cap. The run's own counters show the
+        total number of affected rows; do not use the returned row count to measure the size of the problem.
+
+      operationId: GET-importtool-list-run-diagnostics
+      tags:
+        - Runs
+      parameters:
+        - $ref: '#/components/parameters/trait_diagnosticsStreamId'
+        - $ref: '#/components/parameters/trait_diagnosticsKind'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of rows to return. Defaults differ between the JSON and CSV operations.
+          schema:
+            type: integer
+            default: 500
+            minimum: 1
+            maximum: 50000
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The diagnostic rows are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagnosticPage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/runs/{runId}/diagnostics/csv':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_runId'
+    get:
+      summary: Downloading run diagnostics as CSV
+      description: |-
+        Returns the same rows as a CSV attachment, for opening in a spreadsheet or attaching to a ticket.
+
+        Comment lines above the header indicate whether the `limit` parameter restricted the response or
+        a stream reached the recording cap. These comments preserve that context when the file is shared
+        independently of the request.
+
+        Values are quoted. Any value beginning with `=`, `+`, `-`, or `@` is prefixed with an apostrophe
+        so that spreadsheet software does not interpret source-provided data as a formula.
+
+      operationId: GET-importtool-download-run-diagnostics-csv
+      tags:
+        - Runs
+      parameters:
+        - $ref: '#/components/parameters/trait_diagnosticsStreamId'
+        - $ref: '#/components/parameters/trait_diagnosticsKind'
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of rows to include. Defaults differ between the JSON and CSV operations.
+          schema:
+            type: integer
+            default: 50000
+            minimum: 1
+            maximum: 50000
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The CSV file is returned.
+          headers:
+            Content-Disposition:
+              description: Attachment disposition and the suggested file name.
+              schema:
+                type: string
+                example: attachment; filename="diagnostics-tenant-2026-09-23.csv"
+          content:
+            text/csv:
+              schema:
+                type: string
+              example: |-
+                # capped sample: 2000 rows recorded (cap 2000 per stream) - the run's counters show the total number of affected rows
+                stream,kind,key,linkingField,linkingValue,targetType,waitingLines,occurrence
+                poLine,UNRESOLVED_PARENT,ID:PO-4711,HEADER_ID,PO-4711,PURCHASE_ORDER,7,
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
   '/importtool/{tenant}/data/types':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
     get:
       summary: Retrieving imported data types
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the distinct target types that currently hold imported records.
 
       operationId: GET-importtool-list-data-types
@@ -655,12 +851,6 @@ paths:
     get:
       summary: Searching imported records
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Searches imported records of a given type with an optional `search` filter on the natural key, paginated.
 
       operationId: GET-importtool-search-data-records
@@ -723,12 +913,6 @@ paths:
     get:
       summary: Searching a stream's imported records
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Searches the imported records produced by a specific stream with an optional `search` filter on the natural key, paginated.
 
       operationId: GET-importtool-search-stream-records
@@ -783,12 +967,6 @@ paths:
     get:
       summary: Retrieving import statistics
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves aggregated import metrics for a time window: headline counters and rates, a time series
         bucketed by day, week, or month, per-stream health, the top failing streams, an error breakdown,
         and how many streams were added or removed.
@@ -898,12 +1076,6 @@ paths:
     get:
       summary: Retrieving job groups
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the tenant's job groups. A job group is a named set of import configurations, used to
         scope the analytics to the imports that matter to you. Groups are stored per tenant and shared by
         everyone working on it.
@@ -939,12 +1111,6 @@ paths:
     get:
       summary: Retrieving the tenant's health thresholds
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the tenant-wide thresholds that decide whether a stream is reported as `GREEN`, `AMBER`,
         or `RED` in the import statistics, together with the built-in defaults they fall back to.
 
@@ -981,15 +1147,10 @@ paths:
     get:
       summary: Retrieving import limits
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves the tenant's import limits. If an import exceeds `maxRecordsPerEntity`, excess records
         are skipped and the run finishes with the `PARTIAL` status. If `maxConcurrentImports` runs are
-        already active, additional run requests are rejected with a `429 Too Many Requests` response.
+        already executing, an additional run waits in the `QUEUED` status until one of the tenant's runs
+        finishes.
 
         Contact [Emporix Support](mailto:support@emporix.com) to have a limit raised.
       operationId: GET-importtool-license
@@ -1021,17 +1182,12 @@ paths:
     post:
       summary: Retrying the failed records of a run
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Starts a new run that reprocesses only the records that failed in the given run, instead of the
-        whole source. The new run is returned immediately and reports its own progress; the original run is
-        left untouched and keeps its counters.
+        whole source. The new run is returned immediately in the `QUEUED` status and starts when a worker is
+        free. It reports its own progress. The original run is left untouched and keeps its counters.
 
-        As with any run, at most one run can be active per configuration.
+        As with a run that you trigger, the service rejects the retry with a `409 Conflict` response while the
+        configuration has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status.
       operationId: POST-importtool-retry-run
       tags:
         - Runs
@@ -1040,7 +1196,7 @@ paths:
             - importtool.import_trigger
       responses:
         '200':
-          description: The retry run was started.
+          description: The request was successful. The retry run has been queued.
           content:
             application/json:
               schema:
@@ -1239,17 +1395,39 @@ components:
           example:
             PO Invoice: PO_INVOICE
             Non PO Invoice: NON_PO_INVOICE
-        targetDeleteSubscriptionEnabled:
-          type: boolean
-          description: Whether the stream reacts to its target objects being deleted outside the import.
-          example: false
-        onTargetReappear:
-          type: string
-          enum:
-            - IGNORE
-            - READD
-          description: What happens when a record deleted in the target is seen in the source again.
-          example: IGNORE
+        deleteConfig:
+          type: object
+          description: |-
+            How deletes are detected in the source and propagated to the target. Omit for an upsert-only
+            stream. `MARKER`: a field on the record flags it as deleted. `TOMBSTONE`: a separate source
+            record lists the deleted IDs.
+          properties:
+            mode:
+              type: string
+              enum:
+                - MARKER
+                - TOMBSTONE
+              description: How a deleted record is recognised.
+            markerField:
+              type: string
+              description: '`MARKER` only. The source field that flags a record as deleted.'
+            markerValues:
+              type: array
+              items:
+                type: string
+              description: '`MARKER` only. The values of `markerField` that mean deleted.'
+            record:
+              type: string
+              description: |-
+                `TOMBSTONE` only. The explicit name of the source record that lists deleted IDs. Omit this
+                property when the name can be derived from the imported record by adding a prefix or suffix —
+                for example, `invoice_deleted` for an `invoice` stream. Specify it when the deletion record
+                does not follow that naming convention.
+          example:
+            mode: MARKER
+            markerField: DELETIONINDICATOR
+            markerValues:
+              - X
         healthThresholds:
           $ref: '#/components/schemas/HealthThresholds'
         createdAt:
@@ -1325,7 +1503,13 @@ components:
           type: array
           description: >-
             Dry-run only. A sample of the mapped records that would be written, so the mapping can be
-            previewed without a real import. Absent on normal runs.
+            previewed without a real import. Absent on normal runs. Each stream is sampled separately, up
+            to the `sampleSize` set in the run request. A parent stream's records include the records of
+            its composite child streams that have `childStrategy` set to `EMBED` or `PATCH`. Those child
+            records appear in the parent attribute named by the child stream's `embedAttribute`, as a real
+            import writes them. Only child records inside the child stream's own sample are included, so a
+            sampled parent record can show fewer child records than the source contains for that parent, or
+            none. Child records are also sampled under their own stream.
           items:
             type: object
             properties:
@@ -1354,11 +1538,27 @@ components:
           enum:
             - QUEUED
             - RUNNING
+            - RESUMABLE
             - SUCCEEDED
             - PARTIAL
             - FAILED
             - CANCELLED
-          description: The run status.
+            - ABORTED
+          description: |-
+            The run status. Possible values:
+
+            * `QUEUED` – the run waits to start. Nothing has been read yet, and the run has no per-stream
+              progress. `queueWaitingFor` says what the run waits for.
+            * `RUNNING` – the run is executing.
+            * `RESUMABLE` – the run was interrupted, for example by a service restart, and resumes automatically
+              from its last checkpoint. It is not a final status.
+            * `SUCCEEDED` – the run finished, and every record was processed.
+            * `PARTIAL` – the run finished, but not completely: some records failed, a limit skipped records,
+              or a stream was not run. The `message` field and the per-stream progress give the details.
+            * `FAILED` – the run stopped because of an error.
+            * `CANCELLED` – the run was cancelled.
+            * `ABORTED` – the service refused to start the run because of the import configuration, for example
+              mappings that have never been published or a changed target schema. Nothing was read or written.
           example: SUCCEEDED
         mode:
           type: string
@@ -1370,13 +1570,63 @@ components:
         startedAt:
           type: string
           format: date-time
-          description: When the run started.
+          description: >-
+            When the run was requested. If the run was queued first, it began executing later, at
+            `executionStartedAt`.
           example: '2026-07-27T02:00:00.000Z'
+        executionStartedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: >-
+            When the run began executing. Equal to `startedAt`, or later by the time the run spent in the
+            queue. `null` while the run is `QUEUED`, and on runs recorded before the field existed.
+          example: '2026-07-27T02:00:03.000Z'
         finishedAt:
           type: string
           format: date-time
           description: When the run finished.
           example: '2026-07-27T02:04:12.000Z'
+        queuePosition:
+          type: integer
+          minimum: 1
+          description: >-
+            `QUEUED` runs only. The run's position among the queued runs that can start, where `1` starts
+            next. Runs of all tenants share the queue, and a tenant with fewer runs executing goes first. The
+            value is approximate, because the queue changes while you read it. The field is absent when the
+            run is not queued, when it waits for something other than a worker, or when the service has not
+            yet calculated it.
+          example: 2
+        queueWaitingFor:
+          type: string
+          enum:
+            - WORKER
+            - PREVIOUS_RUN
+            - TENANT_LIMIT
+          description: |-
+            `QUEUED` runs only. What the run waits for. Possible values:
+
+            * `WORKER` – the run waits for a free worker. `queuePosition` gives its place in the queue.
+            * `PREVIOUS_RUN` – the run waits for the configuration's current run to finish.
+            * `TENANT_LIMIT` – the run waits for one of the tenant's runs to finish, because
+              `maxConcurrentImports` runs are already executing.
+
+            The field is absent when the run is not queued, or when the service has not yet calculated it.
+          example: WORKER
+        supersededRequests:
+          type: integer
+          description: >-
+            The number of later scheduled run requests that were added to this run while it was queued. A
+            configuration has at most one queued run, so a scheduled request that arrives while a real run of
+            the whole configuration is queued does not queue a second run.
+          example: 0
+        lastRequestedAt:
+          type: string
+          format: date-time
+          description: >-
+            When the latest scheduled run request counted in `supersededRequests` was made. Absent when
+            `supersededRequests` is `0`.
+          example: '2026-07-27T03:00:00.000Z'
         recordsRead:
           type: integer
           description: Records read (created + updated + skipped + deleted + failed).
@@ -1442,6 +1692,30 @@ components:
           type: integer
           description: For a dry run, how many mapped records were kept as a sample.
           example: 10
+        dryRunPublished:
+          type: boolean
+          description: >-
+            Dry-run only. Whether the dry run used the published mappings (`true`) or the draft mappings
+            (`false`).
+          example: true
+        mappingVersions:
+          type: array
+          description: >-
+            The published mapping version each stream uses in this run, fixed when the run starts executing.
+            Version `0` means that the stream has no published mappings. The field is absent while the run is
+            `QUEUED`, on a dry run of the draft mappings, and on runs recorded before it existed.
+          items:
+            type: object
+            properties:
+              streamId:
+                type: string
+                format: uuid
+                description: The stream identifier.
+                example: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              version:
+                type: integer
+                description: The published mapping version the stream uses.
+                example: 3
     ImportRunStream:
       title: Run stream progress
       type: object
@@ -1475,7 +1749,11 @@ components:
             - PARTIAL
             - FAILED
             - SKIPPED
-          description: The stream's status within the run.
+            - ABORTED
+          description: >-
+            The stream's status within the run. `ABORTED` means the service refused to run the stream because
+            of its configuration, for example because its mappings have never been published. It indicates a
+            configuration problem to fix. The `message` field gives the reason.
           example: PARTIAL
         recordsRead:
           type: integer
@@ -1684,6 +1962,99 @@ components:
               description: The runs on this page.
               items:
                 $ref: '#/components/schemas/ImportRun'
+    DiagnosticPage:
+      type: object
+      description: >-
+        A page of diagnostic rows with metadata that indicates whether the response contains all recorded
+        rows or only part of a capped sample. Use `recorded`, `cap`, and `sampleTruncated` to interpret the
+        page. The run's counters show the total number of affected rows.
+      properties:
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/DiagnosticRecord'
+        returned:
+          type: integer
+          description: How many rows this response contains.
+          example: 500
+        recorded:
+          type: integer
+          description: How many rows were recorded in total for this scope.
+          example: 2000
+        cap:
+          type: integer
+          description: The per-stream, per-kind recording cap.
+          example: 2000
+        sampleTruncated:
+          type: boolean
+          description: |-
+            Whether at least one stream reached the cap. When true, these rows are a sample, and the run's
+            own counters show the total number of affected rows.
+          example: true
+        note:
+          type: string
+          description: A human-readable statement of what this response is.
+      example:
+        returned: 2
+        recorded: 2000
+        cap: 2000
+        sampleTruncated: true
+        note: At least one stream hit the recording cap, so these rows are a capped SAMPLE.
+        rows:
+          - streamName: poLine
+            kind: UNRESOLVED_PARENT
+            naturalKey: 'ID:PO-4711'
+            linkingField: HEADER_ID
+            linkingValue: PO-4711
+            targetType: PURCHASE_ORDER
+            waitingLines: 7
+    DiagnosticRecord:
+      type: object
+      description: One row behind a feed-quality counter.
+      properties:
+        id:
+          type: string
+          format: uuid
+        runId:
+          type: string
+          format: uuid
+        streamId:
+          type: string
+          format: uuid
+        streamName:
+          type: string
+          description: The stream that recorded the row.
+        kind:
+          type: string
+          enum:
+            - UNRESOLVED_PARENT
+            - REPEATED_KEY
+          description: |-
+            `UNRESOLVED_PARENT`: a child line whose parent instance did not exist when it was written.
+            `REPEATED_KEY`: a source row whose natural key this run had already imported.
+        naturalKey:
+          type: string
+          description: The record's own natural key in the source.
+        linkingField:
+          type: string
+          description: '`UNRESOLVED_PARENT` only. The field that points at the parent.'
+        linkingValue:
+          type: string
+          description: |-
+            `UNRESOLVED_PARENT` only. The parent key the line pointed at — the value to look up in the
+            source system.
+        targetType:
+          type: string
+          description: The target type the row was headed for.
+        waitingLines:
+          type: integer
+          description: '`UNRESOLVED_PARENT` only. The number of child lines waiting for this parent.'
+        occurrence:
+          type: integer
+          description: '`REPEATED_KEY` only. How many times this key had already been seen in this run.'
+        createdAt:
+          type: string
+          format: date-time
     ErrorRecordPage:
       title: Error record page
       allOf:
@@ -1790,8 +2161,8 @@ components:
         maxConcurrentImports:
           type: integer
           description: >-
-            The maximum number of runs that may be active at once for the tenant. A run requested beyond
-            this limit is rejected with `429`.
+            The maximum number of runs that can execute at once for the tenant. A run requested beyond this
+            limit is not rejected. It waits in the `QUEUED` status until one of the tenant's runs finishes.
           example: 2
         batchSize:
           type: integer
@@ -1873,7 +2244,9 @@ components:
         avgRunDurationSec:
           type: number
           format: double
-          description: The mean duration of a finished run, in seconds.
+          description: >-
+            The mean duration of a finished run, in seconds, measured from when the run began executing
+            (`executionStartedAt`). Time spent in the queue is not counted.
           example: 184.5
         avgCreatedPerRun:
           type: number
@@ -1891,7 +2264,9 @@ components:
           example: 87000
         activeRuns:
           type: integer
-          description: The number of runs currently in progress.
+          description: >-
+            The number of runs currently in the `QUEUED`, `RUNNING`, or `RESUMABLE` status. When you filter by
+            `streamId`, queued runs are not counted, because they have not started any stream yet.
           example: 1
     ImportStatsPoint:
       title: Statistics time bucket
@@ -2198,6 +2573,24 @@ components:
             Internal service error:
               $ref: '#/components/examples/InternalServiceError500_Example'
   parameters:
+    trait_diagnosticsStreamId:
+      name: streamId
+      in: query
+      required: false
+      description: Restrict the rows to those recorded for this stream.
+      schema:
+        type: string
+        format: uuid
+    trait_diagnosticsKind:
+      name: kind
+      in: query
+      required: false
+      description: Restrict the rows to this kind.
+      schema:
+        type: string
+        enum:
+          - UNRESOLVED_PARENT
+          - REPEATED_KEY
     trait_tenant:
       name: tenant
       in: path
@@ -2342,16 +2735,18 @@ components:
         tenant: mytenant
         trigger: MANUAL
         origin: Dashboard
-        status: RUNNING
+        status: QUEUED
         mode: FULL
         startedAt: '2026-07-27T02:00:00.000Z'
+        executionStartedAt: null
         finishedAt: null
-        recordsRead: 120
-        created: 10
-        updated: 100
-        skipped: 8
-        failed: 2
+        recordsRead: 0
+        created: 0
+        updated: 0
+        skipped: 0
+        failed: 0
         deleted: 0
+        supersededRequests: 0
         message: null
     ImportRunPage_Example:
       value:
@@ -2368,6 +2763,7 @@ components:
             status: SUCCEEDED
             mode: DELTA
             startedAt: '2026-07-27T02:00:00.000Z'
+            executionStartedAt: '2026-07-27T02:00:03.000Z'
             finishedAt: '2026-07-27T02:04:12.000Z'
             recordsRead: 1250
             created: 40
@@ -2387,6 +2783,7 @@ components:
           status: SUCCEEDED
           mode: DELTA
           startedAt: '2026-07-27T02:00:00.000Z'
+          executionStartedAt: '2026-07-27T02:00:03.000Z'
           finishedAt: '2026-07-27T02:04:12.000Z'
           recordsRead: 1250
           created: 40

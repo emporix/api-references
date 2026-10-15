@@ -8,12 +8,6 @@ icon: clock-rotate-left
 
 Query tenant-wide change history for Emporix platform entities.
 
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-
-If you have any questions, contact the [Emporix Support Team](mailto:support@emporix.com) or post directly in the [Community](https://community.emporix.io/).
-{% endhint %}
-
 ### Key features and benefits
 
 * Retrieves paginated changelog history across configured platform entities

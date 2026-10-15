@@ -25,17 +25,11 @@ paths:
       summary: Retrieving logs
       operationId: GET-changelog-retrieve-tenant-changelogs
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Retrieves a paginated list of changes for the tenant. Results are ordered by occurrence time.
 
         Filter results with the standard `q` query parameter. Supported fields:
 
-        * `entity` — Entity type, for example `order`, `customer`, `company`, `product`, `segment`, `group`, `group-assignment`, `coupon`, or a custom entity created with the Schema Service.
+        * `entity` — Entity type, for example `order`, `customer`, `company`, `product`, `segment`, `group`, `group-assignment`, `coupon`, `quote`, `site`, or a custom entity created with the Schema Service.
         * `entityId` — Document identifier. Requires `entity`.
         * `type` — Change type. Possible values: `create`, `update`, `delete`.
         * `actor` — Actor display name. Supports exact match, glob patterns such as `John*`, and regex such as `actor:~^sys`. Special values: `system`, `unknown`.
@@ -140,7 +134,7 @@ components:
         * `related:elemMatch(...)` — ElemMatch syntax, for example `q=related:elemMatch(entity:group entityId:1gr5e52e-6e27-4ac5-9471-2467d3fb7501)`.
         * `compoundLogicalQuery` — Nested `OR` / `AND` expressions, for example `q=compoundLogicalQuery:((entity:group type:update) OR (related:elemMatch(entity:group)))`.
 
-        See also [Query Parameter](https://developer.emporix.io/api-references/standard-practices/q-param).
+        See also [Query Parameter](https://developer.emporix.io/api-documentation/standard-practices/q-param).
       example: 'entity:order entityId:6a2bce93592855a33518fc2f'
     query_page:
       name: page
@@ -215,7 +209,7 @@ components:
         entity:
           type: string
           description: |
-            Logical entity type of the changed document, for example `order`, `customer`, `company`, `product`, `segment`, `group`, `group-assignment`, `coupon`, or a custom entity created with the Schema Service.
+            Logical entity type of the changed document, for example `order`, `customer`, `company`, `product`, `segment`, `group`, `group-assignment`, `coupon`, `quote`, `site`, or a custom entity created with the Schema Service.
         entityId:
           type: string
           description: Unique identifier of the changed document.

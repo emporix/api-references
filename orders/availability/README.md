@@ -25,7 +25,7 @@ If you currently use these endpoints, plan an alternative workflow before the re
 * Turns stores into mini DCs
 * Enables Click & Collect from a store
 * Runs dark stores or fulfillment from a warehouse
-* Uses location information to optimize the pick-pack process
+* Uses location information to optimize the picking and packing process
 * Uses stock level information in local stores to feed Google Search and other digital product discovery services
 * Understands availability in different locations
 * Provides buyers with stock information before they buy

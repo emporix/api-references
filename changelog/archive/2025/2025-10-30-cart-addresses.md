@@ -55,8 +55,8 @@ The addresses specified on the cart are used for:
 * **Shipping cost calculation** - The shipping address is used to calculate accurate shipping costs based on the destination.
 
 For more details, see:
-* [How to determine a tax country at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level)
-* [How to calculate shipping cost at cart level](https://developer.emporix.io/api-references/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level)
+* [How to determine a tax country at cart level](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/cart#how-to-determine-a-tax-country-at-cart-level)
+* [How to calculate shipping cost at cart level](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/cart#how-to-calculate-shipping-cost-at-cart-level)
 
 ### Backward compatibility
 
@@ -66,9 +66,9 @@ The existing `countryCode` and `zipCode` parameters at the cart level are still 
 
 | Endpoint                                                                                                                                                                   | Description                                                            |
 |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------|
-| [Creating a new cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)                    | The `addresses` attribute has been added to the request body.  |
-| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                    | The `addresses` attribute has been added to the request body.  |
-| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                      | The `addresses` attribute with origin information is included in the response.  |
+| [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)                    | The `addresses` attribute has been added to the request body.  |
+| [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid)                    | The `addresses` attribute has been added to the request body.  |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid)                      | The `addresses` attribute with origin information is included in the response.  |
 
 ## Known problems
 

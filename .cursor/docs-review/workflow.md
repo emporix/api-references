@@ -8,10 +8,11 @@ title: Docs Self-Review Workflow
 
 ## Overview
 
-Two-phase flow with native Cursor Keep/Undo for fixes:
+Single-turn flow with native Cursor Keep/Undo for auto-fixes:
 
-1. **Review** — readonly chat report (no file changes)
-2. **Apply fixes** — optional, on author confirmation via agent edits
+1. **Review** — readonly subagent returns findings (no file writes)
+2. **Apply** — parent applies `Auto-fixable: yes` findings in the same turn
+3. **Report** — unified chat report: applied changes, remaining decisions, needs more information
 
 ## Manual trigger
 
@@ -19,40 +20,38 @@ Two-phase flow with native Cursor Keep/Undo for fixes:
 Run docs style self-review for my current changes.
 ```
 
-## Phase 1 — Review
+Similar phrasing also works (for example `run self review on the changes`).
 
-1. Subagent scans changed docs files against `.style-guide/`.
-2. Returns structured chat report with:
+## Review
+
+1. Parent collects changed docs files and optional task context from this chat (pasted AC/task text, GitHub PR/issue URLs).
+2. Readonly subagent scans changed docs against `.style-guide/` and [sufficiency-and-fit.md](sufficiency-and-fit.md).
+3. Returns structured findings with:
    - file path + line reference (required for every finding; use `:LINE` or `:START-END` for ranges)
-   - severity, rule, issue, suggested fix
+   - severity, lane (`style` | `sufficiency` | `task-fit`), rule, issue, suggested fix
    - `Auto-fixable: yes | no`
    - grammar and spelling findings with corrected text when unambiguous
-3. Ends with verdict and readiness.
-4. Agent ends with the structured **Apply auto-fixable fixes?** call-to-action (or **Next step** when auto-fixable N = 0).
+4. Parent verifies every finding has a line reference before applying or reporting.
 
-**No file modifications. No cleanup scripts needed.**
+The review subagent does not modify files.
 
-## Phase 2 — Apply fixes (optional)
+## Apply (same turn)
 
-1. Author confirms: **"Yes"** (in reply to the Phase 1 auto-fixable CTA).
-2. Agent applies only `Auto-fixable: yes` findings.
-3. One `StrReplace` per fix — each appears in Cursor's diff UI.
-4. Author accepts (Keep) or rejects (Undo) each change.
-5. Agent returns the structured **Phase 2 Complete** summary:
-   - fixes applied (with `file:line`)
-   - fixes skipped/rejected (Keep/Undo rejections)
-   - still requires your action — all remaining items by severity, with `file:line`, issue, and suggested fix
-   - updated **Ready for peer review** verdict
-6. Offer to re-run Phase 1 review.
+1. Parent immediately applies only `Auto-fixable: yes` findings. No "Yes" confirmation.
+2. One `StrReplace` per fix — each appears in Cursor's diff UI.
+3. Author accepts (Keep) or rejects (Undo) each change.
+4. Sufficiency, task-fit, and structural findings are not auto-applied.
 
 This includes obvious grammar and spelling corrections.
 
-### Phase 2 lanes
+### Lanes
 
-- **Obvious fixes lane**: applies only findings marked `Auto-fixable: yes`.
-- **Guided structural lane**: runs only after explicit author confirmation, and applies approved structural suggestions from Phase 1 (`Reworked structure suggestion`) as targeted section-level edits.
+- **Obvious fixes:** applies only findings marked `Auto-fixable: yes` (style/grammar).
+- **Reader sufficiency:** always runs; always `Auto-fixable: no`.
+- **Task-fit:** runs only when task context is in this chat or the trigger; always `Auto-fixable: no`.
+- **Guided structural:** runs only after explicit author confirmation in a follow-up, and applies approved `Reworked structure suggestion` items as targeted section-level edits.
 
-Structural findings remain `Auto-fixable: no` in Phase 1 even when a concrete rewrite is provided.
+Structural findings remain `Auto-fixable: no` even when a concrete rewrite is provided.
 
 ### Stepper conversion example
 
@@ -83,25 +82,35 @@ Compliant rewrite:
 {% endstepper %}
 ```
 
+## Unified report
+
+The parent returns one **Docs Self-Review** report:
+
+- **Verdict** and **Ready for peer review** (from remaining open items after apply)
+- **Task context:** none (task-fit skipped) or listed sources
+- **Applied auto-fixes** — each with `file:line`, what was wrong, and what changed
+- **Needs your decision** — remaining items by severity, with `file:line`, issue, and suggested fix
+- **Needs more information** — omitted when none
+- **Next step** — fix remaining items, optional guided structural apply, or re-run self-review
+
 ## Author checklist
 
 - Update docs content.
-- Run manual docs style self-review.
-- Read chat report for all findings.
-- Confirm whether to apply auto-fixable fixes (reply **"Yes"** or **"No"**).
-- Use Keep/Undo on each proposed edit.
-- Manually fix remaining non-auto-fixable issues.
+- Run manual docs style self-review (optionally include task description, AC, or a PR/issue URL in the same chat).
+- Read the unified report (`file:line` on every item).
+- Use Keep/Undo on each auto-applied edit.
+- Manually fix remaining decision items (and supply more information when asked).
 - Re-run review after significant changes.
 - Submit for peer review when verdict is `pass` or `pass-with-warnings`.
 
 ## Hybrid gate rules
 
-- Block only when `critical` findings are present.
-- `major` and `minor` findings are warnings in this phase.
+- Block only when remaining `critical` findings are present after apply.
+- Remaining `major` and `minor` findings are warnings.
 
-## Phase 3 (planned): automatic trigger
+## Planned: automatic trigger
 
-After the manual flow is stable, enable automatic Phase 1 review through project hooks. Phase 2 remains author-confirmed.
+After the manual flow is stable, enable automatic **review-only** self-review through project hooks. A stop hook must not apply file edits. See [guide.md](guide.md).
 <!-- This will be added at later stage. -->
 
 ### Example hook blueprint (not active yet)
@@ -113,7 +122,7 @@ After the manual flow is stable, enable automatic Phase 1 review through project
     "stop": [
       {
         "type": "prompt",
-        "prompt": "If documentation files changed, run Phase 1 docs style self-review using .cursor/docs-review/subagent-prompt.md and return a chat-only report. End with the Apply auto-fixable fixes? call-to-action."
+        "prompt": "If documentation files changed, run a review-only docs style self-review using .cursor/docs-review/subagent-prompt.md and return findings in chat. Do not apply file edits from a stop hook."
       }
     ]
   }

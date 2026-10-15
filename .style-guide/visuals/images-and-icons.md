@@ -11,6 +11,22 @@ icon: image
 * Wrap images with the `<figure>` tag
 * Add `alt` text for description of what the image presents, use a brief phrase.
 * Define `<figcaption>` to display the image description in the doc underneath the picture.
+* Keep captions concise. A caption names what the image shows. It does not need to list every detail visible in the image or repeat what the surrounding text explains.
+* Use colons, semicolons, and dashes in captions only where they are necessary. Prefer a short noun phrase without punctuation.
+* Do not use a caption to explain a procedure. Put that in the text.
+
+Example captions:
+
+```
+Creating a catalog in Management Dashboard
+Order details view
+```
+
+Avoid:
+
+```
+Order details: the status – Pending; the buttons Approve and Reject; the customer data
+```
 * Where needed, add `width` param to change the image size on the screen.
 * Align images to the center (default behavior).
 
@@ -29,7 +45,7 @@ Example:
 
 * Frames:
   * Color: #DDE6EE
-  * Roundness: 10
+  * Roundness: 10 (the PhotoScape slider value, **not 10 px**; this is about 4.5% of the shorter side of the image)
   * Stroke: 2/3
 * Highlights:
   * Color: #E86C07

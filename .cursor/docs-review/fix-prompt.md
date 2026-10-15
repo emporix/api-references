@@ -1,26 +1,27 @@
-You are applying auto-fixable documentation style fixes confirmed by the author.
+You are applying auto-fixable documentation style fixes in the same turn as the review.
 
 ## When to run
-Only after Phase 1 review is complete and the author confirms they want fixes applied.
+Immediately after review findings are complete, in the same turn. Do not wait for author confirmation.
 
 ## Inputs
-- Phase 1 chat report with findings marked `Auto-fixable: yes`
+- Review findings with items marked `Auto-fixable: yes`
 - Original documentation files
 
 ## Rules
 1. Apply ONLY findings marked `Auto-fixable: yes`.
 2. Use one `StrReplace` per fix so each change appears separately in Cursor's Keep/Undo UI.
 3. Match `old_string` exactly from the file — include enough context for uniqueness.
-4. Replace with the suggested fix text from the Phase 1 report.
+4. Replace with the suggested fix text from the review findings.
 5. Do not apply fixes marked `Auto-fixable: no`.
 6. Do not add HTML review comments or suggestion blocks to files.
 7. Briefly list which fixes you are about to apply before making edits.
+8. Do not apply `sufficiency` or `task-fit` findings.
 
 ## Optional guided structural mode
-Use this mode only when the author explicitly confirms they want approved structural suggestions applied.
+Use this mode only when the author explicitly confirms in a follow-up that they want approved structural suggestions applied.
 
 In guided structural mode:
-1. Use only structural findings from Phase 1 that include `Reworked structure suggestion`.
+1. Use only structural findings from the review that include `Reworked structure suggestion`.
 2. Keep those findings as `Auto-fixable: no` in review semantics; this is still author-guided, not automatic.
 3. Apply targeted section-level replacements so each structural rewrite appears as a clear Keep/Undo change.
 4. Preserve meaning, behavior, and technical facts; rewrite structure/format only.
@@ -36,51 +37,15 @@ In guided structural mode:
 
 ## After applying
 
-Return the structured **Phase 2 Complete** summary below. Do not end with a vague one-liner.
+Do not emit a separate completion report. The parent folds apply results into the unified **Docs Self-Review** report in `review-contract.md`.
 
-Completion rules:
-- List every fix that was applied, with `file:line` and rule reference.
-- List any `Auto-fixable: yes` finding the author rejected via Keep/Undo under **Fixes skipped/rejected**.
-- List **every** remaining author-action item:
-  - all Phase 1 findings marked `Auto-fixable: no` not applied in guided structural mode
-  - any rejected auto-fixable finding
-- Group remaining items by severity (`critical`, `major`, `minor`).
-- Keep `file:line` references on all remaining items — never omit line numbers.
-- For structural items, include the `Reworked structure suggestion` from Phase 1 when available.
-- Restate **Ready for peer review** based on what is still open (`no` if any critical item remains).
-
-Chat report format:
-
-## Phase 2 Complete
-
-**Fixes applied:** N
-1. `path/to/file.md:LINE` — rule-reference
-
-**Fixes skipped/rejected:** N
-1. `path/to/file.md:LINE` — rule-reference
-   - Reason: author rejected via Keep/Undo | not attempted
-
-**Still requires your action:** N
-
-### Critical (N)
-1. `path/to/file.md:LINE` — rule-reference
-   - Issue: what is wrong and why it matters
-   - Suggested fix: replacement text or concrete steps
-
-### Major (N)
-...
-
-### Minor (N)
-...
-
-**Ready for peer review:** yes | no
-**Next step:** Re-run Phase 1 review | Fix remaining issues manually
-
----
-
-Offer to re-run Phase 1 review to verify.
+Track for that report:
+- Every fix that was applied, with `file:line`, rule reference, issue, and the change made
+- Any `Auto-fixable: yes` finding not kept (author Undo) or not attempted, under skipped/rejected if known
+- All remaining author-action items (`Auto-fixable: no`, sufficiency, task-fit, needs more information)
 
 ## Do not
 - Batch unrelated fixes into one large edit
 - Guess endpoint URLs or product behavior
-- Modify files the author did not confirm
+- Wait for "Yes" before applying auto-fixable findings
+- Apply sufficiency, task-fit, or structural findings unless the author later confirms the guided structural lane
