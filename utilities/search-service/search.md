@@ -316,7 +316,7 @@ If the job fails, inspect `response` and use [Retrieving a search index](https:/
 {% step %}
 #### Search the indexed custom instances
 
-Send a request to [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type). For query types, filter operators, and further examples, see [Available search criteria](#available-search-criteria).
+Send a request to [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) and define your query and filters. For query types, filter operators, and further examples, see [Available search criteria](#available-search-criteria).
 
 This example matches `diesel engine` in `name.en` or a code that starts with `VH-`. It then keeps active vehicles with at least 150 horsepower. The response is sorted by horsepower.
 
@@ -387,13 +387,14 @@ Assume the index contains the following values:
 
 Place one of the following objects in `queries`:
 
-* `{"type":"TEXT","query":"diesel","field":"name.en"}` matches Vehicle A because `diesel` is an analyzed word in its name.
-* `{"type":"PHRASE","query":"diesel engine","field":"name.en"}` matches Vehicle A because both words are adjacent and in that order. A value such as `Diesel-powered engine` does not match this phrase.
-* `{"type":"AUTOCOMPLETE","query":"elec","field":"name.en"}` matches Vehicle B when `name.en` uses `autocomplete: PREFIX`. The same query does not match `Bioelectric car` because `elec` is not at the start of that word.
-* `{"type":"WILDCARD","query":"VH-?00","field":"mixins.vehicleSearchAttributes.code"}` matches Vehicle A because `?` replaces the single character `9`. It does not match `vh-900` because wildcard matching is case-sensitive, or `PRE-VH-900` because the pattern evaluates the whole stored value.
-* `{"type":"TEXT","query":"deisel","field":"name.en","fuzzy":{"enabled":true,"maxEdits":1}}` matches Vehicle A because swapping the adjacent `i` and `e` counts as one edit.
-* `{"type":"TEXT","query":"dieselxx","field":"name.en","fuzzy":{"enabled":true,"maxEdits":2}}` matches Vehicle A by allowing the two extra characters. It does not match with `maxEdits` set to `1`.
-
+| Type | Example | Matches | Notes |
+| --- | --- | --- | --- |
+| `TEXT` | `{"type":"TEXT","query":"diesel","field":"name.en"}` | Vehicle A | `diesel` is an analyzed word in its name. |
+| `PHRASE` | `{"type":"PHRASE","query":"diesel engine","field":"name.en"}` | Vehicle A | Both words are adjacent and in that order. A value such as `Diesel-powered engine` does not match. |
+| `AUTOCOMPLETE` | `{"type":"AUTOCOMPLETE","query":"elec","field":"name.en"}` | Vehicle B | Requires `autocomplete: PREFIX` on `name.en`. Does not match `Bioelectric car` because `elec` is not at the start of that word. |
+| `WILDCARD` | `{"type":"WILDCARD","query":"VH-?00","field":"mixins.vehicleSearchAttributes.code"}` | Vehicle A | `?` replaces the single character `9`. Does not match `vh-900` (case-sensitive) or `PRE-VH-900` (pattern evaluates the whole stored value). |
+| `TEXT` (fuzzy) | `{"type":"TEXT","query":"deisel","field":"name.en","fuzzy":{"enabled":true,"maxEdits":1}}` | Vehicle A | Swapping the adjacent `i` and `e` counts as one edit. |
+| `TEXT` (fuzzy) | `{"type":"TEXT","query":"dieselxx","field":"name.en","fuzzy":{"enabled":true,"maxEdits":2}}` | Vehicle A | Allows the two extra characters. Does not match with `maxEdits` set to `1`. |
 
 The following filter operators are available:
 
@@ -409,16 +410,18 @@ Assume Vehicle C has `status` set to `ACTIVE`, `horsepower` set to `180`, `code`
 
 Place one of the following objects in `filters`:
 
-* `{"field":"mixins.vehicleSearchAttributes.status","operator":"EQ","value":"ACTIVE"}` matches the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.status","operator":"NEQ","value":"ARCHIVED"}` matches the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GT","value":150}` and `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GTE","value":180}` match the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LT","value":200}` and `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LTE","value":180}` match the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"BETWEEN","value":[150,200]}` matches the vehicle because the range is inclusive.
-* `{"field":"mixins.vehicleSearchAttributes.status","operator":"IN","value":["ACTIVE","DRAFT"]}` matches the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.status","operator":"NOT_IN","value":["ARCHIVED","DELETED"]}` matches the vehicle.
-* `{"field":"mixins.vehicleSearchAttributes.code","operator":"EXISTS","value":true}` matches the vehicle because `code` is present.
-* `{"field":"name.en","operator":"CONTAINS","value":"tres long"}` matches `Très Long Description` because `CONTAINS` ignores case and diacritics.
-* `{"field":"name.en","operator":"CONTAINS","value":"*"}` matches a value such as `Model * Special`, but not `Model X Special`, because `CONTAINS` treats `*` as a literal character.
+| Operator | Example | Matches | Notes |
+| --- | --- | --- | --- |
+| `EQ` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"EQ","value":"ACTIVE"}` | Vehicle C | Exact equality. |
+| `NEQ` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"NEQ","value":"ARCHIVED"}` | Vehicle C | Excludes the given value. |
+| `GT` / `GTE` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GT","value":150}` · `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"GTE","value":180}` | Vehicle C | Greater than, or greater than or equal to. |
+| `LT` / `LTE` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LT","value":200}` · `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"LTE","value":180}` | Vehicle C | Less than, or less than or equal to. |
+| `BETWEEN` | `{"field":"mixins.vehicleSearchAttributes.horsepower","operator":"BETWEEN","value":[150,200]}` | Vehicle C | Inclusive range. |
+| `IN` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"IN","value":["ACTIVE","DRAFT"]}` | Vehicle C | Value is one of the listed items. |
+| `NOT_IN` | `{"field":"mixins.vehicleSearchAttributes.status","operator":"NOT_IN","value":["ARCHIVED","DELETED"]}` | Vehicle C | Value is none of the listed items. |
+| `EXISTS` | `{"field":"mixins.vehicleSearchAttributes.code","operator":"EXISTS","value":true}` | Vehicle C | `code` is present. |
+| `CONTAINS` | `{"field":"name.en","operator":"CONTAINS","value":"tres long"}` | Vehicle C | Ignores case and diacritics; matches `Très Long Description`. |
+| `CONTAINS` | `{"field":"name.en","operator":"CONTAINS","value":"*"}` | Values such as `Model * Special` | Treats `*` as a literal character; does not match `Model X Special`. |
 
 For example, this filter matches values such as `Hybrid-999`:
 
