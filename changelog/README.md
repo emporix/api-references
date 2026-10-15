@@ -52,6 +52,80 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-14" tags="new-feature" %}
+
+## Coupon, Cart, and Order Services - vendor-restricted coupons
+
+#### Overview
+
+A coupon can apply only to products from selected vendors. Set `vendorRestricted` to `true` and list the vendor identifiers in `restrictions.vendors`. A vendor restriction can be combined with other restriction types.
+
+The cart stores that restriction on the applied discount. The discount applies to line items from those vendors. When the coupon has a minimum order value, that value is checked against the total of those vendor lines. The created order keeps `vendorRestricted` and `restrictions.vendors` on the discount.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new coupon](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) | Accepts `vendorRestricted` and `restrictions.vendors` so a coupon can apply only to selected vendors. |
+| [Retrieving list of coupons by criteria](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons) | Returns `vendorRestricted` and `restrictions.vendors`. |
+| [Retrieving information about particular coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#get-coupon-tenant-coupons-code) | Returns `vendorRestricted` and `restrictions.vendors`. |
+| [Updating the coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#put-coupon-tenant-coupons-code) | Accepts `vendorRestricted` and `restrictions.vendors`. |
+| [Partially updating the coupon by code](https://developer.emporix.io/api-references/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#patch-coupon-tenant-coupons-code) | Accepts `vendorRestricted` and `restrictions.vendors`. |
+| [Applying a discount to cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#post-cart-tenant-carts-cartid-discounts) | Stores the coupon vendor restriction on the applied discount. |
+| [Returning all discounts from the cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/discounts#get-cart-tenant-carts-cartid-discounts) | Returns `vendorRestricted` and `restrictions.vendors` for each discount. |
+| [Retrieving cart details by criteria](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) | Returns `vendorRestricted` and `restrictions.vendors` on each applied discount. |
+| [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | Returns `vendorRestricted` and `restrictions.vendors` on each applied discount. |
+| [Creating a new order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) | Stores `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Retrieving orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Searching for orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders-search) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Retrieving a specific order by ID](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#get-order-v2-tenant-salesorders-orderid) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#put-order-v2-tenant-salesorders-orderid) | Accepts `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Partially updating an order](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) | Accepts `vendorRestricted` and `restrictions.vendors` on the order discount. |
+| [Retrieving a list of orders](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+| [Retrieving order details](https://developer.emporix.io/api-references/api-guides/orders/order/api-reference/orders-customer-managed#get-order-v2-tenant-orders-orderid) | Returns `vendorRestricted` and `restrictions.vendors` on each discount. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-14" tags="improvement, major-change" %}
+
+## Import Service - queued import runs
+
+#### Overview
+
+Import runs now wait in a queue that all workers of the Import Service share, so a run starts as soon as any worker is free. Triggering or retrying a run returns the run in the `QUEUED` status instead of `RUNNING`. A configuration has at most one run executing and at most one run queued.
+
+The `maxConcurrentImports` limit now applies to runs that are executing. A run requested beyond the limit is no longer rejected with a `429 Too Many Requests` response. It waits in the queue until one of the tenant's runs finishes.
+
+A scheduled run is no longer skipped when its configuration is busy. It waits behind the configuration's current run. If the schedule requests another run while a real run of the whole configuration is still queued, the service adds the request to that run and counts it in `supersededRequests`.
+
+Runs report the new `RESUMABLE` status, for a run that resumes automatically after an interruption such as a service restart. The new `executionStartedAt` field shows when a run began executing, and `startedAt` shows when the run was requested. For a queued run, `queueWaitingFor` and `queuePosition` show what the run waits for and its place in the queue.
+
+{% hint style="warning" %}
+If your integration expects a triggered or retried run to have the `RUNNING` status, update it to accept the `QUEUED` status. The trigger endpoint no longer returns `429`: a run beyond `maxConcurrentImports` is queued instead, with `queueWaitingFor` set to `TENANT_LIMIT`.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns the run in the `QUEUED` status. Returns `409` while the configuration has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status, and no longer returns `429`. The response no longer includes `mappingVersions`, because the versions are fixed when the run starts executing. Retrieve the run to read them. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns the new run in the `QUEUED` status. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run includes the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Run entries include the `RESUMABLE` status and the new `executionStartedAt`, `queuePosition`, `queueWaitingFor`, `supersededRequests`, and `lastRequestedAt` fields. |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A queued run is cancelled immediately. A run in the `RESUMABLE` status can be stopped only with `force=true`. |
+| [Retrieving import limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/license#get-importtool-tenant-license) | The `maxConcurrentImports` limit applies to runs that are executing. Runs beyond it wait in the queue. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | The `activeRuns` count includes runs in the `QUEUED`, `RUNNING`, and `RESUMABLE` status. `avgRunDurationSec` excludes the time a run spent in the queue. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-12" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6667 -->
 
