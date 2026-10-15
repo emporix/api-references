@@ -4,7 +4,7 @@ info:
   description: |
     Manage the mixin schemas for miscellaneous types.
 
-    Schemas can be marked as site-aware with `siteAware: true`. Custom instances then store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}` and merge them when the `emporix-site` request header is set.
+    Schemas can be marked as site-aware with `siteAware: true`. Site-aware mixins currently work for custom instances and products. Those entities store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}` and merge them when the `emporix-site` request header is set. Schema Service enforces `siteAware` on custom-instance writes. Product Service documents product overlay write and read behavior separately.
   contact:
     email: documentation@emporix.com
   version: ''
@@ -21,7 +21,7 @@ paths:
       description: |
         Creates a schema entity and generates a JSON Schema representation which is then uploaded to the Cloudinary repository.
 
-        Set `siteAware` to `true` when entities that use this mixin may store per-site overlays. Overlay keys use the form `{mixinName}__{siteCode}` on custom instances. Only schemas with `siteAware: true` accept those overlay keys.
+        Set `siteAware` to `true` when custom instances or products that use this mixin may store per-site overlays. Overlay keys use the form `{mixinName}__{siteCode}`. On custom instances, only schemas with `siteAware: true` accept those overlay keys.
 
       operationId: POST-schema-create-schema
       requestBody:
@@ -2376,8 +2376,9 @@ components:
               type: boolean
               nullable: true
               description: |
-                When `true`, entities that use this mixin may store per-site overlays under keys in the form `{mixinName}__{siteCode}`.
-                Overlay keys are rejected when this flag is not `true`. If omitted or set to `null`, the value behaves like `false`.
+                When `true`, custom instances or products that use this mixin may store per-site overlays under keys in the form `{mixinName}__{siteCode}`.
+                On custom-instance writes, overlay keys are rejected when this flag is not `true`. Product Service does not enforce this flag on product writes.
+                If omitted or set to `null`, the value behaves like `false`.
             attributes:
               type: array
               description: List of attributes related to the schema.
@@ -2476,7 +2477,7 @@ components:
               type: boolean
               nullable: true
               description: |
-                When `true`, entities that use this mixin may store per-site overlays under keys in the form `{mixinName}__{siteCode}`.
+                When `true`, custom instances or products that use this mixin may store per-site overlays under keys in the form `{mixinName}__{siteCode}`.
                 Historical schemas may omit the field (`null`), which behaves like `false`.
             attributes:
               type: array

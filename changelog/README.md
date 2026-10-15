@@ -25,6 +25,59 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Product Service - site-aware mixins
+
+#### Overview
+
+Site-aware mixins currently work for products. Products can store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}` and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` header is set on read operations, the service deep-merges the matching overlay into the base mixin and returns only the merged base keys. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present. Overlay values are validated against the base mixin JSON Schema URL. Unlike Schema Service custom instances, Product Service does not enforce the Schema Service `siteAware` flag on write.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) | Accepts site overlay keys in the form `{mixinName}__{siteCode}` when the base mixin schema URL is present in `metadata.mixins`. |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | Accepts site overlay keys in the form `{mixinName}__{siteCode}` when the base mixin schema URL is present in `metadata.mixins`. |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Accepts site overlay keys in the form `{mixinName}__{siteCode}` when the base mixin schema URL is present in `metadata.mixins`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Schema Service - site-aware mixins
+
+#### Overview
+
+Site-aware mixins currently work for custom instances and products. Mixin schemas can be marked as site-aware with `siteAware: true`. Custom instances then store per-site overlays under keys in the form `{mixinName}__{siteCode}` and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` header is set on read operations, the service deep-merges the matching overlay into the base mixin and returns only the merged base keys. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present. Overlay keys are rejected when the mixin schema is not site-aware. Product overlay write and read behavior is documented in the Product Service changelog entry.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts the optional `siteAware` field so a mixin schema can allow per-site overlays. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Accepts the optional `siteAware` field. The flag is versioned with the schema attributes snapshot. |
+| [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) | Returns the `siteAware` flag when it is set on the schema. |
+| [Retrieving all schemas](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas) | Returns the `siteAware` flag for each schema when it is set. |
+| [Creating a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances) | Accepts site overlay keys in the form `{mixinName}__{siteCode}` for site-aware mixins. |
+| [Upserting a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#put-schema-tenant-custom-entities-type-instances-id) | Accepts site overlay keys in the form `{mixinName}__{siteCode}` for site-aware mixins. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+| [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+| [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Accepts the `emporix-site` header to deep-merge site-aware mixin overlays into the base keys. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-12" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6667 -->
 
