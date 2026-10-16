@@ -58,10 +58,6 @@ These announcements are intended to keep you informed about ongoing work and pot
     <td class="tg-0pky">SEO Optimization PDP</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Schema Service</td>
-    <td class="tg-0pky">Site awareness of mixins</td>
-  </tr>
-  <tr>
     <td class="tg-0pky">Return Service</td>
     <td class="tg-0pky">Site awareness returns</td>
   </tr>
