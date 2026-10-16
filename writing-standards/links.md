@@ -59,13 +59,14 @@ Example:
 | Partner Library guides | `emporix-documentation-portal/content/partner-library-guides` | `aAxCFK0JJRlhIPufuXz8` |
 | Import Tool guides | `emporix-documentation-portal/content/import-tool-guides` | `9VS91qn3Ylwd58YivX1A` |
 | Order Intake Cockpit guides | `emporix-documentation-portal/content/order-intake-guides` | `NXembrzntBOyi7ynrVRB` |
+| Document Intake Cockpit guides | `emporix-documentation-portal/content/document-intake-guides` | `PBaf05o2vgbdikMFDTyz` |
+| Search Cockpit guides | `emporix-documentation-portal/content/search-cockpit-guides` | `NalkXo6K8v3yH6VIBRqy` |
 | API Documentation (API guides and tutorials) | `api-references` | `d4POTWomuSS7d3dnh4Dg` |
 | Changelog (API) | `api-references/changelog` | `T7xSS33IeCxcZw0eXU0D` |
-| Document Intake Cockpit guides | `emporix-documentation-portal/content/document-intake-guides` | to be confirmed |
-| Product Features (release notes) | `emporix-documentation-portal/content/release-notes` | to be confirmed |
-| Welcome | `emporix-documentation-portal/content/welcome` | to be confirmed |
+| Product Features (release notes) | `emporix-documentation-portal/content/release-notes` | `9BZA5q5EbkPLw3JiAtOl` |
+| Welcome | `emporix-documentation-portal/content/welcome` | `6GTRpjfleJymwcc6AX3v` |
 
-* The IDs above are taken from links that already exist in the published documentation. Maintainers: confirm them in the GitBook app and replace "to be confirmed" when the ID is known.
+* The IDs above are taken from links that already exist in the published documentation.
 * When a target space is not in the registry, do not guess the ID. Copy it from an existing link to that space, or ask the maintainers, and add it to the registry.
 * When a new space is created, add it to the registry in the same change.
 
