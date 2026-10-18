@@ -5560,12 +5560,13 @@ components:
         templatePrompt: "You are an complaint agent for checking emails and do some action."
         userPrompt: "Use get-order tool to fetch order."
         llmConfig:
-          model: GPT-4.1
+          model: gpt-6.1-sol
           apiKey: secureApiKey
           provider: openai
           maxTokens: 100000
           temperature: 0.2
           additionalParams:
+            top_p: 0.9
             reasoning_effort: medium
         triggers:
           - type: endpoint
