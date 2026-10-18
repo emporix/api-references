@@ -3275,6 +3275,13 @@ components:
           type: integer
           description: The limit of tokens which agent can burn during one request session.
           example: 1000
+        additionalParams:
+          type: object
+          additionalProperties: true
+          description: |
+            Optional JSON object of extra model parameters. Use it to pass provider-specific options, for example reasoning settings.
+          example:
+            reasoning_effort: medium
       required:
         - model
     EmporixLlm:
@@ -5558,6 +5565,8 @@ components:
           provider: openai
           maxTokens: 100000
           temperature: 0.2
+          additionalParams:
+            reasoning_effort: medium
         triggers:
           - type: endpoint
         maxRecursionLimit: 20
