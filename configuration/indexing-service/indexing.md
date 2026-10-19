@@ -171,7 +171,7 @@ To apply your configuration changes to existing data, run the reindexing process
 
 Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.
 But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.
-You can run the reindex without the need to update all your resource data by sending the request to the [Reindex](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex) endpoint.
+You can run the reindex without the need to update all your resource data by sending the request to the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -180,16 +180,16 @@ You can run the reindex without the need to update all your resource data by sen
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request POST 
-  --url 'https://api.emporix.io/indexing/{tenant}/reindex' 
-  --header 'Content-Type: application/json' 
-  --data '{
-    "mode": "FULL"
+curl -i -X POST \
+  'https://api.emporix.io/indexing/{tenant}/reindex-jobs' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "entityType": "PRODUCT"
   }'
 ```
 
-This operation starts the full reindexing mode.
+A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`.
 
 For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
 
@@ -198,6 +198,62 @@ For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
 No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with:
 
 `Battery Included credential validation is temporarily unavailable. Try again later.`
+
+## How Battery Included reindexing works
+
+When the active provider is `BATTERY_INCLUDED`, a full product reindex does not empty the index at the start. Existing documents stay searchable while the Indexing Service uploads the new set. You start the process by creating a reindex job, as described in [How to reindex existing products](#how_to_reindex_existing_products). Emporix completes the upload and runs cleanup for you. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint.
+
+Each reindex job has an `id`, and that value is sent to Battery Included as `transactionId` on every document that belongs to the job. Eligible products are uploaded with this label. If a matching document is already in the index, it is updated in place in the same way as during normal incremental indexing, and labeled with the current `transactionId`. Products that are not eligible for reindexing are not sent. Eligibility follows the same Battery Included indexing rules as day-to-day updates; for details, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+
+When every document intended for the job has been sent, the upload is committed. After commit, Battery Included removes documents that were not sent with this `transactionId`. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the set of documents labeled with the committed `transactionId`.
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart LR
+  subgraph EMP["Emporix"]
+    direction TB
+    P1["Product 1"]
+    P2["Product 2"]
+    P3["Product 3"]
+  end
+
+  subgraph UPLOAD["Upload"]
+    direction TB
+    ND["ndjson documents<br/>transactionId = X"]
+  end
+
+  subgraph BI["Battery Included index"]
+    direction TB
+    KEEP["Existing documents<br/>stay searchable"]
+    LABELED["Docs labeled with X<br/>updated in place"]
+    CLEAN["After commit<br/>docs without X removed"]
+  end
+
+  P1 --> ND
+  P2 --> ND
+  P3 --> ND
+  ND -->|send| LABELED
+  KEEP --> LABELED
+  LABELED --> CLEAN
+
+  classDef Class_01 stroke-width:1px,stroke:#A1BDDC,fill:#A1BDDC
+  classDef Class_02 stroke-width:1px,stroke:#DDE6EE,fill:#DDE6EE
+  classDef Class_03 stroke-width:1px,stroke:#3B73BB,fill:#3B73BB,color:#FFFFFF
+  class P1,P2,P3 Class_01
+  class ND,KEEP,LABELED Class_02
+  class CLEAN Class_03
+```
 
 ## How to retrieve public search configuration
 
@@ -255,6 +311,10 @@ In the request parameters, for the `propertyKey` choose `indexing_siteAwareField
 ## How Battery Included indexes products
 
 When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
+
+{% hint style="info" %}
+For the full product reindex lifecycle in Battery Included, including `transactionId`, commit, and cleanup, see [How Battery Included reindexing works](#how-battery-included-reindexing-works).
+{% endhint %}
 
 The Battery Included document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
 Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
