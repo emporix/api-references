@@ -47,7 +47,7 @@ Starting a product reindex while `BATTERY_INCLUDED` is active runs the same chec
 By default, Algolia indexes provided by Emporix support records up to 10kB in size. In order to support larger records, you must provide your own Algolia service. For more information, please refer to documents provided by Algolia:
 
 * [Algolia documentation](https://www.algolia.com/doc/guides/scaling/algolia-service-limits#application-record-and-index-limits)
-* [Algolia FAQ](https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-an-index-records)
+* [Algolia FAQ](https://support.algolia.com/hc/en-us/articles/4406981897617-Is-there-a-size-limit-for-my-index-records)
 
 For every tenant, new Algolia credentials are created and kept as `AlgoliaClient`.
 
@@ -63,7 +63,7 @@ Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Incl
 For details on how Battery Included indexes products under `MERGE`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
 {% endhint %}
 
-To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint.
+To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint. The request requires an OAuth2 service token with the `configuration.configuration_manage` scope.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -72,18 +72,18 @@ To choose the right mode for your index, send the request to the [Updating a con
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --request PUT 
-  --url 'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' 
-  --header 'Content-Type: application/json' 
-  --data '{
+curl -i -X PUT \
+  'https://api.emporix.io/configuration/{tenant}/configurations/{propertyKey}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
     "key": "indexing_siteAwareFieldsStrategy",
     "secured": false,
     "value": {
-    "strategy": "SPLIT"
-  },
+      "strategy": "SPLIT"
+    },
     "version": 1
-}
+  }'
 ```
 
 In the request parameters, for the `propertyKey` choose `indexing_siteAwareFieldsStrategy`. In the request body, pass the chosen strategy value. Please remain patient as propagating changes to the index strategy may take up to 1 hour, so you might not be able to see the changes instantly.
@@ -256,7 +256,7 @@ To rebuild the Battery Included index after configuration changes, see [How to r
 
 Usually, reindexing runs upon the update of a product or its dependant entity, such as category, price, or media. The scheduler job discovers what has been changed and pushes the changes to index frequently.
 But, if you change your index configuration, you need to trigger the reindexing process to apply your configuration changes.
-You can run the reindex without the need to update all your resource data by sending the request to the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint.
+You can run the reindex without the need to update all your resource data by sending the request to the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint. Creating a job requires an OAuth2 service token with the `indexing.search_manage` scope. Tracking the job with [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) requires `indexing.search_view`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -274,7 +274,7 @@ curl -i -X POST \
   }'
 ```
 
-A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`.
+A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`. A job status of `SUCCESS` means that all indexing events for the job were consumed. It does not separately report whether Battery Included has finished commit and cleanup, so search can still return older documents until that cleanup completes.
 
 For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
 
@@ -292,7 +292,7 @@ When the active provider is `BATTERY_INCLUDED`, a full product reindex does not 
 
 Each reindex job has an `id`, and that value is sent to Battery Included as `transactionId` on every document that belongs to the job. Eligible products are uploaded with this label. If a matching document is already in the index, it is updated in place in the same way as during normal incremental indexing, and labeled with the current `transactionId`. Products that are not eligible for reindexing are not sent. Eligibility follows the same Battery Included indexing rules as day-to-day updates; see [How Battery Included indexes products](#how-battery-included-indexes-products).
 
-When every document intended for the job has been sent, the upload is committed. After commit, Battery Included removes documents that were not sent with this `transactionId`. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the set of documents labeled with the committed `transactionId`.
+When every document intended for the job has been sent, the upload is committed. After commit, Battery Included removes documents that were not sent with this `transactionId`. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the set of documents labeled with the committed `transactionId`. The reindex job API reports when indexing events were consumed (`SUCCESS`); it does not expose a separate signal that Battery Included commit and cleanup are complete.
 
 ```mermaid
 ---
@@ -363,7 +363,7 @@ If you want to get your storefront index configuration without the need to updat
 {% endcontent-ref %}
 
 ```bash
-curl -L 
-  --url 'https://api.emporix.io/indexing/{tenant}/public/configurations' 
-  --header 'Accept: */*'
+curl -i -X GET \
+  'https://api.emporix.io/indexing/{tenant}/public/configurations' \
+  -H 'Accept: */*'
 ```
