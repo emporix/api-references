@@ -929,7 +929,7 @@ OpenAI reasoning models. Supported effort values depend on the model. For models
 }
 ```
 
-Anthropic models with extended thinking:
+Anthropic models with extended thinking. Thinking tokens count toward `maxTokens`, so set `maxTokens` higher than `budget_tokens` (for example, `maxTokens` `8000` with `budget_tokens` `4096`):
 
 ```json
 {
