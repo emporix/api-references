@@ -66,6 +66,20 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-19" tags="new-feature" %}
+
+## Availability Service - optional removal of availabilities on site deletion
+
+#### Overview
+
+Deleting a site can remove that site's product availabilities. To turn this on, open **Settings** → **System Preferences** and turn on the **Delete availabilities when a site is deleted** (`deleteAvailabilitiesOnSiteDeletion`) switch. The switch is off by default. For existing tenants, behavior stays unchanged until you turn the switch on.
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-19" tags="improvement" %}
 
 ## AI Service - New field `additionalParams` on agents
