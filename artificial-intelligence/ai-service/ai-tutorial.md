@@ -859,8 +859,10 @@ curl -L \
     "userPrompt": "Use get-order tool to fetch order.",
     "llmConfig": {
       "provider": "openai",
-      "model": "gpt-4.1",
-      "apiKey": "secureApiKey",
+      "model": "gpt-6.1-sol",
+      "token": {
+        "id": "openai-token"
+      },
       "temperature": 0.2,
       "maxTokens": 1000,
       "additionalParams": {
