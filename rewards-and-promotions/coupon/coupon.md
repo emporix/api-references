@@ -16,7 +16,7 @@ layout:
 To create a new coupon, you need to send a request to the [Creating a new coupon](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-management#post-coupon-tenant-coupons) endpoint.
 
 {% hint style="success" %}
-To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different confgis.
+To test the endpoint, open the API reference or check the examples of the curl requests below that refer to different configs.
 {% endhint %}
 
 {% content-ref url="api-reference/" %}
@@ -26,7 +26,7 @@ To test the endpoint, open the API reference or check the examples of the curl r
 ### Creating a free shipping coupon with minimum order value and 1 usage per customer
 
 {% hint style="warning" %}
-When creating a free shipping coupon, ensure that the `categoryRestricted` parameter is set to `false`.
+When creating a free shipping coupon, set `categoryRestricted` to `false`. Do not include `discountAbsolute` or `discountPercentage`. Those fields apply only to `ABSOLUTE` and `PERCENT` discount types.
 {% endhint %}
 
 ```bash
@@ -39,10 +39,6 @@ curl -i -X POST
   "name": "Winter Sale 2022",
   "description": "Free shipping coupon",
   "discountType": "FREE_SHIPPING",
-  "discountAbsolute": {
-    "amount": 24.99,
-    "currency": "USD"
-  },
   "allowAnonymous": false,
   "maxRedemptions": -1,
   "maxRedemptionsPerCustomer": 1,
@@ -113,10 +109,7 @@ curl -i -X POST
    "name": "Winter Sale 2022",
    "description": "Percentage category coupon",
    "discountType": "PERCENT",
-   "discountAbsolute": {
-     "amount": 24.99,
-     "currency": "USD"
-   },
+   "discountPercentage": 10,
    "allowAnonymous": false,
    "maxRedemptions": -1,
    "maxRedemptionsPerCustomer": -1,
@@ -134,8 +127,7 @@ curl -i -X POST
        "{categoryId}"
      ]
    },
-   "issuedTo": "",
-   "discountPercentage": 10
+   "issuedTo": ""
  }'
 ```
 
@@ -198,7 +190,10 @@ curl -i -X PATCH
     "name": "Winter Sale 2022",
     "description": "",
     "discountType": "ABSOLUTE",
-    "discountPercentage": 7,
+    "discountAbsolute": {
+      "amount": 7,
+      "currency": "EUR"
+    },
     "allowAnonymous": true,
     "maxRedemptionsPerCustomer": -1,
     "categoryRestricted": false,
@@ -277,21 +272,63 @@ curl -i -X POST
 ```
 
 {% hint style="warning" %}
-* Applying the coupon to cart does not mean that the coupon is automatically redeemed. For more information, check out [How to redeem a coupon](coupon.md#how-to-redeem-a-coupon).
-* For more information on managing carts, check out the [_Carts guide_](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts).
+Keep the following points in mind when you apply a coupon to a cart:
+
+* Applying a coupon to a cart does not redeem it automatically. For more information, see [How to redeem a coupon](coupon.md#how-to-redeem-a-coupon).
+* For cart management, see the [Carts guide](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/carts).
 {% endhint %}
 
+## When a coupon is rejected
+
+Coupon eligibility can fail when you create a coupon, validate redeemability, create a redemption, or apply a discount to a cart. Different failures return different HTTP status codes.
+
+#### Coupon Service create failures
+
+| Scenario | Status | Response `type` | Detail / message |
+| --- | --- | --- | --- |
+| `FREE_SHIPPING` with `discountAbsolute` or `discountPercentage` | `400` | `validation_violation` | `discountAbsolute` / `discountPercentage` must not be provided for a `FREE_SHIPPING` discount |
+
+#### Coupon Service validation and redemption failures
+
+These status codes apply to [Validating redeemability of a coupon](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-validation) and [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption). Validation and redemption use the same checks. A successful validation returns `200`; a successful redemption returns `201`. Failures return a `business_error` payload with `message` set to `Coupon cannot be redeemed` and a `details[].type` value from the table below.
+
+| Scenario | Status | `details[].type` | `details[].message` |
+| --- | --- | --- | --- |
+| Coupon expired | `400` | `coupon_expired` | Coupon has expired. |
+| Coupon inactive | `400` | `coupon_not_active` | Coupon is not active. |
+| Maximum redemptions exceeded | `400` | `coupon_redemptions_exceeded` | Coupon has reached maximum number of redemptions. |
+| Minimum order value not met | `400` | `coupon_order_total_too_low` | The order value is too low for this coupon. |
+| Order currency does not match the coupon | `400` | `coupon_currency_incorrect` | Currency inconsistent with coupon. |
+| Customer is not in a required segment | `400` | `coupon_segment_customer_not_assigned` | The given customer is not a member of a segment for given segment-restricted coupon. |
+| Anonymous customer when `allowAnonymous` is `false`, or customer not in `restrictions.validFor` | `403` | `coupon_redemption_forbidden` | This customer is not allowed to redeem this coupon. |
+| Seller / service client token (without redeeming on behalf of a customer identity) | `403` | `Forbidden` | Sellers are not allowed to redeem coupons. |
+| Missing or insufficient OAuth scopes | `403` | — | Access forbidden for the caller. |
+| Invalid or expired access token | `401` | — | Unauthorized. |
+
+{% hint style="info" %}
+Use a customer or anonymous access token to validate or redeem, or a service token with `coupon.coupon_redeem_on_behalf` together with a customer identity that the Coupon Service accepts. A plain seller client-credentials token returns `403` before business-rule checks run.
+{% endhint %}
+
+#### Cart Service apply-discount failures
+
+| Scenario | Status | Message pattern |
+| --- | --- | --- |
+| Coupon code not found | `404` | Coupon with code … not found. |
+| Coupon not valid for the cart (for example expired) | `400` | Discount with code … is not valid. Please remove your discount with code … |
+| Missing or insufficient OAuth scopes | `403` | Access forbidden for the caller. |
+
+Applying a coupon to a cart is not the same as redeeming it. Cart apply can succeed in cases where a later validation or redemption would still return `403` (for example when `allowAnonymous` is `false`). Always validate or complete checkout to confirm redeemability.
 
 ## How to redeem a coupon
 
 A coupon can be redeemed in the following ways:
 
 * When a coupon is added to a cart and the order is completed at checkout, the coupon is automatically redeemed by the Checkout Service.
-* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
+* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
 
 In the following example, we are redeeming a coupon on behalf of a customer.
 
-Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required: `coupon.coupon_redeem_on_behalf`.
+Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption) endpoint. The following scope is required: `coupon.coupon_redeem_on_behalf`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -318,7 +355,7 @@ curl -i -X POST
 ```
 
 {% hint style="warning" %}
-The redeemed coupon cannot be used used again during checkout.
+The redeemed coupon cannot be used again during checkout.
 {% endhint %}
 
 ## How to enable referral coupons
@@ -556,8 +593,8 @@ To retrieve referral coupon information for a specific customer, you need to sen
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET 
-'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}'
--H 'Authorization: Bearer '
+curl -i -X GET \
+  'https://api.emporix.io/coupon/{tenant}/referral-coupons/{customerNumber}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
  
