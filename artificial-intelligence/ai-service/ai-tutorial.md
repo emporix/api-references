@@ -857,7 +857,7 @@ curl -L \
     },
     "type": "complaint",
     "enabled": true,
-    "userPrompt": "Use get-order tool to fetch order.",
+    "userPrompt": "Handle customer complaints and draft a clear response.",
     "llmConfig": {
       "provider": "openai",
       "model": "gpt-6.1-sol",
