@@ -949,7 +949,7 @@ Gemini models with thinking:
 }
 ```
 
-For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [AI Agents](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#configure-ai-model).
+For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [Additional parameters examples](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#additional-parameters-examples).
 
 ## How to pass a media file for the agents to process
 
