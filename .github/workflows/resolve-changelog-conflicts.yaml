@@ -1,0 +1,169 @@
+# Resolves merge conflicts in changelog/README.md on open PRs.
+#
+# The resolved file keeps everything on main and puts the PR's own
+# {% update %} entries on top, directly after {% updates format="full" %}.
+# See .github/scripts/resolve-changelog-conflict.py.
+#
+# Runs:
+# - after every push to main that touches changelog/ (all open PRs that change the changelog)
+# - when someone with write access comments /fix-changelog on a PR
+# - manually, for one PR or for all open PRs
+#
+# PRs from forks are skipped. When files other than the changelog also
+# conflict, nothing is pushed and the PR gets a comment instead.
+
+name: Resolve changelog conflicts
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'changelog/**'
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number (leave empty for all open PRs)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  resolve:
+    if: >-
+      github.event_name != 'issue_comment' || (
+        github.event.issue.pull_request &&
+        startsWith(github.event.comment.body, '/fix-changelog') &&
+        contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'), github.event.comment.author_association)
+      )
+    runs-on: ubuntu-latest
+    concurrency:
+      group: resolve-changelog-${{ github.event.issue.number || inputs.pr_number || 'all' }}
+      cancel-in-progress: true
+
+    steps:
+      # author_association does not prove write access, so check the real repository permission.
+      - name: Check commenter permission
+        if: github.event_name == 'issue_comment'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENTER: ${{ github.event.comment.user.login }}
+        run: |
+          set -euo pipefail
+          if ! permission="$(gh api "repos/$GITHUB_REPOSITORY/collaborators/$COMMENTER/permission" --jq '.permission')"; then
+            echo "Could not look up the repository permission of $COMMENTER."
+            exit 1
+          fi
+          case "$permission" in
+            admin|write) echo "$COMMENTER has $permission permission." ;;
+            *) echo "$COMMENTER has $permission permission; write access is required."; exit 1 ;;
+          esac
+
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.API_REFERENCES_TOKEN }}
+          fetch-depth: 0
+
+      # Run the resolver from main so a PR branch cannot change the script that runs with the token.
+      - name: Prepare resolver
+        run: |
+          cp .github/scripts/resolve-changelog-conflict.py "$RUNNER_TEMP/resolve-changelog-conflict.py"
+          git config user.name "tech-cicd"
+          git config user.email "cicd-user@emporix.com"
+
+      - name: Resolve changelog conflicts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.issue.number || inputs.pr_number }}
+        run: |
+          set -euo pipefail
+          RESOLVER="$RUNNER_TEMP/resolve-changelog-conflict.py"
+          MARKER="<!-- changelog-conflict-resolver -->"
+
+          comment() {
+            # comment PR BODY — on push runs, comment only once per PR to avoid noise
+            local pr="$1" body="$2"
+            if [ "$EVENT_NAME" = "push" ] && gh pr view "$pr" --json comments \
+                --jq '.comments[].body' | grep -qF "$MARKER"; then
+              return
+            fi
+            printf '%s\n\n%s\n' "$MARKER" "$body" > "$RUNNER_TEMP/comment.md"
+            gh pr comment "$pr" --body-file "$RUNNER_TEMP/comment.md"
+          }
+
+          if [ -n "$PR_NUMBER" ]; then
+            prs="$PR_NUMBER"
+          else
+            prs="$(gh pr list --state open --base main --limit 200 --json number --jq '.[].number')"
+          fi
+
+          for pr in $prs; do
+            info="$(gh pr view "$pr" --json state,headRefName,isCrossRepository,baseRefName)"
+            head="$(jq -r '.headRefName' <<< "$info")"
+            if [ "$(jq -r '.state' <<< "$info")" != "OPEN" ] \
+              || [ "$(jq -r '.isCrossRepository' <<< "$info")" = "true" ] \
+              || [ "$(jq -r '.baseRefName' <<< "$info")" != "main" ]; then
+              echo "PR #$pr: skipped (closed, from a fork, or not based on main)"
+              continue
+            fi
+            if ! git fetch -q origin "$head"; then
+              echo "PR #$pr: skipped (could not fetch $head)"
+              continue
+            fi
+            if git diff --quiet "origin/main...origin/$head" -- changelog/README.md; then
+              echo "PR #$pr: skipped (does not change changelog/README.md)"
+              if [ "$EVENT_NAME" = "issue_comment" ]; then
+                comment "$pr" "This PR does not change \`changelog/README.md\`. Nothing to do."
+              fi
+              continue
+            fi
+
+            echo "::group::PR #$pr ($head)"
+            git switch -q -C "resolve-pr-$pr" "origin/$head"
+
+            set +e
+            python3 "$RESOLVER" --base origin/main --skip-clean
+            rc=$?
+            set -e
+
+            if [ "$rc" = 0 ]; then
+              if [ "$(git rev-parse HEAD)" = "$(git rev-parse "origin/$head")" ]; then
+                echo "PR #$pr: no changelog conflict"
+                if [ "$EVENT_NAME" = "issue_comment" ]; then
+                  comment "$pr" "\`changelog/README.md\` has no merge conflict with \`main\`. Nothing to do."
+                fi
+              elif git push origin "HEAD:refs/heads/$head"; then
+                echo "PR #$pr: changelog conflict resolved and pushed"
+              else
+                echo "PR #$pr: push failed; the branch probably moved. The next run retries."
+                if [ "$EVENT_NAME" = "issue_comment" ]; then
+                  comment "$pr" "Resolved the changelog conflict, but the push failed because the branch changed in the meantime. Comment \`/fix-changelog\` again."
+                fi
+              fi
+            else
+              files="$(git diff --name-only --diff-filter=U | sed 's/^/- `/; s/$/`/' || true)"
+              git merge --abort 2>/dev/null || true
+              if [ "$rc" = 3 ]; then
+                advice="Besides adding entries, this PR changes, renames, reorders, or removes an existing changelog entry, or changes text outside the entries, so it cannot be resolved automatically without losing that change. Merge \`main\` and resolve \`changelog/README.md\` by hand, keeping every entry from \`main\`."
+              else
+                advice="Run \`python3 .github/scripts/resolve-changelog-conflict.py\` locally to merge \`main\` and resolve \`changelog/README.md\`, then resolve the other files by hand."
+              fi
+              comment "$pr" "$(printf '%s\n\n%s\n\n%s\n\n%s' \
+                "Could not resolve the merge conflict with \`main\` automatically. Nothing was pushed." \
+                "Files that still conflict:" \
+                "${files:-- (see the workflow log)}" \
+                "$advice")"
+              echo "PR #$pr: not resolved (exit code $rc)"
+            fi
+
+            git switch -q main
+            echo "::endgroup::"
+          done
