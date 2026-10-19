@@ -909,27 +909,37 @@ A successful request returns `204`.
 {% endstep %}
 {% endstepper %}
 
-### Examples
+### Additional parameters examples
 
-Use a JSON object as the root value. The following examples show common provider-specific shapes. Supported keys and values depend on the model.
+Use a JSON object as the root value. Configure reasoning only when the selected model supports it. The same parameter name can have different supported values or behavior across providers and models.
 
-General model option:
-
+{% tabs %}
+{% tab title="General" %}
 ```json
 {
   "top_p": 0.9
 }
 ```
+{% endtab %}
 
-OpenAI reasoning models. Supported effort values depend on the model. For models that support disabling reasoning, use `"reasoning_effort": "none"`:
-
+{% tab title="OpenAI" %}
 ```json
 {
   "reasoning_effort": "medium"
 }
 ```
 
-Anthropic models with extended thinking. Thinking tokens count toward `maxTokens`, so set `maxTokens` higher than `budget_tokens` (for example, `maxTokens` `8000` with `budget_tokens` `4096`):
+Supported effort values depend on the model. For models that support disabling reasoning, use:
+
+```json
+{
+  "reasoning_effort": "none"
+}
+```
+{% endtab %}
+
+{% tab title="Anthropic" %}
+`budget_tokens` is the provider thinking budget. Thinking tokens count toward `maxTokens`, so set `maxTokens` higher than `budget_tokens` (for example, `maxTokens` `8000` with `budget_tokens` `4096`).
 
 ```json
 {
@@ -939,9 +949,9 @@ Anthropic models with extended thinking. Thinking tokens count toward `maxTokens
   }
 }
 ```
+{% endtab %}
 
-Gemini models with thinking:
-
+{% tab title="Google" %}
 ```json
 {
   "thinking_config": {
@@ -950,8 +960,10 @@ Gemini models with thinking:
   }
 }
 ```
+{% endtab %}
+{% endtabs %}
 
-For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [Additional parameters examples](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#additional-parameters-examples).
+For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [AI Agents](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#configure-ai-model).
 
 ## How to pass a media file for the agents to process
 
