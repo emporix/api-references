@@ -60,7 +60,7 @@ Example:
 | Import Tool guides | `emporix-documentation-portal/content/import-tool-guides` | `9VS91qn3Ylwd58YivX1A` |
 | Order Intake Cockpit guides | `emporix-documentation-portal/content/order-intake-guides` | `NXembrzntBOyi7ynrVRB` |
 | Document Intake Cockpit guides | `emporix-documentation-portal/content/document-intake-guides` | `PBaf05o2vgbdikMFDTyz` |
-| Search Cockpit guides | `emporix-documentation-portal/content/search-cockpit-guides` | `NalkXo6K8v3yH6VIBRqy` |
+| Search Cockpit guides | `emporix-documentation-portal/content/search-cockpit-guides` | `ERIsr5d67LF0wtgPlnHs` |
 | API Documentation (API guides and tutorials) | `api-references` | `d4POTWomuSS7d3dnh4Dg` |
 | Changelog (API) | `api-references/changelog` | `T7xSS33IeCxcZw0eXU0D` |
 | Product Features (release notes) | `emporix-documentation-portal/content/release-notes` | `9BZA5q5EbkPLw3JiAtOl` |
