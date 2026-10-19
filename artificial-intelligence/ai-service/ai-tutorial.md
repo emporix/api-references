@@ -847,6 +847,7 @@ curl -L \
   --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
+  --header 'Content-Language: *' \
   --data '{
     "name": {
       "en": "Complaint Agent"
@@ -963,7 +964,7 @@ Supported effort values depend on the model. For models that support disabling r
 {% endtab %}
 {% endtabs %}
 
-For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [AI Agents](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#configure-ai-model).
+For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [AI Agents](https://app.gitbook.com/s/8GgoeZEZYjZrpjOU6w52/agentic/agents#configure-ai-model).
 
 ## How to pass a media file for the agents to process
 
