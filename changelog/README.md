@@ -66,6 +66,29 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-19" tags="improvement" %}
+
+## AI Service - New field `additionalParams` on agents
+
+#### Overview
+
+Agent `llmConfig` supports optional `additionalParams`, a JSON object of extra model parameters. Use it to pass provider-specific options, including reasoning settings, which enables reasoning support for providers that offer it. Values are stored on the agent and returned by agent read APIs.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts optional `llmConfig.additionalParams` on create and update. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Returns persisted `llmConfig.additionalParams`. |
+| [Listing agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents) | Returns persisted `llmConfig.additionalParams` for each agent. |
+| [Searching agents](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#post-ai-service-tenant-agentic-agents-search) | Returns persisted `llmConfig.additionalParams` for each matching agent. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-14" tags="new-feature" %}
 
 ## Coupon, Cart, and Order Services - vendor-restricted coupons
