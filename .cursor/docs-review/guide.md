@@ -91,7 +91,7 @@ Authors work in `api-references`, `emporix-documentation-portal`, or `learning-c
 git pull
 ```
 
-That is all. Maintainers propagate `docs-standards` updates into consumer repos; you receive them on pull.
+That is all. After a standards merge to `master`, CI propagates updates into consumer repos; you receive them on pull.
 
 ### Docs self-review — when to use it
 
@@ -243,31 +243,36 @@ After merging to `master`, regenerate export branches:
 
 ### Publishing an update (standard workflow)
 
+1. Edit docs-standards on a feature branch → PR → merge to `master`.
+2. **Propagate subtrees** runs automatically on push to `master` when shared paths change (`.style-guide/`, `.cursor/docs-review/`, `.cursor/skills/`, `.github/skills/`). It refreshes `split/*` and pushes subtree updates into api-references, emporix-documentation-portal, and learning-certification.
+3. Authors in consumer repos receive the update on their next `git pull`.
+
+**One-time setup** (required before CI can publish): follow the header comments in [propagate-subtrees.yaml](https://github.com/emporix/docs-standards/blob/master/.github/workflows/propagate-subtrees.yaml) — set secret `SUBTREE_PROPAGATE_TOKEN`, allow force-push on `split/*` (or leave those branches unprotected), and ensure consumer default-branch protection allows the PAT identity to push.
+
+Manual catch-up or dry-run (optional):
+
 ```bash
-# 1) Edit docs-standards on a feature branch → PR → merge to master
-
-# 2) Refresh split branches
 cd ~/emporix/docs-standards
-./scripts/refresh-splits.sh
+./scripts/refresh-splits.sh --dry-run
+./scripts/update-subtrees.sh --dry-run
 
-# 3) Pull into consumer repos
-./scripts/update-subtrees.sh
-
+./scripts/refresh-splits.sh --yes
+./scripts/update-subtrees.sh --yes
 # Or one repo at a time:
-./scripts/update-subtrees.sh --repo api-references
-./scripts/update-subtrees.sh --repo emporix-documentation-portal
-./scripts/update-subtrees.sh --repo learning-certification
-
-# 4) Push consumer repo branches and open PRs there if needed
+./scripts/update-subtrees.sh --yes --repo api-references
+./scripts/update-subtrees.sh --yes --repo emporix-documentation-portal
+./scripts/update-subtrees.sh --yes --repo learning-certification
 ```
+
+You can also run **Actions → Propagate subtrees → Run workflow** for a full catch-up without a shared-path commit.
 
 ### What each script does
 
 | Script | When to use |
 |--------|-------------|
 | `bootstrap-subtrees.sh` | First-time setup only (new consumer repo) |
-| `refresh-splits.sh` | After every merge to `master` that changes shared content |
-| `update-subtrees.sh` | After `refresh-splits.sh` — pulls into api-references, portal, and learning-certification |
+| `refresh-splits.sh` | CI after merge to `master`; locally for dry-run or emergency catch-up |
+| `update-subtrees.sh` | CI after `refresh-splits`; locally for dry-run or emergency catch-up |
 
 Dry-run any script first:
 
@@ -295,7 +300,7 @@ Or use `./scripts/bootstrap-subtrees.sh` from `docs-standards`.
 ### Contribution rules
 
 1. **Never edit shared paths directly in consumer repos** — changes will be overwritten on the next subtree pull.
-2. Edit in `docs-standards`, merge to `master`, then run `refresh-splits.sh` + `update-subtrees.sh`.
+2. Edit in `docs-standards` and merge to `master`. CI runs `refresh-splits.sh` + `update-subtrees.sh`; use the scripts locally only for dry-run or emergency catch-up.
 3. Repo-specific Cursor rules (`.cursor/rules/`) stay in each consumer repo.
 4. Repo-specific Copilot review checks (`.github/copilot-docs-review/local-review-checks.md`) stay in each consumer repo. Use [local-review-checks.template.md](../../.github/copilot-docs-review/local-review-checks.template.md) as the starting point.
 5. Do not commit directly to `split/*` branches.
@@ -343,7 +348,7 @@ git subtree pull --prefix=.cursor/skills docs-standards split/skills --squash
 
 ## Copilot skill rollout
 
-Roll out the Copilot PR review skill to consumer repos after merging changes to `master` and running `refresh-splits.sh`.
+Roll out the Copilot PR review skill to consumer repos after merging skill changes to `master`. CI propagates `.github/skills/` via subtree; then add the local (non-vendored) review checks in each consumer.
 
 ### Rollout order
 
@@ -353,9 +358,7 @@ Roll out the Copilot PR review skill to consumer repos after merging changes to 
 ### Steps per consumer repo
 
 ```bash
-# 1) From docs-standards (after merge + refresh-splits)
-./scripts/update-subtrees.sh --repo api-references
-./scripts/update-subtrees.sh --repo emporix-documentation-portal
+# 1) Wait for Propagate subtrees CI (or run update-subtrees.sh --yes locally)
 
 # 2) In each consumer repo: add local review checks (not subtree-managed)
 cp .github/copilot-docs-review/local-review-checks.template.md .github/copilot-docs-review/local-review-checks.md
@@ -371,11 +374,7 @@ git push
 
 The shared skill at `.github/skills/code-review/` is vendored via subtree. After a subtree pull that renames the skill, update the local `.github/copilot-instructions.md` path to `.github/skills/code-review/` if it still points at the old folder name. Only `.github/copilot-docs-review/local-review-checks.md` and `.github/instructions/*.instructions.md` are maintained locally in each consumer repo.
 
-For learning-certification, repeat the same steps when ready:
-
-```bash
-./scripts/update-subtrees.sh --repo learning-certification
-```
+For learning-certification, repeat the same local-checks steps when ready.
 
 ## Planned: automatic review-only trigger
 
