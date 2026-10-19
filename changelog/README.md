@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-10-19" tags="improvement" %}
 
 ## AI Service - New field `additionalParams` on agents
 
