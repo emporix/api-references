@@ -146,7 +146,7 @@ curl -L \
   }'
 ```
 
-## How to search for the AI Agents
+## How to search for AI agents
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
 
@@ -172,7 +172,7 @@ curl -L \
   --header 'Accept: */*'
 ```
 
-You can use the retrieved details to establish the required connections and triggers for the AI Agent.
+You can use the retrieved details to establish the required connections and triggers for the AI agent.
 
 ## How to create an MCP server and attach it to an agent
 
@@ -578,9 +578,9 @@ curl -L \
 
 If the agent already has a `commerce_events` trigger, replace the `triggers` array and keep any other trigger types you still need, for example `endpoint`. You can also set `eventScopes` when you create or replace the whole agent with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. That `PUT` replaces the whole agent document.
 
-## How to communicate with an Agent
+## How to communicate with an agent
 
-For some Agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints. If the agent has a custom, dynamic, or predefined MCP server attached, it can invoke those tools during the chat without extra fields in the request body.
+For some agents, it is convenient to trigger their actions by API calls. To allow communication with the selected agent, you can use the dedicated endpoints. If the agent has a custom, dynamic, or predefined MCP server attached, it can invoke those tools during the chat without extra fields in the request body.
 
 When the agent invokes a dynamic MCP tool during chat, Emporix forwards the caller's identity to the Cloud Function:
 
@@ -615,7 +615,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
 
-  In the above example, the German Translation Agent is triggered. The Agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the Agent gets back with the following response:
+  In the above example, the German Translation Agent is triggered. The agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the agent gets back with the following response:
 
   ```
   {
@@ -823,9 +823,137 @@ A successful response includes `agents`, the list of agent IDs that participated
 This `session-id` is the AI Service conversation key. It is not the Session Context `session-id` or the cart `session-id`. The same value also scopes attachments and is forwarded as `emporix-session-id` when a tool runs inside an agent session. See [How to pass a media file for the agents to process](#how-to-pass-a-media-file-for-the-agents-to-process).
 {% endhint %}
 
+## How to set additional LLM parameters
+
+An agent's `llmConfig` supports optional `additionalParams`, a JSON object of extra model parameters. Use it to pass provider-specific options that are not available as dedicated `llmConfig` fields, including reasoning settings when the selected model supports them.
+
+Parameter names and supported values depend on the provider and model. Use only options documented by the provider for that model. Unsupported options or combinations may be rejected by the provider. Configure reasoning only when the selected model supports it. The same parameter name can have different supported values or behavior across providers and models.
+
+The OAuth2 access token must include `ai.agent_manage` to create or update an agent.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% stepper %}
+{% step %}
+#### Set `additionalParams` when you create or replace an agent
+
+Call the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. Include `additionalParams` inside `llmConfig`. The `PUT` replaces the whole agent document, so the body must include all required agent fields.
+
+The following example sets OpenAI reasoning effort on create or replace. Adjust `provider`, `model`, and the rest of the agent body for your tenant.
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": {
+      "en": "Complaint Agent"
+    },
+    "description": {
+      "en": "Complaint agent"
+    },
+    "type": "complaint",
+    "enabled": true,
+    "userPrompt": "Use get-order tool to fetch order.",
+    "llmConfig": {
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "apiKey": "secureApiKey",
+      "temperature": 0.2,
+      "maxTokens": 1000,
+      "additionalParams": {
+        "top_p": 0.9,
+        "reasoning_effort": "medium"
+      }
+    },
+    "triggers": [
+      {
+        "type": "endpoint"
+      }
+    ],
+    "maxRecursionLimit": 20,
+    "mcpServers": []
+  }'
+```
+
+A successful create returns `201`. A successful replace returns `204`. Read APIs return the persisted `llmConfig.additionalParams` on the agent.
+{% endstep %}
+
+{% step %}
+#### Update `additionalParams` on an existing agent
+
+Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint. Replace `/llmConfig/additionalParams` with a JSON object.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "REPLACE",
+      "path": "/llmConfig/additionalParams",
+      "value": {
+        "reasoning_effort": "none"
+      }
+    }
+  ]'
+```
+
+A successful request returns `204`.
+{% endstep %}
+{% endstepper %}
+
+### Examples
+
+Use a JSON object as the root value. The following examples show common provider-specific shapes. Supported keys and values depend on the model.
+
+General model option:
+
+```json
+{
+  "top_p": 0.9
+}
+```
+
+OpenAI reasoning models. Supported effort values depend on the model. For models that support disabling reasoning, use `"reasoning_effort": "none"`:
+
+```json
+{
+  "reasoning_effort": "medium"
+}
+```
+
+Anthropic models with extended thinking:
+
+```json
+{
+  "thinking": {
+    "type": "enabled",
+    "budget_tokens": 4096
+  }
+}
+```
+
+Gemini models with thinking:
+
+```json
+{
+  "thinking_config": {
+    "thinking_level": "high",
+    "include_thoughts": true
+  }
+}
+```
+
+For the schema definition, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid). In the Management Dashboard, the same options are entered in **Additional parameters** on the agent **Model** tab. See [AI Agents](https://developer.emporix.io/agentic-commerce-intelligence/agentic-intelligence/agents#configure-ai-model).
+
 ## How to pass a media file for the agents to process
 
-Agents are able to retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat. 
+Agents can retrieve data from media attachments and use that data to execute some steps or pass it over to other agents to process. You can attach media files and then use them in the agent chat.
 
 The following MIME types are supported:
 * image/jpeg
