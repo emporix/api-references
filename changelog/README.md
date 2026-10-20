@@ -32,15 +32,15 @@ layout:
 
 #### Overview
 
-Cart Service now optimizes category-restricted coupon and discount calculation by prefetching category membership for distinct cart items once per calculation and reusing the result across restriction checks. This reduces repeated category lookups and improves calculation performance for carts with category-restricted discounts, especially when the same product appears in multiple lines or multiple discounts reference categories.
+Cart Service now optimizes category-restricted coupon and discount calculation by prefetching category membership for distinct cart items once per calculation and reusing the result across restriction checks. For non-Algolia tenants, the service resolves category membership in bulk through internal product category lookups, which reduces repeated category fetches and improves calculation performance for carts with category-restricted discounts, especially when the same product appears in multiple lines or multiple discounts reference categories.
 
-This optimization applies to the non-Algolia category resolution path. Algolia-enabled tenants continue to use the existing per-item category lookup flow. No public cart API contract or response schema changes were introduced.
+This change does not modify the public cart API contract or response schema. Algolia-enabled tenants continue to use the existing per-item category lookup flow.
 
 #### Affected endpoints
 
 | Endpoint | Description |
 |----------|-------------|
-| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) | Category-restricted coupon and discount calculation now reuses prefetched category membership during cart recalculation to reduce repeated lookups. |
+| [Updating a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) | Category-restricted coupon and discount calculation now reuses prefetched category membership during cart recalculation to reduce repeated category fetches. |
 | [Retrieving cart details by ID](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) | Cart calculation now uses cached category membership for category-restricted discounts without changing the public response schema. |
 
 #### Known problems
