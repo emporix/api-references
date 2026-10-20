@@ -290,7 +290,9 @@ Coupon eligibility can fail when you create a coupon, validate redeemability, cr
 
 #### Coupon Service validation and redemption failures
 
-These status codes apply to [Validating redeemability of a coupon](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-validation) and [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption). Validation and redemption use the same checks. A successful validation returns `200`; a successful redemption returns `201`. Failures return a `business_error` payload with `message` set to `Coupon cannot be redeemed` and a `details[].type` value from the table below.
+These status codes apply to [Validating redeemability of a coupon](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-validation#post-coupon-tenant-coupons-code-validation) and [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions). Validation and redemption use the same checks. A successful validation returns `200`; a successful redemption returns `201`.
+
+Coupon eligibility failures return a `business_error` payload with `message` set to `Coupon cannot be redeemed` and a `details[].type` value from the table below. Authentication and authorization failures use different response shapes: seller tokens return `403` with `type` `Forbidden`; missing scopes return `403` with `type` `insufficient_permissions`; invalid or expired tokens return `401` with a `fault` object.
 
 | Scenario | Status | `details[].type` | `details[].message` |
 | --- | --- | --- | --- |
@@ -301,9 +303,9 @@ These status codes apply to [Validating redeemability of a coupon](https://devel
 | Order currency does not match the coupon | `400` | `coupon_currency_incorrect` | Currency inconsistent with coupon. |
 | Customer is not in a required segment | `400` | `coupon_segment_customer_not_assigned` | The given customer is not a member of a segment for given segment-restricted coupon. |
 | Anonymous customer when `allowAnonymous` is `false`, or customer not in `restrictions.validFor` | `403` | `coupon_redemption_forbidden` | This customer is not allowed to redeem this coupon. |
-| Seller / service client token (without redeeming on behalf of a customer identity) | `403` | `Forbidden` | Sellers are not allowed to redeem coupons. |
-| Missing or insufficient OAuth scopes | `403` | — | Access forbidden for the caller. |
-| Invalid or expired access token | `401` | — | Unauthorized. |
+| Seller / service client token (without redeeming on behalf of a customer identity) | `403` | — | Sellers are not allowed to redeem coupons. (`type`: `Forbidden`) |
+| Missing or insufficient OAuth scopes | `403` | — | Access forbidden for the caller. (`type`: `insufficient_permissions`) |
+| Invalid or expired access token | `401` | — | Unauthorized. (`fault` object) |
 
 {% hint style="info" %}
 Use a customer or anonymous access token to validate or redeem, or a service token with `coupon.coupon_redeem_on_behalf` together with a customer identity that the Coupon Service accepts. A plain seller client-credentials token returns `403` before business-rule checks run.
@@ -324,11 +326,11 @@ Applying a coupon to a cart is not the same as redeeming it. Cart apply can succ
 A coupon can be redeemed in the following ways:
 
 * When a coupon is added to a cart and the order is completed at checkout, the coupon is automatically redeemed by the Checkout Service.
-* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
+* When you send a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. This process is independent of the checkout, so a coupon can be used even after an order is created and processed at checkout. This can be done by a merchant on behalf of a customer.
 
 In the following example, we are redeeming a coupon on behalf of a customer.
 
-Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption) endpoint. The following scope is required: `coupon.coupon_redeem_on_behalf`.
+Redeem a coupon on behalf of a customer by sending a request to the [Redeeming the coupon by creating a redemption](https://developer.emporix.io/api-documentation/api-guides/rewards-and-promotions/coupon/api-reference/coupon-redemption#post-coupon-tenant-coupons-code-redemptions) endpoint. The following scope is required: `coupon.coupon_redeem_on_behalf`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
