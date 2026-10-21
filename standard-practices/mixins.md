@@ -167,6 +167,25 @@ curl -i -X PATCH \
   }
 ```
 
+## Site-aware mixins
+
+Site-aware mixins are supported for **products** and **custom instances** only. They let those resources store per-site overlay values on top of a shared base mixin. The product stays the same across sites, and site-aware mixins let you add attribute values per site. For how site codes fit the wider platform model, see [Multi-Site Architecture](../quickstart/multisites.md).
+
+Mark the mixin schema with `siteAware: true` in Schema Service. On the product or custom instance, use the same mixin key you would use without site awareness (`{mixinName}` under `mixins` and `metadata.mixins`), then store overlays under `{mixinName}__{siteCode}`, where `{siteCode}` matches a site code in your tenant. Declare only the base mixin name in `metadata.mixins`. Overlay values are validated against the same JSON Schema URL as the base mixin.
+
+When you send the `emporix-site` header on a read request, Product Service or Schema Service deep-merges the overlay whose `{siteCode}` matches that header into the base mixin and returns only the merged base keys. Nested objects are merged recursively. Non-null, non-object values in the overlay replace the base value. A null overlay node does not clear the base value. If there is no overlay for that site, the base mixin is returned. Without the header, base and overlay keys are returned as stored. If mixin fields are localized, `Accept-Language` is applied to the merged result when `emporix-site` is present.
+
+{% hint style="info" %}
+Schema Service rejects overlay keys on custom instances when the mixin schema is not site-aware. Product Service does not reject overlay keys when the schema is not marked `siteAware`. Send overlays only for schemas marked `siteAware: true` in Schema Service.
+{% endhint %}
+
+For step-by-step procedures, see:
+
+* [How to create a site-aware mixin schema](../utilities/schema/schema.md#how-to-create-a-site-aware-mixin-schema)
+* [How to use site-aware mixins on products](../products-labels-and-brands/product-service/product.md#how-to-use-site-aware-mixins-on-products)
+
+Custom instances use the same overlay key pattern and `emporix-site` read behavior on the [Schema Service custom instance endpoints](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance).
+
 ## Updating and removing mixins
 
 How you update or remove mixins depends on the API.
