@@ -274,31 +274,21 @@ curl -i -X POST \
   }'
 ```
 
-A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`.
-
-Use `processedCount` to see how many entities Emporix has already processed. When the count is close to `expectedCount`, Emporix has sent the remaining documents to Battery Included; allow a short time for Battery Included to finish applying them.
-
-A job status of `SUCCESS` means the reindex transaction was committed. After commit, Battery Included removes documents that do not belong to that transaction, so the index should not retain documents that were not part of the job. For the upload, commit, and cleanup sequence, see [How Battery Included reindexing works](#how-battery-included-reindexing-works).
-
-While a reindex job is `IN_PROGRESS`, live product updates are not written to the index immediately. They are queued and applied after the reindex completes.
-
-For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return:
-
-`Battery Included credentials are invalid. Verify the write key and index name.`
-
-No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with:
-
-`Battery Included credential validation is temporarily unavailable. Try again later.`
-
-When a product reindex job is created for `BATTERY_INCLUDED`, the Indexing Service uploads documents to Battery Included and cleans up the index after commit. The following section describes that lifecycle.
+A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`. For Battery Included product reindexes, see [How Battery Included reindexing works](#how-battery-included-reindexing-works).
 
 ### How Battery Included reindexing works
 
+When a product reindex job is created for `BATTERY_INCLUDED`, the Indexing Service uploads documents to Battery Included and cleans up the index after commit.
+
 When the active provider is `BATTERY_INCLUDED`, a full product reindex does not empty the index at the start. Existing documents stay searchable while the Indexing Service uploads the new set. Emporix completes the upload and runs cleanup for you. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint.
+
+Use `processedCount` to see how many entities Emporix has already processed. When the count is close to `expectedCount`, Emporix has sent the remaining documents to Battery Included; allow a short time for Battery Included to finish applying them.
+
+While a reindex job is `IN_PROGRESS`, live product updates are not written to the index immediately. They are queued and applied after the reindex completes.
 
 Each reindex job has an `id`, and that value is sent to Battery Included as `transactionId` on every document that belongs to the job. Eligible products are uploaded with this label. If a matching document is already in the index, it is updated in place in the same way as during normal incremental indexing, and labeled with the current `transactionId`. Products that are not eligible for reindexing are not sent. Eligibility follows the same Battery Included indexing rules as day-to-day updates; see [How Battery Included indexes products](#how-battery-included-indexes-products).
 
-When every document intended for the job has been sent, the upload is committed. After commit, Battery Included removes documents that were not sent with this `transactionId`. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. A job status of `SUCCESS` means the reindex transaction was committed. After commit and cleanup, the index matches the documents labeled with that `transactionId`.
+When every document intended for the job has been sent, the upload is committed. A job status of `SUCCESS` means the reindex transaction was committed. After commit, Battery Included removes documents that were not sent with this `transactionId`, so the index should not retain documents that were not part of the job. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the documents labeled with that `transactionId`.
 
 ```mermaid
 ---
@@ -355,6 +345,10 @@ flowchart LR
   class ND,KEEP,LABELED Class_02
   class CLEAN Class_03
 ```
+
+{% hint style="warning" %}
+For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return `Battery Included credentials are invalid. Verify the write key and index name.` No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with `Battery Included credential validation is temporarily unavailable. Try again later.`
+{% endhint %}
 
 ## How to retrieve public search configuration
 
