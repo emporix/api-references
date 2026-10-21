@@ -59,6 +59,8 @@ On the storefront, a customer fills in the applicable fields in the return reque
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
+The service also derives `siteCode` and `restriction` from the referenced order or orders. You can omit these fields in the request body. If you provide them and they do not match the order data, the request is rejected with `400 Bad Request`. If the request references orders from different sites, the request is rejected with `400 Bad Request` and the message `orders belong to different sites`.
+
 When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint is called.
 
 {% hint style="warning" %}
@@ -135,6 +137,8 @@ returns.returns_read returns.returns_manage
  
 ```
 
+You can also restrict employee access to a site by using suffixed scopes such as `returns.returns_read--DE` or `returns.returns_manage--DE`. In this case, the employee can list and manage only returns whose `restriction` matches that site. Creating, opening, updating, patching, or deleting a return outside the allowed site responds as `404 Not Found`.
+
 The `returns.returns_read_own` and `returns.returns_manage_own` scopes are only required for customer groups.
 {% endhint %}
 
@@ -193,7 +197,11 @@ curl -i -X POST
 The `approvalStatus` field is automatically populated during the creation of a return and is always set to `PENDING`.
 {% endhint %}
 
+Created returns now store the order's `siteCode` and `restriction` and include these fields in return responses.
+
 ### Update the return request by a customer
+
+If a customer update or patch adds new orders, the new orders must belong to the same site and restriction as the stored return. Otherwise, the request is rejected with `400 Bad Request`.
 
 Customers can update their return request only when the approval status of the request is `PENDING`. When a customer updates a return, the [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint is called.
 
@@ -259,6 +267,8 @@ curl -i -X PUT
 
 ### Update the return status
 
+Employees with global scopes can access returns from all sites. Employees with site-restricted scopes such as `returns.returns_manage--DE` can update only returns for that site. Updating, patching, deleting, or opening a return outside the allowed site responds as `404 Not Found`.
+
 As an employee, you can update all the fields available during the return creation, as well as the `approvalStatus` and `received` fields, by sending a request to the [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
 
 {% hint style="warning" %}
@@ -320,4 +330,17 @@ curl -i -X PUT
     }
   }'
 ```
- 
+
+## How to filter returns by site
+
+Use the existing `q` query parameter to filter the returns list by `siteCode`.
+
+Example:
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/return/{tenant}/returns?q=siteCode:DE' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+This filter can be combined with employee scopes. For example, an employee with `returns.returns_read--DE` sees only DE returns, and `q=siteCode:DE` returns the same site-specific subset.

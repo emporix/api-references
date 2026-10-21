@@ -51,12 +51,14 @@ description: Webhook events the creation, update, and deletion of a return.
     "details": "String"
   },
   "received": "Boolean",
+  "restriction": "String",
   "requestor": {
     "customerId": "String",
     "email": "String",
     "firstName": "String",
     "lastName": "String"
   },
+  "siteCode": "String",
   "submitter": {
     "email": "String",
     "firstName": "String",
@@ -112,12 +114,14 @@ description: Webhook events the creation, update, and deletion of a return.
     "details": "String"
   },
   "received": "Boolean",
+  "restriction": "String",
   "requestor": {
     "customerId": "String",
     "email": "String",
     "firstName": "String",
     "lastName": "String"
   },
+  "siteCode": "String",
   "submitter": {
     "email": "String",
     "firstName": "String",

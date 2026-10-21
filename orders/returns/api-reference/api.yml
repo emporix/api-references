@@ -70,6 +70,9 @@ paths:
         - Returns
       description: |
         Retrieves a list of return documents.
+
+        You can filter the list by site using the existing `q` parameter, for example `q=siteCode:DE`.
+        For employee tokens with site-restricted scopes such as `returns.returns_read--DE`, the response contains only returns for the allowed site. A return outside the allowed site is not returned.
       parameters:
         - $ref: '#/components/parameters/x_total_count_header'
         - $ref: '#/components/parameters/page_size_query_param'
@@ -91,6 +94,8 @@ paths:
       operationId: GET-returns-retrieve-return
       description: |
         Retrieves a single return document.
+
+        For employee tokens with site-restricted scopes such as `returns.returns_read--DE`, a return outside the allowed site responds with `404 Not Found`.
       responses:
         '200':
           $ref: '#/components/responses/singleReturnResponse_200'
@@ -130,6 +135,10 @@ paths:
         **Note**: Depending on a case, a different set of fields is required and allowed.
 
         A customer can change a return only when the return approval status is `PENDING`.
+
+        The stored `siteCode` and `restriction` are not updated by this operation.
+        If newly referenced orders do not match the stored site or belong to different sites, the request is rejected.
+        For employee tokens with site-restricted scopes such as `returns.returns_manage--DE`, updating a return outside the allowed site responds with `404 Not Found`.
       requestBody:
         $ref: '#/components/requestBodies/returnUpdateBody'
       security:
@@ -157,6 +166,8 @@ paths:
       description: |-
         Deletes a single return document.
         The return can be deleted completely only by an employee, that is a user who has the `returns.returns_manage` scope granted. A customer, who has the `returns.returns_manage_own` scope granted, can delete a return only if the return status is `PENDING`. The return status is changed to `CLOSED` during the delete operation.
+
+        For employee tokens with site-restricted scopes such as `returns.returns_manage--DE`, deleting a return outside the allowed site responds with `404 Not Found`.
       security:
         - OAuth2:
             - returns.returns_manage
@@ -191,6 +202,10 @@ paths:
         A customer can change a return only when the return approval status is `PENDING`.
 
         The patch request consists of set of operation, that should be defined according to [RFC-6902](https://datatracker.ietf.org/doc/html/rfc6902) standard
+
+        The stored `siteCode` and `restriction` are not updated by this operation.
+        If patched orders do not match the stored site or belong to different sites, the request is rejected.
+        For employee tokens with site-restricted scopes such as `returns.returns_manage--DE`, patching a return outside the allowed site responds with `404 Not Found`.
       security:
         - OAuth2:
             - returns.returns_manage
@@ -1267,6 +1282,8 @@ components:
                 metadata:
                   mixins:
                     customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/productCustomAttributesMixIn.v29.json'
+                siteCode: DE
+                restriction: DE
             A return requested on behalf of a customer:
               value:
                 orders:
@@ -1297,6 +1314,8 @@ components:
                 mixins:
                   customAttributes:
                     attr1: value1
+                siteCode: DE
+                restriction: DE
             A return requested on behalf of a customer for anonymous order:
               value:
                 orders:
