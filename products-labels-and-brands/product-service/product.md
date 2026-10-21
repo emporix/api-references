@@ -1510,6 +1510,8 @@ Product Service does not reject overlay keys when the schema is not marked `site
 
 ### Store base and site overlay values
 
+Create a site-aware mixin schema first. Follow [How to create a site-aware mixin schema](../../utilities/schema/schema.md#how-to-create-a-site-aware-mixin-schema), retrieve the schema, and use the returned `metadata.url` as `{{schemaURL}}` in the request below.
+
 Create or update a product with the base mixin and one or more site overlays. This example uses the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -1547,6 +1549,10 @@ You can also send overlay keys when you upsert or partially update a product. Ov
 ### Read merged mixin values for a site
 
 To receive the merged mixin for a site, send the `emporix-site` header on a read request. The header value must match the `{siteCode}` suffix on the overlay key. This example uses the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
+
+{% hint style="warning" %}
+The product created above has `published: false`. Retrieving it requires the `product.product_read_unpublished` scope. A token that can create the product may not authorize this read without that scope.
+{% endhint %}
 
 ```bash
 curl -i -X GET \
