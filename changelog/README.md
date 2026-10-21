@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6606 -->
+
+## AI Agentic - lazy Mongo RAG initialization
+
+#### Overview
+
+AI Agentic now initializes Mongo-backed RAG retrievers lazily on first tool use instead of during tool creation. This reduces request setup overhead for AI flows such as `get my orders`, improves time to first token when eager retriever construction was on the critical path, and adds bounded Mongo chunk probes with cached existence checks to avoid long stalls during retriever initialization.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| AI Agentic runtime flows | Mongo-backed RAG tools now build retrievers lazily on first invocation, reuse successful initialization results, and fail fast when chunk probing times out instead of silently skipping retrievers. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-19" tags="new-feature" %}
 
 ## Availability Service - optional removal of availabilities on site deletion
