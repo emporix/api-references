@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-21" tags="new-feature" %}
 
 ## Product Service - site-aware mixins
 
@@ -50,7 +50,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-21" tags="new-feature" %}
 
 ## Schema Service - site-aware mixins
 
