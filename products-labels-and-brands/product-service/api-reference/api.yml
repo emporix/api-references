@@ -7,7 +7,7 @@ info:
   description: |
     Manage structured product information.
 
-    Site-aware mixins currently work for products. Products can store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}`. Mark the mixin schema as `siteAware: true` in Schema Service and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` request header is set on read operations, the matching overlay is deep-merged into the base mixin. Product Service does not reject overlay keys when the schema is not marked `siteAware`. Send overlays only for schemas marked `siteAware: true` in Schema Service.
+    Products support site-aware mixins. Store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}`. Mark the mixin schema as `siteAware: true` in Schema Service and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` request header is set on read operations, the matching overlay is deep-merged into the base mixin. Product Service does not reject overlay keys when the schema is not marked `siteAware`. Send overlays only for schemas marked `siteAware: true` in Schema Service.
 servers:
   - url: 'https://api.emporix.io'
 tags:

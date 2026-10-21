@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-Site-aware mixins currently work for products. Products can store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}` and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` header is set on read operations, the service deep-merges the matching overlay into the base mixin and returns only the merged base keys. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present. Overlay values are validated against the base mixin JSON Schema URL. Unlike Schema Service custom instances, Product Service does not enforce the Schema Service `siteAware` flag on write.
+Products now support site-aware mixins. They store per-site mixin overlays under keys in the form `{mixinName}__{siteCode}` and declare only the base mixin name in `metadata.mixins`. When the `emporix-site` header is set on read operations, the service deep-merges the matching overlay into the base mixin and returns only the merged base keys. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present. Overlay values are validated against the base mixin JSON Schema URL. Unlike Schema Service custom instances, Product Service does not enforce the Schema Service `siteAware` flag on write.
 
 #### Updated endpoints
 

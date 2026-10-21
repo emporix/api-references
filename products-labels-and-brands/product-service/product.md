@@ -1500,6 +1500,78 @@ The `variants` map is now fully populated and ready for the storefront.
 The `attempts` field on a job tracks how many times the subscriber has attempted processing. If `status` is `FAILED` and `attempts` is greater than 1, the system has already retried. A `FAILED_PERMANENT` status indicates the job is not retried automatically and requires investigation.
 {% endhint %}
 
+## How to use site-aware mixins on products
+
+Products support site-aware mixins. The product stays the same across sites, and site-aware mixins let you add attribute values per site. After you mark a mixin schema as `siteAware: true` in Schema Service, store a shared base mixin and per-site overlays under keys in the form `{mixinName}__{siteCode}`, where `{mixinName}` is the same mixin key you use in `metadata.mixins` and `{siteCode}` is a site code from your tenant. Declare only the base mixin name in `metadata.mixins`. For site codes in the platform model, see [Multi-Site Architecture](../../quickstart/multisites.md).
+
+{% hint style="warning" %}
+Product Service does not reject overlay keys when the schema is not marked `siteAware`. Send overlays only for schemas marked `siteAware: true` in Schema Service.
+{% endhint %}
+
+### Store base and site overlay values
+
+Create or update a product with the base mixin and one or more site overlays. This example uses the [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) endpoint.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/product/{tenant}/products' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": "Site-aware product",
+    "code": "SITEAWARE001",
+    "published": false,
+    "productType": "BASIC",
+    "mixins": {
+      "marketAttributes": {
+        "taxCategory": "STANDARD",
+        "shippingRestricted": false
+      },
+      "marketAttributes__main": {
+        "taxCategory": "REDUCED",
+        "shippingRestricted": true
+      }
+    },
+    "metadata": {
+      "mixins": {
+        "marketAttributes": "{{schemaURL}}"
+      }
+    }
+  }'
+```
+
+You can also send overlay keys when you upsert or partially update a product. Overlay keys follow the same create, merge, and full-replace rules as other mixin keys. For field merge and mixin removal behavior, see [How to update product mixins](#how-to-update-product-mixins).
+
+### Read merged mixin values for a site
+
+To receive the merged mixin for a site, send the `emporix-site` header on a read request. The header value must match the `{siteCode}` suffix on the overlay key. This example uses the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/product/{tenant}/products/{productId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'emporix-site: main'
+```
+
+With `emporix-site: main`, the response returns only the merged base keys. Overlay values for `main` override matching base fields. If there is no `marketAttributes__main` overlay, the base `marketAttributes` values are returned.
+
+```json
+{
+  "mixins": {
+    "marketAttributes": {
+      "taxCategory": "REDUCED",
+      "shippingRestricted": true
+    }
+  }
+}
+```
+
+Without the `emporix-site` header, the response returns the base and overlay keys as stored, so you can inspect every site overlay.
+
+The same `emporix-site` header behavior applies when you [retrieve all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) or [search for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search).
+
 ## How to update product mixins
 
 To change mixin fields, send a request to the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. To remove a mixin, send a full replacement to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
