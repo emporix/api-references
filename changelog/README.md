@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="minor-change" %}
+{% update date="2026-10-21" tags="minor-change" %}
 <!-- emporix-ai-buddy:changelog:COP-6835 -->
 
 ## AI Experience - AI-generated content notices
