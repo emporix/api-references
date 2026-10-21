@@ -234,6 +234,107 @@ For example, you created a schema with **size** attribute and it got assigned a 
 
 The product you created has already the custom fields added in the separate **Product Custom Attributes** tab.
 
+## How to create a site-aware mixin schema
+
+Set `siteAware` to `true` when you create or update a mixin schema so products and custom instances can store per-site overlays for that schema. After the schema exists, attach it to a product or custom instance as usual: declare only the base mixin name in `metadata.mixins`, and store overlays under keys in the form `{mixinName}__{siteCode}`.
+
+{% hint style="info" %}
+For the product workflow after the schema exists, see [How to use site-aware mixins on products](../../products-labels-and-brands/product-service/product.md#how-to-use-site-aware-mixins-on-products). For an overview of overlay and merge behavior, see [Site-aware mixins](../../standard-practices/mixins.md#site-aware-mixins).
+{% endhint %}
+
+### Create a site-aware schema
+
+Send a request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint and include `"siteAware": true`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/schema/{tenant}/schemas' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Market Attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ],
+    "siteAware": true,
+    "attributes": [
+      {
+        "key": "taxCategory",
+        "name": {
+          "en": "Tax category"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "required": false
+        }
+      },
+      {
+        "key": "shippingRestricted",
+        "name": {
+          "en": "Shipping restricted"
+        },
+        "type": "BOOLEAN",
+        "metadata": {
+          "required": false
+        }
+      }
+    ]
+  }'
+```
+
+Retrieve the schema with the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint. The response includes `siteAware: true` and the schema URL to reference from products or custom instances.
+
+### Enable site awareness on an existing schema
+
+To mark an existing mixin schema as site-aware, send a request to the [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) endpoint. Include the current schema attributes, set `"siteAware": true`, and send the current `metadata.version`. The `siteAware` flag is stored with that attributes version.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/schema/{tenant}/schemas/{id}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Market Attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ],
+    "siteAware": true,
+    "attributes": [
+      {
+        "key": "taxCategory",
+        "name": {
+          "en": "Tax category"
+        },
+        "type": "TEXT",
+        "metadata": {
+          "required": false
+        }
+      },
+      {
+        "key": "shippingRestricted",
+        "name": {
+          "en": "Shipping restricted"
+        },
+        "type": "BOOLEAN",
+        "metadata": {
+          "required": false
+        }
+      }
+    ],
+    "metadata": {
+      "version": 1
+    }
+  }'
+```
+
 ## How to create a more complex schema
 
 In case you need to add a schema for more complex attribute types than those supported by default, instead of creating a schema, you can create a reference. This tutorial shows you how to upload more complex schemas.
