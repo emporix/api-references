@@ -25,6 +25,44 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6957 -->
+
+## Returns Service - site-aware returns
+
+#### Overview
+
+Returns Service now stores `siteCode` and `restriction` on returns based on the referenced order data. When a return is created without these fields, the service derives them from the order. If the request provides values that do not match the order, or if the referenced orders belong to different sites, the request is rejected. Employee access with site-restricted scopes such as `returns.returns_read--DE` or `returns.returns_manage--DE` now applies to listing, counting, retrieving, creating, updating, patching, and deleting returns. Returns outside the employee's allowed site are hidden with `404 Not Found`, while global employee scopes still allow access to returns from all sites.
+
+New attributes added to return models and events:
+
+- `siteCode` - the site assigned to the return from the referenced order.
+- `restriction` - the access boundary assigned to the return from the referenced order.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) | The endpoint now derives `siteCode` and `restriction` from the referenced order when they are omitted, rejects mismatched values with `400 Bad Request`, and hides out-of-site employee access with `404 Not Found`. |
+| [Retrieving a return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) | The response now includes `siteCode` and `restriction`, and site-restricted employee scopes can access only returns from the allowed site. |
+| [Retrieving returns](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) | The response now supports filtering by site with `q=siteCode:DE`, and site-restricted employee scopes return only returns from the allowed site and matching total counts. |
+| [Updating a return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) | The endpoint now rejects newly attached orders from another site or mixed-site order sets, keeps stored `siteCode` and `restriction` unchanged, and hides out-of-site employee access with `404 Not Found`. |
+| [Patching a return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid) | The endpoint now rejects newly attached orders from another site or mixed-site order sets, keeps stored `siteCode` and `restriction` unchanged, and hides out-of-site employee access with `404 Not Found`. |
+| [Deleting a return](https://developer.emporix.io/api-references/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) | Site-restricted employee scopes can delete only returns from the allowed site. Returns outside that site are hidden with `404 Not Found`. |
+
+#### Updated events
+
+| Event | Description |
+|-------|-------------|
+| `return.created` | Event payload now includes `siteCode` and `restriction`. |
+| `return.updated` | Event payload now includes `siteCode` and `restriction`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-21" tags="minor-change" %}
 <!-- emporix-ai-buddy:changelog:COP-6835 -->
 
