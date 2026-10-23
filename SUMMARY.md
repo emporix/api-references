@@ -592,6 +592,19 @@
         ```
     * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/users-and-permissions/session-context/api-reference/api.yaml)
 * [Utilities](utilities/README.md)
+  * [API-Test Service](utilities/api-test-service/README.md)
+    * [API Reference](utilities/api-test-service/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: api-test-api
+        ```
+    * [View Raw API Specification](https://raw.githubusercontent.com/emporix/api-references/refs/heads/main/utilities/api-test-service/api-reference/api.yml)
   * [Audit Logs (Changelog) Service](utilities/audit-logs-changelog/README.md)
     * [Audit Logs (Changelog) Tutorial](utilities/audit-logs-changelog/audit-logs-changelog.md)
     * [API Reference](utilities/audit-logs-changelog/api-reference/README.md)
