@@ -58,5 +58,5 @@ Obtain an access token. See [Tokens and Scopes](authentication-and-authorization
 {% endstepper %}
 
 {% hint style="info" %}
-For the API overview, downloadable OpenAPI specs, and base URL details, see [Getting Started with Emporix API](api-intro.md).
+For the API overview, service list, and base URL details, see [Getting Started with Emporix API](api-intro.md).
 {% endhint %}

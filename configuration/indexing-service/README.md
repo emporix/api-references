@@ -10,6 +10,7 @@ Allows management of indexing configuration.
 
 ### Key features and benefits
 
-* Supports the following index provider:
+* Supports the following index providers:
   * [Algolia](https://www.algolia.com/)
- 
+  * [Battery Included](https://www.batteryincluded.io)
+
