@@ -24,7 +24,7 @@ Similar phrasing also works (for example `run self review on the changes`).
 ## Input scope
 - Include only changed documentation files from the current branch/working tree.
 - Exclude style-guide sources in `.style-guide/` from being reviewed as target content.
-- Exclude review infrastructure files (`.cursor/docs-review/`, `.cursor/skills/docs-style-review-subagent/`).
+- Exclude review infrastructure files (`.cursor/docs-review/`).
 - Prioritize markdown pages, changelog entries, release notes, and tutorial pages.
 
 ## Task context
