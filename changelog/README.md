@@ -31,14 +31,14 @@ layout:
 
 #### Overview
 
-Asset details now include `md5`, the lowercase hexadecimal MD5 of the uploaded file. The same file has the same `md5`.
+Asset details now include `details.md5`, the lowercase hexadecimal MD5 of the uploaded file when a content digest is available. The field is empty when the store does not return a content digest. Identical file bytes produce the same digest when one is available.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving an asset | The response `details.md5` is the content MD5 when the store returned one. |
-| Retrieving all assets | Each asset includes `details.md5` when the store returned one. |
+| [Retrieving an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid) | The response `details.md5` is the content MD5 when the store returned one. |
+| [Retrieving all assets](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets) | Each asset includes `details.md5` when the store returned one. |
 
 #### Known problems
 
