@@ -32,10 +32,15 @@ jobs:
               "$2"
           }
 
-          # --- batch 1 (ab) ---
           publish "ai-api" "artificial-intelligence/ai-service/api-reference/api.yml"
           publish "ai-rag-indexer-api" "artificial-intelligence/ai-rag-indexer/api-reference/api.yml"
           publish "approval-api" "companies-and-customers/approval-service/approval-api-reference/api.yml"
           publish "audit-logs-changelog-api" "utilities/audit-logs-changelog/api-reference/api.yml"
           publish "availability-api" "orders/availability/api-reference/api.yml"
           publish "brand-api" "products-labels-and-brands/brand-service/api-reference/api.yml"
+          publish "cart-api" "checkout/cart/api-reference/api.yml"
+          publish "catalog-api" "catalogs-and-categories/catalog/api-reference/api.yml"
+          publish "category-api" "catalogs-and-categories/category-tree/api-reference/api.yml"
+          publish "checkout-api" "checkout/checkout/api-reference/api.yml"
+          publish "configuration-api" "configuration/configuration-service/api-reference/api.yml"
+          publish "country-api" "configuration/country-service/api-reference/api.yml"
