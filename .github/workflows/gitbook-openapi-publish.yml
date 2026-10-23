@@ -34,6 +34,7 @@ jobs:
 
           publish "ai-api" "artificial-intelligence/ai-service/api-reference/api.yml"
           publish "ai-rag-indexer-api" "artificial-intelligence/ai-rag-indexer/api-reference/api.yml"
+          publish "api-test-api" "utilities/api-test-service/api-reference/api.yml"
           publish "approval-api" "companies-and-customers/approval-service/approval-api-reference/api.yml"
           publish "audit-logs-changelog-api" "utilities/audit-logs-changelog/api-reference/api.yml"
           publish "availability-api" "orders/availability/api-reference/api.yml"
