@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6991 -->
+
+## Schema Service - custom-instance equality filter collation
+
+#### Overview
+
+Schema Service now skips locale collation for plain equality filters on non-localized custom-instance fields. This improves performance for exact ID and code lookups on custom instances by allowing existing indexes to be used again, while preserving the current behavior for localized `name` filters and other filter types such as `in(...)`, ranges, `!=`, and prefix search.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving custom instances](https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Plain equality filters on non-localized fields no longer force locale collation, which improves exact-match lookup performance without changing the API contract. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-21" tags="minor-change" %}
 <!-- emporix-ai-buddy:changelog:COP-6835 -->
 
