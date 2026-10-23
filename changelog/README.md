@@ -37,6 +37,8 @@ Import runs can now read delimited files (CSV and its variants), and the run rep
 
 **A run stream says which files it read.** `filesRead` lists the file locators in the order they were read and `fileNames` gives each one's display name, so a retry re-reads the same bytes rather than whatever has since replaced them. `capSkipped` reports that the licensed records-per-entity limit left records read but not written, `keylessSeen` that a record had no value in its key column, and `sweep` marks the extra row produced by the unresolved-parent repair pass.
 
+**A stream's files are managed with the operating scope.** The file queue — upload a file, see what is waiting, change the load order, remove one — is `importtool.import_trigger`, because a file is a stream's data feed and not its configuration: nothing in the queue changes a mapping, a connection, a target type or a key. Requiring the administration scope made the split incoherent, since triggering the run that reads the file is already an operating action. Defining where files come from stays administrative.
+
 **A stream carries its source definition.** `sourceDataset` describes how a stream addresses its source, including a multi-column natural key (`keyFields`, `keyName`), a per-run record cap (`limit`), and the delimited-file format. `fileMode` says whether each file is a whole snapshot or a change set. The schema also now documents `connectionId`, `parentKeyField`, `hashIncludesDeltaField`, `mappingSchemaVersions`, `abortOnSchemaVersionDrift`, `dependsOn`, `schemaAttributes`, and the superseded `nameField`.
 
 Error records now carry `CONFIGURATION` and `EXTERNAL_SYSTEM` codes, distinguishing something to change in the import's own configuration, and another system answering with an error, from an application fault. The documented code list previously named a code the service does not emit.
@@ -50,6 +52,11 @@ Error records now carry `CONFIGURATION` and `EXTERNAL_SYSTEM` codes, distinguish
 | [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
 | [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | `errorCode` documents the codes the service actually emits, including `CONFIGURATION` and `EXTERNAL_SYSTEM`. |
 | [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, `connectionId`, and the other properties listed above. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. What a file-based stream still has to import, and what it has already dealt with. |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. Queues a delimited file; the same content is never imported twice. |
+| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. The largest file this environment accepts, and whether uploading is available. |
+| [Setting the order files are imported in](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. For an incremental feed the order is part of the data. |
+| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. Removes a waiting file and the stored bytes with it. |
 | [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
 
 #### Known problems

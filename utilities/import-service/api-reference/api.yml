@@ -21,6 +21,10 @@ tags:
     description: Read import configurations.
   - name: Streams
     description: Read the streams of a configuration.
+  - name: Files
+    description: >-
+      The queue of files a file-based stream imports: upload one, see what is waiting, change the load
+      order, remove one.
   - name: Schedules
     description: Read and set a configuration's run schedule.
   - name: Runs
@@ -163,6 +167,296 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '404':
           $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/streams/{streamId}/files':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving a stream's files
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Lists what a file-based stream still has to import, in the order it will be read, and what it has
+        already dealt with. A file is identified by the SHA-256 of its content, so re-sending the same bytes
+        is recognised however the file is named.
+      operationId: GET-importtool-stream-files
+      tags:
+        - Files
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful. The queue and the history are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileQueue'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          $ref: '#/components/responses/Conflict_409'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+    post:
+      summary: Uploading a file for a stream to import
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Queues a delimited file (CSV or one of its variants) for a file-based stream to import on its next
+        run. Nothing is imported by this request.
+
+        The file is stored, and its content hash recorded, so the same bytes are never imported twice: a
+        file this stream has already imported is refused rather than queued again. A file that previously
+        failed is accepted, because the usual reason is that it has been fixed.
+
+        The request is refused while the stream's job has a run in flight if the upload would REPLACE bytes
+        the stream already holds — a run may be reading them, and a retry may be waiting to re-read them.
+        A file the stream has not seen before is a new queue entry and is accepted at any time.
+      operationId: POST-importtool-stream-files
+      tags:
+        - Files
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The file to import.
+              required:
+                - file
+      responses:
+        '200':
+          description: The request was successful. The file is queued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImportFile'
+        '400':
+          description: No file was sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          description: >-
+            The stream has already imported this exact file, the file is already queued, the stream does not
+            read files, or a run in flight is using the bytes this upload would replace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '413':
+          description: >-
+            The file is larger than this environment's upload limit. Publish it at an HTTP(S) URL and set
+            that as the connection's file URL instead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '503':
+          description: File upload is not configured in this environment.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/streams/{streamId}/files/limits':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    get:
+      summary: Retrieving the file upload limits
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        The largest file this environment accepts, and whether uploading is available at all — so a client
+        can state the limit and reject an oversize file before sending it.
+      operationId: GET-importtool-stream-file-limits
+      tags:
+        - Files
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '200':
+          description: The request was successful.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  maxUploadBytes:
+                    type: integer
+                    format: int64
+                    description: The largest file accepted, in bytes.
+                    example: 104857600
+                  uploadSupported:
+                    type: boolean
+                    description: >-
+                      False when the environment has nowhere to store an uploaded file. A file URL on the
+                      connection does not help: a fetched file is stored in the same place.
+                    example: true
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/streams/{streamId}/files/order':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+    put:
+      summary: Setting the order files are imported in
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Sets the order the waiting files are read in. For an incremental feed the order IS the data: a later
+        file's values win on a key an earlier one also carries, so an older export must be placed before a
+        newer one.
+
+        Takes EVERY waiting file's identifier, in load order, rather than moving one file: ranks are only
+        meaningful relative to each other, and a partial list would leave the omitted files at their old
+        ranks interleaved with the new ones. A list that is not exactly the waiting set is refused.
+
+        Refused while the job has a run in flight, which may be draining the queue as the order changes.
+      operationId: PUT-importtool-stream-file-order
+      tags:
+        - Files
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: Every waiting file's identifier, in the order they should be imported.
+              example:
+                - 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+                - c56a4180-65aa-42ec-a945-5fd21dec0538
+      responses:
+        '200':
+          description: The request was successful. The queue is returned in its new order.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ImportFile'
+        '400':
+          description: The list is not exactly the set of waiting files.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          description: The job has a run in flight, or the queue is too long to be reordered in one request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+  '/importtool/{tenant}/streams/{streamId}/files/{fileId}':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_streamId'
+      - name: fileId
+        in: path
+        required: true
+        description: The file's identifier.
+        schema:
+          type: string
+          format: uuid
+    delete:
+      summary: Removing a file from the queue
+      description: |-
+        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Removes a waiting file and deletes the stored bytes with it. Only a waiting file can be removed: one
+        a run has claimed must not vanish underneath it, and one already imported is history — removing that
+        record would make the same bytes importable again, which is the one thing the file ledger exists to
+        prevent.
+
+        Refused while the job has a run in flight: the run may claim the file at any moment, and a retry may
+        be waiting to re-read it.
+      operationId: DELETE-importtool-stream-file
+      tags:
+        - Files
+      security:
+        - OAuth2:
+            - importtool.import_trigger
+      responses:
+        '204':
+          description: The request was successful. The file is removed.
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          description: >-
+            The file is no longer waiting — a run has claimed it or already imported it — or the job has a
+            run in flight.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
   '/importtool/{tenant}/configs/{configId}/schedule':
@@ -1298,6 +1592,99 @@ components:
           format: date-time
           description: When the configuration was last updated.
           example: '2026-07-20T08:00:00.000Z'
+    ImportFile:
+      title: Import file
+      type: object
+      description: One file a file-based stream has been given, and what became of it.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: The file's identifier.
+          example: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        fileName:
+          type: string
+          description: The name the file was given, used to display it and to infer compression.
+          example: vendors-2026-10-23.csv
+        size:
+          type: integer
+          format: int64
+          description: The file's size in bytes.
+          example: 2458112
+        status:
+          type: string
+          enum:
+            - PENDING
+            - IN_PROGRESS
+            - PROCESSED
+            - FAILED
+            - DUPLICATE
+          description: >-
+            Where the file is in its life. `PENDING`: waiting to be imported. `IN_PROGRESS`: a run has
+            claimed it and is reading it. `PROCESSED`: read to completion — set only once its records have
+            been written, so a run that fails part-way leaves the file importable. `FAILED`: the FILE could
+            not be read (malformed, truncated, wrong charset); records that fail individually do not put a
+            file here, and a stream that finishes with record failures still marks its file imported.
+            `DUPLICATE`: the same content was offered again after it had already been imported.
+          example: PROCESSED
+        loadRank:
+          type: integer
+          format: int64
+          description: >-
+            The position in the drain order. For an incremental feed the order is part of the data: a later
+            file's values win on a key an earlier one also carries.
+          example: 3
+        queuedAt:
+          type: string
+          format: date-time
+          description: When the file was added to the queue.
+          example: '2026-10-23T09:15:00.000Z'
+        processedAt:
+          type: string
+          format: date-time
+          description: When it finished being imported.
+          example: '2026-10-23T09:17:42.000Z'
+        runId:
+          type: string
+          format: uuid
+          description: The run that consumed it.
+          example: c56a4180-65aa-42ec-a945-5fd21dec0538
+        recordsRead:
+          type: integer
+          description: How many records came out of it.
+          example: 43342
+        message:
+          type: string
+          description: >-
+            Why the file ended as it did, when that needs saying — a file superseded by a newer snapshot in
+            the same run, or one imported with record-level failures.
+          example: 'Imported with failures: 1 record had no key value'
+    FileQueue:
+      title: File queue
+      type: object
+      description: What a stream still has to import, and what it has already dealt with.
+      properties:
+        pending:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportFile'
+          description: The files waiting to be imported, in the order they will be read.
+        history:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportFile'
+          description: Files already dealt with, newest first.
+        pendingTruncated:
+          type: boolean
+          description: >-
+            True when more files are waiting than this response carries. The load order cannot be changed
+            while it is true, because an order that cannot name every waiting file has no meaning.
+          example: false
+        pendingTotal:
+          type: integer
+          format: int64
+          description: How many files are waiting in total, however many this response lists.
+          example: 3
     ImportStream:
       title: Stream
       type: object
