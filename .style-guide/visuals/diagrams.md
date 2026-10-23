@@ -8,7 +8,7 @@ icon: diagram-project
 * Use Mermaid code format.
 * Add general configuration to adapt to the specific style.
 * Every diagram must use the Emporix branding: the configuration, the transparent background, and the color palette described on this page. Do not publish a diagram with the default Mermaid theme or with colors outside the palette.
-* Create and validate diagrams with the `mermaid-brand-diagrams` skill (it applies the configuration below and validates the code with Mermaid-MCP). Do not write Mermaid styling by hand.
+* Create and validate diagrams with the `emporix-docs-diagrams` skill from [emporix-ai-sdlc-skills](https://github.com/emporix/emporix-ai-sdlc-skills) (it applies the configuration below and validates the code with Mermaid-MCP). Do not write Mermaid styling by hand.
 * Keep labels short and use the same name for the same element across the page.
 * Add a figure caption that follows [Images & Icons](images-and-icons.md#placing-pictures-in-docs) when the diagram needs one.
 
