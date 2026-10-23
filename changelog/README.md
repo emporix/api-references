@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="minor-change" %}
+{% update date="2026-10-23" tags="minor-change" %}
 
 ## Media Service - content MD5 on asset details
 
