@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+
+## Media Service - content MD5 on asset details
+
+#### Overview
+
+Asset details now include `md5`, the lowercase hexadecimal MD5 of the uploaded file. The same file has the same `md5`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving an asset | The response `details.md5` is the content MD5 when the store returned one. |
+| Retrieving all assets | Each asset includes `details.md5` when the store returned one. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-21" tags="minor-change" %}
 <!-- emporix-ai-buddy:changelog:COP-6835 -->
 
