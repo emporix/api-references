@@ -27,6 +27,39 @@ layout:
 
 {% update date="2026-10-23" tags="minor-change" %}
 
+## Import Service - file imports, and run counters that reconcile
+
+#### Overview
+
+Import runs can now read delimited files (CSV and its variants), and the run reports say so. Three changes are visible with the `importtool.import_trigger` scope.
+
+**The run counters reconcile.** `recordsRead` equals `created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded`, on both the run and each of its streams. The reference previously stated a sum three terms short, so a client reconciling against it could not balance. Two of those terms are newly reported: `collapsed` counts source rows that repeated a key already present in the same batch, which are merged before the write with the last row winning; `embedded` counts child records an `EMBED` composite child handed to its parent, which the parent wrote inside its own instance, and which are settled onto `skipped`, `failed`, or `unresolvedParents` once the parent's pass completes.
+
+**A run stream says which files it read.** `filesRead` lists the file locators in the order they were read and `fileNames` gives each one's display name, so a retry re-reads the same bytes rather than whatever has since replaced them. `capSkipped` reports that the licensed records-per-entity limit left records read but not written, `keylessSeen` that a record had no value in its key column, and `sweep` marks the extra row produced by the unresolved-parent repair pass.
+
+**A stream carries its source definition.** `sourceDataset` describes how a stream addresses its source, including a multi-column natural key (`keyFields`, `keyName`), a per-run record cap (`limit`), and the delimited-file format. `fileMode` says whether each file is a whole snapshot or a change set. The schema also now documents `connectionId`, `parentKeyField`, `hashIncludesDeltaField`, `mappingSchemaVersions`, `abortOnSchemaVersionDrift`, `dependsOn`, `schemaAttributes`, and the superseded `nameField`.
+
+Error records now carry `CONFIGURATION` and `EXTERNAL_SYSTEM` codes, distinguishing something to change in the import's own configuration, and another system answering with an error, from an application fault. The documented code list previously named a code the service does not emit.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run and its streams report `collapsed` and `embedded`, and `recordsRead` states the full reconciliation. |
+| [Retrieving import runs](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | As above, for each run in the page. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | `errorCode` documents the codes the service actually emits, including `CONFIGURATION` and `EXTERNAL_SYSTEM`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, `connectionId`, and the other properties listed above. |
+| [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
+
+#### Known problems
+
+The Import Service is in preview mode, so some features may not be fully operational yet.
+
+{% endupdate %}
+
+{% update date="2026-10-23" tags="minor-change" %}
+
 ## Media Service - content MD5 on asset details
 
 #### Overview

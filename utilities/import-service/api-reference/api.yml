@@ -1439,6 +1439,102 @@ components:
           type: boolean
           description: Whether the stream is active.
           example: true
+        connectionId:
+          type: string
+          format: uuid
+          description: >-
+            The source connection this stream reads from, when it has its own. Omitted means the
+            configuration's default connection is used. One configuration can therefore mix sources.
+          example: 2b069ad4-ee40-4c1d-9151-898ad59bd88a
+        sourceDataset:
+          type: object
+          additionalProperties: true
+          description: |-
+            How this stream addresses its source. The recognised properties depend on the source type; the
+            ones below are common.
+
+            * `keyField` — the source column holding the natural key.
+            * `keyFields` and `keyName` — a key that may resolve from more than one column: the first
+              non-empty of `keyFields` wins, and `keyName` is the single canonical name recorded for it,
+              so the same entity keeps one target id whichever column supplied the value. Put the stable
+              identifier first: a lower-priority column winning on an earlier run and a higher-priority
+              one later re-keys the record.
+            * `limit` — the maximum number of records one run reads (`Max records`). A positive number
+              only; text or zero means no cap. It also sets the sample size of a dry run.
+            * `record` — the source record, table, or endpoint to read.
+            * For a file source: the delimited-file format (`delimiter`, `quote`, `escape`, `charset`,
+              `header`, `skipLines`, `nullLiterals`, `trimValues`, `compression`, `failOnRaggedRow`) and
+              `arrays`, which reshapes repeated flat columns into nested form.
+            * For an HTTP source: `pagination`, `queryParams`, `bodyTemplate`, and `format` (`JSON` or
+              `XML`).
+          example:
+            keyField: ID
+            limit: 1000
+        fileMode:
+          type: string
+          enum:
+            - SNAPSHOT
+            - INCREMENTAL
+          description: >-
+            For a file-based source, what one file represents. `SNAPSHOT`: each file is the whole picture,
+            so only the most recently arrived one is read and delete detection can act on what it no longer
+            contains. `INCREMENTAL`: each file is a change set, so every queued file is read in order and
+            a later file's values win. Defaults to `SNAPSHOT`.
+          example: SNAPSHOT
+        parentKeyField:
+          type: string
+          description: >-
+            For an `EMBED` composite child, the source column its parent matches records by. Required for
+            such a stream: without it the parent cannot find its children and writes an empty array.
+          example: INVOICE_ID
+        hashIncludesDeltaField:
+          type: boolean
+          description: >-
+            Whether the delta field counts as content when deciding a record has changed. Off by default: a
+            modified timestamp is metadata about a change, not content, and a source that restamps every row
+            on reload would otherwise make every run rewrite the whole table. Turn it on only when the
+            timestamp moving genuinely means the record is different.
+          example: false
+        schemaAttributes:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: >-
+            Extra target attributes to declare on the type beyond those the mappings cover, for fields
+            written by something other than this import.
+        mappingSchemaVersions:
+          type: object
+          additionalProperties:
+            type: integer
+          description: >-
+            The target mixin schema version this stream's mappings were written against, keyed by schema
+            id. An instance is validated against the version it was written under, so a stream pinned here
+            is also written at that version. Set by the mapping editor, not by a stream update: a stream
+            update that carried this property would blank the pins.
+          example:
+            PO_INVOICE: 49
+        abortOnSchemaVersionDrift:
+          type: boolean
+          description: >-
+            Whether to refuse to start a run when a pinned mixin's current version has moved past the
+            pinned one, before any record is read. Opt-in, and bypassed by triggering a run with `force`.
+          example: false
+        dependsOn:
+          type: array
+          items:
+            type: string
+          description: >-
+            Names of streams that must run before this one, beyond the ordering a composite parent already
+            implies.
+        nameField:
+          type: string
+          deprecated: true
+          description: >-
+            The source field used as the instance's display name. Superseded by mapping a field to the
+            standard `name` attribute, which a mapping's transformations also apply to; a `name` mapping
+            wins over this property. Kept for streams configured before that existed.
+          example: VENDORNAME
     Schedule:
       title: Schedule
       type: object
@@ -1629,7 +1725,9 @@ components:
           example: '2026-07-27T03:00:00.000Z'
         recordsRead:
           type: integer
-          description: Records read (created + updated + skipped + deleted + failed).
+          description: >-
+            Records read. The counters reconcile: `recordsRead` = created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded.
+            A client that sums only some of them will not balance.
           example: 1250
         created:
           type: integer
@@ -1664,6 +1762,23 @@ components:
             Child records that were not imported because their parent could not be found.
             Counted separately from `skipped`, which counts records that were already up to date.
           example: 25370
+        collapsed:
+          type: integer
+          description: >-
+            Source rows that repeated a key already present in the same batch. They are merged before the
+            write, last row wins, and counted here — so the report adds up however the source feed is
+            batched. A repeat in a *later* batch is written again and counted as created or updated
+            instead; `duplicateKeys` is the signal for a feed that is not unique on its key.
+          example: 12
+        embedded:
+          type: integer
+          description: >-
+            Child records an `EMBED` composite child handed to its parent, which the parent then wrote
+            inside its own instance. One write of the parent covers them all, so they are never counted as
+            created or updated (that would count each line as an instance) and never as skipped (which
+            means "already up to date"). If the parent turned out to be unchanged, failed, or absent, these
+            are settled onto `skipped`, `failed`, or `unresolvedParents` once the parent's pass completes.
+          example: 430
         message:
           type: string
           description: A terminal status message, typically set on failure.
@@ -1757,7 +1872,8 @@ components:
           example: PARTIAL
         recordsRead:
           type: integer
-          description: Records read for this stream.
+          description: >-
+            Records read for this stream. The counters reconcile: `recordsRead` = created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded.
           example: 1250
         created:
           type: integer
@@ -1792,10 +1908,69 @@ components:
             Child records that were not imported because their parent could not be found.
             Counted separately from `skipped`, which counts records that were already up to date.
           example: 25370
+        collapsed:
+          type: integer
+          description: >-
+            Source rows that repeated a key already present in the same batch. They are merged before the
+            write, last row wins, and counted here — so the report adds up however the source feed is
+            batched. A repeat in a *later* batch is written again and counted as created or updated
+            instead; `duplicateKeys` is the signal for a feed that is not unique on its key.
+          example: 12
+        embedded:
+          type: integer
+          description: >-
+            Child records an `EMBED` composite child handed to its parent, which the parent then wrote
+            inside its own instance. One write of the parent covers them all, so they are never counted as
+            created or updated (that would count each line as an instance) and never as skipped (which
+            means "already up to date"). If the parent turned out to be unchanged, failed, or absent, these
+            are settled onto `skipped`, `failed`, or `unresolvedParents` once the parent's pass completes.
+          example: 430
         message:
           type: string
           description: A per-stream status message.
           example: 5 records failed validation.
+        filesRead:
+          type: array
+          items:
+            type: string
+          description: >-
+            For a file-based source, the file locators this stream actually read, in the order it read
+            them. Recorded so a retry re-reads exactly the same bytes: the file behind a locator can be
+            replaced by a later drop, and re-running against a different file would report a clean success
+            having repaired nothing.
+          example:
+            - 'media:5f1c0a9e8b7d4c2fa1e3'
+        fileNames:
+          type: object
+          additionalProperties:
+            type: string
+          description: >-
+            The display name of each locator in `filesRead`, keyed by locator. A file is addressed by an
+            opaque id, so the name is carried beside it rather than derived from it.
+          example:
+            'media:5f1c0a9e8b7d4c2fa1e3': vendors-2026-10-23.csv
+        capSkipped:
+          type: boolean
+          description: >-
+            True when the tenant's licensed `maxRecordsPerEntity` was reached and the remaining records
+            were read but not written. They are counted as `skipped` and the stream is `PARTIAL`: the data
+            is not lost, but it is not imported either until the limit is raised. See the license endpoint.
+          example: false
+        keylessSeen:
+          type: boolean
+          description: >-
+            True when at least one source record had no value in its key column. Such a record is counted
+            as both read and failed and is reported under error code `NO_KEY` — the import does not invent
+            a key, because a synthesised one collides across records and changes whenever the record does.
+          example: false
+        sweep:
+          type: boolean
+          description: >-
+            True for the extra row produced by the unresolved-parent sweep, which re-fetches the parents a
+            composite child could not find and then re-reads their lines. A child's sweep row is folded
+            into its original row and removed; a parent's sweep row remains, because its reads are genuinely
+            new. Treat a row with this flag as a repair pass, not as a second stream.
+          example: false
     RunDetail:
       title: Run detail
       type: object
@@ -1860,8 +2035,25 @@ components:
           example: MAPPING
         errorCode:
           type: string
-          description: A machine-readable error code.
-          example: REQUIRED_FIELD_MISSING
+          description: |-
+            A machine-readable error code:
+
+            * `VALIDATION` — the mapped record failed validation before any write was attempted.
+            * `NO_KEY` — the record's key column was empty, so it cannot be identified.
+            * `UPSERT` — the target rejected the write.
+            * `CONFIGURATION` — something to change in the import's own configuration, not a fault: a
+              missing base URL, refused credentials, an unknown path, a stream that names no parent.
+            * `EXTERNAL_SYSTEM` — another system answered with an error, for example the source returning
+              5xx or a source-side extraction failure.
+            * `MERGE`, `PATCH_EMBED` — a composite merge or an embed patch onto the parent failed.
+            * `NO_LINKING_VALUE` — a composite child row carried no value in its linking field.
+            * `MARKER_DELETE`, `TOMBSTONE_DELETE`, `TOMBSTONE_NO_KEY` — a delete detected by a status
+              marker or a tombstone record could not be applied.
+            * `STREAM_ERROR` — the stream failed as a whole; the record-level detail is in `message`.
+
+            `CONFIGURATION` and `EXTERNAL_SYSTEM` are reported as a plain sentence naming what to change.
+            They are not application faults and are not alerted on as such.
+          example: VALIDATION
         message:
           type: string
           description: A human-readable error message.
