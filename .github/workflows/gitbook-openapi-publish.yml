@@ -14,16 +14,28 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
-      GITBOOK_SPEC_NAME: ${{ vars.GITBOOK_SPEC_NAME }}
       GITBOOK_ORGANIZATION_ID: ${{ vars.GITBOOK_ORGANIZATION_ID }}
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Publish label-api to GitBook
+      - name: Publish OpenAPI specs to GitBook
         run: |
-          npx -y @gitbook/cli@latest openapi publish \
-            --spec "$GITBOOK_SPEC_NAME" \
-            --organization "$GITBOOK_ORGANIZATION_ID" \
-            "products-labels-and-brands/label-service/api-reference/api.yml"
+          set -euo pipefail
+
+          publish() {
+            echo "Publishing $1 <- $2"
+            npx -y @gitbook/cli@latest openapi publish \
+              --spec "$1" \
+              --organization "$GITBOOK_ORGANIZATION_ID" \
+              "$2"
+          }
+
+          # --- batch 1 (ab) ---
+          publish "ai-api" "artificial-intelligence/ai-service/api-reference/api.yml"
+          publish "ai-rag-indexer-api" "artificial-intelligence/ai-rag-indexer/api-reference/api.yml"
+          publish "approval-api" "companies-and-customers/approval-service/approval-api-reference/api.yml"
+          publish "audit-logs-changelog-api" "utilities/audit-logs-changelog/api-reference/api.yml"
+          publish "availability-api" "orders/availability/api-reference/api.yml"
+          publish "brand-api" "products-labels-and-brands/brand-service/api-reference/api.yml"
