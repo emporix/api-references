@@ -1,0 +1,78 @@
+name: Publish OpenAPI to GitBook
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "**/*.yaml"
+      - "**/*.yml"
+      - "**/*.json"
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
+      GITBOOK_ORGANIZATION_ID: ${{ vars.GITBOOK_ORGANIZATION_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Publish OpenAPI specs to GitBook
+        run: |
+          set -euo pipefail
+
+          publish() {
+            echo "Publishing $1 <- $2"
+            npx -y @gitbook/cli@latest openapi publish \
+              --spec "$1" \
+              --organization "$GITBOOK_ORGANIZATION_ID" \
+              "$2"
+          }
+
+          publish "ai-api" "artificial-intelligence/ai-service/api-reference/api.yml"
+          publish "ai-rag-indexer-api" "artificial-intelligence/ai-rag-indexer/api-reference/api.yml"
+          publish "approval-api" "companies-and-customers/approval-service/approval-api-reference/api.yml"
+          publish "audit-logs-changelog-api" "utilities/audit-logs-changelog/api-reference/api.yml"
+          publish "availability-api" "orders/availability/api-reference/api.yml"
+          publish "brand-api" "products-labels-and-brands/brand-service/api-reference/api.yml"
+          publish "cart-api" "checkout/cart/api-reference/api.yml"
+          publish "catalog-api" "catalogs-and-categories/catalog/api-reference/api.yml"
+          publish "category-api" "catalogs-and-categories/category-tree/api-reference/api.yml"
+          publish "checkout-api" "checkout/checkout/api-reference/api.yml"
+          publish "configuration-api" "configuration/configuration-service/api-reference/api.yml"
+          publish "country-api" "configuration/country-service/api-reference/api.yml"
+          publish "coupon-api" "rewards-and-promotions/coupon/api-reference/api.yml"
+          publish "currency-api" "configuration/currency-service/api-reference/api.yml"
+          publish "customer-client-management-api" "companies-and-customers/client-management/api-reference/api.yml"
+          publish "customer-managed-api" "companies-and-customers/customer-management/api-reference/api.yml"
+          publish "customer-tenant-api" "companies-and-customers/customer-service/api-reference/api.yml"
+          publish "fee-api" "checkout/fee/api-reference/api.yml"
+          publish "iam-api" "users-and-permissions/iam/api-reference/api.yml"
+          publish "import-service-api" "utilities/import-service/api-reference/api.yml"
+          publish "indexing-api" "configuration/indexing-service/api-reference/api.yml"
+          publish "invoice-api" "orders/invoice/api-reference/api.yaml"
+          publish "label-api" "products-labels-and-brands/label-service/api-reference/api.yml"
+          publish "media-api" "media/media/api-reference/api.yml"
+          publish "oauth-api" "authentication/oauth-service/api-reference/api.yml"
+          publish "order-api" "orders/order/api-reference/api.yml"
+          publish "payment-gateway-api" "checkout/payment-gateway/api-reference/api.yml"
+          publish "price-api" "prices-and-taxes/price-service/api-reference/api.yml"
+          publish "product-api" "products-labels-and-brands/product-service/api-reference/api.yml"
+          publish "quote-api" "quotes/quote/api-reference/api.yaml"
+          publish "returns-api" "orders/returns/api-reference/api.yml"
+          publish "reward-points-api" "rewards-and-promotions/reward-points/api-reference/api.yml"
+          publish "schema-api" "utilities/schema/api-reference/api.yml"
+          publish "search-api" "utilities/search-service/api-reference/api.yml"
+          publish "segments-api" "companies-and-customers/customer-segments/api-reference/api.yml"
+          publish "sequential-id-api" "utilities/sequential-id/api-reference/api.yml"
+          publish "session-context-api" "users-and-permissions/session-context/api-reference/api.yaml"
+          publish "shipping-api" "delivery-and-shipping/shipping/api-reference/api.yml"
+          publish "shopping-list-api" "checkout/shopping-list/api-reference/api.yml"
+          publish "site-settings-api" "configuration/site-settings-service/api-reference/api.yml"
+          publish "tax-api" "prices-and-taxes/tax-service/api-reference/api.yml"
+          publish "unit-handling-api" "configuration/unit-handling-service/api-reference/api.yml"
+          publish "vendor-api" "companies-and-customers/vendor-service/api-reference/api.yml"
+          publish "webhook-api" "webhooks/webhook-service/api-reference/api.yml"

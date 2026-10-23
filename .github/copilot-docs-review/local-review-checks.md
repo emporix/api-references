@@ -96,7 +96,7 @@ Exception: Approval Service uses `approval-api-reference/api.yml`. Three legacy 
 
 - One spec per service under `api-reference/` (or `approval-api-reference/`); `api.yml` is the source of truth — endpoint docs are not authored as separate markdown pages
 - `api-reference/README.md` is a thin GitBook page shell only; do not add endpoint documentation there
-- New services must update `SUMMARY.md`: service README, `api-reference/README.md`, `builtin:openapi` block with a unique spec ID (e.g. `cart-api`), and "View Raw API Specification" link to the raw GitHub file
+- New services must update `SUMMARY.md`: service README, `api-reference/README.md`, `builtin:openapi` block with a unique spec ID (e.g. `cart-api`)
 - Update `quickstart/list-of-api-services.md` when adding a new downloadable service spec
 - Required OpenAPI sections: `openapi: 3.0.0`, `info` (`version: ''`), `servers`, `paths`, `components`, `security` (`.style-guide/writing-standards/api-references.md`)
 - Path keys include the service prefix and start with `/` (e.g. `/cart/{tenant}/carts`)
