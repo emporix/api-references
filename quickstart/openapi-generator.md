@@ -41,8 +41,8 @@ Download the Maven project OpenAPI Generator and unpack it in a relevant destina
 
 ### Using OpenAPI Generator
 
-1. Download Emporix OpenAPI reference documentation for all Commerce Engine services from the [Emporix API](./).
-2. For the service of your interest, copy its API reference yml file to the `src/main/resources/apis` directory.
+1. Get the OpenAPI specification (`api.yml`) for the Emporix service you want to generate a client for. See the [List of API Services](list-of-api-services.md) for the available services and their interactive API references.
+2. Copy that API reference yml file to the `src/main/resources/apis` directory.
 
 {% hint style="warning" %}
 The file has to be named as `api.yml`.\

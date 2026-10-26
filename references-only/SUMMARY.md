@@ -221,6 +221,17 @@
             kind: openapi
             spec: iam-api
       ```
+  * [Import Service](../utilities/import-service/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: import-service-api
+      ```
   * [Indexing](../configuration/indexing-service/api-reference/README.md)
     * ```yaml
       props:
@@ -374,17 +385,6 @@
           ref:
             kind: openapi
             spec: search-api
-      ```
-  * [Import Service](../utilities/import-service/api-reference/README.md)
-    * ```yaml
-      props:
-        models: true
-      type: builtin:openapi
-      dependencies:
-        spec:
-          ref:
-            kind: openapi
-            spec: import-service-api
       ```
   * [Sequential ID](../utilities/sequential-id/api-reference/README.md)
     * ```yaml

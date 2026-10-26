@@ -24,7 +24,7 @@ Similar phrasing also works (for example `run self review on the changes`).
 ## Input scope
 - Include only changed documentation files from the current branch/working tree.
 - Exclude style-guide sources in `.style-guide/` from being reviewed as target content.
-- Exclude review infrastructure files (`.cursor/docs-review/`, `.cursor/skills/docs-style-review-subagent/`).
+- Exclude review infrastructure files (`.cursor/docs-review/`).
 - Prioritize markdown pages, changelog entries, release notes, and tutorial pages.
 
 ## Task context
@@ -38,9 +38,13 @@ If nothing is found, set `Task context: none` and skip the task-fit lane.
 
 ## Rule sources
 - `.style-guide/README.md`
+- `.style-guide/writing-standards/planning-and-structure.md`
 - `.style-guide/writing-standards/format-and-structure.md`
 - `.style-guide/writing-standards/language-and-tone.md`
 - `.style-guide/writing-standards/word-choice.md`
+- `.style-guide/writing-standards/links.md`
+- `.style-guide/visuals/images-and-icons.md`
+- `.style-guide/visuals/diagrams.md`
 - `.style-guide/writing-standards/api-tutorials.md`
 - `.style-guide/writing-standards/api-references.md`
 - `.style-guide/templates/changelog.md`
@@ -49,7 +53,10 @@ If nothing is found, set `Task context: none` and skip the task-fit lane.
 - `.cursor/docs-review/sufficiency-and-fit.md`
 
 ## Required checks
-- Structure and formatting (headings, sections, hints, list style).
+- Structure and formatting (headings, sections, hints, list style including lead-in sentences and consistent items).
+- Figure captions (concise, restrained punctuation) and diagram branding.
+- Links (form by space, resolvable targets, registry space IDs).
+- Release note titles in title case.
 - Tone and clarity (active voice preference, concise instructions).
 - Grammar and spelling (typos, subject-verb agreement, punctuation, malformed phrasing).
 - Terminology and word-choice compliance.
@@ -57,7 +64,7 @@ If nothing is found, set `Task context: none` and skip the task-fit lane.
 - Changelog location and release-date placeholder when `changelog/` files change: entries go in `changelog/README.md` (not `changelog/changelog.md` or new per-release files); new entries use `{% update date="RELEASE_DATE" ... %}` at the top of the `{% updates %}` block; do not edit existing entries or `changelog/SUMMARY.md`.
 - API tutorial completeness when relevant (auth, headers, examples, behavior notes).
 - API reference completeness when relevant (OpenAPI structure, gerund summaries, scopes on `security`, schema/example quality, common parameters).
-- Reader sufficiency (always) — see `sufficiency-and-fit.md`.
+- Reader sufficiency (always), including user goal, fit in the documentation set, and obvious or quoted UI statements — see `sufficiency-and-fit.md`.
 - Task-fit (only when task context is provided) — see `sufficiency-and-fit.md`.
 
 ## Severity model (hybrid gate)

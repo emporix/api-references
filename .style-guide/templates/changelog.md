@@ -61,7 +61,7 @@ General description of introduced changes, one or a few sentences.
 
 | Endpoint | Description |
 | --- | --- |
-| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
 
 #### Deprecated endpoints
 
@@ -97,7 +97,7 @@ Examples:
   * Use the table format.
   * Provide links to the changed endpoints in the Endpoint column.
   * For displayed link names, use the verb in gerund form (updating, deleting etc) - this should be consistent with the endpoint title in API reference.
-  * Base the link URLs on the endpoints paths (not operationIDs) - Gitbook takes the paths defined in `yml` files to create URLs, for example: `patch/schema/{tenant}/custom-entities/{type}/instances/{id}` → `https://developer.emporix.io/api-references/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id`
+  * Base the link URLs on the endpoints paths (not operationIDs) - Gitbook takes the paths defined in `yml` files to create URLs, for example: `patch/schema/{tenant}/custom-entities/{type}/instances/{id}` → `https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#patch-schema-tenant-custom-entities-type-instances-id`
   * Provide a description for each changed endpoint:
     * Keep it brief and simple.
     * Use present simple tense if possible.
@@ -158,9 +158,9 @@ All previously deprecated endpoints and fields are now removed ([Brand Service -
 | --- | --- |
 | Creating a media | Endpoint removed. The `POST /media/{tenant}/assets` operation is no longer available. |
 | Deleting a media | Endpoint removed. The `DELETE /media/{tenant}/assets/{assetId}` operation is no longer available. |
-| [Creating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
-| [Updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
-| [Partially updating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#patch-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
+| [Creating a brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brands) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
+| [Updating a brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#put-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
+| [Partially updating a brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#patch-brands-brandid) | The `image` and `cloudinaryUrl` fields are removed from the request body. |
 
 #### Known problems
 
@@ -175,7 +175,7 @@ With a substitute:
 ```
 | Endpoint | Description |
 | --- | --- |
-| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
+| Retrieving all locations for a site | Endpoint removed. The `GET /availability/{tenant}/locations/{site}` operation is no longer available. Use [Retrieving all availability information for a site](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#get-availability-tenant-availability-site-site) instead. |
 ```
 
 Without a substitute:
