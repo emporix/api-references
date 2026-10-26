@@ -217,8 +217,6 @@ paths:
           $ref: '#/components/responses/Forbidden_403'
         '404':
           $ref: '#/components/responses/NotFound_404'
-        '409':
-          $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
     post:
@@ -237,7 +235,7 @@ paths:
         file this stream has already imported is refused rather than queued again. A file that previously
         failed is accepted, because the usual reason is that it has been fixed.
 
-        The request is refused while the stream's job has a run in flight if the upload would REPLACE bytes
+        The request is refused while the stream's job has a run in flight if the upload would replace bytes
         the stream already holds — a run may be reading them, and a retry may be waiting to re-read them.
         A file the stream has not seen before is a new queue entry and is accepted at any time.
       operationId: POST-importtool-stream-files
@@ -315,8 +313,8 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        The largest file this environment accepts, and whether uploading is available at all — so a client
-        can state the limit and reject an oversize file before sending it.
+        Returns the largest file this environment accepts, and whether uploading is available at all, so a
+        client can state the limit and reject an oversize file before sending it.
       operationId: GET-importtool-stream-file-limits
       tags:
         - Files
@@ -335,7 +333,14 @@ paths:
                     type: integer
                     format: int64
                     description: The largest file accepted, in bytes.
-                    example: 104857600
+                    example: 9437184
+                  gatewayLimited:
+                    type: boolean
+                    description: >-
+                      Whether `maxUploadBytes` is set by the API gateway in front of the service rather than by
+                      the service itself. A larger file is then refused by the gateway, with the gateway's own
+                      `413` error body, before it reaches the service. Use the connection's file URL for it.
+                    example: true
                   uploadSupported:
                     type: boolean
                     description: >-
@@ -363,11 +368,11 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Sets the order the waiting files are read in. For an incremental feed the order IS the data: a later
+        Sets the order the waiting files are read in. For an incremental feed the order is the data: a later
         file's values win on a key an earlier one also carries, so an older export must be placed before a
         newer one.
 
-        Takes EVERY waiting file's identifier, in load order, rather than moving one file: ranks are only
+        Takes every waiting file's identifier, in load order, rather than moving one file: ranks are only
         meaningful relative to each other, and a partial list would leave the omitted files at their old
         ranks interleaved with the new ones. A list that is not exactly the waiting set is refused.
 
@@ -387,7 +392,7 @@ paths:
               items:
                 type: string
                 format: uuid
-              description: Every waiting file's identifier, in the order they should be imported.
+              description: Every waiting file's identifier, in the order they must be imported.
               example:
                 - 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
                 - c56a4180-65aa-42ec-a945-5fd21dec0538
@@ -1631,14 +1636,14 @@ components:
             - IN_PROGRESS
             - PROCESSED
             - FAILED
-            - DUPLICATE
           description: >-
             Where the file is in its life. `PENDING`: waiting to be imported. `IN_PROGRESS`: a run has
             claimed it and is reading it. `PROCESSED`: read to completion — set only once its records have
-            been written, so a run that fails part-way leaves the file importable. `FAILED`: the FILE could
-            not be read (malformed, truncated, wrong charset); records that fail individually do not put a
-            file here, and a stream that finishes with record failures still marks its file imported.
-            `DUPLICATE`: the same content was offered again after it had already been imported.
+            been written, so a run that fails part-way leaves the file importable. `FAILED`: the stream that
+            read the file finished `FAILED` — the file could not be read (malformed, truncated, wrong
+            charset), or the import failed for another reason, such as the target being unavailable. Such a
+            file can be sent again. Records that fail individually do not put a file here: a stream that
+            finishes with record failures still marks its file imported.
           example: PROCESSED
         loadRank:
           type: integer
@@ -1860,7 +1865,7 @@ components:
               identifier first: a lower-priority column winning on an earlier run and a higher-priority
               one later re-keys the record.
             * `limit` — the maximum number of records one run reads (`Max records`). A positive number
-              only; text or zero means no cap. It also sets the sample size of a dry run.
+              only; text or zero means no cap. A dry run reads at most the smaller of this and its own sample size.
             * `record` — the source record, table, or endpoint to read.
             * For a file source: the delimited-file format (`delimiter`, `quote`, `escape`, `charset`,
               `header`, `skipLines`, `nullLiterals`, `trimValues`, `compression`, `failOnRaggedRow`) and
@@ -1887,8 +1892,8 @@ components:
             - INCREMENTAL
           description: >-
             For a file-based source, what one file represents. `SNAPSHOT`: each file is the whole picture,
-            so only the most recently arrived one is read and delete detection can act on what it no longer
-            contains. `INCREMENTAL`: each file is a change set, so every queued file is read in order and
+            so only the most recently arrived one is read, and the per-record content hash decides what is
+            written. A record missing from a newer file is not deleted. `INCREMENTAL`: each file is a change set, so every queued file is read in order and
             a later file's values win. Defaults to `SNAPSHOT`.
           example: SNAPSHOT
         parentKeyField:
@@ -1906,13 +1911,11 @@ components:
             timestamp moving genuinely means the record is different.
           example: false
         schemaAttributes:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
+          type: object
+          additionalProperties: true
           description: >-
             Extra target attributes to declare on the type beyond those the mappings cover, for fields
-            written by something other than this import.
+            written by something other than this import, keyed by attribute name.
         mappingSchemaVersions:
           type: object
           additionalProperties:

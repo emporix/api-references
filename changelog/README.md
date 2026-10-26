@@ -27,7 +27,7 @@ layout:
 
 {% update date="RELEASE_DATE" tags="minor-change" %}
 
-## Import Service - file imports, and run counters that reconcile
+## Import Service - file imports and run counter reconciliation
 
 #### Overview
 
@@ -45,6 +45,16 @@ Error records now carry `CONFIGURATION` and `EXTERNAL_SYSTEM` codes, distinguish
 
 A delimited-file row whose array has more elements than `sourceDataset.arrays.maxElements` now fails on its own with the new `REJECTED_BY_SOURCE` error code, and the rest of the file is imported. The Retrieving a stream's files endpoint accepts the `historyLimit` query parameter, which sets how many already handled files `history` returns.
 
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | What a file-based stream still has to import, and what it has already dealt with. `historyLimit` sets how many handled files are returned. |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Queues a delimited file; the same content is never imported twice. |
+| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files-limits) | The largest file this environment accepts, and whether uploading is available. |
+| [Setting the order files are imported in](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#put-importtool-tenant-streams-streamid-files-order) | For an incremental feed the order is part of the data. |
+| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#delete-importtool-tenant-streams-streamid-files-fileid) | Removes a waiting file and the stored bytes with it. |
+
 #### Updated endpoints
 
 | Endpoint | Description |
@@ -54,11 +64,6 @@ A delimited-file row whose array has more elements than `sourceDataset.arrays.ma
 | [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
 | [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | `errorCode` documents the codes the service actually emits, including `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE`. |
 | [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, `connectionId`, and the other properties listed above. |
-| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. What a file-based stream still has to import, and what it has already dealt with. `historyLimit` sets how many handled files are returned. |
-| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. Queues a delimited file; the same content is never imported twice. |
-| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. The largest file this environment accepts, and whether uploading is available. |
-| [Setting the order files are imported in](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. For an incremental feed the order is part of the data. |
-| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files) | New. Removes a waiting file and the stored bytes with it. |
 | [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
 
 #### Known problems
