@@ -25,6 +25,34 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Import Service - file connections
+
+#### Overview
+
+A connection's `sourceType` can be `file`, for delimited files that are uploaded to a stream's file queue or fetched from a URL. A `file` connection's `config` takes the optional `fileFormat`, `fileUrl`, `authType`, and `username` settings, and default delimited-file format settings: the file at `fileUrl` is fetched at the start of each run, with the authentication that `authType` names. A sample file uploaded for the connection supplies the columns for setting up a stream before any file has been imported.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading a sample file for a connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections-id-sample-file) | Stores a sample file whose columns are offered when setting up a stream. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
+| [Updating a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#put-importtool-tenant-connections-id) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
+| [Retrieving a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-connections-id) | Returns `sampleFileLocator` and `sampleFileName` for a `file` connection with a stored sample file. |
+
+#### Known problems
+
+The Import Service is in preview mode, so some features may not be fully operational yet.
+
+{% endupdate %}
+
 {% update date="2026-10-26" tags="new-feature" %}
 
 ## Category Service - category tree type filtering
