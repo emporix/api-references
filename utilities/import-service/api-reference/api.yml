@@ -1529,6 +1529,19 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SourceConnection'
+            examples:
+              File fetched from a URL:
+                value:
+                  name: Vendor master file
+                  sourceType: file
+                  config:
+                    fileFormat: CSV
+                    fileUrl: https://files.example.com/exports/vendors.csv
+                    authType: BASIC
+                    username: emporix-import
+                    delimiter: ';'
+                    charset: ISO-8859-1
+                  apiToken: Xk9vT2qLm7Rw
       responses:
         '201':
           description: The connection was created.
@@ -1644,6 +1657,11 @@ paths:
         For an HTTP connection, the test calls the base URL, or the endpoint named in the connection's
         optional `config.testPath` under it. An API root often proves nothing about the credential, so name an
         endpoint that requires it, for example `/v1/account`. The result's `url` is the URL that was called.
+
+        For a `file` connection, the test reads the connection's file — its sample file, or else the file at
+        its `fileUrl` — and reports the file's name and columns. If the file cannot be read, for example
+        because the URL returns a web page, the test fails with the reason. A connection with neither a sample
+        file nor a `fileUrl` has nothing to read yet, and the test says so.
 
       operationId: POST-importtool-test-connection
       tags:
@@ -2815,6 +2833,134 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
 
+  '/importtool/{tenant}/connections/{id}/sample-file':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+      - $ref: '#/components/parameters/trait_id'
+    post:
+      summary: Uploading a sample file for a connection
+      description: |-
+        Stores a sample delimited file for a `file` connection, so that a stream can be set up before any
+        file has been imported: the columns offered for the stream's key field and for its mappings are read
+        from the sample. The connection keeps one sample: uploading another replaces the previous one, which
+        is deleted. The sample is only read for its columns; it is never imported. Its columns are read with
+        the format settings in the connection's `config` — for example `delimiter` and `charset` — and
+        otherwise as a comma-separated UTF-8 file with a header row.
+
+        The file is subject to the same size limit as a file uploaded to a stream's file queue. A larger file
+        can be imported through the connection's `fileUrl`.
+      operationId: POST-importtool-connection-sample-file
+      tags:
+        - Connections (Administration)
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The sample delimited file, for example a CSV export of the source data. Only its columns are read.
+              required:
+                - file
+      responses:
+        '200':
+          description: The request was successful. The sample file is stored on the connection.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fileName:
+                    type: string
+                    description: Name of the uploaded file.
+                  size:
+                    type: integer
+                    format: int64
+                    description: Size of the file, in bytes.
+                  locator:
+                    type: string
+                    description: Where the service stored the file. Also stored as the connection's `sampleFileLocator`.
+              examples:
+                Sample stored:
+                  value:
+                    fileName: vendors.csv
+                    size: 48211
+                    locator: media:6adf4753d82e783030210549
+        '400':
+          description: No file was sent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                No file:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: No file was uploaded
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
+        '409':
+          description: The connection is not a `file` connection.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Not a file connection:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: >-
+                      A sample file only applies to a file-based connection; this one is http. Use spec
+                      discovery or endpoint sampling instead.
+        '413':
+          description: >-
+            The file is larger than the upload limit. Publish it at an HTTP(S) URL and set that as the
+            connection's `fileUrl` instead.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                File too large:
+                  value:
+                    code: 413
+                    status: Payload Too Large
+                    message: >-
+                      This file is 14 MB and the limit is 10 MB. Publish it at an HTTP(S) URL and set that as
+                      the connection's File URL instead — a fetched file has a much larger limit and is not
+                      sent through the browser.
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+        '503':
+          description: >-
+            Storing a sample file is not available in this environment, because the service has nowhere to
+            store it. Contact Emporix support.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Storage not configured:
+                  value:
+                    code: 503
+                    status: Service Unavailable
+                    message: >-
+                      Uploading a sample needs the Media service, which is not configured for this environment.
+                      Ask an administrator to configure it — a file URL is not an alternative here, because a
+                      fetched file is stored as a Media asset too.
+
   '/importtool/{tenant}/connections/{id}/preview':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -3662,7 +3808,8 @@ components:
           type: string
           description: |-
             The kind of source, which decides how the connection is read and which configuration it needs —
-            for example `http` for a REST or GraphQL API.
+            for example `http` for a REST or GraphQL API, or `file` for delimited files that are uploaded to
+            a stream's file queue or fetched from a URL.
         config:
           type: object
           additionalProperties: true
@@ -3674,6 +3821,27 @@ components:
             * `testPath` (optional) — the endpoint, under the base URL, that testing the connection calls.
             * `schemaSourceKind` — where the API's fields come from. `SAMPLE` means the connection has no spec:
               each stream samples its own endpoint, and a spec stored earlier is not offered to streams.
+
+            For a `file` connection (all optional):
+            * `fileFormat` — the format of the files. `CSV` is the only supported value, and the default.
+            * `fileUrl` — an HTTP(S) URL the file is fetched from at the start of each run of a stream that
+              uses the connection. Leave it empty to upload files to each stream's file queue instead. A
+              fetched file whose content the stream has already imported is not imported again. A fetched
+              file can be larger than an uploaded one. The URL, and every redirect it follows, must resolve
+              to a public address. If the URL returns a web page instead of the file, the stream fails with a
+              message that says so. A Google Drive sharing link to a large file returns such a page; use
+              `https://drive.usercontent.google.com/download?id={fileId}&export=download&confirm=t` instead,
+              where `{fileId}` is the file's Google Drive ID.
+            * `authType` — how the service authenticates when it fetches `fileUrl`: `NONE` (the default), `BASIC` (`username` plus the
+              password in `apiToken`), or `BEARER` (the token in `apiToken`).
+            * `username` — the user name for `BASIC`.
+            * The delimited-file format settings a stream's `sourceDataset` takes (`delimiter`, `quote`,
+              `escape`, `header`, `skipLines`, `charset`, `nullLiterals`, `trimValues`, `compression`,
+              `arrays`, `failOnRaggedRow`), as defaults: they are used to read the connection's files before a
+              stream exists, and a new stream copies them.
+            * `sampleFileLocator`, `sampleFileName` — read-only. Where the service stored the sample file, and
+              its name, set by the Uploading a sample file for a connection endpoint. Updating the connection
+              leaves them unchanged.
         apiToken:
           type: string
           writeOnly: true
