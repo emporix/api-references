@@ -188,6 +188,19 @@ paths:
       operationId: GET-importtool-stream-files
       tags:
         - Files
+      parameters:
+        - schema:
+            type: integer
+            default: 100
+            minimum: 1
+            maximum: 500
+          in: query
+          name: historyLimit
+          description: |-
+            Number of the stream's most recently handled files to return in `history`. A value below 1 is
+            treated as 1, and a value above 500 as 500. This parameter does not limit `pending`: the queue is
+            returned in full up to 2000 files, and `pendingTruncated` and `pendingTotal` indicate when it is
+            longer than the response.
       security:
         - OAuth2:
             - importtool.import_trigger
@@ -1851,7 +1864,17 @@ components:
             * `record` — the source record, table, or endpoint to read.
             * For a file source: the delimited-file format (`delimiter`, `quote`, `escape`, `charset`,
               `header`, `skipLines`, `nullLiterals`, `trimValues`, `compression`, `failOnRaggedRow`) and
-              `arrays`, which reshapes repeated flat columns into nested form.
+              `arrays`, which reshapes repeated flat columns into nested form. The original columns are kept,
+              and each array is added beside them under its name followed by `[]` — for example `lineItems[]`
+              for `lineItems.0.sku`, or `COUNTRIES[]` for a delimited `COUNTRIES` column:
+              * `style` — how a repeated column is recognised: `DOT` (`lineItems.0.sku`), `BRACKET`
+                (`lineItems[0].sku`), `SUFFIX` (`phone_1`), or `NONE` (the default), which recognises no
+                repeated columns.
+              * `delimited` — a list of column names whose cells each hold a list of values.
+              * `separator` — the character a `delimited` cell is split on. Defaults to `;`.
+              * `maxElements` — the maximum number of elements one array can hold. Defaults to 1000; the
+                highest allowed value is 10000. A row with a longer array is not truncated: only that row
+                fails, with the error code `REJECTED_BY_SOURCE`, and the rest of the file is imported.
             * For an HTTP source: `pagination`, `queryParams`, `bodyTemplate`, and `format` (`JSON` or
               `XML`).
           example:
@@ -2436,6 +2459,10 @@ components:
             * `NO_LINKING_VALUE` — a composite child row carried no value in its linking field.
             * `MARKER_DELETE`, `TOMBSTONE_DELETE`, `TOMBSTONE_NO_KEY` — a delete detected by a status
               marker or a tombstone record could not be applied.
+            * `REJECTED_BY_SOURCE` — the source rejected a single record because of its data, for example a
+              delimited-file row whose array has more elements than `sourceDataset.arrays.maxElements`. That
+              record is not imported, but the other records are; `message` names the column, its number of
+              elements, and the limit.
             * `STREAM_ERROR` — the stream failed as a whole; the record-level detail is in `message`.
 
             `CONFIGURATION` and `EXTERNAL_SYSTEM` are reported as a plain sentence naming what to change.
