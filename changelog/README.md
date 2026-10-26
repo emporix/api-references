@@ -108,6 +108,26 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-26" tags="new-feature" %}
+
+## Category Service - category tree type filtering
+
+#### Overview
+
+The Category Service now supports filtering category trees by category type. Use the optional `type` query parameter to retrieve only `STANDARD` or `CLASSIFICATION` trees. If you omit the parameter, the endpoint returns trees of all types.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving the category trees](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-tree-resources#get-category-tenant-category-trees) | Accepts the optional `type` query parameter. You can combine it with `categoryIds` to return matching trees of the selected type. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-23" tags="minor-change" %}
 
 ## Media Service - content MD5 on asset details
