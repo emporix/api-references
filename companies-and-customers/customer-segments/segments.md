@@ -113,6 +113,10 @@ curl -i -X PUT \
 {% hint style="info" %}
 These operations perform an `UPSERT`. If the item is already assigned to the segment, the assignment is updated. If it is not assigned, the service creates the assignment.
 {% endhint %}
+
+{% hint style="info" %}
+For product visibility, Product Service resolves segment membership effectively. A direct product exclusion overrides category-based inclusion for the same segment, so an excluded product does not remain visible through its category assignment. Legacy assignments without an explicit mode continue to behave as `INCLUDE`.
+{% endhint %}
 {% endstep %}
 
 {% step %}
@@ -463,6 +467,8 @@ curl -i -X GET \
 ```
 
 You can limit the results with the `q` parameter, for example `q=type:PRODUCT` or `q=type:CATEGORY`.
+
+When Product Service resolves product visibility, direct product `EXCLUDE` takes precedence over category-based `INCLUDE`. As a result, a product can be assigned through a segment category and still be excluded effectively for that segment by a direct product assignment.
 {% endstep %}
 
 {% step %}
