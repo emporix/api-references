@@ -8,10 +8,11 @@ info:
     upserts idempotently. Imports run asynchronously and stream per-stream progress over Server-Sent Events.
 
     This reference covers the operational surface available with the `importtool.import_trigger` scope:
-    triggering, scheduling, monitoring, and cancelling import runs, reading configurations, streams,
-    schedules, runs, and imported data, and reading the import analytics that summarise them.
-    Administrative operations (creating and changing configurations, connections, streams, and mappings)
-    require the `importtool.import_manage` scope.
+    triggering, scheduling, monitoring, and cancelling import runs; managing the file queue of a
+    file-based stream (upload, list, reorder, remove); reading configurations, streams, schedules, runs,
+    and imported data; and reading the import analytics that summarise them. Administrative operations
+    (creating and changing configurations, connections, streams, and mappings) require the
+    `importtool.import_manage` scope.
   contact:
     name: Emporix
     url: https://emporix.com
@@ -176,12 +177,6 @@ paths:
     get:
       summary: Retrieving a stream's files
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Lists what a file-based stream still has to import, in the order it will be read, and what it has
         already dealt with. A file is identified by the SHA-256 of its content, so re-sending the same bytes
         is recognised however the file is named.
@@ -211,6 +206,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FileQueue'
+              examples:
+                File queue response:
+                  $ref: '#/components/examples/FileQueue_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -222,12 +220,6 @@ paths:
     post:
       summary: Uploading a file for a stream to import
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Queues a delimited file (CSV or one of its variants) for a file-based stream to import on its next
         run. Nothing is imported by this request.
 
@@ -264,6 +256,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportFile'
+              examples:
+                Uploaded file response:
+                  $ref: '#/components/examples/ImportFile_Example'
         '400':
           description: No file was sent.
           content:
@@ -307,12 +302,6 @@ paths:
     get:
       summary: Retrieving the file upload limits
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Returns the largest file this environment accepts, and whether uploading is available at all, so a
         client can state the limit and reject an oversize file before sending it.
       operationId: GET-importtool-stream-file-limits
@@ -347,6 +336,9 @@ paths:
                       False when the environment has nowhere to store an uploaded file. A file URL on the
                       connection does not help: a fetched file is stored in the same place.
                     example: true
+              examples:
+                File upload limits response:
+                  $ref: '#/components/examples/FileUploadLimits_Example'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -360,23 +352,18 @@ paths:
       - $ref: '#/components/parameters/trait_tenant'
       - $ref: '#/components/parameters/trait_streamId'
     put:
-      summary: Setting the order files are imported in
+      summary: Setting the order in which files are imported
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
+        Sets the order in which the waiting files are read. For an incremental feed the order is the data: a
+        later file's values win on a key an earlier one also carries, so an older export must be placed before
+        a newer one.
 
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
+        The request takes every waiting file's identifier, in load order, rather than moving one file: ranks
+        are only meaningful relative to each other, and a partial list would leave the omitted files at their
+        old ranks interleaved with the new ones. A list that is not exactly the waiting set is refused.
 
-        Sets the order the waiting files are read in. For an incremental feed the order is the data: a later
-        file's values win on a key an earlier one also carries, so an older export must be placed before a
-        newer one.
-
-        Takes every waiting file's identifier, in load order, rather than moving one file: ranks are only
-        meaningful relative to each other, and a partial list would leave the omitted files at their old
-        ranks interleaved with the new ones. A list that is not exactly the waiting set is refused.
-
-        Refused while the job has a run in flight, which may be draining the queue as the order changes.
+        The request is refused while the job has a run in flight, which may be draining the queue as the order
+        changes.
       operationId: PUT-importtool-stream-file-order
       tags:
         - Files
@@ -405,6 +392,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/ImportFile'
+              examples:
+                Reordered file queue response:
+                  $ref: '#/components/examples/ImportFiles_Example'
         '400':
           description: The list is not exactly the set of waiting files.
           content:
@@ -439,19 +429,13 @@ paths:
     delete:
       summary: Removing a file from the queue
       description: |-
-        <p align="left"><img src="https://res.cloudinary.com/saas-ag/image/upload/e_upscale/v1752824268/emporix/icons/preview_api1.png" alt="" width="60" height="20"></p>
-
-        {% hint style="danger" %}
-        This functionality is in preview mode - some of the features may not be fully operational yet.
-        {% endhint %}
-
         Removes a waiting file and deletes the stored bytes with it. Only a waiting file can be removed: one
         a run has claimed must not vanish underneath it, and one already imported is history — removing that
         record would make the same bytes importable again, which is the one thing the file ledger exists to
         prevent.
 
-        Refused while the job has a run in flight: the run may claim the file at any moment, and a retry may
-        be waiting to re-read it.
+        The request is refused while the job has a run in flight: the run may claim the file at any moment,
+        and a retry may be waiting to re-read it.
       operationId: DELETE-importtool-stream-file
       tags:
         - Files
@@ -1636,14 +1620,17 @@ components:
             - IN_PROGRESS
             - PROCESSED
             - FAILED
-          description: >-
-            Where the file is in its life. `PENDING`: waiting to be imported. `IN_PROGRESS`: a run has
-            claimed it and is reading it. `PROCESSED`: read to completion — set only once its records have
-            been written, so a run that fails part-way leaves the file importable. `FAILED`: the stream that
-            read the file finished `FAILED` — the file could not be read (malformed, truncated, wrong
-            charset), or the import failed for another reason, such as the target being unavailable. Such a
-            file can be sent again. Records that fail individually do not put a file here: a stream that
-            finishes with record failures still marks its file imported.
+          description: |-
+            Where the file is in its life. Possible values:
+
+            * `PENDING` – waiting to be imported.
+            * `IN_PROGRESS` – a run has claimed it and is reading it.
+            * `PROCESSED` – read to completion. Set only once its records have been written, so a run that
+              fails part-way leaves the file importable.
+            * `FAILED` – the stream that read the file finished `FAILED`. The file could not be read
+              (malformed, truncated, wrong charset), or the import failed for another reason, such as the
+              target being unavailable. Such a file can be sent again. Records that fail individually do not
+              put a file here: a stream that finishes with record failures still marks its file imported.
           example: PROCESSED
         loadRank:
           type: integer
@@ -1660,7 +1647,7 @@ components:
         processedAt:
           type: string
           format: date-time
-          description: When it finished being imported.
+          description: When the file finished being imported.
           example: '2026-10-23T09:17:42.000Z'
         runId:
           type: string
@@ -1858,26 +1845,26 @@ components:
             How this stream addresses its source. The recognised properties depend on the source type; the
             ones below are common.
 
-            * `keyField` — the source column holding the natural key.
-            * `keyFields` and `keyName` — a key that may resolve from more than one column: the first
+            * `keyField` – the source column holding the natural key.
+            * `keyFields` and `keyName` – a key that may resolve from more than one column: the first
               non-empty of `keyFields` wins, and `keyName` is the single canonical name recorded for it,
               so the same entity keeps one target id whichever column supplied the value. Put the stable
               identifier first: a lower-priority column winning on an earlier run and a higher-priority
               one later re-keys the record.
-            * `limit` — the maximum number of records one run reads (`Max records`). A positive number
+            * `limit` – the maximum number of records one run reads (`Max records`). A positive number
               only; text or zero means no cap. A dry run reads at most the smaller of this and its own sample size.
-            * `record` — the source record, table, or endpoint to read.
+            * `record` – the source record, table, or endpoint to read.
             * For a file source: the delimited-file format (`delimiter`, `quote`, `escape`, `charset`,
               `header`, `skipLines`, `nullLiterals`, `trimValues`, `compression`, `failOnRaggedRow`) and
               `arrays`, which reshapes repeated flat columns into nested form. The original columns are kept,
               and each array is added beside them under its name followed by `[]` — for example `lineItems[]`
               for `lineItems.0.sku`, or `COUNTRIES[]` for a delimited `COUNTRIES` column:
-              * `style` — how a repeated column is recognised: `DOT` (`lineItems.0.sku`), `BRACKET`
+              * `style` – how a repeated column is recognised: `DOT` (`lineItems.0.sku`), `BRACKET`
                 (`lineItems[0].sku`), `SUFFIX` (`phone_1`), or `NONE` (the default), which recognises no
                 repeated columns.
-              * `delimited` — a list of column names whose cells each hold a list of values.
-              * `separator` — the character a `delimited` cell is split on. Defaults to `;`.
-              * `maxElements` — the maximum number of elements one array can hold. Defaults to 1000; the
+              * `delimited` – a list of column names whose cells each hold a list of values.
+              * `separator` – the character a `delimited` cell is split on. Defaults to `;`.
+              * `maxElements` – the maximum number of elements one array can hold. Defaults to 1000; the
                 highest allowed value is 10000. A row with a longer array is not truncated: only that row
                 fails, with the error code `REJECTED_BY_SOURCE`, and the rest of the file is imported.
             * For an HTTP source: `pagination`, `queryParams`, `bodyTemplate`, and `format` (`JSON` or
@@ -2451,22 +2438,22 @@ components:
           description: |-
             A machine-readable error code:
 
-            * `VALIDATION` — the mapped record failed validation before any write was attempted.
-            * `NO_KEY` — the record's key column was empty, so it cannot be identified.
-            * `UPSERT` — the target rejected the write.
-            * `CONFIGURATION` — something to change in the import's own configuration, not a fault: a
+            * `VALIDATION` – the mapped record failed validation before any write was attempted.
+            * `NO_KEY` – the record's key column was empty, so it cannot be identified.
+            * `UPSERT` – the target rejected the write.
+            * `CONFIGURATION` – something to change in the import's own configuration, not a fault: a
               missing base URL, refused credentials, an unknown path, a stream that names no parent.
-            * `EXTERNAL_SYSTEM` — another system answered with an error, for example the source returning
+            * `EXTERNAL_SYSTEM` – another system answered with an error, for example the source returning
               5xx or a source-side extraction failure.
-            * `MERGE`, `PATCH_EMBED` — a composite merge or an embed patch onto the parent failed.
-            * `NO_LINKING_VALUE` — a composite child row carried no value in its linking field.
-            * `MARKER_DELETE`, `TOMBSTONE_DELETE`, `TOMBSTONE_NO_KEY` — a delete detected by a status
+            * `MERGE`, `PATCH_EMBED` – a composite merge or an embed patch onto the parent failed.
+            * `NO_LINKING_VALUE` – a composite child row carried no value in its linking field.
+            * `MARKER_DELETE`, `TOMBSTONE_DELETE`, `TOMBSTONE_NO_KEY` – a delete detected by a status
               marker or a tombstone record could not be applied.
-            * `REJECTED_BY_SOURCE` — the source rejected a single record because of its data, for example a
+            * `REJECTED_BY_SOURCE` – the source rejected a single record because of its data, for example a
               delimited-file row whose array has more elements than `sourceDataset.arrays.maxElements`. That
               record is not imported, but the other records are; `message` names the column, its number of
               elements, and the limit.
-            * `STREAM_ERROR` — the stream failed as a whole; the record-level detail is in `message`.
+            * `STREAM_ERROR` – the stream failed as a whole; the record-level detail is in `message`.
 
             `CONFIGURATION` and `EXTERNAL_SYSTEM` are reported as a plain sentence naming what to change.
             They are not application faults and are not alerted on as such.
@@ -3309,6 +3296,60 @@ components:
           enabled: true
           createdAt: '2026-07-01T10:15:30.000Z'
           updatedAt: '2026-07-20T08:00:00.000Z'
+    ImportFile_Example:
+      value:
+        id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+        fileName: vendors-2026-10-23.csv
+        size: 2458112
+        status: PENDING
+        loadRank: 1
+        queuedAt: '2026-10-23T09:15:00.000Z'
+    ImportFiles_Example:
+      value:
+        - id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+          fileName: vendors-2026-10-23.csv
+          size: 2458112
+          status: PENDING
+          loadRank: 1
+          queuedAt: '2026-10-23T09:15:00.000Z'
+        - id: c56a4180-65aa-42ec-a945-5fd21dec0538
+          fileName: vendors-2026-10-24.csv
+          size: 2510044
+          status: PENDING
+          loadRank: 2
+          queuedAt: '2026-10-24T09:15:00.000Z'
+    FileQueue_Example:
+      value:
+        pending:
+          - id: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
+            fileName: vendors-2026-10-23.csv
+            size: 2458112
+            status: PENDING
+            loadRank: 1
+            queuedAt: '2026-10-23T09:15:00.000Z'
+          - id: c56a4180-65aa-42ec-a945-5fd21dec0538
+            fileName: vendors-2026-10-24.csv
+            size: 2510044
+            status: PENDING
+            loadRank: 2
+            queuedAt: '2026-10-24T09:15:00.000Z'
+        history:
+          - id: a3bb189e-8bf9-3888-9912-ace4e6543002
+            fileName: vendors-2026-10-22.csv
+            size: 2391001
+            status: PROCESSED
+            loadRank: 1
+            queuedAt: '2026-10-22T09:15:00.000Z'
+            processedAt: '2026-10-22T09:17:42.000Z'
+            runId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+            recordsRead: 43342
+        pendingTruncated: false
+        pendingTotal: 2
+    FileUploadLimits_Example:
+      value:
+        maxUploadBytes: 9437184
+        gatewayLimited: true
+        uploadSupported: true
     ImportStream_Example:
       value:
         id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -3558,7 +3599,7 @@ components:
         clientCredentials:
           tokenUrl: 'https://api.emporix.io/oauth/token'
           scopes:
-            importtool.import_trigger: Needed to trigger, schedule, monitor, and cancel import runs and to read configurations, streams, schedules, runs, and imported data.
+            importtool.import_trigger: Needed to trigger, schedule, monitor, and cancel import runs; to manage a file-based stream's file queue; and to read configurations, streams, schedules, runs, and imported data.
 security:
   - OAuth2:
       - importtool.import_trigger

@@ -25,35 +25,29 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="minor-change" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
 
 ## Import Service - file imports and run counter reconciliation
 
 #### Overview
 
-Import runs can now read delimited files (CSV and its variants), and the run reports say so. These changes are visible with the `importtool.import_trigger` scope.
+Import runs can now read delimited files (CSV and its variants). You manage a stream's file queue — upload a file, list what is waiting, change the load order, or remove one — with the `importtool.import_trigger` scope, because a file is a stream's data feed rather than its configuration.
 
-**The run counters reconcile.** `recordsRead` equals `created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded`, on both the run and each of its streams. The reference previously stated a sum three terms short, so a client reconciling against it could not balance. Two of those terms are newly reported: `collapsed` counts source rows that repeated a key already present in the same batch, which are merged before the write with the last row winning; `embedded` counts child records an `EMBED` composite child handed to its parent, which the parent wrote inside its own instance, and which are settled onto `skipped`, `failed`, or `unresolvedParents` once the parent's pass completes.
+Run and stream counters now reconcile in full. On both the run and each of its streams, `recordsRead` equals `created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded`. The new `collapsed` and `embedded` counters cover repeated keys within a batch and child records written inside an `EMBED` parent. A file-based stream also reports which files it read (`filesRead` and `fileNames`), so a retry re-reads the same bytes.
 
-**A run stream says which files it read.** `filesRead` lists the file locators in the order they were read and `fileNames` gives each one's display name, so a retry re-reads the same bytes rather than whatever has since replaced them. `capSkipped` reports that the licensed records-per-entity limit left records read but not written, `keylessSeen` that a record had no value in its key column, and `sweep` marks the extra row produced by the unresolved-parent repair pass.
+Streams expose `sourceDataset` and `fileMode`, so you can see how a stream addresses its source and whether each file is a whole snapshot or a change set. Error records now include the `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE` codes.
 
-**A stream's files are managed with the operating scope.** The file queue — upload a file, see what is waiting, change the load order, remove one — is `importtool.import_trigger`, because a file is a stream's data feed and not its configuration: nothing in the queue changes a mapping, a connection, a target type or a key. Requiring the administration scope made the split incoherent, since triggering the run that reads the file is already an operating action. Defining where files come from stays administrative.
-
-**A stream carries its source definition.** `sourceDataset` describes how a stream addresses its source, including a multi-column natural key (`keyFields`, `keyName`), a per-run record cap (`limit`), and the delimited-file format. `fileMode` says whether each file is a whole snapshot or a change set. The schema also now documents `connectionId`, `parentKeyField`, `hashIncludesDeltaField`, `mappingSchemaVersions`, `abortOnSchemaVersionDrift`, `dependsOn`, `schemaAttributes`, and the superseded `nameField`.
-
-Error records now carry `CONFIGURATION` and `EXTERNAL_SYSTEM` codes, distinguishing something to change in the import's own configuration, and another system answering with an error, from an application fault. The documented code list previously named a code the service does not emit.
-
-A delimited-file row whose array has more elements than `sourceDataset.arrays.maxElements` now fails on its own with the new `REJECTED_BY_SOURCE` error code, and the rest of the file is imported. The Retrieving a stream's files endpoint accepts the `historyLimit` query parameter, which sets how many already handled files `history` returns.
+For the file-upload workflow, how the counters reconcile, and how to read these fields, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
 
 #### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | What a file-based stream still has to import, and what it has already dealt with. `historyLimit` sets how many handled files are returned. |
-| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Queues a delimited file; the same content is never imported twice. |
-| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files-limits) | The largest file this environment accepts, and whether uploading is available. |
-| [Setting the order files are imported in](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#put-importtool-tenant-streams-streamid-files-order) | For an incremental feed the order is part of the data. |
-| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#delete-importtool-tenant-streams-streamid-files-fileid) | Removes a waiting file and the stored bytes with it. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | Returns what a file-based stream still has to import and what it has already dealt with. Accepts `historyLimit`. |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Queues a delimited file for the stream's next run. The same content is never imported twice. |
+| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files-limits) | Returns the largest file this environment accepts and whether uploading is available. |
+| [Setting the order in which files are imported](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#put-importtool-tenant-streams-streamid-files-order) | Sets the load order of waiting files for an incremental feed. |
+| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#delete-importtool-tenant-streams-streamid-files-fileid) | Removes a waiting file and deletes the stored bytes with it. |
 
 #### Updated endpoints
 
@@ -62,13 +56,13 @@ A delimited-file row whose array has more elements than `sourceDataset.arrays.ma
 | [Retrieving an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run and its streams report `collapsed` and `embedded`, and `recordsRead` states the full reconciliation. |
 | [Retrieving import runs](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | As above, for each run in the page. |
 | [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
-| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | `errorCode` documents the codes the service actually emits, including `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE`. |
-| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, `connectionId`, and the other properties listed above. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Documents the `errorCode` values the service emits, including `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, and related source properties. |
 | [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
 
 #### Known problems
 
-The Import Service is in preview mode, so some features may not be fully operational yet.
+There are no known problems.
 
 {% endupdate %}
 
