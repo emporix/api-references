@@ -849,7 +849,8 @@ components:
               type: string
     returnSite:
       title: Site copied from the orders
-      description: Site and access boundary copied from the referenced orders. Create requests and return responses include these fields. Update and patch request bodies do not.
+      description: |
+        Site and access boundary copied from the referenced orders. You can send these fields on the create request. The create response returns only the new return id. Retrieved return documents include the fields. Update and patch request bodies do not accept them.
       type: object
       properties:
         siteCode:
