@@ -48,7 +48,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-28" tags="new-feature" %}
 
 ## Import Service - file imports and run counter reconciliation
 
