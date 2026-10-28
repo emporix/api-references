@@ -42,6 +42,10 @@ Countries and regions are predefined in the Emporix API [Country Service](../../
 
 Creating your first product is a process made up of defining sales tax rates, adding the product and adding media files for a product.
 
+{% hint style="info" %}
+If you use customer segments to control product visibility, the product response field `customerSegmentIds` contains the product's **effective** segment membership. Direct product or category-based INCLUDE assignments add a segment to this field, while a direct product EXCLUDE removes it even if the product is also included through a category. Legacy assignments without an explicit mode still behave as INCLUDE.
+{% endhint %}
+
 {% stepper %}
 {% step %}
 ### Define sales tax rates
