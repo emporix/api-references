@@ -59,7 +59,7 @@ On the storefront, a customer fills in the applicable fields in the return reque
 
 Based on your tenant's configuration settings and customer's oauth token, the remaining fields are populated automatically.
 
-When a customer sends a return request, the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint is called.
+When a customer sends a return request, the [Creating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint is called.
 
 {% hint style="warning" %}
 The following set of scopes is granted to a customer group:
@@ -125,7 +125,7 @@ curl -i -X POST
 
 ### Create a return on behalf of a customer
 
-To create a return on behalf of a customer, you need to send a request to the [Creating a single return entity](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) endpoint.
+To create a return on behalf of a customer, you need to send a request to the [Creating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint.
 
 {% hint style="warning" %}
 The following set of scopes is required for an employee group:
@@ -192,6 +192,18 @@ curl -i -X POST
 {% hint style="warning" %}
 The `approvalStatus` field is automatically populated during the creation of a return and is always set to `PENDING`.
 {% endhint %}
+
+### Keep the return on the order's site
+
+The service copies `siteCode` and `restriction` from the orders when you create the return. You can omit both fields. If you send a value, it must match the orders. Every order in the return must use the same site and the same restriction. A mismatch returns `400` with `site does not match order`. Orders that disagree return `400` with `orders belong to different sites`.
+
+The response includes both fields. To list the returns for one site, call [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) with `q=siteCode:DE`.
+
+An employee token with `returns.returns_read` or `returns.returns_manage` and no site suffix can read every return. A suffix limits that token to one site, for example `returns.returns_read--DE` or `returns.returns_manage--DE`. That token can create a return only when the copied `restriction` is `DE`. Creating a return for another site returns `403` with `Creating a return for this site is not allowed.` [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid), [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid), [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid), or [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) outside that site returns `404` with `The return with id {returnId} has not been found.` A return that has no `restriction` is hidden from that token. An employee token without a site suffix can still read it.
+
+Customer scopes `returns.returns_read_own` and `returns.returns_manage_own` stay limited to the customer's own returns.
+
+Update and partial update bodies do not accept `siteCode` or `restriction`. Attaching an order from another site on update returns `400`.
 
 ### Update the return request by a customer
 

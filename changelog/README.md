@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Returns Service - site on a return
+
+#### Overview
+
+Returns now store the `siteCode` and `restriction` of the referenced orders. You can omit both fields when you create a return. A value that does not match the orders, or orders that disagree with each other, is rejected. The list can be filtered with `q=siteCode`. An employee scope with a site suffix, such as `returns.returns_read--DE` or `returns.returns_manage--DE`, can access only returns for that site. An employee scope without a suffix can still access every return.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) | The service copies `siteCode` and `restriction` from the orders. A mismatch returns `400` with `site does not match order`. Mixed orders return `400` with `orders belong to different sites`. Creating a return outside a site-limited employee's site returns `403` with `Creating a return for this site is not allowed.` |
+| [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) | The list supports `q=siteCode:DE`. A site-limited employee receives only returns whose `restriction` is in that scope. `X-Total-Count` uses the same filter. |
+| [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) | The response includes `siteCode` and `restriction`. A return outside the employee's site, including a return with no `restriction`, returns `404`. |
+| [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) | The body does not accept `siteCode` or `restriction`. A mismatched new order returns `400`. A hidden return returns `404`. |
+| [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid) | The body does not accept `siteCode` or `restriction`. A hidden return returns `404` before the patch is applied. |
+| [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) | A hidden return returns `404`. |
+
+#### Known problems
+
+Returns that already exist are not given a site by this change.
+
+{% endupdate %}
+
 {% update date="2026-10-28" tags="new-feature" %}
 
 ## Import Service - file imports and run counter reconciliation
