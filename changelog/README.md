@@ -63,6 +63,47 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-10-28" tags="new-feature" %}
+
+## Import Service - file imports and run counter reconciliation
+
+#### Overview
+
+Import runs can now read delimited files (CSV and its variants). You manage a stream's file queue — upload a file, list what is waiting, change the load order, or remove one — with the `importtool.import_trigger` scope, because a file is a stream's data feed rather than its configuration.
+
+Run and stream counters now reconcile in full. On both the run and each of its streams, `recordsRead` equals `created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded`. The new `collapsed` and `embedded` counters cover repeated keys within a batch and child records written inside an `EMBED` parent. A file-based stream also reports which files it read (`filesRead` and `fileNames`), so a retry re-reads the same bytes.
+
+Streams expose `sourceDataset` and `fileMode`, so you can see how a stream addresses its source and whether each file is a whole snapshot or a change set. Error records now include the `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE` codes.
+
+For the file-upload workflow, how the counters reconcile, and how to read these fields, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | Returns what a file-based stream still has to import and what it has already dealt with. Accepts `historyLimit`. |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Queues a delimited file for the stream's next run. The same content is never imported twice. |
+| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files-limits) | Returns the largest file this environment accepts and whether uploading is available. |
+| [Setting the order in which files are imported](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#put-importtool-tenant-streams-streamid-files-order) | Sets the load order of waiting files for an incremental feed. |
+| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#delete-importtool-tenant-streams-streamid-files-fileid) | Removes a waiting file and deletes the stored bytes with it. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run and its streams report `collapsed` and `embedded`, and `recordsRead` states the full reconciliation. |
+| [Retrieving import runs](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | As above, for each run in the page. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Documents the `errorCode` values the service emits, including `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, and related source properties. |
+| [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-26" tags="new-feature" %}
 
 ## Category Service - category tree type filtering
