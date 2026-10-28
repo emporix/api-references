@@ -25,6 +25,21 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7014 -->
+
+## Document Intake Cockpit - line-item validation mapping
+
+#### Overview
+
+The Document Intake Cockpit now keeps saved line-item validation messages aligned with the correct invoice rows while a clerk edits line items. When rows are deleted, added, or reordered, validation messages stay on the corresponding logical lines, messages for deleted rows disappear from the form, and deleted-row errors no longer appear as a table-level error icon until the invoice is saved and revalidated.
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-28" tags="new-feature" %}
 
 ## Import Service - file imports and run counter reconciliation
