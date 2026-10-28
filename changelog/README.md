@@ -25,13 +25,13 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="RELEASE_DATE" tags="improvement" %}
 
 ## Returns Service - site on a return
 
 #### Overview
 
-Returns now store the `siteCode` and `restriction` of the referenced orders. You can omit both fields when you create a return. A value that does not match the orders, or orders that disagree with each other, is rejected. The list can be filtered with `q=siteCode`. An employee scope with a site suffix, such as `returns.returns_read--DE` or `returns.returns_manage--DE`, can access only returns for that site. An employee scope without a suffix can still access every return.
+Returns now store the `siteCode` and `restriction` of the referenced orders. You can omit both fields when you create a return. A value that does not match the orders, or orders that disagree with each other, is rejected. The list can be filtered with `q=siteCode:DE`. An employee scope with a site suffix, such as `returns.returns_read--DE` or `returns.returns_manage--DE`, can access only returns for that site. An employee scope without a suffix can still access every return.
 
 #### Updated endpoints
 

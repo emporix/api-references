@@ -75,7 +75,7 @@ paths:
       description: |
         Retrieves a list of return documents.
 
-        An employee scope with a site suffix returns only returns whose `restriction` is in that list. The `X-Total-Count` header uses the same filter. A return with no `restriction` is omitted. An employee scope without a site suffix returns every return. A customer scope returns that customer's own returns.
+        An employee scope with a site suffix retrieves only the returns whose `restriction` is in that list. The `X-Total-Count` header uses the same filter. A return with no `restriction` is omitted. An employee scope without a site suffix returns every return. A customer scope returns that customer's own returns.
 
         Filter one site with `q=siteCode:DE`.
       parameters:
@@ -360,12 +360,18 @@ components:
                 status: Bad Request
                 message: orders belong to different sites
     returns_post_response_Forbidden_403:
-      description: The employee is not allowed to create a return for this site.
+      description: |
+        The caller is not allowed to create the return. A missing `returns.returns_manage` or `returns.returns_manage_own` scope returns `The access to the requested resource has been forbidden by the server.` A site-limited employee who creates a return outside that site, including a return whose copied `restriction` is empty, returns `Creating a return for this site is not allowed.`
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/coreErrorMessage'
           examples:
+            Missing permission:
+              value:
+                code: 403
+                status: Forbidden
+                message: The access to the requested resource has been forbidden by the server.
             Site outside the employee restriction:
               value:
                 code: 403
@@ -581,6 +587,8 @@ components:
             Returns retrieved by a customer:
               value:
                 - id: 7ba2f2b6-7dc8-45ff-9f20-4e6163c14c2e
+                  siteCode: DE
+                  restriction: DE
                   approvalStatus: PENDING
                   received: false
                   orders:
@@ -654,6 +662,8 @@ components:
             Returns retrieved by an employee:
               value:
                 - id: 7ba2f2b6-7dc8-45ff-9f20-4e6163c14c2e
+                  siteCode: DE
+                  restriction: DE
                   approvalStatus: PENDING
                   received: false
                   orders:
