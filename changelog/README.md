@@ -25,6 +25,42 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Schema and Product Services - localized `OBJECT` mixins
+
+#### Overview
+
+Tenants with `languageSchemaVersion` set to `v2` can define localized `OBJECT` mixin attributes as language-keyed maps of nested objects. Array-of-localized `TEXT` and `OBJECT` fields now emit V2 language maps on mixin create and update instead of nested v1 arrays. A nullable localized `OBJECT` attribute allows both an outer `null` value and per-language `null` values.
+
+On product and custom-instance reads, `Accept-Language` filters localized `OBJECT` maps and arrays of language maps to a single preferred language key, matching existing v2 `TEXT` map behavior.
+
+Nested localization under a localized `OBJECT` remains forbidden. Nested localized `TEXT` or `OBJECT` under a plain `OBJECT` remains allowed. v1 tenants and v1 `[{language,value}]` arrays stay unchanged and are not filtered by `Accept-Language`.
+
+{% hint style="warning" %}
+When a v2 tenant updates a mixin that still uses nested v1 arrays for array-of-localized fields, Schema Service regenerates those fields as V2 maps. Stored nested-v1 values then fail validation until you migrate them to language maps.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts localized `OBJECT` attributes when `languageSchemaVersion` is `v2`, and emits V2 language maps for array-of-localized `TEXT` and `OBJECT`. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Applies the same localized `OBJECT` and V2 array-of-localized generation rules used when creating a schema. |
+| [Providing a file](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas-file) | Round-trips localized `OBJECT` maps and array-item V2 `TEXT` `$ref`s on schema file import. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
