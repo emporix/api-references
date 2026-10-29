@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
 
@@ -50,7 +50,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-29" tags="new-feature" %}
 
 ## Indexing Service - customer and legal-entity reindex
 
@@ -70,7 +70,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-29" tags="new-feature" %}
 
 ## AI Service - `search` native tool and new entity types for RAG tools
 
@@ -95,7 +95,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-29" tags="new-feature" %}
 
 ## AI RAG Indexer Service - customer and legal-entity types, filter metadata for lists and references
 
@@ -116,7 +116,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-29" tags="new-feature" %}
 
 ## Search Service - customer and legal-entity search
 
@@ -139,7 +139,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-10-29" tags="new-feature" %}
 
 ## Search Service - analyzers and list fields on an index
 
