@@ -18,14 +18,14 @@ layout:
 
 # AI RAG Indexer Tutorial
 
-You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in **product** and **order** entity types, and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/).
+You can use the AI RAG Indexer Service to keep your vector database in sync with Emporix data and to discover which attributes are available for Retrieval-Augmented Generation (RAG) and filtering. The service supports the built-in entity types **product**, **order**, **customer**, and **legal entity**, and **custom entity types** created in the [Schema Service](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/).
 
 Follow this tutorial to learn how to create a RAG tool with indexable and filterable fields that you can use in an AI agent.
 
 ## Prerequisites
 
 * The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
-* For built-in entity types, use `product` or `order` as the `{type}` path parameter.
+* For built-in entity types, use `product`, `order`, `customer`, or `legal-entity` as the `{type}` path parameter.
 * For custom entities, the custom type must exist in the Schema Service. The `{type}` in indexer URLs must match the `config.entityType`.
 
 {% hint style="warning" %}
@@ -127,6 +127,8 @@ Sample response (field paths depend on your custom schema):
 Replace the sample paths with the values returned by `rag-metadata` for your tenant. Mixin keys must match your Schema Service attribute definitions.
 {% endhint %}
 
+For customers and legal entities, call the same endpoint with `customer` or `legal-entity` as `{type}`. For customers, the response includes paths such as `customerNumber`, `contactEmail`, `company`, and `addresses.city`. For legal entities, it includes paths such as `name`, `legalInfo.legalName`, and `legalInfo.taxRegistrationNumber`.
+
 Use the response paths in the `indexedFields[].key` when you 
 create a RAG tool in the upcoming step.
 
@@ -218,6 +220,8 @@ Sample response (field paths depend on your custom schema):
 
 {% endtab %}
 {% endtabs %}
+
+For customers and legal entities, call the same endpoint with `customer` or `legal-entity` as `{type}`.
 
 Use the returned field paths in `filterFields[].key` when creating a tool in the upcoming step. 
 
@@ -434,6 +438,8 @@ curl --request PUT \
 {% endtab %}
 {% endtabs %}
 
+For customers and legal entities, set `config.entityType` to `customer` or `legal-entity`, and use a tool ID such as `rag-customer` or `rag-legal-entity`. The same rules for `indexedFields` and `filterFields` apply.
+
 {% hint style="info" %}
 Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `filter-metadata` for your tenant. 
 {% endhint %}
@@ -503,7 +509,9 @@ curl -L \
 {% endtab %}
 {% endtabs %}
 
-The service fetches every entity of the specified type (`product`, `order`, or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive a `201` or `200` response with a reindex job ID, which allows you to track the progress.
+For customers and legal entities, send the same request as for a custom entity and set `entityType` to `CUSTOMER` or `LEGAL-ENTITY`. The value is case-insensitive, but use a hyphen in `LEGAL-ENTITY`, not an underscore.
+
+The service fetches every entity of the specified type (`product`, `order`, `customer`, `legal-entity`, or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive a `201` or `200` response with a reindex job ID, which allows you to track the progress.
 
 {% hint style="danger" %}
 Reindexing is a computationally expensive and time-consuming operation, especially for large catalogs or high order volumes. It may significantly increase infrastructure costs, processing time, and overall system load. For this reason, perform reindexing only when truly necessary — for example, after major configuration changes, embedding model updates, or structural schema modifications. Avoid triggering it frequently or without clear intent.
@@ -520,7 +528,7 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 {% step %}
 #### Attach the tool to an agent
 
-Assign the tool ID (for example, `rag-product`, `rag-order`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
+Assign the tool ID (for example, `rag-product`, `rag-order`, `rag-customer`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
 {% hint style="info" %}
 For broader agent setup and chat flows, see the [AI Service Tutorial](../ai-service/ai-tutorial.md).
