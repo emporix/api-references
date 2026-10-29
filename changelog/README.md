@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-6923 -->
+
+## Schema Service - restart-time change notice reliability
+
+#### Overview
+
+Schema Service now preserves in-flight schema change notice publishing during service restarts. Updates that are already in progress when shutdown begins can still complete and publish their follow-up change notices for custom instances and custom schema types, which reduces partial-success failures during deploy restarts.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| Schema Service save and update operations for custom instances and custom schema types | In-flight operations can still publish their change notices during shutdown drain, while no further notices are sent after the service has fully stopped. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
