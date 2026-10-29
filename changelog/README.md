@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7044 -->
+
+## Search Service - tutorial coverage for analyzers and list fields
+
+#### Overview
+
+The Search Service tutorial was expanded to document existing search capabilities for custom schema type indexes. It now explains `analyzer`, `additionalAnalyzers`, and `itemFields`, describes analyzer presets and custom analyzers, and clarifies how queries and filters behave for lists of objects. This update improves discoverability of already supported behavior without changing the API contract.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating an index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/indexes#post-search-tenant-indexes) | The tutorial now explains index field options for `analyzer`, `additionalAnalyzers`, and `itemFields`, including custom analyzers defined on the index. |
+| [Updating an index](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/indexes#put-search-tenant-indexes-indexid) | The tutorial now clarifies that adding, removing, or changing `analyzers` starts an update job and returns asynchronous processing. |
+| [Searching indexed documents](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search) | The tutorial now documents query-time `analyzer` selection for `TEXT` and `PHRASE` queries and same-item matching rules for fields inside lists of objects. |
+| [Exporting indexes](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/indexes#post-search-tenant-indexes-export) | The tutorial now states that exported index configuration includes optional `analyzers`. |
+| [Importing indexes](https://developer.emporix.io/api-references/api-guides/utilities/search-service/api-reference/indexes#import-search-tenant-indexes) | The tutorial now reflects that imported index configuration can include `analyzers`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
