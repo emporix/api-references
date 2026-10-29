@@ -121,6 +121,51 @@ Sample response (field paths depend on your custom schema):
 ]
 ```
 {% endtab %}
+
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/customer/rag-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  "customerNumber",
+  "contactEmail",
+  "company",
+  "addresses.city"
+]
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/legal-entity/rag-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  "name",
+  "legalInfo.legalName",
+  "legalInfo.taxRegistrationNumber"
+]
+```
+
+{% endtab %}
 {% endtabs %}
 
 {% hint style="info" %}
@@ -217,6 +262,53 @@ Sample response (field paths depend on your custom schema):
 ```
 
 {% endtab %}
+
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/customer/filter-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  { "key": "id", "type": "string" },
+  { "key": "customerNumber", "type": "string" },
+  { "key": "contactEmail", "type": "string" },
+  { "key": "company", "type": "string" },
+  { "key": "defaultAddress.city", "type": "string" }
+]
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request GET \
+  --url 'https://api.emporix.io/ai-rag-indexer/{{tenant}}/legal-entity/filter-metadata' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Accept: application/json'
+```
+
+Sample response:
+
+```json
+[
+  { "key": "id", "type": "string" },
+  { "key": "name", "type": "string" },
+  { "key": "legalInfo.legalName", "type": "string" },
+  { "key": "legalInfo.taxRegistrationNumber", "type": "string" }
+]
+```
+
+{% endtab %}
 {% endtabs %}
 
 Use the returned field paths in `filterFields[].key` when creating a tool in the upcoming step. 
@@ -234,7 +326,7 @@ Use the returned field paths in `filterFields[].key` when creating a tool in the
 
 When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
 
-Set the `toolId` in the URL path (for example, `rag-product`, `rag-order`, or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
+Set the `toolId` in the URL path (for example, `rag-product`, `rag-order`, `rag-customer`, `rag-legal-entity`, or `rag-car-parts`). The `indexedFields` and `filterFields` are required for `rag_emporix` tools – specify the paths from the responses returned in previous steps:
 * The `indexedFields` can use optional name aliases. 
 * For the `filterFields`, add relevant descriptions so that the agent knows when to apply the filters.
 
@@ -432,6 +524,92 @@ curl --request PUT \
 ```
 
 {% endtab %}
+
+{% tab title="Customer" %}
+
+```bash
+curl --request PUT \
+  'https://api.emporix.io/ai-service/{{tenant}}/agentic/tools/rag-customer' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Customer Search RAG Tool",
+    "type": "rag_emporix",
+    "enabled": true,
+    "config": {
+      "prompt": "Use this tool when the user asks to find or look up customers by customer number, email, company, or city.",
+      "entityType": "customer",
+      "embeddingConfig": {
+        "provider": "emporix_openai"
+      },
+      "indexedFields": [
+        { "key": "customerNumber", "name": "Customer number" },
+        { "key": "contactEmail", "name": "Contact email" },
+        { "key": "company", "name": "Company" },
+        { "key": "addresses.city", "name": "Address city" }
+      ],
+      "filterFields": [
+        {
+          "key": "customerNumber",
+          "name": "Customer number",
+          "description": "Exact customer number. Use when the user provides a specific customer number."
+        },
+        {
+          "key": "contactEmail",
+          "name": "Contact email",
+          "description": "Customer email address. Use when the user asks for a customer with a specific email."
+        },
+        {
+          "key": "company",
+          "name": "Company",
+          "description": "Company name. Use when results must be limited to customers of a specific company."
+        }
+      ]
+    }
+  }'
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl --request PUT \
+  'https://api.emporix.io/ai-service/{{tenant}}/agentic/tools/rag-legal-entity' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Legal Entity Search RAG Tool",
+    "type": "rag_emporix",
+    "enabled": true,
+    "config": {
+      "prompt": "Use this tool when the user asks to find or look up legal entities by name, legal name, or tax registration number.",
+      "entityType": "legal-entity",
+      "embeddingConfig": {
+        "provider": "emporix_openai"
+      },
+      "indexedFields": [
+        { "key": "name", "name": "Name" },
+        { "key": "legalInfo.legalName", "name": "Legal name" },
+        { "key": "legalInfo.taxRegistrationNumber", "name": "Tax registration number" }
+      ],
+      "filterFields": [
+        {
+          "key": "id",
+          "name": "Legal entity ID",
+          "description": "Exact legal entity identifier. Use when the user provides a specific legal entity ID."
+        },
+        {
+          "key": "legalInfo.taxRegistrationNumber",
+          "name": "Tax registration number",
+          "description": "Tax registration number. Use when the user searches for a legal entity by its tax number."
+        }
+      ]
+    }
+  }'
+```
+
+{% endtab %}
 {% endtabs %}
 
 {% hint style="info" %}
@@ -501,6 +679,40 @@ curl -L \
 ```
 
 {% endtab %}
+
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{{tenant}}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "CUSTOMER"
+  }'
+```
+
+The `rag` flag applies only to products. Don't set it for customers.
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{{tenant}}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "LEGAL-ENTITY"
+  }'
+```
+
+Use `LEGAL-ENTITY` with a hyphen, not an underscore. The `entityType` value is case-insensitive. As for customers, don't set the `rag` flag.
+
+{% endtab %}
 {% endtabs %}
 
 The service fetches every entity of the specified type (`product`, `order`, `customer`, `legal-entity`, or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive a `201` or `200` response with a reindex job ID, which allows you to track the progress.
@@ -520,7 +732,7 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 {% step %}
 #### Attach the tool to an agent
 
-Assign the tool ID (for example, `rag-product`, `rag-order`, `rag-customer`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
+Assign the tool ID (for example, `rag-product`, `rag-order`, `rag-customer`, `rag-legal-entity`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
 {% hint style="info" %}
 For broader agent setup and chat flows, see the [AI Service Tutorial](../ai-service/ai-tutorial.md).
