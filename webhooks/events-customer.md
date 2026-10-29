@@ -30,6 +30,7 @@ description: Webhook events related to the creation, update and deletion of a cu
     "companyRegistrationId": "String"
   },
   "type": "String",
+  "restriction": "String",
   "metadata": "Object",
   "mixins": "Map",
   "tenant": "String"
@@ -55,6 +56,7 @@ description: Webhook events related to the creation, update and deletion of a cu
     "companyRegistrationId": "String"
   },
   "type": "String",
+  "restriction": "String",
   "defaultAddress": "Object",
   "addresses": ["Object"],
   "metadata": "Object",
