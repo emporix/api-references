@@ -146,6 +146,54 @@ curl -L \
   }'
 ```
 
+## How to create a Search native tool
+
+Use the Search native tool when an agent must find a specific **customer** or **legal entity** by matching terms such as name, number, or other details. Unlike RAG-based retrieval, Search does not use embeddings. Instead, it uses an Emporix-managed search index.
+
+Call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update the tool.
+
+The OAuth2 access token must include the `ai.agent_manage` scope to create the tool.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+Set `type` to `search` and configure the entity type under `config.entityType`.
+
+Supported `config.entityType` values are:
+
+* `customer`
+* `legal-entity`
+
+You can also set:
+
+* `config.prompt` – optional instructions that tell the agent when to use the tool
+* `config.maxResults` – the maximum number of returned results, from `1` to `10`; if omitted, the default is `5`
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/search-customer' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Customer Search",
+    "type": "search",
+    "enabled": true,
+    "config": {
+      "entityType": "customer",
+      "prompt": "Use this tool when the user asks to find a customer by name or number.",
+      "maxResults": 5
+    }
+  }'
+```
+
+Saving the tool prepares the search index for the selected entity type. If the index cannot be prepared, the tool is not saved.
+
+After you create the tool, attach it to an agent as a native tool. For agent management details, see [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) and [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid).
+
 ## How to search for AI agents
 
 When you want to add a trigger for an enabled AI agent through API, for example as a part of a digital process or from an external system, you need to fetch the specific agent details.
