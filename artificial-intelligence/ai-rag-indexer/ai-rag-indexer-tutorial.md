@@ -127,8 +127,6 @@ Sample response (field paths depend on your custom schema):
 Replace the sample paths with the values returned by `rag-metadata` for your tenant. Mixin keys must match your Schema Service attribute definitions.
 {% endhint %}
 
-For customers and legal entities, call the same endpoint with `customer` or `legal-entity` as `{type}`. For customers, the response includes paths such as `customerNumber`, `contactEmail`, `company`, and `addresses.city`. For legal entities, it includes paths such as `name`, `legalInfo.legalName`, and `legalInfo.taxRegistrationNumber`.
-
 Use the response paths in the `indexedFields[].key` when you 
 create a RAG tool in the upcoming step.
 
@@ -220,8 +218,6 @@ Sample response (field paths depend on your custom schema):
 
 {% endtab %}
 {% endtabs %}
-
-For customers and legal entities, call the same endpoint with `customer` or `legal-entity` as `{type}`.
 
 Use the returned field paths in `filterFields[].key` when creating a tool in the upcoming step. 
 
@@ -438,8 +434,6 @@ curl --request PUT \
 {% endtab %}
 {% endtabs %}
 
-For customers and legal entities, set `config.entityType` to `customer` or `legal-entity`, and use a tool ID such as `rag-customer` or `rag-legal-entity`. The same rules for `indexedFields` and `filterFields` apply.
-
 {% hint style="info" %}
 Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `filter-metadata` for your tenant. 
 {% endhint %}
@@ -508,8 +502,6 @@ curl -L \
 
 {% endtab %}
 {% endtabs %}
-
-For customers and legal entities, send the same request as for a custom entity and set `entityType` to `CUSTOMER` or `LEGAL-ENTITY`. The value is case-insensitive, but use a hyphen in `LEGAL-ENTITY`, not an underscore.
 
 The service fetches every entity of the specified type (`product`, `order`, `customer`, `legal-entity`, or custom entity type). Embeddings are generated per entity and vector database records are updated. You receive a `201` or `200` response with a reindex job ID, which allows you to track the progress.
 
