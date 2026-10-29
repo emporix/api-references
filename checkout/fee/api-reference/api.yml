@@ -322,6 +322,7 @@ paths:
         - $ref: '#/components/parameters/trait_localizedRetrieval_Accept-Language'
         - $ref: '#/components/parameters/SiteCode'
         - $ref: '#/components/parameters/Expand'
+        - $ref: '#/components/parameters/ItemType'
     put:
       description: |
         Adds a list of feeIds to the itemYRN.
@@ -348,6 +349,7 @@ paths:
           $ref: '#/components/responses/trait_yaasAware_403'
       parameters:
         - $ref: '#/components/parameters/Partial'
+        - $ref: '#/components/parameters/ItemType'
     delete:
       description: |
         Deletes item fee with the specified itemYRN.
@@ -365,6 +367,8 @@ paths:
           $ref: '#/components/responses/trait_unauthorized_401'
         '403':
           $ref: '#/components/responses/trait_yaasAware_403'
+      parameters:
+        - $ref: '#/components/parameters/ItemType'
     parameters:
       - $ref: '#/components/parameters/ItemYRN'
       - $ref: '#/components/parameters/tenant'
@@ -392,6 +396,7 @@ paths:
         - $ref: '#/components/parameters/ItemYRN'
         - $ref: '#/components/parameters/tenant'
         - $ref: '#/components/parameters/FeeId'
+        - $ref: '#/components/parameters/ItemType'
   '/fee/{tenant}/productFees/{productId}/fees':
     get:
       description: |
@@ -605,7 +610,7 @@ paths:
   '/fee/{tenant}/itemFees/search':
     post:
       description: |
-        Checks if the itemYrns in the request have a fee applied to. Responds with the itemYRN and the corresponding fees.
+        Checks if the specified items have a fee applied. Items can be identified either by `itemYrns` or by `items` (plain ID and type pairs). Responds with matching item fees.
       tags:
         - Item fee search
       summary: Checking if a fee has been applied
@@ -818,21 +823,27 @@ components:
       required:
         - fee
     ItemYRNs:
-      description: the itemYrns this fee is applied to
+      description: The item identifications this fee is applied to.
       type: object
       properties:
         itemYrns:
           type: array
+          deprecated: true
+          description: '**This field is deprecated**. Use `items` instead.'
           items:
             type: string
           example:
             - 'urn:yaas:saasag:caasproduct:product:tenantName;5c2e4957a46b0e0008491095'
             - 'urn:yaas:saasag:caasproduct:product:tenantName;5c2e4957a46b0e0008491096'
+        items:
+          type: array
+          description: List of item references. Can be provided as an alternative to `itemYrns`.
+          items:
+            $ref: '#/components/schemas/ItemReferenceDto'
         siteCode:
           type: string
           example: main
       required:
-        - itemYrns
         - siteCode
     ItemFee:
       type: object
@@ -844,20 +855,20 @@ components:
           description: The SiteCode this fee belongs to.
           type: string
         itemYrn:
-          description: YRN of the item to assign fees to.
+          description: 'YRN of the item to assign fees to. **This field is deprecated**. Use `itemId` and `itemType` instead.'
           type: string
+          deprecated: true
+        itemId:
+          description: Plain identifier of the item.
+          type: string
+        itemType:
+          $ref: '#/components/schemas/ItemReferenceType'
         feeIds:
           description: List of unique identifiers of fees to assign to the item.
           type: array
           items:
             type: string
-        # fees:
-        #   description: List of fees to assign to the item.
-        #   type: array
-        #   items:
-        #     $ref: '#/components/schemas/Fee'
       required:
-        - itemYrn
         - feeIds
         - siteCode
     ItemFees:
@@ -889,6 +900,24 @@ components:
       title: YRN
       description: A unique identifier of a global resource, which stores information about the resource, such as its type, ID or name of the tenant.
       minLength: 1
+    ItemReferenceDto:
+      type: object
+      description: An item reference identified by a plain ID and type.
+      properties:
+        id:
+          type: string
+          description: Plain identifier of the item.
+        type:
+          $ref: '#/components/schemas/ItemReferenceType'
+      required:
+        - id
+        - type
+    ItemReferenceType:
+      type: string
+      description: The type of the referenced item.
+      enum:
+        - PRODUCT
+        - PAYMENT
     SearchItemFee:
       type: object
       description: Search ItemFee request body.
@@ -1173,6 +1202,14 @@ components:
       required: true
       schema:
         type: string
+      description: Item YRN or plain item ID. When `itemType` query parameter is provided, this value is interpreted as a plain item ID.
+    ItemType:
+      in: query
+      name: itemType
+      required: false
+      schema:
+        $ref: '#/components/schemas/ItemReferenceType'
+      description: When provided, the `itemYRN` path parameter is interpreted as a plain item ID of the specified type.
     FeeId:
       in: path
       name: feeId
