@@ -25,6 +25,144 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Webhook Events - `restriction` on `customer.created` and `customer.updated`
+
+#### Overview
+
+The `customer.created` and `customer.updated` webhook event payloads were extended with `restriction`.
+
+#### Updated events
+
+| Event              | Description                                        |
+|--------------------|----------------------------------------------------|
+| `customer.created` | Event schema extended with `restriction` property. |
+| `customer.updated` | Event schema extended with `restriction` property. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Indexing Service - customer and legal-entity reindex
+
+#### Overview
+
+You can now reindex all customers or all legal entities of a tenant. Set `entityType` to `CUSTOMER` or `LEGAL-ENTITY` when you create a reindex job. AI RAG tools and Search Service searches for these types use the reindexed documents.
+
+#### Updated endpoints
+
+| Endpoint | Description                                                                          |
+| --- |--------------------------------------------------------------------------------------|
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Accepts `CUSTOMER` and `LEGAL-ENTITY` as `entityType`. Values are case-insensitive.  |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - `search` native tool and new entity types for RAG tools
+
+#### Overview
+
+The new `search` native tool lets an agent search customers or legal entities. Set `config.entityType` to `customer` or `legal-entity`, add an optional `prompt`, and limit results per search with `maxResults` (1 to 10, default 5). When you save a `search` tool, the service creates or updates the search index for that entity type. If the index cannot be prepared, the tool is not saved.
+
+`rag_emporix` tools now also accept `customer` and `legal-entity` as `config.entityType`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts the `search` tool type and creates or updates the search index for `config.entityType` before saving. If the index cannot be prepared, the tool is not saved. For `rag_emporix` tools, accepts `customer` and `legal-entity` as `config.entityType`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Can return a `search` tool. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Can return `search` tools. |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search) | Can return `search` tools. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI RAG Indexer Service - customer and legal-entity types, filter metadata for lists and references
+
+#### Overview
+
+The metadata endpoints now accept `customer` and `legal-entity` as the entity type, in addition to `product`, `order`, and custom entity types. Filter metadata marks fields inside a list of objects with `parent` and returns the `id` of a Schema Service `REFERENCE` attribute as a filterable field.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata) | Accepts `customer` and `legal-entity` as `type`. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Accepts `customer` and `legal-entity` as `type`. A field inside a list of objects, such as `addresses.city`, includes `parent` with the list path. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Search Service - customer and legal-entity search
+
+#### Overview
+
+Search indexes, saved searches, and searches now support the `customer` and `legal-entity` types, in addition to custom schema types. A search on these types needs the matching customer or legal-entity read scope. A restricted read scope or an own-read scope limits which documents are returned.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Accepts `customer` and `legal-entity` as `type`. Requires `customer.customer_read` or `customer.customer_read_own` for customers, and `customermanagement.legalentity_read` or `customermanagement.legalentity_read_own` for legal entities. A restricted scope returns only documents with the listed `restriction` or `restrictions` values. An own-read scope returns only the caller's own customer or legal entity. |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | Creates and updates indexes for `customer` and `legal-entity`. |
+| [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id) | Saves searches for `customer` and `legal-entity`. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Imports indexes for `customer` and `legal-entity`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Search Service - analyzers and list fields on an index
+
+#### Overview
+
+A search index can now define `analyzers` that control how text is compared, and can index a list of objects through `itemFields` so that a search can require every condition to match the same item. A `TEXT` or `PHRASE` query can select one of those analyzers.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | Accepts optional `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id) | Returns stored `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Exporting search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-export) | Includes `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field, in the package. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Imports `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Accepts an optional `analyzer` on a `TEXT` or `PHRASE` query. The name must be the field's analyzer or one of its additional analyzers. Searches fields inside `itemFields` by full path, such as `addresses.city`. Conditions on one list joined by `and` must match the same item. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-28" tags="new-feature" %}
 
 ## Import Service - file imports and run counter reconciliation
