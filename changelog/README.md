@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6980 -->
+
+## Product Service - effective `customerSegmentIds` resolution
+
+#### Overview
+
+Product Service now calculates `customerSegmentIds` as effective customer segment visibility instead of a simple union of direct and category-derived assignments. Direct product `EXCLUDE` assignments now remove the segment from the product even when an `INCLUDE` exists through direct or category assignment, while legacy assignments without `mode` continue to behave as `INCLUDE`.
+
+This change keeps the existing product response shape and updates only the semantics of the `customerSegmentIds` field.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | The `customerSegmentIds` field now contains only effective segment assignments after `INCLUDE` and `EXCLUDE` resolution. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
