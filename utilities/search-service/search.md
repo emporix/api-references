@@ -404,7 +404,7 @@ A custom analyzer supports the following properties:
 
 For example, a company-name analyzer based on `FOLDED` that ignores the words `gmbh` and `ag` matches `Maier GmbH` and `Maier` for the same query.
 
-Analyzers are part of the field definition. Adding, removing, or changing an analyzer starts an update job and returns `202 Accepted`. For more information, see [How to manage indexes and jobs](#how-to-manage-indexes-and-jobs).
+Custom analyzers belong to the index, and fields only select them by name in `analyzer` or `additionalAnalyzers`. Adding, removing, or changing a custom analyzer, or changing which analyzers a field selects, starts an update job and returns `202 Accepted`. For more information, see [How to manage indexes and jobs](#how-to-manage-indexes-and-jobs).
 
 ### Select an analyzer in a query
 
@@ -427,7 +427,7 @@ Follow these rules when you define a list:
 The following rules describe how conditions on a list of objects match list items:
 
 * Conditions on the same list joined by `and` must match the same item. For example, a filter for `addresses.city` equal to `Berlin` and `addresses.zipCode` equal to `10115` matches only when one address has both values. A document with a Berlin address and a separate address with that postal code does not match.
-* A lone `NEQ`, `NOT_IN`, or `EXISTS` with `false` on a list field excludes the document when any item matches the value. A document with no items in that list matches.
+* When you use `NEQ`, `NOT_IN`, or `EXISTS` with `false` on its own against a list field, the condition applies to every item. If any item has the excluded value, or has the field in the case of `EXISTS` with `false`, the document is excluded. If the list has no items, the document is included.
 * When such an operator is joined by `and` with another condition on the same list, it still applies to one item. The document matches when one item meets all conditions.
 
 ## Available search criteria
