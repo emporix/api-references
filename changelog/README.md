@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7036 -->
+
+## AI Agents Configuration - Mistral setup guidance
+
+#### Overview
+
+The AI Agents Configuration documentation now includes a dedicated guide for connecting agents to Mistral through the existing self-hosted model configuration. The update also clarifies that `Authorization Token` selects a stored AI Token, that the token stores the raw API key without the `Bearer` prefix, and that OpenAI-compatible providers such as Mistral use `Self-hosted vLLM` with `Base Provider` set to `OpenAI`.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Configuring AI agents](https://developer.emporix.io/api-references/aci-guides/agentic/agents) | Updated the model configuration guidance with clarified `Base Provider` values, `Authorization Token` behavior, and a link to the self-hosted model setup for OpenAI-compatible providers such as Mistral. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
