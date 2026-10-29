@@ -60,9 +60,9 @@ You can now reindex all customers or all legal entities of a tenant. Set `entity
 
 #### Updated endpoints
 
-| Endpoint | Description |
-| --- | --- |
-| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Accepts `CUSTOMER` and `LEGAL-ENTITY` as `entityType`. Values are case-insensitive. `LEGAL-ENTITY` uses a hyphen, not an underscore. |
+| Endpoint | Description                                                                          |
+| --- |--------------------------------------------------------------------------------------|
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Accepts `CUSTOMER` and `LEGAL-ENTITY` as `entityType`. Values are case-insensitive.  |
 
 #### Known problems
 
@@ -108,7 +108,7 @@ The metadata endpoints now accept `customer` and `legal-entity` as the entity ty
 | Endpoint | Description |
 | --- | --- |
 | [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata) | Accepts `customer` and `legal-entity` as `type`. |
-| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Accepts `customer` and `legal-entity` as `type`. A field inside a list of objects, such as `addresses.city`, includes `parent` with the list path. Returns a Schema Service `REFERENCE` attribute as the attribute path with type `object` and `{path}.id` with type `string`. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Accepts `customer` and `legal-entity` as `type`. A field inside a list of objects, such as `addresses.city`, includes `parent` with the list path. |
 
 #### Known problems
 
