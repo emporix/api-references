@@ -25,6 +25,30 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7045 -->
+
+## AI Service and AI RAG Indexer Service - customer and legal entity tool guidance
+
+#### Overview
+
+The AI RAG Indexer tutorial now documents existing support for `customer` and `legal-entity` as built-in entity types for `rag_emporix` tools, including metadata discovery, tool configuration, and reindex guidance. The AI Service tutorial now also explains the existing `search` native tool for customer and legal entity lookup, including `config.entityType`, optional `config.prompt`, `config.maxResults`, and save-time search-index preparation behavior.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving RAG metadata](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/default#get-ai-rag-indexer-tenant-type-rag-metadata) | Documentation now clarifies that this endpoint also supports the built-in `customer` and `legal-entity` types. |
+| [Retrieving filter metadata](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/default#get-ai-rag-indexer-tenant-type-filter-metadata) | Documentation now clarifies that this endpoint also supports the built-in `customer` and `legal-entity` types. |
+| [Upserting a tool](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/tools#put-ai-service-tenant-agentic-tools-toolid) | Documentation now explains how to configure the `search` native tool with `config.entityType`, optional `config.prompt`, and `config.maxResults` for `customer` and `legal-entity`. |
+| [Creating reindex job](https://developer.emporix.io/api-references/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Documentation now explains reindex guidance for `CUSTOMER` and `LEGAL-ENTITY`, including the expected `entityType` values. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
