@@ -28,7 +28,7 @@ To let an agent find customers or legal entities without configuring indexed and
 
 ## Prerequisites
 
-* The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
+* The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes. To trigger a reindex job, the token must also include the `indexing.search_manage` scope.
 * For built-in entity types, use `product`, `order`, `customer`, or `legal-entity` as the `{type}` path parameter.
 * For custom entities, the custom type must exist in the Schema Service. The `{type}` in indexer URLs must match the `config.entityType`.
 
