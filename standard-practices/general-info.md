@@ -23,7 +23,7 @@ To ensure consistency between the Emporix API services, some data types use stan
 | **Countries**       | Countries are indicated through two-letter codes compliant with the [ISO 3166-1 alpha-2 standard](https://www.iso.org/obp/ui/#iso:pub:PUB500001:en).                         |
 | **Currencies**      | Currencies are indicated through three-letter codes compliant with the [ISO 4217 standard](https://www.iso.org/iso-4217-currency-codes.html).                                |
 | **Dates and times** | All dates and times are stored as instantaneous moments in the UTC timezone, compliant with the [ISO 8601 standard](https://www.iso.org/iso-8601-date-and-time-format.html). |
-| **Languages**       | Languages (including regional variants) are indicated through codes compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).              |
+| **Languages**       | Languages (including regional variants) are indicated through codes compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag). Emporix services that support custom language codes accept tags by format, for example `en-NL`, `en-de`, `es-419`, `zh-Hant`, or `sr-Latn-BA`. Language codes are commonly matched ignoring letter case, while stored values keep their original letter case. For service-specific behavior, see [Translations](./translations.md) and [Language Tutorials](../configuration/configuration-service/language.md). |
 
 Check the below for specific practices:
 

@@ -48,6 +48,30 @@ curl -L
     "metadata": {}
   }'
 ```
+{% hint style="info" %}
+Site languages and `defaultLanguage` accept language codes in the IETF BCP-47 format, including custom variants such as `en-NL`, `en-de`, `es-419`, or `zh-Hant`.
+
+The `defaultLanguage` value must also be present in `languages`. These values are compared ignoring letter case, so `defaultLanguage: "de-de"` matches `languages: ["de-DE"]`. The values are returned as sent in the request.
+{% endhint %}
+
+For example:
+
+```json
+{
+  "code": "example",
+  "name": "ExampleName",
+  "active": false,
+  "default": false,
+  "defaultLanguage": "de-de",
+  "languages": [
+    "en",
+    "de-DE",
+    "en-NL"
+  ],
+  "currency": "GBP"
+}
+```
+
 
 ## How to set a list of countries to which a site ships products
 
