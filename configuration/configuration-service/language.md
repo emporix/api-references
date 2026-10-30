@@ -40,6 +40,8 @@ Languages configured for a particular site need to be a subset of languages conf
 
 Language codes defined in language configurations must be compliant with the [IETF BCP-47 standard](https://en.wikipedia.org/wiki/IETF_language_tag).
 
+Codes are checked for their format, not against a list of registered languages, so you can define the regional variants that your business needs, such as `en-NL` or `en-SG`. A code must start with a language code of 2 or 3 letters, optionally followed by region, script, or variant subtags of 2 to 8 letters or digits, each separated by a hyphen, for example `es-419` or `zh-Hant`. Extension and private-use subtags, such as `-u-` or `-x-`, are not supported. Codes are accepted in any letter case. The recommended letter case is lowercase for the language, uppercase for the region, and title case for the script. The Product Service, Brand Service, Label Service, and Site Settings Service match language codes ignoring letter case. For details, see [Translations](../../standard-practices/translations.md).
+
 Your tenant's language configuration is stored under the `project_lang` key in the [Emporix API Configuration Service](./). Check out the following language configuration example:
 
 ```json

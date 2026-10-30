@@ -23,6 +23,17 @@ In the Emporix Commerce Engine, localized fields are stored in the form of Strin
 {% hint style="warning" %}
 Language codes must match the ones defined in your language configurations.
 
+The Product Service (products, variants, and product templates), Brand Service, Label Service, and Site Settings Service accept language codes by IETF BCP-47 tag format, including custom codes that are not in a built-in list, for example `en-NL`, `en-de`, `es-419`, or `zh-Hant`.
+
+The following letter-case rules apply to language codes in these services:
+
+* `Content-Language` and `Accept-Language` values match a configured language in any letter case. For example, `Content-Language: de-de` matches the configured `de-DE` and is treated as `de-DE`.
+* When you update an object with a single-language `Content-Language` header, an existing translation keeps the letter case it was stored with. Sending `Content-Language: de-de` updates an existing `de-DE` translation and does not add a second one.
+* With `Content-Language: *`, the keys of a translation map must use exactly the letter case of your language configuration.
+* A translation map that contains the same language twice in different letter case, for example `de-de` and `de-DE`, is rejected with a `400` response. The response message is `Language … is provided more than once with different letter case.`, where `…` is the submitted code.
+
+In other services, use language codes exactly as they are written in your language configuration.
+
 For more information on language configurations, check out the [Language Tutorials](../configuration/configuration-service/language.md).
 {% endhint %}
 
