@@ -22,6 +22,10 @@ You can use the AI RAG Indexer Service to keep your vector database in sync with
 
 Follow this tutorial to learn how to create a RAG tool with indexable and filterable fields that you can use in an AI agent.
 
+{% hint style="info" %}
+To let an agent find customers or legal entities without configuring indexed and filterable fields, use the `search` native tool. See [How to create a search tool for customers and legal entities](../ai-service/ai-tutorial.md#how-to-create-a-search-tool-for-customers-and-legal-entities).
+{% endhint %}
+
 ## Prerequisites
 
 * The OAuth2 access token must include the `ai.agent_read` and `ai.agent_manage` scopes.
