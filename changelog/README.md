@@ -25,6 +25,44 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Product, Brand, Label, and Site Settings Services - custom language codes
+
+#### Overview
+
+The Product Service (including variants and product templates), Brand Service, Label Service, and Site Settings Service now accept custom language codes, such as `en-NL` or `en-SG`, not only codes from the former fixed list. A valid code is a two- or three-letter language code, optionally followed by hyphen-separated subtags of two to eight letters or digits (`^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$`). All previously accepted codes remain valid.
+
+The services compare language codes ignoring letter case, for example in `Content-Language` and `Accept-Language` headers and between a site's `defaultLanguage` and `languages`. Stored keys keep their original letter case. For example, sending `de-de` updates the stored `de-DE` value, and the key stays `de-DE`. With `Content-Language: *`, the keys of localized maps must still match the configured letter case exactly.
+
+{% hint style="warning" %}
+One validation rule is stricter. A localized map that contains the same language twice in different letter case, for example `de-DE` and `de-de`, is now rejected with the `400` status and the message `Language … is provided more than once with different letter case.` A code that does not match the format is rejected with the `400` status and the message `Language … has an invalid format.` In both messages, `…` is the submitted code.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Adding a new brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brand-brands) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Creating a label](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/label-service/api-reference/label#post-labels) | Accepts custom language codes in localized fields. |
+| [Creating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Fully updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Partially updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Translations](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/standard-practices/translations)
+* [Language Tutorials](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/configuration-service/language)
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
