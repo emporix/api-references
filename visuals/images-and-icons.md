@@ -50,6 +50,8 @@ Example:
 * Highlights:
   * Color: #E86C07
   * Shape: Rounded Rectangle
+  * Place the frame evenly around the control (button or field). Use about 8–10 px padding on every side — do not hug one edge tighter than another
+  * Stroke about 3 px and corner radius about 8 px when drawing outside PhotoScape (docs polish tooling uses these defaults)
 * Arrows:
   * Color: #E86C07
 * Blur to hide sensitive data
@@ -57,6 +59,8 @@ Example:
   * Strength: 30
   * Brush size: 15
   * Hardness: 25
+  * Acceptance: the result must show that content is present but remain unreadable. Prefer mid-gray letter-shaped density. Avoid a milky white wash and avoid a solid dark pill or blackout bar
+  * Strength is a PhotoScape slider value, not a pixel blur radius. Do not map Strength 30 to a 30 px Gaussian radius on thin UI text
 * More brand colors: [Emporix Style Guide](https://figma.com/design/dAuV0qAntjHxBaypNLd1Os/Emporix-Style-Guide?node-id=23-101\&node-type=frame\&t=TBbRBa6UdWfIFjzk-0).
 
 Example:
