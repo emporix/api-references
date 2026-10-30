@@ -25,6 +25,37 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-6955 -->
+
+## Product, Brand, Label, and Site Settings Services - custom language codes
+
+#### Overview
+
+Product Service, Brand Service, Label Service, and Site Settings Service now accept tenant-defined language codes that match the supported IETF BCP-47 tag shape, such as `en-NL`, `en-de`, `es-419`, and `zh-Hant`. Language matching is now case-insensitive in `Content-Language` and `Accept-Language` handling and when comparing a site's `defaultLanguage` with `languages`, while stored keys keep their existing letter case.
+
+A localized map that contains the same language more than once with different letter case, for example `de-DE` and `de-de`, is now rejected with `400`. When `Content-Language: *` is used, localized map keys must still match the configured letter case exactly.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Creating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) | Accepts custom language codes in localized fields and validates them by supported tag format instead of the former fixed list. |
+| [Updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | Matches language codes case-insensitively and preserves the stored letter case of localized keys. |
+| [Partially updating a product](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Matches language codes case-insensitively and preserves the stored letter case of localized keys. |
+| [Creating a brand](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brand-brands) | Accepts custom language codes in localized fields and documents the new validation and case-handling rules. |
+| [Creating a label](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/label-service/api-reference/labels#post-label-tenant-labels) | Accepts custom language codes in localized fields and rejects duplicate language keys that differ only by letter case. |
+| [Updating a label](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/label-service/api-reference/labels#put-label-tenant-labels-labelid) | Accepts custom language codes in localized fields and documents the new validation and case-handling rules. |
+| [Creating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) | Accepts custom language codes in `languages` and `defaultLanguage`. |
+| [Updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares `defaultLanguage` with `languages` ignoring letter case. |
+| [Partially updating a site](https://developer.emporix.io/api-references/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares `defaultLanguage` with `languages` ignoring letter case. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
