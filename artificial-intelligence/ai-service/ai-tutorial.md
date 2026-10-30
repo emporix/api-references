@@ -532,6 +532,158 @@ Emporix sets these headers on the function request:
 
 For the full header table, see [Invoking cloud functions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting#invoking-cloud-functions). For how these headers are set in the Management Dashboard, see [Cloud Function context for dynamic MCP tools](https://app.gitbook.com/s/8GgoeZEZYjZrpjOU6w52/agentic-intelligence/configuration/custom-mcp#cloud-function-context-for-dynamic-mcp-tools).
 
+## How to create a search tool for customers and legal entities
+
+The `search` native tool lets an agent find customers or legal entities of your tenant. The agent sends a search query, and the tool returns the best matching documents. You don't need to configure indexed or filterable fields for the tool.
+
+To search customers or legal entities by fields you select, with vector search and filters, use a `rag_emporix` tool instead. See the [AI RAG Indexer Tutorial](../ai-rag-indexer/ai-rag-indexer-tutorial.md).
+
+To follow this workflow, the OAuth2 access token must include the `ai.agent_manage` scope to create and attach the tool, and the `indexing.search_manage` scope to trigger a reindex job.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+{% stepper %}
+{% step %}
+#### Create the search tool
+
+Call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint with `type` set to `search`. Set the `toolId` in the URL path, for example `search-customer` or `search-legal-entity`.
+
+Configure the tool in `config`:
+
+* `entityType` – Required. The type of documents the tool searches: `customer` or `legal-entity`.
+* `prompt` – Optional. Instructions for the agent on when and why to call the tool. The prompt is added to the tool description.
+* `maxResults` – Optional. The maximum number of documents the tool returns for one search, from `1` to `10`. The default value is `5`.
+
+{% tabs %}
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/search-customer' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Customer Search Tool",
+    "type": "search",
+    "enabled": true,
+    "config": {
+      "prompt": "Use this tool to find customers by name, email, or customer number.",
+      "entityType": "customer",
+      "maxResults": 5
+    }
+  }'
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request PUT \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/tools/search-legal-entity' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "name": "Legal Entity Search Tool",
+    "type": "search",
+    "enabled": true,
+    "config": {
+      "prompt": "Use this tool to find legal entities by name, legal name, or tax registration number.",
+      "entityType": "legal-entity",
+      "maxResults": 3
+    }
+  }'
+```
+
+{% endtab %}
+{% endtabs %}
+
+A successful create returns `201` with the tool ID. A successful update returns `204`.
+
+{% hint style="info" %}
+When you save the tool, the service prepares the search index for the selected entity type. If the index can't be prepared, the tool isn't saved.
+{% endhint %}
+
+{% endstep %}
+
+{% step %}
+#### Trigger a reindex job
+
+After you create the first search tool for an entity type, reindex that entity type. Until the reindex job finishes, the search index is empty and the tool returns no results. For more search tools of the same entity type, you don't need to reindex again.
+
+Call the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint with `entityType` set to `CUSTOMER` or `LEGAL-ENTITY`. The token for this request must include the `indexing.search_manage` scope.
+
+{% tabs %}
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "CUSTOMER"
+  }'
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "LEGAL-ENTITY"
+  }'
+```
+
+Use `LEGAL-ENTITY` with a hyphen, not an underscore. The `entityType` value is case-insensitive.
+
+{% endtab %}
+{% endtabs %}
+
+You receive a `201` or `200` response with a reindex job ID, which you can use to track the progress.
+
+{% endstep %}
+
+{% step %}
+#### Attach the tool to an agent
+
+Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the tool ID to the `nativeTools` of an existing agent, for example an agent you [created from a template](#how-to-create-an-ai-agent-using-a-template). A successful request returns `204`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/complaint-agent' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/nativeTools",
+      "value": {
+        "id": "search-customer"
+      }
+    }
+  ]'
+```
+
+You can also set `nativeTools` when you create or replace an agent with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. The `PUT` request replaces the whole agent document, so include all required agent fields and any native tools the agent already uses.
+
+{% endstep %}
+{% endstepper %}
+
 ## How to set event scopes for a commerce event trigger
 
 When a commerce event triggers an agent, for example `product.product-created`, there is no caller token to pass to a Cloud Function on a dynamic MCP server. Set `eventScopes` on the `commerce_events` trigger so AI Service can obtain an Emporix token with those IAM scopes and forward it as `emporix-token`.
