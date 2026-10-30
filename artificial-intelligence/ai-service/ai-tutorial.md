@@ -534,7 +534,7 @@ For the full header table, see [Invoking cloud functions](https://app.gitbook.co
 
 ## How to create a search tool for customers and legal entities
 
-The `search` native tool lets an agent find customers or legal entities of your tenant. The agent sends a search query, and the tool returns the best matching documents. You don't need to configure indexed or filterable fields for the tool.
+The `search` native tool lets an agent find customers or legal entities of your tenant. The agent sends a search query, and the tool returns the best matching documents. Unlike a RAG tool, the search tool doesn't use embeddings. It uses a search index managed by Emporix. You don't need to configure indexed or filterable fields for the tool.
 
 To search customers or legal entities by fields you select, with vector search and filters, use a `rag_emporix` tool instead. See the [AI RAG Indexer Tutorial](../ai-rag-indexer/ai-rag-indexer-tutorial.md).
 
