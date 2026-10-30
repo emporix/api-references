@@ -538,7 +538,7 @@ The `search` native tool lets an agent find customers or legal entities of your 
 
 To search customers or legal entities by fields you select, with vector search and filters, use a `rag_emporix` tool instead. See the [AI RAG Indexer Tutorial](../ai-rag-indexer/ai-rag-indexer-tutorial.md).
 
-To follow this workflow, the OAuth2 access token must include the `ai.agent_manage` scope.
+To follow this workflow, the OAuth2 access token must include the `ai.agent_manage` scope to create and attach the tool, and the `indexing.search_manage` scope to trigger a reindex job.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -609,6 +609,51 @@ A successful create returns `201` with the tool ID. A successful update returns 
 {% hint style="info" %}
 When you save the tool, the service prepares the search index for the selected entity type. If the index can't be prepared, the tool isn't saved.
 {% endhint %}
+
+{% endstep %}
+
+{% step %}
+#### Trigger a reindex job
+
+After you create the first search tool for an entity type, reindex that entity type. Until the reindex job finishes, the search index is empty and the tool returns no results. For more search tools of the same entity type, you don't need to reindex again.
+
+Call the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint with `entityType` set to `CUSTOMER` or `LEGAL-ENTITY`. The token for this request must include the `indexing.search_manage` scope.
+
+{% tabs %}
+{% tab title="Customer" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "CUSTOMER"
+  }'
+```
+
+{% endtab %}
+
+{% tab title="Legal Entity" %}
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/indexing/{tenant}/reindex-jobs' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+    "entityType": "LEGAL-ENTITY"
+  }'
+```
+
+Use `LEGAL-ENTITY` with a hyphen, not an underscore. The `entityType` value is case-insensitive.
+
+{% endtab %}
+{% endtabs %}
+
+You receive a `201` or `200` response with a reindex job ID, which you can use to track the progress.
 
 {% endstep %}
 

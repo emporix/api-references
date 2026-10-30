@@ -260,7 +260,6 @@ Sample response (field paths depend on your custom schema):
   { "key": "mixins.carparts.brand", "type": "string" },
   { "key": "mixins.carparts.category", "type": "string" },
   { "key": "mixins.carparts.vehicleMake", "type": "string" },
-  { "key": "published", "type": "boolean" },
   { "key": "mixins.carparts.inStock", "type": "boolean" }
 ]
 ```
@@ -513,11 +512,6 @@ curl --request PUT \
           "description": "Part condition. Possible values: NEW, REFURBISHED, USED."
         },
         {
-          "key": "published",
-          "name": "Published",
-          "description": "Set to true when the user should only see parts available in the catalog."
-        },
-        {
           "key": "mixins.carparts.inStock",
           "name": "In stock",
           "description": "Set to true when the user asks for parts that can be ordered now."
@@ -660,12 +654,9 @@ curl -L \
   --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   --header 'Content-Type: application/json' \
   --data '{
-    "entityType": "ORDER",
-    "rag": true
+    "entityType": "ORDER"
   }'
 ```
-
-For orders, set `"rag": true` so the reindex job generates vector embeddings for your `rag_emporix` tool, using the `indexedFields` defined in the tool configuration.
 
 {% endtab %}
 
