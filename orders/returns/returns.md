@@ -209,7 +209,7 @@ Send a request to the [Creating a single return](https://developer.emporix.io/ap
 
 #### List returns by site
 
-To list the returns for one site, call [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) with `q=siteCode:DE`.
+To list the returns for one site, call [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) with `q=siteCode:{siteCode}`, replacing `{siteCode}` with your site code — for example, `q=siteCode:DE`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -219,20 +219,20 @@ To list the returns for one site, call [Retrieving a list of returns](https://de
 
 ```bash
 curl -i -X GET 
-  'https://api.emporix.io/return/{tenant}/returns?q=siteCode:DE' 
+  'https://api.emporix.io/return/{tenant}/returns?q=siteCode:{siteCode}' 
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 #### Employee site scopes
 
-Employees use `returns.returns_read` and `returns.returns_manage`. Without a site suffix, those tokens can access every return. With a site suffix, access is limited to that site.
+Employees use `returns.returns_read` and `returns.returns_manage`. Without a site suffix, those tokens can access every return. With a site suffix, access is limited to that site. In the table, `DE` stands for your site code.
 
 | Scope | Access |
 | --- | --- |
 | `returns.returns_read` | Read every return. Does not grant create, update, or delete. |
-| `returns.returns_read--DE` | Read returns whose `restriction` is `DE`. Does not grant create, update, or delete. |
+| `returns.returns_read--DE` | Read returns whose `restriction` matches that site. Does not grant create, update, or delete. |
 | `returns.returns_manage` | Create, update, and delete every return. Does not grant read access. |
-| `returns.returns_manage--DE` | Create, update, and delete returns whose `restriction` is `DE`. Does not grant read access. |
+| `returns.returns_manage--DE` | Create, update, and delete returns whose `restriction` matches that site. Does not grant read access. |
 
 {% hint style="info" %}
 Customer scopes `returns.returns_read_own` and `returns.returns_manage_own` stay limited to the customer's own returns.

@@ -77,7 +77,7 @@ paths:
 
         An employee scope with a site suffix retrieves only the returns whose `restriction` is in that list. The `X-Total-Count` header uses the same filter. A return with no `restriction` is omitted. An employee scope without a site suffix returns every return. A customer scope returns that customer's own returns.
 
-        Filter one site with `q=siteCode:DE`.
+        Filter by site code with `q=siteCode:{siteCode}` — for example, `q=siteCode:DE`.
       parameters:
         - $ref: '#/components/parameters/x_total_count_header'
         - $ref: '#/components/parameters/page_size_query_param'
@@ -1525,7 +1525,7 @@ components:
       description: |
         A standard query parameter is used to search for specific values.
 
-           + Searching for an item by a string property: `q=approvalStatus:PENDING`, where `approvalStatus` is the name of the string field and `PENDING` is its required value. Searching by site uses the same form: `q=siteCode:DE`.
+           + Searching for an item by a string property: `q=approvalStatus:PENDING`, where `approvalStatus` is the name of the string field and `PENDING` is its required value. Searching by site uses the same form: `q=siteCode:{siteCode}` — for example, `q=siteCode:DE`.
            + Searching for items by a number-based property:
              + Searching for items with specific values: `q=mixins.returnCustomAttributes.orderQuantity:20`
              + Searching for items with values greater than: `q=mixins.returnCustomAttributes.orderQuantity:>20`
