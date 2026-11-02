@@ -193,19 +193,60 @@ curl -i -X POST
 The `approvalStatus` field is automatically populated during the creation of a return and is always set to `PENDING`.
 {% endhint %}
 
-### Keep the return on the order's site
+### Use the order's site on a return
 
-The service copies `siteCode` and `restriction` from the orders when you create the return. You can omit both fields. If you send a value, it must match the orders. Every order in the return must use the same site and the same restriction. A mismatch returns `400` with `site does not match order`. Orders that disagree return `400` with `orders belong to different sites`.
+When you create a return, Returns Service copies `siteCode` and `restriction` from the referenced orders. Retrieved return documents include both fields. You can omit both fields in the create request. If you send a value, it must match the orders. Every order in the return must use the same site and the same restriction.
 
-Retrieved return documents include both fields. Creating a return returns the new return id. To list the returns for one site, call [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) with `q=siteCode:DE`.
+#### Create a return for one site
 
-An employee reads returns with `returns.returns_read`. Without a site suffix, that token can read every return. `returns.returns_read--DE` can retrieve returns whose `restriction` is `DE`. A return with no `restriction` is hidden from that token. The list omits it, and `X-Total-Count` omits it. [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) outside that site returns `404` with `The return with id {id} has not been found.`
+Send a request to the [Creating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) endpoint. Omit `siteCode` and `restriction`, or send values that match the orders. A successful create returns the new return id.
 
-Creating, updating, and deleting use `returns.returns_manage`. Without a site suffix, that token can change every return. Only `returns.returns_manage--DE` can create a return, and only when the copied `restriction` is `DE`. Creating a return for another site, or a return whose copied `restriction` is empty, returns `403` with `Creating a return for this site is not allowed.` [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid), [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid), or [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) outside that site returns `404` with `The return with id {id} has not been found.` Partial update returns that `404` before the patch is applied. `returns.returns_manage` does not grant read access, and `returns.returns_read` does not grant create, update, or delete.
+| Response | Message | When |
+| --- | --- | --- |
+| `400` | `site does not match order` | A sent `siteCode` or `restriction` does not match the orders. |
+| `400` | `orders belong to different sites` | The orders disagree on site or restriction. |
+| `403` | `Creating a return for this site is not allowed.` | A site-limited employee creates a return outside that site, or the copied `restriction` is empty. |
+
+#### List returns by site
+
+To list the returns for one site, call [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) with `q=siteCode:DE`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X GET 
+  'https://api.emporix.io/return/{tenant}/returns?q=siteCode:DE' 
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+#### Employee site scopes
+
+Employees use `returns.returns_read` and `returns.returns_manage`. Without a site suffix, those tokens can access every return. With a site suffix, access is limited to that site.
+
+| Scope | Access |
+| --- | --- |
+| `returns.returns_read` | Read every return. |
+| `returns.returns_read--DE` | Read returns whose `restriction` is `DE`. |
+| `returns.returns_manage` | Create, update, and delete every return. Does not grant read access. |
+| `returns.returns_manage--DE` | Create, update, and delete returns whose `restriction` is `DE`. Does not grant read access. |
+
+A return with no `restriction` is hidden from a site-limited employee. The list omits it, and `X-Total-Count` omits it. [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid), [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid), [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid), or [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) outside that site returns `404` with `The return with id {id} has not been found.` Partial update returns that `404` before the patch is applied.
+
+`returns.returns_manage` does not grant read access, and `returns.returns_read` does not grant create, update, or delete.
 
 Customer scopes `returns.returns_read_own` and `returns.returns_manage_own` stay limited to the customer's own returns.
 
-Update and partial update bodies do not accept `siteCode` or `restriction`. Attaching an order from another site on update returns `400`.
+#### Updates keep the original site
+
+Update and partial update bodies do not accept `siteCode` or `restriction`. The stored site values stay as they were set when the return was created. Attaching an order from another site on update returns `400`.
+
+{% hint style="warning" %}
+Returns that already exist are not given a site by this change. A site-limited employee cannot see those returns.
+{% endhint %}
 
 ### Update the return request by a customer
 
