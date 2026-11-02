@@ -229,16 +229,16 @@ Employees use `returns.returns_read` and `returns.returns_manage`. Without a sit
 
 | Scope | Access |
 | --- | --- |
-| `returns.returns_read` | Read every return. |
-| `returns.returns_read--DE` | Read returns whose `restriction` is `DE`. |
+| `returns.returns_read` | Read every return. Does not grant create, update, or delete. |
+| `returns.returns_read--DE` | Read returns whose `restriction` is `DE`. Does not grant create, update, or delete. |
 | `returns.returns_manage` | Create, update, and delete every return. Does not grant read access. |
 | `returns.returns_manage--DE` | Create, update, and delete returns whose `restriction` is `DE`. Does not grant read access. |
 
-A return with no `restriction` is hidden from a site-limited employee. The list omits it, and `X-Total-Count` omits it. [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid), [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid), [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid), or [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) outside that site returns `404` with `The return with id {id} has not been found.` Partial update returns that `404` before the patch is applied.
-
-`returns.returns_manage` does not grant read access, and `returns.returns_read` does not grant create, update, or delete.
-
+{% hint style="info" %}
 Customer scopes `returns.returns_read_own` and `returns.returns_manage_own` stay limited to the customer's own returns.
+{% endhint %}
+
+A return with no `restriction` is hidden from a site-limited employee. The list omits it, and `X-Total-Count` omits it. 
 
 #### Updates keep the original site
 
