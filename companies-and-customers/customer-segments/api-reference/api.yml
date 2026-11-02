@@ -1081,6 +1081,8 @@ paths:
       description: |
         
         Retrieves all items assignments for all customer segments.
+
+        Item assignment responses can include the optional `mode` field. If `mode` is missing, the assignment behaves as `INCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1125,6 +1127,8 @@ paths:
       description: |
         
         Retrieves all item assignments for a given customer segment.
+
+        Item assignment responses can include the optional `mode` field. If `mode` is missing, the assignment behaves as `INCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1222,6 +1226,8 @@ paths:
       description: |
         
         Retrieves an item assignment by specified ID for a given customer segment.
+
+        The response can include the optional `mode` field. If `mode` is missing, the assignment behaves as `INCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1256,6 +1262,8 @@ paths:
       description: |
         
         Performs `UPSERT` operation. Updates an item assignment to a customer segment. A new item assignment is created if it's not present in the system.
+
+        Use the optional `mode` field to explicitly include or exclude the item from the segment. If `mode` is omitted, the assignment is treated as `INCLUDE`.
       security:
         - OAuth2:
             - customersegment.segment_manage
@@ -1311,6 +1319,8 @@ paths:
       description: |
         
         Performs `UPSERT` operation. Updates multiple item assignments to a customer segments. The maximum batch size is 200.
+
+        Each item assignment object can include the optional `mode` field. If `mode` is omitted, the assignment is treated as `INCLUDE`.
 
       security:
         - OAuth2:
@@ -1573,10 +1583,18 @@ components:
     ItemAssignmentUpsert:
       type: object
       description: |
-        
+        Request body for creating or updating an item assignment.
+
+        If `mode` is omitted, the assignment is treated as `INCLUDE`.
       allOf:
         - type: object
           properties:
+            mode:
+              type: string
+              description: Determines whether the item is explicitly included in or excluded from the segment. If not provided, the assignment is treated as `INCLUDE`.
+              enum:
+                - INCLUDE
+                - EXCLUDE
             mixins:
               type: object
               description: A key-value map of additional attributes.

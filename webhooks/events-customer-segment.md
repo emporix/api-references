@@ -60,6 +60,7 @@ description: Webhook events related to the creation, update, and deletion of cus
   }
   "metadata": {},
   "mixins": "Map",
+  "mode": "String",
   "segmentId": "String",
   "tenant": "String",
   "type": "String"
@@ -80,6 +81,7 @@ description: Webhook events related to the creation, update, and deletion of cus
   }
   "metadata": {},
   "mixins": "Map",
+  "mode": "String",
   "segmentId": "String",
   "tenant": "String",
   "type": "String"
@@ -116,3 +118,6 @@ description: Webhook events related to the creation, update, and deletion of cus
 }
 </code></pre></td></tr></tbody></table>
  
+
+> The `mode` field on `customer-segment.item-assignment-created` and `customer-segment.item-assignment-updated` is optional. Supported values are `INCLUDE` and `EXCLUDE`. If `mode` is missing, consumers should treat the assignment as `INCLUDE`.
+

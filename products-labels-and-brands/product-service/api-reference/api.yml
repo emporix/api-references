@@ -41,6 +41,8 @@ paths:
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
         ***
 
+        `customerSegmentIds` contains each product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
+
         **Additional scope information**
 
         * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
@@ -85,6 +87,8 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
         ***
+
+        `customerSegmentIds` contains each product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
 
         **Additional scope information**
 
@@ -903,6 +907,8 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged so integrations can inspect the stored data. `Accept-Language` is applied after the site merge when `emporix-site` is present.
         ***
+
+        `customerSegmentIds` contains the product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
 
         **Additional scope information**
 
