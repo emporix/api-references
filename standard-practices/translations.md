@@ -23,12 +23,23 @@ In the Emporix Commerce Engine, localized fields are stored in the form of Strin
 {% hint style="warning" %}
 Language codes must match the ones defined in your language configurations.
 
-The following letter-case rules apply to language codes in the Product Service (products, variants, and product templates), Brand Service, Label Service, and Site Settings Service:
+In the Product Service (products, variants, and product templates), Brand Service, Label Service, and Site Settings Service, letter case matters only for language codes used as keys in the request body. The following rules assume that your language configuration contains `de-DE`:
 
-* `Content-Language` and `Accept-Language` values match a configured language in any letter case. For example, `Content-Language: de-de` matches the configured `de-DE` and is treated as `de-DE`.
-* When you update an object with a single-language `Content-Language` header, an existing translation keeps the letter case it was stored with. Sending `Content-Language: de-de` updates an existing `de-DE` translation and does not add a second one.
-* With `Content-Language: *`, the keys of a translation map must use exactly the letter case of your language configuration.
-* A translation map that contains the same language twice in different letter case, for example `de-de` and `de-DE`, is rejected with a `400` response. The response message is `Language de-DE is provided more than once with different letter case.`
+* Language in a header – any letter case works. `Content-Language: de-de`, `Content-Language: DE-DE`, and `Accept-Language: de-de` all mean `de-DE`, and the value is saved under the `de-DE` key.
+* Language as a key in the request body, with `Content-Language: *` – use the exact letter case from your language configuration, for example `"de-DE"`, not `"de-de"`.
+* The same language twice in one map, for example `"de-de"` and `"de-DE"` – the request is rejected with a `400` response and the message `Language de-DE is provided more than once with different letter case.`
+
+Both of the following requests save the name under the `de-DE` key:
+
+```bash
+-H 'Content-Language: de-de' \
+-d '{ "name": "Screw" }'
+```
+
+```bash
+-H 'Content-Language: *' \
+-d '{ "name": { "de-DE": "Screw" } }'
+```
 
 In other services, use language codes exactly as they are written in your language configuration.
 
