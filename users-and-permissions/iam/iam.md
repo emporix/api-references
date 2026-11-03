@@ -10,17 +10,17 @@ layout:
 # IAM Tutorial
 
 {% hint style="warning" %}
-Names and descriptions of groups, permissions, resources, access control templates, and role resources are localized.
+Names and descriptions of groups, access controls, and access control templates are localized.
 
 Looking for more info on localization? Check out [_Standard practices_](../../standard-practices/translations.md).
 {% endhint %}
 
 ## How to create a group of employees with a specific set of access controls
 
-To specify user access level in a particular service resource, you need to create a group of users that share the same access controls.\
-For the purposes of this tutorial, you will create an employee group with manager rights in Catalog API service.
+To specify a user's access level in a particular service resource, create a group of users that share the same access controls.
+For the purposes of this tutorial, you will create an employee group with manager rights in the Catalog Service.
 
-### Before you start
+### Prerequisites
 
 Ensure you have a tenant and users created.
 
@@ -28,13 +28,15 @@ Ensure you have a tenant and users created.
 To create users, check out the **Manage Users** tab in the [Emporix Developer Portal](https://app.emporix.io/users).
 {% endhint %}
 
-### Retrieve a list of available access controls
+{% stepper %}
+{% step %}
+#### Retrieve a list of available access controls
 
 {% hint style="warning" %}
 There's a set of access controls that are predefined and designed to cover all necessary scenarios. It is not possible to change the built-in access controls, but you can create new custom ones. See section [How to manage custom scopes](#how-to-manage-custom-scopes).
 {% endhint %}
 
-To assign specific access control level to a group, first you need to retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
+To assign a specific access control level to a group, first retrieve a list of predefined access controls available for your tenant by sending a request to the [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -43,14 +45,17 @@ To assign specific access control level to a group, first you need to retrieve a
 {% endcontent-ref %}
 
 ```bash
-curl -i -X GET 
-  'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01&roleId=1rl5e52e-6e27-4ac5-9471-2467d3fb7503&resourceId=string&expand=role%2Cresource' 
-  -H 'Accept-Language: string' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
+curl -i -X GET \
+  'https://api.emporix.io/iam/{tenant}/access-controls?pageNumber=1&pageSize=60&metadataModifiedAt=2022-01-01' \
+  -H 'Accept-Language: en' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'X-Total-Count: true'
 ```
 
-### Create an employee group
+{% endstep %}
+
+{% step %}
+#### Create an employee group
 
 Employee groups aggregate users that share the same access control within a particular service and resource. Create an employee group and assign access controls to it by sending a request to the [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint.
 
@@ -65,11 +70,11 @@ The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMP
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/iam/{tenant}/groups' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Language: de' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Language: de' \
+  -H 'Content-Type: application/json' \
   -d '{
     "name": {
       "en": "Catalog managers",
@@ -93,12 +98,15 @@ curl -i -X POST
   }'
 ```
 
-### Assign users to an employee group
+{% endstep %}
+
+{% step %}
+#### Assign users to an employee group
 
 By assigning a user to a particular employee group, you grant them a specific access control level. Create assignments by calling the [Adding a user to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups-groupid-users) endpoint.
 
 {% hint style="warning" %}
-The user type in the `userType` parameter can be specified as `customer` or `employee`. For the purposes of this tutorial, set the `userType` parameter as `employee`.
+The user type in the `userType` parameter can be specified as `CUSTOMER` or `EMPLOYEE`. For the purposes of this tutorial, set the `userType` parameter as `EMPLOYEE`.
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -108,15 +116,18 @@ The user type in the `userType` parameter can be specified as `customer` or `emp
 {% endcontent-ref %}
 
 ```bash
-curl -i -X POST 
-  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' 
-  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
-  -H 'Content-Type: application/json' 
+curl -i -X POST \
+  'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
   -d '{
-    "userId": " ",
+    "userId": "00u4ukqvzlEP31sCk417",
     "userType": "EMPLOYEE"
   }'
 ```
+
+{% endstep %}
+{% endstepper %}
  
 ## How to manage custom scopes
 
@@ -139,14 +150,14 @@ Typical flow:
 
 {% stepper %}
 {% step %}
-### Create or update a custom scope
+#### Create or update a custom scope
 
 To create or update a custom scope, call the [Upserting a custom scope](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/scopes#put-iam-tenant-scopes-scopeid) endpoint.
 
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/iam/{tenant}/scopes/myproject.bulk_export_manage' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "description": {
@@ -158,18 +169,16 @@ curl -i -X PUT \
 {% endstep %}
 
 {% step %}
-### Create or update an access control that uses custom scopes
+#### Create or update an access control that uses custom scopes
 
-Access controls map roles and resources to resolved scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
+Access controls are collections of scopes and are assigned to groups. To create or update an access control, call the [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid) endpoint.
 
 ```bash
 curl -i -X PUT \
   'https://api.emporix.io/iam/{tenant}/access-controls/custom-bulk-export-manage' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
-    "resourceId": "myproject.bulk_export",
-    "roleId": "manage",
     "scopes": [
       "myproject.bulk_export_manage"
     ]
@@ -179,14 +188,14 @@ curl -i -X PUT \
 {% endstep %}
 
 {% step %}
-### Assign access controls through groups
+#### Assign access controls through groups
 
 To assign access controls, call the [Creating a new group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#post-iam-tenant-groups) endpoint and include your access control IDs in the payload.
 
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/iam/{tenant}/groups' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "name": {
@@ -204,7 +213,7 @@ Then call the [Adding a user to a group](https://developer.emporix.io/api-docume
 ```bash
 curl -i -X POST \
   'https://api.emporix.io/iam/{tenant}/groups/{groupId}/users' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -H 'Content-Type: application/json' \
   -d '{
     "userId": "00u4ukqvzlEP31sCk417",
@@ -214,14 +223,14 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-### Verify resolved scopes for a user
+#### Verify resolved scopes for a user
 
-To validate IAM configuration, call the [Retrieving all scopes granted to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
+To validate IAM configuration, call the [Retrieving scopes of a specific user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) endpoint.
 
 ```bash
 curl -i -X GET \
   'https://api.emporix.io/iam/{tenant}/users/{userId}/scopes' \
-  -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
 {% endstep %}
