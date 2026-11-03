@@ -1,5 +1,5 @@
 ---
-description: Learn how to create a search index, monitor its job, search custom instances, reuse saved searches, and copy index configuration.
+description: Learn how to create a search index, control text matching with analyzers, index lists of objects, search custom instances, reuse saved searches, and copy index configuration.
 icon: graduation-cap
 layout:
   width: wide
@@ -7,7 +7,7 @@ layout:
 
 # Search Service Tutorials
 
-Use the Search Service to index custom instances, search them with text and filters, and save reusable search definitions. This tutorial follows one custom schema type from index creation to direct and saved searches. It also explains index jobs and how to copy index configuration between tenants.
+Use the Search Service to index custom instances, search them with text and filters, and save reusable search definitions. This tutorial follows one custom schema type from index creation to direct and saved searches. It also explains how analyzers control text comparison, how to index a list of objects, how index jobs work, and how to copy index configuration between tenants.
 
 {% hint style="danger" %}
 This functionality is in preview mode - some of the features may not be fully operational yet.
@@ -229,6 +229,9 @@ Choose the field options according to how you want to search:
 | `autocomplete: PREFIX` | Match the beginning of a word with `AUTOCOMPLETE`. |
 | `autocomplete: NGRAM` | Match a character sequence inside a word with `AUTOCOMPLETE`. |
 | `exact: true` | Sort, or filter with equality, range, list, or existence operators. Number, Boolean, and date fields support only this option. |
+| `analyzer` | Set the comparison rules for a field with `text: true`. Use a preset or the name of a custom analyzer on the index. When omitted, `STANDARD` is used. For more information, see [How to control text matching with analyzers](#how-to-control-text-matching-with-analyzers). |
+| `additionalAnalyzers` | Add up to three extra comparison rules for a field with `text: true`. A query uses an additional analyzer only when it selects that analyzer. |
+| `itemFields` | Index the fields inside a list of objects. For more information, see [How to index a list of objects](#how-to-index-a-list-of-objects). |
 
 Use full stored paths such as `name.en` and `mixins.vehicleSearchAttributes.code`. A path must exist on the custom schema type.
 
@@ -365,6 +368,68 @@ The response body is an array of matching custom instances. When the `X-Total-Co
 {% endstep %}
 {% endstepper %}
 
+## How to control text matching with analyzers
+
+An analyzer defines how the service compares text in a field with `text: true`. The service applies the same rules to the stored value and to the query text. Set the main rules with `analyzer` on the field. To offer other ways of matching the same field, list up to three more analyzers in `additionalAnalyzers`.
+
+### Presets
+
+The following presets are available without any index-level configuration:
+
+| Preset | Behavior |
+| --- | --- |
+| `STANDARD` | Compares word by word and ignores case. This is the default when `analyzer` is omitted. |
+| `FOLDED` | Works like `STANDARD` and also ignores accents, so `Très` matches `tres`. |
+| `IDENTIFIER` | Compares the whole value, ignores case, and removes spaces, `-`, `.`, and `/`. Use it for codes, postal codes, and reference numbers. |
+| `SOUNDS_LIKE` | Matches words that sound alike, such as different spellings of the same name. |
+
+### Custom analyzers
+
+When no preset fits, define custom analyzers in the index-level `analyzers` list and select them by `name` in `analyzer` or `additionalAnalyzers`. An index accepts up to 10 custom analyzers. Every custom analyzer must be selected by at least one field. Otherwise, the index request returns `400 Bad Request` with a message such as `Analyzer 'companyName' is not used.`
+
+An analyzer `name` starts with a letter, followed by up to 39 letters, digits, underscores, or hyphens. Preset names, `keyword`, and `folded` are reserved.
+
+A custom analyzer supports the following properties:
+
+| Property | Description |
+| --- | --- |
+| `name` | Required. Name that fields use to select the analyzer. |
+| `basedOn` | Preset that the analyzer starts from: `STANDARD`, `FOLDED`, `IDENTIFIER`, or `SOUNDS_LIKE`. A property you set replaces the value of that preset. |
+| `split` | `WORDS` compares word by word. `WHOLE_VALUE` compares the whole value as one token. |
+| `ignoreCase` | If set to `true`, upper and lower case are treated as equal. |
+| `ignoreAccents` | If set to `true`, letters with and without accents are treated as equal. |
+| `ignoreCharacters` | Up to 20 single characters removed before comparing, such as `.`. |
+| `ignoreWords` | Up to 200 words ignored when comparing, such as the legal-form suffixes `gmbh` and `ag`. With `WORDS`, each entry must contain only letters and digits, be at most 50 characters long, and stay one word when text is split. |
+| `compare` | `SPELLING` compares the letters. `SOUND` matches words that sound alike. |
+
+For example, a company-name analyzer based on `FOLDED` that ignores the words `gmbh` and `ag` matches `Maier GmbH` and `Maier` for the same query.
+
+Custom analyzers belong to the index, and fields only select them by name in `analyzer` or `additionalAnalyzers`. Adding, removing, or changing a custom analyzer, or changing which analyzers a field selects, starts an update job and returns `202 Accepted`. For more information, see [How to manage indexes and jobs](#how-to-manage-indexes-and-jobs).
+
+### Select an analyzer in a query
+
+A `TEXT` or `PHRASE` query can set `analyzer` to the field's `analyzer` or to one of its `additionalAnalyzers`. The name is not case-sensitive. When `analyzer` is omitted, the query uses the field's `analyzer`. Any other name returns `400 Bad Request` with a message such as `Analyzer 'FOLDED' is not available on field 'name'.`
+
+{% hint style="info" %}
+To catch both typos and alternative spellings, combine two clauses on the same field in an `or` group: a `TEXT` clause with fuzzy matching, and a `TEXT` clause with `analyzer` set to `SOUNDS_LIKE` and a lower `boost`. Exact spelling then ranks above matches by sound.
+{% endhint %}
+
+## How to index a list of objects
+
+Use `itemFields` when a field holds a list of objects, such as a list of addresses. Set `path` to the list, and declare each child field in `itemFields` with its full path, for example `addresses.street` and `addresses.city`. Each child field supports the same options as a top-level field, including `analyzer` and `additionalAnalyzers`.
+
+Follow these rules when you define a list:
+
+* Do not set `text`, `autocomplete`, `exact`, or `analyzer` on the list itself.
+* Declare child fields only inside `itemFields`. A child path declared as a top-level field returns `400 Bad Request` with a message such as `Field 'addresses.street' belongs to 'addresses'. Declare it in itemFields.`
+* Search and filter child fields by their full path. The list path itself cannot be searched.
+
+The following rules describe how conditions on a list of objects match list items:
+
+* Conditions on the same list joined by `and` must match the same item. For example, a filter for `addresses.city` equal to `Berlin` and `addresses.zipCode` equal to `10115` matches only when one address has both values. A document with a Berlin address and a separate address with that postal code does not match.
+* When you use `NEQ`, `NOT_IN`, or `EXISTS` with `false` on its own against a list field, the condition applies to every item. If any item has the excluded value, or has the field in the case of `EXISTS` with `false`, the document is excluded. If the list has no items, the document is included.
+* When such an operator is joined by `and` with another condition on the same list, it still applies to one item. The document matches when one item meets all conditions.
+
 ## Available search criteria
 
 A direct search must provide `index` and at least one of `queries` or `filters`. `queries` can contain one query object, a list of query objects, or an `and` or `or` group. A top-level list matches when any item matches.
@@ -377,6 +442,8 @@ The following query types are available:
 | `PHRASE` | Matches adjacent words in the same order. | `text: true` |
 | `AUTOCOMPLETE` | Matches according to the configured `PREFIX` or `NGRAM` mode. | `autocomplete` |
 | `WILDCARD` | Matches a case-sensitive pattern. `*` matches any number of characters and `?` matches one character. | `text: true` |
+
+`TEXT` and `PHRASE` queries accept an optional `analyzer` that selects one of the field's analyzers. For more information, see [How to control text matching with analyzers](#how-to-control-text-matching-with-analyzers).
 
 ### Query examples
 
@@ -443,6 +510,8 @@ The following filter operators are available:
 * `IN` and `NOT_IN` compare a non-empty array of values.
 * `EXISTS` takes a Boolean and checks whether the field is present.
 * `CONTAINS` takes a non-blank string and performs a case- and diacritic-insensitive substring match. The field must have `text: true` in the index. The service treats `\`, `*`, and `?` in the value as literal characters.
+
+Queries and filters on fields inside a list of objects follow same-item matching rules. For more information, see [How to index a list of objects](#how-to-index-a-list-of-objects).
 
 ### Filter examples
 
@@ -688,7 +757,7 @@ curl -i -X POST \
   ]'
 ```
 
-The response contains `exportedAt` and `data`. The `data` value is a base64-encoded JSON array. Exported items include `id`, `type`, `fields`, and optional localized `name` and `description`. They do not include `status` or `metadata`.
+The response contains `exportedAt` and `data`. The `data` value is a base64-encoded JSON array. Exported items include `id`, `type`, `fields`, optional `analyzers`, and optional localized `name` and `description`. They do not include `status` or `metadata`.
 {% endstep %}
 
 {% step %}
