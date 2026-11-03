@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="deprecated" %}
+{% update date="2026-11-03" tags="deprecated" %}
 
 ## IAM Service - removal of deprecated endpoints and fields
 
