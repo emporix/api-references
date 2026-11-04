@@ -485,6 +485,11 @@ paths:
         records failing, its status is `PROCESSED`: retry those records with the run's
         `POST /importtool/{tenant}/runs/{runId}/retry` operation instead.
 
+        On a snapshot stream, a run reads the newest file in the queue. So a failed file cannot be queued again after
+        a newer file has arrived for the stream, whether that file is imported, waiting or being read: queued again,
+        the older snapshot would be imported over the newer data. Upload a corrected current file instead. A stream
+        with incremental files reads its files in queue order, so this restriction does not apply.
+
         The request is refused while the job has a run in the `QUEUED`, `RUNNING`, or `RESUMABLE` status.
       operationId: POST-importtool-stream-file-requeue
       tags:
@@ -511,7 +516,8 @@ paths:
         '409':
           description: >-
             The file has not failed, its stored content is no longer available, or it is not one of this
-            stream's files. Also returned while the job has a run in flight.
+            stream's files. Also returned when a newer file arrived after it on a snapshot stream, and while the
+            job has a run in flight.
           content:
             application/json:
               schema:
