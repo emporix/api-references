@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-All previously deprecated endpoints, response fields, and query parameters are now removed ([IAM Service - deprecations](https://developer.emporix.io/changelog/2026/readme#iam-service-access-control-restrictions-predefined-scopes-and-deprecations)).
+All previously deprecated endpoints, response fields, and query parameters are now removed (see [IAM Service - deprecations](https://developer.emporix.io/changelog/2026/readme#iam-service-access-control-restrictions-predefined-scopes-and-deprecations)).
 
 #### Removed endpoints & fields
 
