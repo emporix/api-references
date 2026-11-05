@@ -53,7 +53,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="minor-change" %}
+{% update date="2026-11-05" tags="minor-change" %}
 
 ## IAM Service - non-deletable system groups
 
