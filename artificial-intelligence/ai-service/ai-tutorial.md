@@ -895,6 +895,76 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   The job entity contains information about the request and response from the agent.
 
+## How to expose an agent through the A2A protocol
+
+Selected generic agents can also be exposed through an A2A-compatible API so external A2A clients can discover the agent contract and invoke it over JSON-RPC.
+
+{% hint style="info" %}
+This A2A support is a proof of concept. It is configured outside the public AI Service management API and is available only for agents explicitly enabled in the runtime configuration.
+{% endhint %}
+
+The inbound A2A API exposes two endpoints per enabled agent:
+
+* `GET /{tenant}/a2a/{agent_id}/.well-known/agent-card.json` – returns the public A2A Agent Card
+* `POST /{tenant}/a2a/{agent_id}` – accepts authenticated A2A JSON-RPC requests such as `SendMessage` and `GetTask`
+
+The Agent Card endpoint is public.
+
+The JSON-RPC endpoint requires the `Authorization: Bearer <token>` header. If the header is missing or invalid, the endpoint returns `401` and the `WWW-Authenticate: Bearer` response header.
+
+The Agent Card endpoint returns `404` if the tenant and agent pair is not exposed for A2A, or if the target agent is disabled or no longer exists. The JSON-RPC endpoint returns `404` after successful authentication if the target agent is disabled or no longer exists.
+
+The generated Agent Card advertises:
+
+* JSON-RPC binding
+* protocol version `1.0`
+* bearer authentication
+* `streaming: false`
+* `push_notifications: false`
+
+The card contains the agent name and description, but it does not expose internal prompt, tool, or memory configuration.
+
+Example Agent Card request:
+
+```bash
+curl -L \
+  --url 'https://api.emporix.io/{tenant}/a2a/{agent_id}/.well-known/agent-card.json' \
+  --header 'Accept: application/json'
+```
+
+Example JSON-RPC request:
+
+```bash
+curl -L \
+  --request POST \
+  --url 'https://api.emporix.io/{tenant}/a2a/{agent_id}' \
+  --header 'Authorization: Bearer {{A2A_BEARER_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --header 'A2A-Version: 1.0' \
+  --data '{
+    "jsonrpc": "2.0",
+    "id": "1",
+    "method": "SendMessage",
+    "params": {
+      "message": {
+        "messageId": "m1",
+        "role": "ROLE_USER",
+        "parts": [
+          {
+            "text": "Translate to German: good morning"
+          }
+        ]
+      }
+    }
+  }'
+```
+
+A successful `SendMessage` request returns `200` with a JSON-RPC response containing the A2A task state and the generated response artifact. Use the returned task ID with `GetTask` on the same endpoint when you need to retrieve the stored task state.
+
+{% hint style="warning" %}
+This PoC emits an A2A 1.x Agent Card. Older A2A 0.x clients may not interoperate with this schema.
+{% endhint %}
+
 ## How to reuse session memory in agent chat
 
 Session memory keeps conversational data across chat turns within one `session-id`. Memory is opt-in per agent. Reusing the `session-id` header without enabling memory continues the session identity but does not store chat memory.
