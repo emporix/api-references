@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Customer Segment Service - product exclusion from a segment
+
+#### Overview
+
+Item assignments now store `mode` as `INCLUDE` or `EXCLUDE`. A product assigned with `EXCLUDE` does not match that segment, even when a category of the same segment contains the product. Omitting `mode` stores `INCLUDE`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Updating an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) | Accepts an optional `mode`. Stores `INCLUDE` when `mode` or the request body is omitted. Stores `EXCLUDE` for products only. Rejects a category assignment with `EXCLUDE`, and rejects an unsupported `mode` value. |
+| [Updating item assignments to a customer segment in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-bulk) | Accepts `mode` on each item with the same rules as a single update. Returns HTTP 400 for a category item with `EXCLUDE` and still processes the other items. Rejects the whole request when `mode` is unsupported. |
+| [Retrieving all item assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-segmentid-items) | Returns `mode` on each assignment. Filters stored values with `q`, for example `q=mode:EXCLUDE`. |
+| [Retrieving all item assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#post-customer-segment-tenant-segments-segmentid-items-search) | Returns `mode` on each assignment. Filters stored values with `q` in the request body, for example `{"q":"mode:EXCLUDE"}`. |
+| [Retrieving an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-segmentid-items-type-itemid) | Returns `mode`. Returns `INCLUDE` when the assignment has no stored `mode`. |
+| [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) | Returns `mode` on each assignment. Filters stored values with `q`, for example `q=mode:EXCLUDE`. |
+| [Checking which items belong to segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-match) | Omits a product that a segment excludes, including when a category of that segment contains the product. Still returns the product when another requested segment includes it. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-03" tags="deprecated" %}
 
 ## IAM Service - removal of deprecated endpoints and fields

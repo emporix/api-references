@@ -1080,7 +1080,7 @@ paths:
         - Items Assignments
       description: |
         
-        Retrieves all items assignments for all customer segments.
+        Retrieves all item assignments for all customer segments. Each assignment includes `mode`. Filters stored values with the `q` parameter, for example `q=mode:EXCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1124,7 +1124,7 @@ paths:
         - Items Assignments
       description: |
         
-        Retrieves all item assignments for a given customer segment.
+        Retrieves all item assignments for a given customer segment. Each assignment includes `mode`. Filters stored values with the `q` parameter, for example `q=mode:EXCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1166,7 +1166,7 @@ paths:
         - Items Assignments
       description: |
         
-        Retrieves all item assignments for a given customer segment.
+        Retrieves all item assignments for a given customer segment. Each assignment includes `mode`. Filters stored values with `q` in the request body, for example `{"q":"mode:EXCLUDE"}`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1177,8 +1177,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SegmentsSearch'
-            example:
-              q: "type:PRODUCT"
+            examples:
+              Filter by type:
+                value:
+                  q: "type:PRODUCT"
+              Filter by mode:
+                value:
+                  q: "mode:EXCLUDE"
       responses:
         '200':
           description: Customer segment assignments were successfully retrieved.
@@ -1260,6 +1265,7 @@ paths:
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
+        required: false
         content:
           application/json:
             schema:
@@ -1577,6 +1583,15 @@ components:
       allOf:
         - type: object
           properties:
+            mode:
+              type: string
+              description: |
+                Determines whether the item is included in the customer segment or excluded from it. Possible values are `INCLUDE` and `EXCLUDE`.
+                When `mode` is omitted on create or update, the assignment is stored as `INCLUDE`. An assignment with no stored `mode` is returned as `INCLUDE`.
+                `EXCLUDE` is supported for products only. A category assignment with `mode` set to `EXCLUDE` is rejected.
+              enum:
+                - INCLUDE
+                - EXCLUDE
             mixins:
               type: object
               description: A key-value map of additional attributes.
@@ -2184,6 +2199,7 @@ components:
           name:
             en: Hammer
         type: PRODUCT
+        mode: INCLUDE
         metadata:
           createdAt: 2024-10-12T12:00:00.000Z
           modifiedAt: 2024-10-12T12:00:00.000Z
@@ -2198,6 +2214,7 @@ components:
             name:
               en: Screwdriver
           type: PRODUCT
+          mode: EXCLUDE
           metadata:
             createdAt: 2024-10-12T12:00:00.000Z
             modifiedAt: 2024-10-12T12:00:00.000Z
@@ -2244,10 +2261,17 @@ components:
             segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
     ItemAssignmentUpsert:
       value:
-        *mixins
+        mode: INCLUDE
+        mixins:
+          segmentAttributes:
+            membershipStatus: PREMIUM
+        metadata:
+          mixins:
+            segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
     ItemAssignmentsUpsert:
       value:
         - id: "12468504"
+          mode: EXCLUDE
           mixins:
             segmentAttributes:
               membershipStatus: PREMIUM
