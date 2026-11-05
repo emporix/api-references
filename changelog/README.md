@@ -25,6 +25,34 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+<!-- emporix-ai-buddy:changelog:COP-6819 -->
+
+## AI Agentic - A2A protocol support
+
+{% hint style="warning" %}
+This functionality is in preview mode — some of the features may not be fully operational yet.
+{% endhint %}
+
+#### Overview
+
+AI Agentic now provides a proof-of-concept implementation of Agent2Agent (A2A) interoperability with LangChain integration. This enables selected Emporix generic agents to expose inbound A2A endpoints for external A2A clients and allows Emporix generic agents to invoke external A2A-compatible agents as tools.
+
+The inbound A2A contract is available only for agents configured for exposure. The JSON-RPC endpoint requires bearer authentication, while the public Agent Card endpoint remains unauthenticated for discovery.
+
+#### New endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Retrieving an agent card](https://developer.emporix.io/api-references/artificial-intelligence/ai-service/ai-tutorial#get-tenant-a2a-agent-id-well-known-agent-card-json) | Returns the public A2A Agent Card for an exposed agent at `/{tenant}/a2a/{agent_id}/.well-known/agent-card.json`. |
+| [Sending A2A JSON-RPC requests to an agent](https://developer.emporix.io/api-references/artificial-intelligence/ai-service/ai-tutorial#post-tenant-a2a-agent-id) | Accepts authenticated A2A JSON-RPC requests at `/{tenant}/a2a/{agent_id}` so external A2A clients can invoke an exposed Emporix agent. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-05" tags="minor-change" %}
 
 ## IAM Service - non-deletable system groups
