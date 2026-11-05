@@ -53,6 +53,26 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+
+## IAM Service - non-deletable system groups
+
+#### Overview
+
+Deleting a group whose `code` is `CUSTOMER`, `BO_USER`, `BO_MANAGER`, `BO_ADMIN`, or `SUPPORT_USER`, in any letter case, returns HTTP 400. The group and its assignments stay. Setting `forceDelete` to `true` does not remove these groups. A group with no `code`, a blank `code`, or any other `code` still follows the existing delete rules.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Deleting a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid) | The endpoint returns HTTP 400 with the detail `System group cannot be deleted.` when the group's `code` is one of the system codes above, including when `forceDelete` is `true`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-03" tags="deprecated" %}
 
 ## IAM Service - removal of deprecated endpoints and fields
