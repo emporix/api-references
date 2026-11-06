@@ -53,6 +53,36 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-06" tags="new-feature" %}
+
+## Import Service - requeue of failed files
+
+#### Overview
+
+You can now put a file whose import failed back in a file-based stream's queue, without uploading it again. The next run reads the content the service already holds for the file, so you can fix the cause, such as a mapping, and import the same file. Only a file with the `FAILED` status can be queued again. An imported file is never queued again, because an older snapshot would overwrite newer data. To reprocess the records that failed in an imported file, retry the run instead.
+
+When a run finds no file waiting for a file-based stream, the stream's progress `message` now says that nothing was imported and names the latest file if its import failed.
+
+For the workflow, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Queuing a failed file again](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files-fileid-requeue) | Puts a failed file back at the end of the stream's queue, using the content the service already holds. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | A file-based stream's `message` states when no file was waiting and names the latest file if its import failed. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-06" tags="minor-change" %}
 
 ## Import Service - run responses and the last imported file
