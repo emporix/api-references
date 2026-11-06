@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="minor-change" %}
+{% update date="2026-11-06" tags="minor-change" %}
 
 ## Import Service - run responses and the last imported file
 
