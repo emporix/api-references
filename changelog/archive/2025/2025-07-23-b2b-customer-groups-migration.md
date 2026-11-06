@@ -45,5 +45,5 @@ There are no known problems.
 For more information, see the following pages:
 
 * [Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/customer-management/customer-groups "mention")
-* [Company Shared Orders and Customer Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/shared-orders "mention")
+* [Shared Orders](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/orders/shared-orders "mention")
  

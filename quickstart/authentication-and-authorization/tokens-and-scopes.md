@@ -20,7 +20,7 @@ To be able to effectively use the Emporix API, you need the relevant API keys. T
 
 In addition, you can define custom API keys credentials that bear scopes to particular resources only. This allows you to restrict system permissions and safely use these credentials in a specific use case or in a dedicated integration. For example, you can create credentials with the scopes to manage prices externally for the products in your database and use them in your CRM system integration. Custom API credentials have a dedicated `Client_ID` and `Secret`, that you can use to obtain the service access token with the specified scopes.
 {% hint style="info" %}
-To learn more how to manage API Keys or create custom scopes in the Developer Portal, refer to the [Manage API Keys](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys) guide.
+To learn more how to manage API Keys or create custom scopes in the Developer Portal, refer to the [Manage API Keys](https://app.gitbook.com/s/6GTRpjfleJymwcc6AX3v/getting-started/developer-portal/manage-apikeys) guide.
 {% endhint %}
 
 # Tokens
@@ -148,7 +148,7 @@ The token approach ensures a consistent user experience, and centralized securit
 
 {% hint style="info" %}
 
-For more information on accessing company-shared resources, refer to the [Company Shared Orders and Customer Groups](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/shared-orders).
+For more information on accessing company-shared resources, refer to the [Shared Orders](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/core-commerce/orders/shared-orders).
 
 {% endhint %}
 
@@ -413,7 +413,7 @@ curl -i -X POST \
 In the [Emporix Developer Portal](https://app.emporix.io), create or update a set of custom API credentials and assign the auto-generated `custom.{lowerCaseType}_*` scopes to them. The custom credentials' `Client_ID` and `Secret` are then used to obtain a service access token that carries those scopes.
 
 {% hint style="info" %}
-For step-by-step instructions, refer to the [Manage API Keys](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys) guide.
+For step-by-step instructions, refer to the [Manage API Keys](https://app.gitbook.com/s/6GTRpjfleJymwcc6AX3v/getting-started/developer-portal/manage-apikeys) guide.
 {% endhint %}
 
 {% endstep %}
