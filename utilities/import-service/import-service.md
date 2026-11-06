@@ -156,7 +156,7 @@ If `fileMode` is absent, the stream does not read uploaded files. An upload to s
 
 Use this workflow when a stream has `fileMode` set. The goal is to get a delimited file (CSV or one of its variants) into Emporix: check limits, upload the file, set the load order when the feed is incremental, then [trigger a run](#how-to-trigger-an-import-run).
 
-Uploading stores the bytes and records their content hash; nothing is imported until a run starts. The same bytes are never imported twice for that stream: a file the stream has already imported is refused rather than queued again. A file that previously failed (`status` `FAILED`) is accepted, because the usual reason is that it has been fixed.
+Uploading stores the bytes and records their content hash; nothing is imported until a run starts. The same bytes are never imported twice for that stream: a file the stream has already imported is refused rather than queued again. A file that previously failed (`status` `FAILED`) is accepted, because the usual reason is that it has been fixed. To import a failed file again without changing it, [queue it again](#queue-a-failed-file-again) instead of uploading it.
 
 All file-queue operations use the `importtool.import_trigger` scope. Nothing in the queue changes a mapping, a connection, a target type, or a key.
 
@@ -186,7 +186,7 @@ curl -i -X POST \
   -F 'file=@./vendors-2026-10-23.csv'
 ```
 
-On success, save the returned file `id`. You need it to reorder or remove the file. The request is refused with `409` while the stream's job has a run in flight if the upload would replace bytes the stream already holds. A file the stream has not seen before is accepted at any time.
+On success, save the returned file `id`. You need it to reorder, remove, or queue the file again. The request is refused with `409` while the stream's job has a run in flight if the upload would replace bytes the stream already holds. A file the stream has not seen before is accepted at any time.
 
 ### List the queue and history
 
@@ -232,6 +232,20 @@ curl -i -X DELETE \
   'https://api.emporix.io/importtool/{tenant}/streams/{streamId}/files/{fileId}' \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
+
+### Queue a failed file again
+
+When a file's import failed (`status` `FAILED` in `history`) and you have fixed the cause, for example a mapping, put the file back in the queue. Send a request to the [Queuing a failed file again](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files-fileid-requeue) endpoint. The service reads the content it already holds for the file, so you do not need to upload it again. The file is added at the end of the queue with `status` `PENDING`.
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/importtool/{tenant}/streams/{streamId}/files/{fileId}/requeue' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+The request is refused with `409` while a run is in flight, when the file has not failed, when it belongs to another stream, or when the service no longer holds its content. In the last case, upload the file again. An imported file (`status` `PROCESSED`) cannot be queued again, because importing an older snapshot again would overwrite newer data. A file imported with some records failing is also `PROCESSED`; retry those records with the [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) endpoint instead.
+
+If a run finds no file waiting for a stream, the stream's `message` in the [run's progress](#how-to-monitor-an-import-run) starts with `No file was waiting, so nothing was imported`. When the latest file in `history` failed, the message names that file, so you know to queue it again. Otherwise, the message tells you to upload a file to the stream's queue first. This message does not appear for a dry run, for a retry, or for a stream whose connection reads its file from a file URL.
 
 ### Trigger the import
 
@@ -514,7 +528,7 @@ Use these fields to identify which source records failed and at which stage of t
 
 For `CONFIGURATION` and `EXTERNAL_SYSTEM`, the `message` is a plain sentence naming what to change. The service does not treat them as application faults for alerting. Composite merge and embed failures use additional codes documented in the [API Reference](api-reference/); follow the `message` for the next action.
 
-After you fix the source file or configuration, re-upload a previously `FAILED` file if needed, then [trigger another run](#how-to-trigger-an-import-run).
+If the run finished `PARTIAL` because some records failed, fix the cause, then retry those records with the [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) endpoint. The retry starts a new run itself. If a file ended `FAILED`, either fix the configuration and [queue the file again](#queue-a-failed-file-again), or fix the source file and upload the corrected file. Then [trigger another run](#how-to-trigger-an-import-run).
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
