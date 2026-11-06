@@ -66,6 +66,28 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-06" tags="minor-change" %}
+
+## Import Service - run responses and the last imported file
+
+#### Overview
+
+Triggering a run for an import job that does not exist, or retrying a run that does not exist, returns HTTP 404. Both returned HTTP 500 before. A manual run with nothing to import returns HTTP 400: every stream the run starts from reads uploaded files and none has ever had a file. Upload a file to the stream's queue first; a dry run is not refused for this. The file queue now names the newest file the stream imported, whatever the history page holds.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 404 for an import job that does not exist, and HTTP 400 when no stream the run starts from has ever had a file. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns HTTP 404 for a run that does not exist, as documented. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | The response adds `lastProcessed`, the newest file the stream imported. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-05" tags="minor-change" %}
 
 ## IAM Service - non-deletable system groups
