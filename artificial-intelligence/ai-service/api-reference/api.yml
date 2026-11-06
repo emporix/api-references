@@ -351,6 +351,7 @@ paths:
                     `ChatStreamThinkingData`
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
+                  * `artifact` — one image or file the agent decided to publish. The image can come from the configured provider's image generation, and the file can come from the internal file tool or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
                   * `done` — `ChatStreamDoneData`
                   * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -364,6 +365,9 @@ paths:
 
                     event: token
                     data: {"content":"delivery is available for order EON1243."}
+
+                    event: artifact
+                    data: {"artifact_id":"6f1c0b2e-1a2b-4c3d-9e8f-112233445566","kind":"image","filename":"forest.png","mime_type":"image/png","size":184233,"status":"ready"}
 
                     event: done
                     data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
@@ -1087,6 +1091,7 @@ paths:
                   - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
                   - $ref: '#/components/schemas/TeamsNativeToolResponse'
                   - $ref: '#/components/schemas/SearchNativeToolResponse'
+                  - $ref: '#/components/schemas/FileNativeToolResponse'
               examples:
                 Tool Response:
                   $ref: '#/components/examples/SlackNativeToolResponse'
@@ -2395,7 +2400,7 @@ components:
     # Native Tools:
     NativeToolType:
       type: string
-      enum: [ slack, rag_custom, rag_emporix, teams, search ]
+      enum: [ slack, rag_custom, rag_emporix, teams, search, file ]
       description: |-
         Type of the native tool. Possible values:
         * `slack`
@@ -2403,6 +2408,7 @@ components:
         * `rag_emporix`
         * `teams`
         * `search`
+        * `file`
     BaseNativeTool:
       type: object
       properties:
@@ -2855,6 +2861,37 @@ components:
               $ref: '#/components/schemas/SearchNativeToolConfig'
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    FileNativeToolConfig:
+      type: object
+      description: File creation has no settings. Selecting the tool lets the agent create a downloadable text, source, or PDF file.
+      additionalProperties: false
+    FileNativeToolRequest:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            type:
+              description: For `FileNativeTool`, it has to be set to `file`.
+              example: file
+            config:
+              $ref: '#/components/schemas/FileNativeToolConfig'
+            metadata:
+              $ref: '#/components/schemas/MetadataRequest'
+    FileNativeToolResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
+            type:
+              description: For `FileNativeTool`, it has to be set to `file`.
+              example: file
+            config:
+              $ref: '#/components/schemas/FileNativeToolConfig'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
     RagCustomNativeToolRequest:
       allOf:
         - $ref: '#/components/schemas/BaseNativeTool'
@@ -2923,6 +2960,7 @@ components:
           - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
           - $ref: '#/components/schemas/TeamsNativeToolResponse'
           - $ref: '#/components/schemas/SearchNativeToolResponse'
+          - $ref: '#/components/schemas/FileNativeToolResponse'
 
     ConversationResponse:
       type: object
@@ -4216,6 +4254,49 @@ components:
         message:
           type: string
           description: Agent message.
+    ChatStreamArtifactData:
+      title: Artifact event data
+      type: object
+      description: JSON object in the SSE `data` field when `event` is `artifact`. The agent published one image or file. Bytes stay in Media Service. A `failed` status does not fail the text stream.
+      required:
+        - kind
+        - filename
+        - mime_type
+        - size
+        - status
+      properties:
+        artifact_id:
+          type: string
+          description: Media Service asset id. Present when `status` is `ready`. Absent while `status` is `pending`. Download with `GET /media/{tenant}/assets/{artifact_id}/download`.
+        generation_id:
+          type: string
+          description: Correlates the pending image card with the later ready or failed event. Absent when the artifact was not produced by image generation.
+        kind:
+          type: string
+          enum:
+            - image
+            - file
+          description: Image preview or file download.
+        filename:
+          type: string
+          description: Display name of the artifact.
+        mime_type:
+          type: string
+          description: Media type of the stored asset.
+        size:
+          type: integer
+          minimum: 0
+          description: Size of the stored asset in bytes. `0` when generation failed before upload.
+        status:
+          type: string
+          enum:
+            - pending
+            - ready
+            - failed
+          description: pending means an image is still generating. ready means the asset can be downloaded. failed means this item failed and the text answer continues.
+        error_code:
+          type: string
+          description: Stable failure code. Present when `status` is `failed`.
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
@@ -4226,6 +4307,7 @@ components:
         - $ref: '#/components/schemas/ChatStreamToolResultData'
         - $ref: '#/components/schemas/ChatStreamDoneData'
         - $ref: '#/components/schemas/ChatStreamErrorData'
+        - $ref: '#/components/schemas/ChatStreamArtifactData'
     ChatStreamTokenData:
       title: Token event data
       type: object
@@ -5427,6 +5509,7 @@ components:
               - $ref: '#/components/schemas/RagEmporixNativeToolRequest'
               - $ref: '#/components/schemas/TeamsNativeToolRequest'
               - $ref: '#/components/schemas/SearchNativeToolRequest'
+              - $ref: '#/components/schemas/FileNativeToolRequest'
           examples:
             Create Slack Tool:
               $ref: '#/components/examples/SlackNativeToolRequest'

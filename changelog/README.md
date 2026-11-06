@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - agent chat stream artifact event
+
+#### Overview
+
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `file` native tool lets an agent create a downloadable text, source, or PDF file.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| `POST /ai-service/{tenant}/agentic/chat-stream` | Named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
+| `PUT /ai-service/{tenant}/agentic/tools/{toolId}` | Accepts native tool type `file` with an empty config. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-29" tags="improvement" %}
 
 ## Webhook Events - `restriction` on `customer.created` and `customer.updated`
