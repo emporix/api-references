@@ -1096,7 +1096,6 @@ paths:
                   - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
                   - $ref: '#/components/schemas/TeamsNativeToolResponse'
                   - $ref: '#/components/schemas/SearchNativeToolResponse'
-                  - $ref: '#/components/schemas/FileNativeToolResponse'
               examples:
                 Tool Response:
                   $ref: '#/components/examples/SlackNativeToolResponse'
@@ -2873,20 +2872,6 @@ components:
 
         The built-in file generator is not stored as a tool. To enable it, add the reserved ID `file_generator` to the agent's `nativeTools`. Creating a tool with the ID `file_generator` returns `400`. A tool with type `file` and any other ID does not enable file or image generation. The agent creates files and images only when the caller's token includes the `media.asset_manage` scope.
       additionalProperties: false
-    FileNativeToolRequest:
-      allOf:
-        - $ref: '#/components/schemas/BaseNativeTool'
-        - type: object
-          properties:
-            type:
-              description: For `FileNativeTool`, it has to be set to `file`.
-              example: file
-            config:
-              $ref: '#/components/schemas/FileNativeToolConfig'
-            metadata:
-              $ref: '#/components/schemas/MetadataRequest'
-          required:
-            - config
     FileNativeToolResponse:
       allOf:
         - $ref: '#/components/schemas/BaseNativeTool'
@@ -5529,7 +5514,6 @@ components:
               - $ref: '#/components/schemas/RagEmporixNativeToolRequest'
               - $ref: '#/components/schemas/TeamsNativeToolRequest'
               - $ref: '#/components/schemas/SearchNativeToolRequest'
-              - $ref: '#/components/schemas/FileNativeToolRequest'
           examples:
             Create Slack Tool:
               $ref: '#/components/examples/SlackNativeToolRequest'
