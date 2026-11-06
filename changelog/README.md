@@ -27,29 +27,25 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
-## AI Service - agent chat artifacts and `file` native tool
+## AI Service - agent chat artifacts and built-in file generator
 
 #### Overview
 
 Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
 
-The new `file` native tool lets an agent create downloadable text, source, and PDF files. The tool has no configuration settings. Add a tool with `type: file` and an empty `config` object, then assign it to an agent through `nativeTools`.
-
-#### New tool
-
-| Tool | Description |
-| --- | --- |
-| `file` | Creates downloadable text, source, and PDF files. Its `config` object must be empty. |
+The new built-in file generator (native tool type `file`) lets an agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it. You do not create this tool. Add its reserved ID `file_generator` to the agent's `nativeTools`. The agent creates images and files only when the caller's token includes the `media.asset_manage` scope.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Preview named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
-| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts native tool type `file` with an empty `config` object. |
-| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Can return a `file` native tool. |
-| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Can return `file` native tools. |
-| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search) | Can return `file` native tools. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Sends the preview `artifact` event with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), and optional `artifact_id`, `generation_id`, and `error_code`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | With `expand=nativeTools`, returns the built-in file generator as a `file` native tool. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Rejects the reserved `file_generator` ID with `400`. |
+| [Exporting agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) | Includes the built-in file generator when an exported agent uses it. |
+| [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Does not create the built-in file generator as a tool. Imported agents keep `file_generator` in `nativeTools`. |
 
 #### Known problems
 

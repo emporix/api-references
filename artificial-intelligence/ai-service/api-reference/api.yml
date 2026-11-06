@@ -353,7 +353,7 @@ paths:
                   * `tool_result` — `ChatStreamToolResultData`
                   * `artifact` — **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
 
-                    One image or file the agent decided to publish. The image can come from the configured provider's image generation, and the file can come from the internal file tool or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
+                    One image or file the agent decided to publish. The agent needs the built-in file generator (`file_generator`) in `nativeTools`, and the caller's token must include `media.asset_manage`. The image can come from the configured provider's image generation, and the file can come from the built-in file generator or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
                   * `done` — `ChatStreamDoneData`
                   * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -2413,7 +2413,7 @@ components:
         * `rag_emporix`
         * `teams`
         * `search`
-        * `file`
+        * `file` — the built-in file generator, enabled with the reserved ID `file_generator` in the agent's `nativeTools`.
     BaseNativeTool:
       type: object
       properties:
@@ -2868,7 +2868,10 @@ components:
               $ref: '#/components/schemas/MetadataResponse'
     FileNativeToolConfig:
       type: object
-      description: File creation has no settings. Selecting the tool lets the agent create a downloadable text, source, or PDF file.
+      description: |-
+        The built-in file generator has no settings. It lets the agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it.
+
+        The built-in file generator is not stored as a tool. To enable it, add the reserved ID `file_generator` to the agent's `nativeTools`. Creating a tool with the ID `file_generator` returns `400`. A tool with type `file` and any other ID does not enable file or image generation. The agent creates files and images only when the caller's token includes the `media.asset_manage` scope.
       additionalProperties: false
     FileNativeToolRequest:
       allOf:
@@ -4268,6 +4271,8 @@ components:
         **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
 
         JSON object in the SSE `data` field when `event` is `artifact`. The agent published one image or file. Bytes stay in Media Service. A `failed` status does not fail the text stream.
+
+        The agent publishes artifacts only when it has the built-in file generator (`file_generator`) in `nativeTools` and the caller's token includes the `media.asset_manage` scope. Downloading a ready asset requires the `media.asset_read` scope. Only the chat stream sends artifacts. The synchronous chat endpoint and agent jobs do not.
       required:
         - kind
         - filename
@@ -4306,7 +4311,12 @@ components:
           description: pending means an image is still generating. ready means the asset can be downloaded. failed means this item failed and the text answer continues.
         error_code:
           type: string
-          description: Stable failure code. Present when `status` is `failed`.
+          description: |-
+            Stable failure code. Present when `status` is `failed`. Possible values:
+            * `CAPABILITY_UNAVAILABLE` — the agent's model provider cannot generate images.
+            * `INVALID_CONTENT` — the requested file content was rejected.
+            * `OVERSIZED` — the image or file exceeds the size limit.
+            * `UPLOAD_FAILED` — the asset could not be stored in Media Service.
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.

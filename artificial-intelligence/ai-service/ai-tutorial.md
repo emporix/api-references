@@ -816,7 +816,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   The request body uses the same `agentId` and `message` fields as the synchronous chat request. The endpoint returns the response as a Server-Sent Events stream (`text/event-stream`). Each frame has an `event` name and a JSON object in `data`. Concatenate successive `token` `content` values to build the assistant reply. When present, save `session_id` from the `done` event and send it as the `session-id` header on later turns. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
   {% hint style="danger" %}
-  The `thinking` and `error` events are in preview mode - some of the features may not be fully operational yet.
+  The `thinking`, `artifact`, and `error` events are in preview mode - some of the features may not be fully operational yet.
   {% endhint %}
 
   Example stream:
@@ -844,7 +844,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
   ```
 
-  In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
+  In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. If the agent has the built-in file generator and creates an image or a file, the stream also sends `artifact` events. See [How to let an agent create images and files](#how-to-let-an-agent-create-images-and-files). An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
 
   Continue the same session on a later streaming turn:
 
@@ -1248,6 +1248,103 @@ curl -L \
 {% endstep %}
 {% endstepper %}
 
+## How to let an agent create images and files
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+{% endhint %}
+
+An agent can generate images and create downloadable files during a streaming chat, for example a product visual or a PDF summary of an order. The agent uses the built-in file generator, a native tool with the reserved ID `file_generator`. In the Management Dashboard, it is listed as **Built-in file generator** under the agent's native tools. It can create text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files. Image generation depends on the agent's model. If the model cannot generate images, the stream sends an `artifact` event with the `failed` status and the `CAPABILITY_UNAVAILABLE` error code.
+
+Generated images and files are stored as private Media Service assets. The chat stream sends only their metadata. A failed image or file does not fail the text answer.
+
+The following scopes are required:
+
+* `media.asset_manage` – in the token you use for chat. Without it, the agent answers in text only.
+* `media.asset_read` – in the token you use to download the images and files.
+
+Only [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) returns images and files. [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) and [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) do not.
+
+{% stepper %}
+{% step %}
+#### Add the built-in file generator to the agent
+
+The built-in file generator is not a tool you create. Add its reserved ID, `file_generator`, to the agent's `nativeTools` with the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint. A successful request returns `204`.
+
+```bash
+curl -L \
+  --request PATCH \
+  --url 'https://api.emporix.io/ai-service/{tenant}/agentic/agents/order-assistant' \
+  --header 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  --header 'Content-Type: application/json' \
+  --data '[
+    {
+      "op": "ADD",
+      "path": "/nativeTools",
+      "value": {
+        "id": "file_generator"
+      }
+    }
+  ]'
+```
+
+Creating a tool with the ID `file_generator` through [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) returns `400`. A tool with type `file` and any other ID does not enable images or files.
+
+{% endstep %}
+
+{% step %}
+#### Ask for an image or a file in the chat stream
+
+Call [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and ask the agent for the result you need.
+
+```bash
+curl -N -L 'https://api.emporix.io/ai-service/{tenant}/agentic/chat-stream' \
+-H 'Content-Type: application/json' \
+-H 'Accept: text/event-stream' \
+-H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+-d '{
+    "agentId": "order-assistant",
+    "message": "Create a PDF summary of order EON1243."
+}'
+```
+
+Besides the `token` events with the text answer, the stream sends `artifact` events for each image or file. A file arrives as one event. An image can first arrive as `pending` and then as `ready` or `failed`:
+
+```
+event: token
+data: {"content":"Here is the summary of order EON1243."}
+
+event: artifact
+data: {"artifact_id":"6f1c0b2e1a2b4c3d9e8f1122","kind":"file","filename":"order-EON1243-summary.pdf","mime_type":"application/pdf","size":48213,"status":"ready"}
+
+event: done
+data: {"agent_id":"order-assistant","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
+```
+
+Handle each `artifact` event by its `status`:
+
+* `pending` – An image is still being generated. Show a placeholder. A later event with the same `generation_id` replaces it.
+* `ready` – The asset is stored. Use `artifact_id` to download it.
+* `failed` – This image or file could not be created. `error_code` tells you why, for example `CAPABILITY_UNAVAILABLE` or `OVERSIZED`. Keep showing the text answer.
+
+{% endstep %}
+
+{% step %}
+#### Download the image or file
+
+Use the `artifact_id` as the asset ID in [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url). The response contains a signed URL that expires after 15 minutes by default.
+
+```bash
+curl -i \
+  'https://api.emporix.io/media/{tenant}/assets/6f1c0b2e1a2b4c3d9e8f1122/download-url?disposition=inline' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+Set `disposition=inline` to display an image in your UI. Omit it to download the file as an attachment. You can also stream the content through [Downloading an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download).
+
+{% endstep %}
+{% endstepper %}
+
 ## How to export and import AI agents
 
 Exporting AI agents lets you migrate your agents configuration together with their dependent tools and MCP servers.
@@ -1306,6 +1403,7 @@ curl -L \
 
 The response summarizes what was imported and returns a `jobId`.
 
+* The built-in file generator (`file_generator`) is part of the export but is not created as a tool. The import summary marks it with the `EXISTS` state, and imported agents keep it in `nativeTools`.
 * If imported tools or MCP servers already exist in the target tenant, they're reused.
 * If they don't exist, new instances are created. If a token is required, they get a **disabled state** for your review, if no token is required, they get **enabled** state.
 * Imported agents are also disabled by default as a safety measure.
