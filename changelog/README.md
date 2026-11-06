@@ -27,11 +27,19 @@ layout:
 
 {% update date="RELEASE_DATE" tags="improvement" %}
 
-## AI Service - agent chat stream artifact event
+## AI Service - agent chat artifacts and `file` native tool
 
 #### Overview
 
-Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet. The `file` native tool lets an agent create a downloadable text, source, or PDF file.
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
+
+The new `file` native tool lets an agent create downloadable text, source, and PDF files. The tool has no configuration settings. Add a tool with `type: file` and an empty `config` object, then assign it to an agent through `nativeTools`.
+
+#### New tool
+
+| Tool | Description |
+| --- | --- |
+| `file` | Creates downloadable text, source, and PDF files. Its `config` object must be empty. |
 
 #### Updated endpoints
 
@@ -39,6 +47,9 @@ Streaming agent chat can publish an image or a file the agent decided to include
 | --- | --- |
 | `POST /ai-service/{tenant}/agentic/chat-stream` | Preview named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
 | `PUT /ai-service/{tenant}/agentic/tools/{toolId}` | Accepts native tool type `file` with an empty config. |
+| `GET /ai-service/{tenant}/agentic/tools/{toolId}` | Can return a `file` native tool. |
+| `GET /ai-service/{tenant}/agentic/tools` | Can return `file` native tools. |
+| `POST /ai-service/{tenant}/agentic/tools/search` | Can return `file` native tools. |
 
 #### Known problems
 
