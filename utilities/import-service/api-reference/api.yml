@@ -849,7 +849,10 @@ paths:
         '400':
           description: >-
             The request is invalid. For example, `dryRun` is `true` and `mappings` has a value other than
-            `published` or `draft`.
+            `published` or `draft`. Also returned for a run with nothing to import: every stream the run starts
+            from reads uploaded files and none has ever had a file, neither waiting nor imported. Upload a file
+            to a stream's queue first. A dry run is not refused for this, because it reads the connection's
+            sample file.
           content:
             application/json:
               schema:
@@ -879,6 +882,8 @@ paths:
           $ref: '#/components/responses/Unauthorized_401'
         '403':
           $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/NotFound_404'
         '409':
           $ref: '#/components/responses/Conflict_409'
         '500':
@@ -1754,6 +1759,14 @@ components:
           format: int64
           description: How many files are waiting in total, however many this response lists.
           example: 3
+        lastProcessed:
+          description: >-
+            The newest file the stream has imported, or `null` when it has imported none. Returned whatever
+            `historyLimit` is, because a run with no file waiting reads this file again (a snapshot stream).
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/ImportFile'
+          nullable: true
     ImportStream:
       title: Stream
       type: object
@@ -3424,6 +3437,16 @@ components:
             recordsRead: 43342
         pendingTruncated: false
         pendingTotal: 2
+        lastProcessed:
+          id: a3bb189e-8bf9-3888-9912-ace4e6543002
+          fileName: vendors-2026-10-22.csv
+          size: 2391001
+          status: PROCESSED
+          loadRank: 1
+          queuedAt: '2026-10-22T09:15:00.000Z'
+          processedAt: '2026-10-22T09:17:42.000Z'
+          runId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          recordsRead: 43342
     FileUploadLimits_Example:
       value:
         maxUploadBytes: 9437184
