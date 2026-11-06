@@ -1652,6 +1652,8 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
+        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+
       tags:
         - Custom Instance
       requestBody:
@@ -1783,7 +1785,7 @@ paths:
         - $ref: '#/components/parameters/trait_paged_pageNumber'
         - $ref: '#/components/parameters/trait_paged_pageSize'
         - $ref: '#/components/parameters/trait_sort'
-        - $ref: '#/components/parameters/trait_acceptLanguage_header'
+        - $ref: '#/components/parameters/trait_acceptLanguage_customInstance_header'
         - $ref: '#/components/parameters/trait_emporix_site_header'
         - $ref: '#/components/parameters/trait_fields'
         - $ref: '#/components/parameters/trait_expand_references'
@@ -3135,7 +3137,8 @@ components:
 
         * A specific language or ordered list filters first-class localized fields to the first matching translation. Their map response contains only that language.
         * For V2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
-        * A V2 mixin field without a matching translation is omitted. In an array of language maps, an element without a matching translation is omitted.
+        * A V2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
+        * In an array of language maps, an element without a matching translation is omitted.
         * `*` returns all translations in first-class localized fields and leaves full V2 mixin language maps unchanged.
         * An omitted or empty header uses the tenant's default language for first-class localized fields and filters V2 mixin language maps to that language.
         * V1 `[{language,value}]` mixin arrays remain unchanged.
