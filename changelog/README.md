@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7070 -->
+
+## Changelog Service - MongoDB CDC restart resilience
+
+#### Overview
+
+Changelog Service now uses MongoDB Java driver `5.1.4` for its CDC capture path to address a driver-level race condition that could trigger `java.lang.AssertionError` during MongoDB nightly restarts. This change improves change stream stability and resume behavior during restart windows without changing public APIs, configuration keys, or event contracts.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| Not applicable. | This change affects internal CDC processing only and does not modify any public API endpoints. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-06" tags="new-feature" %}
 
 ## Import Service - requeue of failed files
