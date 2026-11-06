@@ -218,6 +218,222 @@ If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
 To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
 {% endhint %}
 
+### How to migrate consumers to site-aware mixin paths
+
+{% hint style="danger" %}
+This functionality is in preview mode - some of the features may not be fully operational yet.
+
+To keep preview integrations working after a rollout, incremental update, or reindex, add support for the new paths before the new
+document shape reaches the index. Retain fallback reads from the old paths during the transition.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+#### Add dual-read support
+
+Update consumers to read non-localized values from `_product_siteAware.<site>.mixins.<mixin>` and localized values from
+`_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`. Here, `<mixin>` is the base mixin key, `<site>` is the tenant
+site code used as the overlay suffix, and `<language>` is a language key found in the localized mixin data.
+
+Use the following legacy paths when the corresponding new path is absent:
+
+* For non-localized values, use the base `_product.mixins.<mixin>` and overlay `_product.mixins.<mixin>__<site>` paths.
+* For localized values, use the base `_product_i18n.<language>.mixins.<mixin>` and overlay
+  `_product_i18n.<language>.mixins.<mixin>__<site>` paths.
+
+The consumer deep-merges the legacy overlay value into the legacy base value during fallback. A `null` overlay value preserves the
+base value.
+{% endstep %}
+
+{% step %}
+#### Roll out the change
+
+Roll out the change and keep both reads while old and new document shapes coexist. Run a
+[full reindex](#how_to_reindex_existing_products) to migrate all products in a bounded operation. If you rely on incremental updates
+without a full reindex, both shapes can coexist indefinitely. Keep the fallback reads in that case.
+{% endstep %}
+
+{% step %}
+#### Remove fallbacks after a full reindex
+
+If you run a full reindex, wait until it reports `SUCCESS`, then allow Battery Included time to apply the transaction cleanup.
+Verify through your search integration that reindexed documents contain the `_product_siteAware` paths. Remove the old-path
+fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
+{% endstep %}
+{% endstepper %}
+
+The Indexing Service recognizes a mixin as site-aware when the source product contains an overlay key in the form
+`{mixin}__{site}`. This key convention controls Battery Included indexing even if the mixin schema is not marked as site-aware.
+However, mark the schema with `siteAware: true` so that the product follows the standard
+[site-aware mixin](../../standard-practices/mixins.md#site-aware-mixins) model. Declare only the base mixin under `metadata.mixins`.
+If no schema URL is declared or the schema lookup fails, the merged mixin stays under
+`_product_siteAware.<site>.mixins.<mixin>`.
+
+For each site in `_product_siteAware`, the Indexing Service deep-merges the matching overlay into the base mixin. Nested overlay
+fields replace matching base fields, while the other base fields remain. A `null` overlay value does not clear the base value. The
+existing site eligibility rules determine which prices, availability, and segment IDs contribute to the document. A site with
+contributing commercial data receives an `_product_siteAware` entry and gets the base mixin when it has no matching overlay. An
+overlay key also creates the site entry when no commercial data exists for that site.
+
+After the merge, schema-identified localized fields and non-localized fields use separate paths:
+
+* `_product_siteAware.<site>.mixins.<mixin>` contains the non-localized part of the merged mixin.
+* `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>` contains its localized part.
+
+The site-aware base and overlay roots do not remain in `_product.mixins` or `_product_i18n.<language>.mixins`. Mixins without an
+overlay key remain non-site-aware. Their non-localized fields use `_product.mixins`, and schema-identified localized fields use
+`_product_i18n.<language>.mixins`.
+
+The following source product fragment contains a `productInfo` base, a `main` overlay, and a non-site-aware `internalFlags` mixin.
+The mixin schemas identify `title` and `note` as localized fields:
+
+```json
+{
+  "mixins": {
+    "productInfo": {
+      "skuHint": "BASE",
+      "details": {
+        "material": "cotton",
+        "care": {
+          "temperature": 30
+        }
+      },
+      "title": {
+        "en": "Shirt",
+        "de": "Hemd"
+      }
+    },
+    "productInfo__main": {
+      "skuHint": "MAIN",
+      "details": {
+        "care": {
+          "temperature": 40
+        }
+      },
+      "title": {
+        "de": "Premiumhemd"
+      }
+    },
+    "internalFlags": {
+      "hidden": false,
+      "note": {
+        "en": "Operations",
+        "de": "Betrieb"
+      }
+    }
+  },
+  "metadata": {
+    "mixins": {
+      "productInfo": "https://example.com/schemas/productInfo-v1.json",
+      "internalFlags": "https://example.com/schemas/internalFlags-v1.json"
+    }
+  }
+}
+```
+
+Assume both `main` and `germany` contribute commercial data to the document. The relevant output has the following shape:
+
+```json
+{
+  "_product": {
+    "mixins": {
+      "internalFlags": {
+        "hidden": false
+      }
+    }
+  },
+  "_product_i18n": {
+    "en": {
+      "mixins": {
+        "internalFlags": {
+          "note": "Operations"
+        }
+      }
+    },
+    "de": {
+      "mixins": {
+        "internalFlags": {
+          "note": "Betrieb"
+        }
+      }
+    }
+  },
+  "_product_siteAware": {
+    "main": {
+      "segmentIds": [
+        "seg-main"
+      ],
+      "mixins": {
+        "productInfo": {
+          "skuHint": "MAIN",
+          "details": {
+            "material": "cotton",
+            "care": {
+              "temperature": 40
+            }
+          }
+        }
+      },
+      "localeAware": {
+        "en": {
+          "mixins": {
+            "productInfo": {
+              "title": "Shirt"
+            }
+          }
+        },
+        "de": {
+          "mixins": {
+            "productInfo": {
+              "title": "Premiumhemd"
+            }
+          }
+        }
+      }
+    },
+    "germany": {
+      "segmentIds": [
+        "seg-germany"
+      ],
+      "mixins": {
+        "productInfo": {
+          "skuHint": "BASE",
+          "details": {
+            "material": "cotton",
+            "care": {
+              "temperature": 30
+            }
+          }
+        }
+      },
+      "localeAware": {
+        "en": {
+          "mixins": {
+            "productInfo": {
+              "title": "Shirt"
+            }
+          }
+        },
+        "de": {
+          "mixins": {
+            "productInfo": {
+              "title": "Hemd"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Commercial fields keep their existing paths and behavior. For example, `segmentIds`, `availability`, and `currencyAware` remain
+siblings of `mixins` and `localeAware` under each `_product_siteAware.<site>` entry.
+
+Mixin filters also keep their existing behavior. The Indexing Service applies `includedMixinPaths` and `excludedMixinKeys` to the
+raw source mixin tree before it detects site-aware roots, merges overlays, or separates localized values. Filter patterns therefore
+match source paths such as `productInfo` and `productInfo__main`, not the generated `_product_siteAware` paths.
+
 ### How the base site is chosen
 
 When the Indexing Service merges per-site product data into one document, it picks the base site in this order:
