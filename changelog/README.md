@@ -25,6 +25,24 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## Indexing Service - site-aware Battery Included mixin paths
+
+#### Overview
+
+Battery Included preview product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+
+The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read the old roots must migrate to the new site-aware paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
+
+For migration guidance, see [How to migrate consumers to site-aware mixin paths](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-migrate-consumers-to-site-aware-mixin-paths).
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-06" tags="new-feature" %}
 
 ## Import Service - requeue of failed files
