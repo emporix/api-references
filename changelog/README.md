@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+<!-- emporix-ai-buddy:changelog:COP-7148 -->
+
+## Cart Service - coupon refusal logging
+
+#### Overview
+
+Cart Service now logs unknown coupon codes and other coupon refusals with lower severity during coupon application. This reduces operational noise in cart error logs while keeping the caller-facing behavior unchanged for standard coupon refusals. Additionally, non-standard upstream `4xx` statuses now fall back to `400 BAD_REQUEST` instead of causing a secondary exception during error handling.
+
+#### Affected endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Applying a discount to a cart](https://developer.emporix.io/api-references/api-guides/checkout/cart/api-reference/cart-discounts#post-cart-tenant-carts-cartid-discounts) | Unknown coupon codes are still rejected with the same response, but Cart Service now logs `404` coupon refusals at `INFO`, other `4xx` refusals at `WARN`, and keeps coupon-service `500` failures at `ERROR`. Non-standard upstream `4xx` statuses now fall back to `400 BAD_REQUEST`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-05" tags="minor-change" %}
 
 ## IAM Service - non-deletable system groups
