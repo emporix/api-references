@@ -351,7 +351,9 @@ paths:
                     `ChatStreamThinkingData`
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
-                  * `artifact` — one image or file the agent decided to publish. The image can come from the configured provider's image generation, and the file can come from the internal file tool or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
+                  * `artifact` — **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+                    One image or file the agent decided to publish. The image can come from the configured provider's image generation, and the file can come from the internal file tool or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
                   * `done` — `ChatStreamDoneData`
                   * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -420,6 +422,9 @@ paths:
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
+        * `artifact` — **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+          One image or file the agent decided to publish. `data` is `ChatStreamArtifactData`. The event carries no bytes and no URL.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present. At least one of these fields is sent.
         * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -4257,7 +4262,10 @@ components:
     ChatStreamArtifactData:
       title: Artifact event data
       type: object
-      description: JSON object in the SSE `data` field when `event` is `artifact`. The agent published one image or file. Bytes stay in Media Service. A `failed` status does not fail the text stream.
+      description: |-
+        **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+        JSON object in the SSE `data` field when `event` is `artifact`. The agent published one image or file. Bytes stay in Media Service. A `failed` status does not fail the text stream.
       required:
         - kind
         - filename

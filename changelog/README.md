@@ -31,14 +31,67 @@ layout:
 
 #### Overview
 
-Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `file` native tool lets an agent create a downloadable text, source, or PDF file.
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet. The `file` native tool lets an agent create a downloadable text, source, or PDF file.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| `POST /ai-service/{tenant}/agentic/chat-stream` | Named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
+| `POST /ai-service/{tenant}/agentic/chat-stream` | Preview named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
 | `PUT /ai-service/{tenant}/agentic/tools/{toolId}` | Accepts native tool type `file` with an empty config. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-05" tags="minor-change" %}
+
+## IAM Service - non-deletable system groups
+
+#### Overview
+
+Deleting a group whose `code` is `CUSTOMER`, `BO_USER`, `BO_MANAGER`, `BO_ADMIN`, or `SUPPORT_USER`, in any letter case, returns HTTP 400. The group and its assignments stay. Setting `forceDelete` to `true` does not remove these groups. A group with no `code`, a blank `code`, or any other `code` still follows the existing delete rules.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Deleting a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid) | The endpoint returns HTTP 400 with the detail `System group cannot be deleted.` when the group's `code` is one of the system codes above, including when `forceDelete` is `true`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-03" tags="deprecated" %}
+
+## IAM Service - removal of deprecated endpoints and fields
+
+#### Overview
+
+All previously deprecated endpoints, response fields, and query parameters are now removed (see [IAM Service - deprecations](https://developer.emporix.io/changelog/2026/readme#iam-service-access-control-restrictions-predefined-scopes-and-deprecations)).
+
+#### Removed endpoints & fields
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all permissions | Endpoint removed. The `GET /iam/{tenant}/permissions` operation is no longer available. |
+| Retrieving a permission | Endpoint removed. The `GET /iam/{tenant}/permissions/{permissionId}` operation is no longer available. |
+| Retrieving all resources | Endpoint removed. The `GET /iam/{tenant}/resources` operation is no longer available. |
+| Retrieving a resource | Endpoint removed. The `GET /iam/{tenant}/resources/{resourceId}` operation is no longer available. |
+| Retrieving a list of roles | Endpoint removed. The `GET /iam/{tenant}/roles` operation is no longer available. |
+| Retrieving a role | Endpoint removed. The `GET /iam/{tenant}/roles/{roleId}` operation is no longer available. |
+| Retrieving user access controls for a resource | Endpoint removed. The `GET /iam/{tenant}/users/{userId}/access-controls/{resourceId}` operation is no longer available. Use [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls) instead. |
+| Retrieving user permissions for a resource | Endpoint removed. The `GET /iam/{tenant}/users/{userId}/permissions/{resourceId}` operation is no longer available. Use [Retrieving scopes of a specific user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) instead. |
+| [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `roleId`, `resourceId`, and `expand` query parameters are removed. |
+| [Retrieving an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a requested user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access control templates](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-control-templates#get-iam-tenant-templates) | Expanded access controls no longer include `roleId`, `resourceId`, `role`, or `resource`. |
 
 #### Known problems
 
