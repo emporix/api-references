@@ -565,5 +565,5 @@ To learn more about the approval groups, see the [Approvals](https://app.gitbook
 
 To see an end-to-end quote approval flow from the B2B Commerce Frontend perspective, see the [Quotes](https://app.gitbook.com/s/OgeoK7nW6gEh0q1ceUZP/commerce-examples/quote-process). 
 
-To see the end-to-end cart approval process, see the [Users Management and Approvals](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/customer-use-cases/scenarios-introduction/right-roles#approval-requests-flow)
+To see the end-to-end cart approval process, see the [Users Management and Approvals](https://app.gitbook.com/s/OgeoK7nW6gEh0q1ceUZP/commerce-examples/user-management-approvals#requesting-approval-for-an-order)
 {% endhint %}
