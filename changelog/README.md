@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="RELEASE_DATE" tags="new-feature" %}
 
 ## AI Service - agent chat artifacts and `file` native tool
 
@@ -45,11 +45,11 @@ The new `file` native tool lets an agent create downloadable text, source, and P
 
 | Endpoint | Description |
 | --- | --- |
-| `POST /ai-service/{tenant}/agentic/chat-stream` | Preview named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
-| `PUT /ai-service/{tenant}/agentic/tools/{toolId}` | Accepts native tool type `file` with an empty config. |
-| `GET /ai-service/{tenant}/agentic/tools/{toolId}` | Can return a `file` native tool. |
-| `GET /ai-service/{tenant}/agentic/tools` | Can return `file` native tools. |
-| `POST /ai-service/{tenant}/agentic/tools/search` | Can return `file` native tools. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Preview named SSE event `artifact` with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), optional `artifact_id`, `generation_id`, and `error_code`. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts native tool type `file` with an empty `config` object. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Can return a `file` native tool. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Can return `file` native tools. |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search) | Can return `file` native tools. |
 
 #### Known problems
 

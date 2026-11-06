@@ -2882,6 +2882,8 @@ components:
               $ref: '#/components/schemas/FileNativeToolConfig'
             metadata:
               $ref: '#/components/schemas/MetadataRequest'
+          required:
+            - config
     FileNativeToolResponse:
       allOf:
         - $ref: '#/components/schemas/BaseNativeTool'
