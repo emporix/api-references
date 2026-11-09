@@ -55,27 +55,35 @@ These announcements are intended to keep you informed about ongoing work and pot
 <tbody>
   <tr>
     <td class="tg-0pky">B2B Commerce Frontend</td>
-    <td class="tg-0pky">SEO Optimization PDP</td>
+    <td class="tg-0pky">Company Shared Orders</td>
   </tr>
   <tr>
     <td class="tg-0pky">Schema Service</td>
-    <td class="tg-0pky">Site awareness of mixins</td>
+    <td class="tg-0pky">Localized Mixins</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Return Service</td>
-    <td class="tg-0pky">Site awareness returns</td>
+    <td class="tg-0pky">Emporix Skills</td>
+    <td class="tg-0pky">Import Tool and Management Dashboard extensions</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Segment Service</td>
-    <td class="tg-0pky">Item assignments support INCLUDE and EXCLUDE options</td>
+    <td class="tg-0pky">Import Tool</td>
+    <td class="tg-0pky">Support CSV and Product import</td>
   </tr>
   <tr>
-    <td class="tg-0pky">Agentic</td>
-    <td class="tg-0pky">Support A2A protocol</td>
+    <td class="tg-0pky">Payment Service</td>
+    <td class="tg-0pky">Mollie integration</td>
   </tr>
   <tr>
     <td class="tg-0pky">Cockpits</td>
     <td class="tg-0pky">Deployment Center</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Value Stream Modeller</td>
+    <td class="tg-0pky">Minor Improvements</td>
+  </tr>
+  <tr>
+    <td class="tg-0pky">Agentic</td>
+    <td class="tg-0pky">Support A2A Protocol</td>
   </tr>
 </tbody>
 </table>
