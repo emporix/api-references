@@ -214,6 +214,38 @@ If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
 To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
 {% endhint %}
 
+### How the base site is chosen
+
+When the Indexing Service merges per-site product data into one document, it picks the base site in this order:
+
+1. A site that matches one of the tenant default sites
+2. The `main` site, if no matching default-site data is available
+3. The first available site, if neither of the above matches
+
+The merged document is stored under site code `main`, which is how `MERGE` keeps a single per-product document.
+
+### Special rules for the `main` site
+
+For the `main` site, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
+
+For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
+
+### When the default site is `main`
+
+When a tenant default site is `main`, the following applies:
+
+- Base product fields come from `main`.
+- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from Battery Included.
+- Sites that still contribute data write their prices, availability, and segment IDs to `_product_siteAware`.
+
+### When the default site is not `main`
+
+When the matching tenant default site is not `main`, the following applies:
+
+- Base product fields come from that default site when it still contributes data.
+- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
+- Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
+
 ### How site-aware mixins are indexed
 
 The Indexing Service recognizes a mixin as site-aware when the source product contains an overlay key in the form
@@ -429,38 +461,6 @@ Verify through your search integration that reindexed documents contain the `_pr
 fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
 {% endstep %}
 {% endstepper %}
-
-### How the base site is chosen
-
-When the Indexing Service merges per-site product data into one document, it picks the base site in this order:
-
-1. A site that matches one of the tenant default sites
-2. The `main` site, if no matching default-site data is available
-3. The first available site, if neither of the above matches
-
-The merged document is stored under site code `main`, which is how `MERGE` keeps a single per-product document.
-
-### Special rules for the `main` site
-
-For the `main` site, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
-
-For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
-
-### When the default site is `main`
-
-When a tenant default site is `main`, the following applies:
-
-- Base product fields come from `main`.
-- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from Battery Included.
-- Sites that still contribute data write their prices, availability, and segment IDs to `_product_siteAware`.
-
-### When the default site is not `main`
-
-When the matching tenant default site is not `main`, the following applies:
-
-- Base product fields come from that default site when it still contributes data.
-- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
-- Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
 
 To rebuild the Battery Included index after configuration changes, see [How to reindex existing products](#how_to_reindex_existing_products).
 
