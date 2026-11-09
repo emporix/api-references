@@ -27,18 +27,29 @@ layout:
 
 {% update date="RELEASE_DATE" tags="minor-change" %}
 
-## Import Service - runs with nothing to import and retry runs
+## Import Service - reference corrections for running imports
 
 #### Overview
 
-A manual run is now also refused with HTTP 400 when a stream with incremental files has imported every file in its queue, because it reads each file once. A snapshot stream with an imported file can still run with an empty queue: it reads its latest file again. Streams whose mappings have never been published are left out of the check, and a configuration with a run in progress returns HTTP 409 instead. The error message names each stream and what to do. The reference now lists `RETRY` among the values of a run's `trigger` field: a run created by retrying failed records has it.
+The Import Service reference for running and monitoring imports now matches the service:
+
+* A manual run is also refused with HTTP 400 when a stream with incremental files has imported every file in its queue. A snapshot stream with an imported file can still run with an empty queue, because it reads its latest file again. Streams whose mappings have never been published are not checked, and a configuration with a run in progress returns HTTP 409 instead.
+* Error responses are documented with the body the service returns: `message`, `code`, `status`, `resourceId`, and `details` entries with `message` and `field`.
+* A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media and category assignments. The `FAN_OUT` mode and its fields are documented.
+* Run progress events, run and stream status values, error codes, the imported-data search and the statistics filters are corrected.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 400 when no stream the run starts from has a file to read, including a stream with incremental files whose queue is fully imported. |
-| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Documents `RETRY`, the `trigger` of a run created by retrying failed records. |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Documents the "nothing to import" rule, the error body, and a 409 while a data purge is in progress. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Documents `RETRY` in `trigger`, `streamIds`, the `CANCELLED` stream status, and `payload`, `stage` and `FAN_OUT_REMOVE` on run errors. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Documents the fields of each event. A `run` event names the run in `runId` and is also sent before the run finishes. |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A `409` returns the cancellation result with `accepted` set to `false`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Lists the conditions that return a 409. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents every `targetWriter`, the `FAN_OUT` mode, `fanOutPath`, `fanOutKey`, `targetOptions` and `seq`. |
+| [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | `search` matches the start of the natural key or Emporix identifier, case-sensitively. `outcome` no longer lists `DELETED_TARGET`. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Documents the 366-day window limit, the 404 for an unknown stream, and `summary.aborted`. |
 
 #### Known problems
 
