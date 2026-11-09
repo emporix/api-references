@@ -374,6 +374,127 @@ paths:
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
 
+  '/importtool/{tenant}/streams/transfer':
+    parameters:
+      - $ref: '#/components/parameters/trait_tenant'
+    post:
+      summary: Moving or cloning streams
+      description: |-
+        Moves streams to another configuration, or clones them into the same configuration or another one. The target can also be a new configuration. It gets the source configuration's connection and settings and is created disabled.
+
+        Streams refer to each other by name: a fan-out target, a composite child, and a composite merge name their parent, and any stream can name the streams it runs after in `dependsOn`. The request therefore also includes every stream that depends on a requested stream. The plan lists these streams with `added` set to `true`.
+
+        A move keeps each stream's identifier, so its file queue, delta watermark, and mapping versions go with it, and its imported records move to the target configuration. Its run history stays with the configuration it ran in. A name the target configuration already has is refused.
+
+        A clone is a new stream that writes the same target type as its original. Imported records are tracked by target type and source key, so the clone shares the original's imported records, and a run of the clone skips the records that are unchanged. A clone takes the next free name in the form `<name> (copy)`, and the references inside the cloned set follow the new names. Clones are created disabled.
+
+        If `preview` is set to `true`, the plan is returned and nothing changes. A plan with an empty `problems` list can go ahead. If the list is not empty, the same request without `preview` is refused with a `409` error that lists the same problems.
+
+        The following conditions cause a problem:
+        * A stream would name a stream that is neither in the request nor in the target configuration.
+        * A stream's parent would resolve to a stream of another configuration.
+        * A moved stream's name is already used in the target configuration.
+        * The source or the target configuration has an import run or a purge in progress.
+
+        If a move stops partway, send the same request again to finish it. The streams already moved stay in the plan, and their imported records are moved again.
+
+      operationId: POST-importtool-transfer-streams
+      tags:
+        - Streams
+      security:
+        - OAuth2:
+            - importtool.import_manage
+      parameters:
+        - name: preview
+          in: query
+          required: false
+          description: If set to `true`, the plan is returned without moving or cloning anything.
+          schema:
+            type: boolean
+            default: false
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StreamTransferRequest'
+            examples:
+              Cloning into a new configuration:
+                value:
+                  action: CLONE
+                  streamIds:
+                    - 0b6f6b5e-3d1c-4b8e-9f43-2a7c1e5d9a10
+                  newJobName: Product feed (EU)
+              Moving to an existing configuration:
+                value:
+                  action: MOVE
+                  streamIds:
+                    - 0b6f6b5e-3d1c-4b8e-9f43-2a7c1e5d9a10
+                  targetConfigId: 7e2d4c1a-58f3-4b90-a6d2-3c9e0f1b8a47
+      responses:
+        '200':
+          description: >-
+            The request was successful. If `preview` is `true`, the plan is returned. Otherwise, the streams were moved
+            or cloned and the completed plan is returned, with `targetConfigId` set to the configuration they
+            are now in.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamTransferPlan'
+              examples:
+                Clone plan:
+                  value:
+                    action: CLONE
+                    sourceConfigId: 3f9a2b7c-1d4e-4f6a-8b2c-5e7d9a0c1f34
+                    targetConfigId: 7e2d4c1a-58f3-4b90-a6d2-3c9e0f1b8a47
+                    targetConfigName: Product feed (EU)
+                    streams:
+                      - streamId: 0b6f6b5e-3d1c-4b8e-9f43-2a7c1e5d9a10
+                        name: products
+                        newName: products
+                        added: false
+                      - streamId: 9c4e1f2a-7b3d-4e8f-a1c6-2d5b8e0f3a79
+                        name: prices
+                        newName: prices
+                        added: true
+                    problems: []
+                    notes:
+                      - The copies are switched off, so they do not write beside the streams they copy. Switch them on once they are set up.
+        '400':
+          description: >-
+            The request names no streams or no action, names streams from more than one configuration, or names
+            neither a target configuration nor a name for a new one.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          description: A stream or the target configuration does not exist.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+        '409':
+          description: >-
+            The plan has problems, or a configuration involved has an import run or a purge in progress. The
+            message lists the problems. Nothing was moved or cloned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Name already used:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: Product feed (EU) already has a stream named 'prices'. Rename one of them first.
+        '500':
+          $ref: '#/components/responses/InternalServiceError_500'
+
   '/importtool/{tenant}/streams/{streamId}/files':
     parameters:
       - $ref: '#/components/parameters/trait_tenant'
@@ -2131,6 +2252,12 @@ paths:
         removed. Every transformation is validated before anything is stored, so an invalid one rejects the
         request rather than failing later during a run.
 
+        Each mapping's `targetPath` is also checked against the target type's schema, at the pinned schema
+        version when one is set. A path the schema does not declare, or a declared type the attribute cannot
+        hold, rejects the request. On a custom entity type that the import creates, a path whose
+        `targetSchema` is the type's own schema, or is not set, is accepted as a new attribute. Publishing the
+        mappings declares it on the schema.
+
       operationId: PUT-importtool-replace-mappings
       tags:
         - Mappings (Administration)
@@ -2154,6 +2281,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FieldMapping'
+        '400':
+          description: >-
+            A mapping is invalid, or does not match the target schema. Nothing was stored. The existing set is
+            unchanged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -3505,6 +3640,13 @@ paths:
       description: |-
         Proposes mappings by matching the source's fields against the attributes the target type actually has. Only real target attributes are proposed, each with the type the target declares. Fields with no match are left unmapped rather than invented.
 
+        A custom entity type that the import creates is the exception. Such a type does not exist yet, or its own schema holds only attributes that this configuration's streams map or have published. For such a type, every source field that does not match an existing attribute is proposed as a new attribute. The new attribute is built as follows:
+        * The attribute key is the source field name in camel case, for example `Unit Price` becomes `unitPrice`. Array steps such as `items[]` are kept.
+        * The data type is the one inferred from the source sample.
+        * A field whose key comes out as `name` sets the instance's display name.
+
+        A source field whose name gives no valid attribute key is left unmapped. When the Schema Service cannot confirm whether the type exists, no new attribute is proposed.
+
         By default, the proposed mappings replace the stream's stored mapping set for the addressed target type and are returned. Stored mappings that the proposal does not include, such as manually created mappings, are removed. If `persist` is set to `false`, the proposal is returned without being stored and the stored set is unchanged. You can review the proposal, then save it with `PUT /importtool/{tenant}/streams/{streamId}/mappings` using the same `targetType`, or discard it.
 
         If nothing can be proposed, nothing is stored and the response contains the mapping set that is already stored. This happens when no source field matches a target attribute, or when the source sample or the target attributes cannot be read.
@@ -3685,6 +3827,13 @@ paths:
       description: |-
         Publishes the draft as a new version and makes it the set that runs execute. A stream whose mappings have never been published is skipped by real runs, so a recreated configuration must be published before it will import anything.
 
+        Before publishing, the service checks that every value the target needs has a value, for example the currency of a price target or the site of a stock target. The value comes from a mapping of a source field or from a transformation that sets a fixed value, such as `constant:EUR`. A missing value rejects the request, because every record of that target would fail.
+
+        On a custom entity type that the import creates, publishing also declares every mapped attribute that the type's own schema does not hold yet. The following applies to the declaration:
+        * The attributes are added as a new schema version. Existing attributes are not changed.
+        * Schema version pins in this configuration that point at the previous version move to the new one, so the published set writes the new attributes.
+        * If the schema cannot be read or extended, nothing is published.
+
       operationId: POST-importtool-publish-mappings
       tags:
         - Mappings (Administration)
@@ -3706,6 +3855,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/MappingVersion'
+        '400':
+          description: A value the target needs has neither a mapping nor a fixed-value transformation. Nothing was published.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -3716,6 +3871,14 @@ paths:
           $ref: '#/components/responses/Conflict_409'
         '500':
           $ref: '#/components/responses/InternalServiceError_500'
+        '502':
+          description: >-
+            The target type's schema could not be read or extended with the new attributes. Nothing was
+            published. Send the request again.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
 
   '/importtool/{tenant}/streams/{streamId}/mappings/versions':
     parameters:
@@ -3843,6 +4006,101 @@ components:
         - DRAFT_AHEAD
         - PUBLISHED
       example: DRAFT_AHEAD
+
+    StreamTransferRequest:
+      type: object
+      description: Which streams to move or clone, and where to.
+      properties:
+        action:
+          type: string
+          description: |-
+            Whether to move or clone the streams. Possible values:
+            * `MOVE` – moves the streams, with their imported records, to the target configuration.
+            * `CLONE` – creates disabled copies of the streams in the target configuration.
+          enum:
+            - MOVE
+            - CLONE
+        streamIds:
+          type: array
+          description: >-
+            Identifiers of the streams to move or clone, all from one configuration. Streams that depend on them
+            are added to the plan.
+          minItems: 1
+          items:
+            type: string
+            format: uuid
+        targetConfigId:
+          type: string
+          format: uuid
+          description: >-
+            Identifier of the configuration to move or clone the streams to. For a clone, this can be the
+            streams' own configuration. Omit it to create a new configuration named `newJobName`.
+        newJobName:
+          type: string
+          description: >-
+            Name of a new configuration to create for the streams. Used only when `targetConfigId` is omitted.
+      required:
+        - action
+        - streamIds
+
+    StreamTransferPlan:
+      type: object
+      description: What a move or clone does, or why it cannot go ahead.
+      properties:
+        action:
+          type: string
+          description: The action of the request.
+          enum:
+            - MOVE
+            - CLONE
+        sourceConfigId:
+          type: string
+          format: uuid
+          description: Identifier of the configuration the streams come from.
+        targetConfigId:
+          type: string
+          format: uuid
+          nullable: true
+          description: >-
+            Identifier of the target configuration. In a preview for a new configuration, it is `null` because
+            the configuration does not exist yet.
+        targetConfigName:
+          type: string
+          description: Name of the target configuration.
+        streams:
+          type: array
+          description: The streams the request moves or clones, including dependent streams added to the plan.
+          items:
+            type: object
+            required:
+              - streamId
+              - name
+              - newName
+              - added
+            properties:
+              streamId:
+                type: string
+                format: uuid
+                description: Identifier of the stream.
+              name:
+                type: string
+                description: The stream's current name.
+              newName:
+                type: string
+                description: The name the stream has in the target configuration.
+              added:
+                type: boolean
+                description: Whether the stream was added as a dependant rather than requested.
+        problems:
+          type: array
+          description: Reasons the request cannot go ahead. Empty when it can.
+          items:
+            type: string
+        notes:
+          type: array
+          description: Things to know before confirming the request. Notes do not stop it.
+          items:
+            type: string
 
     MappingVersion:
       type: object
