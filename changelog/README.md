@@ -61,7 +61,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-11-09" tags="improvement" %}
 
 ## Product, Brand, Label, and Site Settings Services - custom language codes
 
