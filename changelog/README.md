@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="2026-11-09" tags="improvement" %}
 
 ## Returns Service - site on a return
 
