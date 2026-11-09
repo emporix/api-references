@@ -211,22 +211,26 @@ The `apiUrl` value must be the `https` address of a Battery Included host that E
 
 The host and the write key belong together. The service validates `writeKey` against the host in `apiUrl` before saving, so use the write key that Battery Included issued for that host. A write key that is not valid on that host returns `400` with the message `Battery Included credentials are invalid. Verify the write key and index name.`, and the stored configuration stays unchanged.
 
-To set the API URL when you create the configuration, add `apiUrl` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint. To set it on an existing configuration, follow the steps below.
+To set the API URL when you create the configuration, add `apiUrl` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
 
-#### Prerequisites
+### Prerequisites
 
 The following items are required before you change `apiUrl`:
 
 * The host of your index and a write key for that host, both provided by Battery Included
 * An OAuth2 service token with the `indexing.search_view` and `indexing.search_manage` scopes
 
-{% hint style="warning" %}
-If you change `apiUrl` while a product reindex is running, the documents uploaded before the change stay on the old host, and the new host holds only the documents uploaded after the change.
-{% endhint %}
+### Set the API URL on an existing configuration
+
+To set the API URL on an existing `BATTERY_INCLUDED` configuration, complete the following steps:
 
 {% stepper %}
 {% step %}
 #### Check that no product reindex is running
+
+{% hint style="warning" %}
+If you change `apiUrl` while a product reindex is running, the documents uploaded before the change stay on the old host, and the new host holds only the documents uploaded after the change.
+{% endhint %}
 
 Send a request to the [Retrieving reindex jobs](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs) endpoint.
 
