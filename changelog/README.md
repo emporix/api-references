@@ -53,6 +53,290 @@ The Import Service is in preview mode, so some features may not be fully operati
 
 {% endupdate %}
 
+{% update date="2026-11-06" tags="new-feature" %}
+
+## Import Service - requeue of failed files
+
+#### Overview
+
+You can now put a file whose import failed back in a file-based stream's queue, without uploading it again. The next run reads the content the service already holds for the file, so you can fix the cause, such as a mapping, and import the same file. Only a file with the `FAILED` status can be queued again. An imported file is never queued again, because an older snapshot would overwrite newer data. To reprocess the records that failed in an imported file, retry the run instead.
+
+When a run finds no file waiting for a file-based stream, the stream's progress `message` now says that nothing was imported and names the latest file if its import failed.
+
+For the workflow, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Queuing a failed file again](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files-fileid-requeue) | Puts a failed file back at the end of the stream's queue, using the content the service already holds. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | A file-based stream's `message` states when no file was waiting and names the latest file if its import failed. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-06" tags="minor-change" %}
+
+## Import Service - run responses and the last imported file
+
+#### Overview
+
+Triggering a run for an import job that does not exist, or retrying a run that does not exist, returns HTTP 404. Both returned HTTP 500 before. A manual run with nothing to import returns HTTP 400: every stream the run starts from reads uploaded files and none has ever had a file. Upload a file to the stream's queue first; a dry run is not refused for this. The file queue now names the newest file the stream imported, whatever the history page holds.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 404 for an import job that does not exist, and HTTP 400 when no stream the run starts from has ever had a file. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns HTTP 404 for a run that does not exist, as documented. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | The response adds `lastProcessed`, the newest file the stream imported. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-05" tags="minor-change" %}
+
+## IAM Service - non-deletable system groups
+
+#### Overview
+
+Deleting a group whose `code` is `CUSTOMER`, `BO_USER`, `BO_MANAGER`, `BO_ADMIN`, or `SUPPORT_USER`, in any letter case, returns HTTP 400. The group and its assignments stay. Setting `forceDelete` to `true` does not remove these groups. A group with no `code`, a blank `code`, or any other `code` still follows the existing delete rules.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Deleting a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid) | The endpoint returns HTTP 400 with the detail `System group cannot be deleted.` when the group's `code` is one of the system codes above, including when `forceDelete` is `true`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-03" tags="deprecated" %}
+
+## IAM Service - removal of deprecated endpoints and fields
+
+#### Overview
+
+All previously deprecated endpoints, response fields, and query parameters are now removed (see [IAM Service - deprecations](https://developer.emporix.io/changelog/2026/readme#iam-service-access-control-restrictions-predefined-scopes-and-deprecations)).
+
+#### Removed endpoints & fields
+
+| Endpoint | Description |
+| --- | --- |
+| Retrieving all permissions | Endpoint removed. The `GET /iam/{tenant}/permissions` operation is no longer available. |
+| Retrieving a permission | Endpoint removed. The `GET /iam/{tenant}/permissions/{permissionId}` operation is no longer available. |
+| Retrieving all resources | Endpoint removed. The `GET /iam/{tenant}/resources` operation is no longer available. |
+| Retrieving a resource | Endpoint removed. The `GET /iam/{tenant}/resources/{resourceId}` operation is no longer available. |
+| Retrieving a list of roles | Endpoint removed. The `GET /iam/{tenant}/roles` operation is no longer available. |
+| Retrieving a role | Endpoint removed. The `GET /iam/{tenant}/roles/{roleId}` operation is no longer available. |
+| Retrieving user access controls for a resource | Endpoint removed. The `GET /iam/{tenant}/users/{userId}/access-controls/{resourceId}` operation is no longer available. Use [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls) instead. |
+| Retrieving user permissions for a resource | Endpoint removed. The `GET /iam/{tenant}/users/{userId}/permissions/{resourceId}` operation is no longer available. Use [Retrieving scopes of a specific user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-scopes) instead. |
+| [Retrieving all access controls](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `roleId`, `resourceId`, and `expand` query parameters are removed. |
+| [Retrieving an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#get-iam-tenant-access-controls-accesscontrolid) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#get-iam-tenant-groups-groupid-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-userid-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access controls assigned to a requested user](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/users#get-iam-tenant-users-me-access-controls) | The `roleId`, `resourceId`, `role`, and `resource` fields are removed from the response. The `expand` query parameter is removed. |
+| [Retrieving all access control templates](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-control-templates#get-iam-tenant-templates) | Expanded access controls no longer include `roleId`, `resourceId`, `role`, or `resource`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="improvement" %}
+
+## Webhook Events - `restriction` on `customer.created` and `customer.updated`
+
+#### Overview
+
+The `customer.created` and `customer.updated` webhook event payloads were extended with `restriction`.
+
+#### Updated events
+
+| Event              | Description                                        |
+|--------------------|----------------------------------------------------|
+| `customer.created` | Event schema extended with `restriction` property. |
+| `customer.updated` | Event schema extended with `restriction` property. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Events - Customer](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-events/events-customer)
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="new-feature" %}
+
+## Indexing Service - customer and legal-entity reindex
+
+#### Overview
+
+You can now reindex all customers or all legal entities of a tenant. Set `entityType` to `CUSTOMER` or `LEGAL-ENTITY` when you create a reindex job. AI RAG tools and Search Service searches for these types use the reindexed documents.
+
+#### Updated endpoints
+
+| Endpoint | Description                                                                          |
+| --- |--------------------------------------------------------------------------------------|
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Accepts `CUSTOMER` and `LEGAL-ENTITY` as `entityType`. Values are case-insensitive.  |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="new-feature" %}
+
+## AI Service - `search` native tool and new entity types for RAG tools
+
+#### Overview
+
+The new `search` native tool lets an agent search customers or legal entities. Set `config.entityType` to `customer` or `legal-entity`, add an optional `prompt`, and limit results per search with `maxResults` (1 to 10, default 5). When you save a `search` tool, the service creates or updates the search index for that entity type. If the index cannot be prepared, the tool is not saved.
+
+`rag_emporix` tools now also accept `customer` and `legal-entity` as `config.entityType`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Accepts the `search` tool type and creates or updates the search index for `config.entityType` before saving. If the index cannot be prepared, the tool is not saved. For `rag_emporix` tools, accepts `customer` and `legal-entity` as `config.entityType`. |
+| [Retrieving tool by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools-toolid) | Can return a `search` tool. |
+| [Listing tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#get-ai-service-tenant-agentic-tools) | Can return `search` tools. |
+| [Searching tools](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#post-ai-service-tenant-agentic-tools-search) | Can return `search` tools. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="new-feature" %}
+
+## AI RAG Indexer Service - customer and legal-entity types, filter metadata for lists and references
+
+#### Overview
+
+The metadata endpoints now accept `customer` and `legal-entity` as the entity type, in addition to `product`, `order`, and custom entity types. Filter metadata marks fields inside a list of objects with `parent` and returns the `id` of a Schema Service `REFERENCE` attribute as a filterable field.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Listing fields for RAG search](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-rag-metadata) | Accepts `customer` and `legal-entity` as `type`. |
+| [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) | Accepts `customer` and `legal-entity` as `type`. A field inside a list of objects, such as `addresses.city`, includes `parent` with the list path. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="new-feature" %}
+
+## Search Service - customer and legal-entity search
+
+#### Overview
+
+Search indexes, saved searches, and searches now support the `customer` and `legal-entity` types, in addition to custom schema types. A search on these types needs the matching customer or legal-entity read scope. A restricted read scope or an own-read scope limits which documents are returned.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Accepts `customer` and `legal-entity` as `type`. Requires `customer.customer_read` or `customer.customer_read_own` for customers, and `customermanagement.legalentity_read` or `customermanagement.legalentity_read_own` for legal entities. A restricted scope returns only documents with the listed `restriction` or `restrictions` values. An own-read scope returns only the caller's own customer or legal entity. |
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | Creates and updates indexes for `customer` and `legal-entity`. |
+| [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id) | Saves searches for `customer` and `legal-entity`. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Imports indexes for `customer` and `legal-entity`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-29" tags="new-feature" %}
+
+## Search Service - analyzers and list fields on an index
+
+#### Overview
+
+A search index can now define `analyzers` that control how text is compared, and can index a list of objects through `itemFields` so that a search can require every condition to match the same item. A `TEXT` or `PHRASE` query can select one of those analyzers.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id) | Accepts optional `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Retrieving a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#get-search-tenant-search-type-indexes-id) | Returns stored `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Exporting search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-export) | Includes `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field, in the package. |
+| [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import) | Imports `analyzers`, and `analyzer`, `additionalAnalyzers`, and `itemFields` on a field. |
+| [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) | Accepts an optional `analyzer` on a `TEXT` or `PHRASE` query. The name must be the field's analyzer or one of its additional analyzers. Searches fields inside `itemFields` by full path, such as `addresses.city`. Conditions on one list joined by `and` must match the same item. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-10-28" tags="new-feature" %}
+
+## Import Service - file imports and run counter reconciliation
+
+#### Overview
+
+Import runs can now read delimited files (CSV and its variants). You manage a stream's file queue — upload a file, list what is waiting, change the load order, or remove one — with the `importtool.import_trigger` scope, because a file is a stream's data feed rather than its configuration.
+
+Run and stream counters now reconcile in full. On both the run and each of its streams, `recordsRead` equals `created + updated + skipped + unresolvedParents + deleted + failed + collapsed + embedded`. The new `collapsed` and `embedded` counters cover repeated keys within a batch and child records written inside an `EMBED` parent. A file-based stream also reports which files it read (`filesRead` and `fileNames`), so a retry re-reads the same bytes.
+
+Streams expose `sourceDataset` and `fileMode`, so you can see how a stream addresses its source and whether each file is a whole snapshot or a change set. Error records now include the `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE` codes.
+
+For the file-upload workflow, how the counters reconcile, and how to read these fields, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | Returns what a file-based stream still has to import and what it has already dealt with. Accepts `historyLimit`. |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Queues a delimited file for the stream's next run. The same content is never imported twice. |
+| [Retrieving the file upload limits](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files-limits) | Returns the largest file this environment accepts and whether uploading is available. |
+| [Setting the order in which files are imported](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#put-importtool-tenant-streams-streamid-files-order) | Sets the load order of waiting files for an incremental feed. |
+| [Removing a file from the queue](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#delete-importtool-tenant-streams-streamid-files-fileid) | Removes a waiting file and deletes the stored bytes with it. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | The run and its streams report `collapsed` and `embedded`, and `recordsRead` states the full reconciliation. |
+| [Retrieving import runs](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | As above, for each run in the page. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Per-stream events carry the new counters and the file provenance. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Documents the `errorCode` values the service emits, including `CONFIGURATION`, `EXTERNAL_SYSTEM`, and `REJECTED_BY_SOURCE`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | The stream reports `sourceDataset`, `fileMode`, and related source properties. |
+| [Retrieving configuration streams](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | As above, for each stream of the configuration. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-10-26" tags="new-feature" %}
 
 ## Category Service - category tree type filtering
