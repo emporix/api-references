@@ -25,7 +25,7 @@ paths:
 
         The tenant's `languageSchemaVersion` configuration determines how localized attributes are generated. The following rules apply:
 
-        * With `v2`, localized `TEXT` attributes use language maps. Localized `OBJECT` attributes use maps whose keys are BCP 47 language tags and whose values are nested objects. Localized `TEXT` or `OBJECT` array items use the same V2 map shapes.
+        * With `v2`, localized `TEXT` attributes use language maps. Localized `OBJECT` attributes use maps whose keys are BCP 47 language tags and whose values are nested objects. Localized `TEXT` or `OBJECT` array items use the same v2 map shapes.
         * With `v1`, or when the configuration is missing, localized `TEXT` attributes use `[{language,value}]` arrays and localized `OBJECT` attributes are rejected.
 
         A localized `OBJECT` can be nested under a plain `OBJECT`, but it cannot contain another localized attribute anywhere in its subtree.
@@ -359,7 +359,7 @@ paths:
 
         The tenant's `languageSchemaVersion` configuration applies the same localized attribute generation rules as when creating a schema.
 
-        When `languageSchemaVersion` is `v2`, updating a schema regenerates localized `TEXT` and `OBJECT` array items as V2 language maps. Migrate stored `[{language,value}]` array values to language maps before validating them against the new schema version.
+        When `languageSchemaVersion` is `v2`, updating a schema regenerates localized `TEXT` and `OBJECT` array items as v2 language maps. Migrate stored `[{language,value}]` array values to language maps before validating them against the new schema version.
 
       tags:
         - Schema
@@ -495,9 +495,9 @@ paths:
       description: |
         Validates and parses a provided JSON Schema file. When the file is valid, the endpoint returns a JSON representation that you can complete and use to create or update a schema. It does not create a file or a database entity.
 
-        The parser recognizes V2 localized `TEXT` fields that reference `languageValue_v2.json` or `languageValueNullable_v2.json`, including references used as array items. It also recognizes localized `OBJECT` language maps defined with `patternProperties`, including localized `OBJECT` array items.
+        The parser recognizes v2 localized `TEXT` fields that reference `languageValue_v2.json` or `languageValueNullable_v2.json`, including references used as array items. It also recognizes localized `OBJECT` language maps defined with `patternProperties`, including localized `OBJECT` array items.
 
-        When you use the parsed representation to create or update a schema with `languageSchemaVersion` set to `v2`, Schema Service preserves these V2 localized shapes.
+        When you use the parsed representation to create or update a schema with `languageSchemaVersion` set to `v2`, Schema Service preserves these v2 localized shapes.
       operationId: POST-schema-parse-schema-file
       requestBody:
         content:
@@ -1148,7 +1148,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
 
       tags:
         - Custom Instance
@@ -1327,7 +1327,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged so integrations can inspect the stored data. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
 
       tags:
         - Custom Instance
@@ -1652,7 +1652,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
 
       tags:
         - Custom Instance
@@ -2356,7 +2356,7 @@ components:
           description: |
             Whether the attribute accepts `null`.
 
-            For a localized V2 `OBJECT`, both the whole field and each per-language value can be `null`.
+            For a localized v2 `OBJECT`, both the whole field and each per-language value can be `null`.
     SchemaAttributeValue:
       type: object
       description: |
@@ -3136,12 +3136,12 @@ components:
         The following rules apply:
 
         * A specific language or ordered list filters first-class localized fields to the first matching translation. Their map response contains only that language.
-        * For V2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
-        * A V2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
+        * For v2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
+        * A v2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
         * In an array of language maps, an element without a matching translation is omitted.
-        * `*` returns all translations in first-class localized fields and leaves full V2 mixin language maps unchanged.
-        * An omitted or empty header uses the tenant's default language for first-class localized fields and filters V2 mixin language maps to that language.
-        * V1 `[{language,value}]` mixin arrays remain unchanged.
+        * `*` returns all translations in first-class localized fields and leaves full v2 mixin language maps unchanged.
+        * An omitted or empty header uses the tenant's default language for first-class localized fields and filters v2 mixin language maps to that language.
+        * v1 `[{language,value}]` mixin arrays remain unchanged.
     trait_emporix_site_header:
       name: emporix-site
       in: header

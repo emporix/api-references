@@ -40,7 +40,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
 
         **Additional scope information**
@@ -87,7 +87,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
 
         **Additional scope information**
@@ -907,7 +907,7 @@ paths:
 
         When the `emporix-site` header is set, each site-aware mixin is deep-merged. `{mixinName}__{siteCode}` overlays the base `{mixinName}`, and only the merged base keys are returned. Without the header, base and overlay keys are returned unmerged so integrations can inspect the stored data. `Accept-Language` is applied after the site merge when `emporix-site` is present.
 
-        For V2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
+        For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
 
         **Additional scope information**
@@ -3729,11 +3729,11 @@ components:
         * For first-class localized fields such as `name` and `description`, a specific language or ordered list returns the first matching translation.
         * If none of the requested languages has a translation for a first-class localized field, the field is returned as `null`.
         * `*`, an omitted header, or an empty header returns all translations for first-class localized fields.
-        * For V2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
-        * A V2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
+        * For v2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
+        * A v2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
         * In an array of language maps, an element without a matching translation is omitted.
-        * `*`, an omitted header, or an empty header leaves full V2 mixin language maps unchanged.
-        * V1 `[{language,value}]` mixin arrays remain unchanged.
+        * `*`, an omitted header, or an empty header leaves full v2 mixin language maps unchanged.
+        * v1 `[{language,value}]` mixin arrays remain unchanged.
     header_emporix_site:
       name: emporix-site
       in: header
