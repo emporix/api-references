@@ -31,11 +31,11 @@ layout:
 
 #### Overview
 
-Battery Included preview product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+Battery Included product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
 
-The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read the old roots must migrate to the new site-aware paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
+The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
 
-For migration guidance, see [How to migrate consumers to site-aware mixin paths](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-migrate-consumers-to-site-aware-mixin-paths).
+For details, see [How site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-site-aware-mixins-are-indexed). For migration guidance, see [Migrating from legacy mixin paths](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#migrating-from-legacy-mixin-paths).
 
 #### Known problems
 

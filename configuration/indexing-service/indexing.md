@@ -26,10 +26,6 @@ Only one provider can be active at a time per tenant. This constraint is enforce
 
 #### Battery Included limitations
 
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet. The payload sent to Battery Included is subject to change.
-{% endhint %}
-
 Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped. To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
 
 {% hint style="info" %}
@@ -218,49 +214,7 @@ If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
 To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
 {% endhint %}
 
-### How to migrate consumers to site-aware mixin paths
-
-{% hint style="danger" %}
-This functionality is in preview mode - some of the features may not be fully operational yet.
-
-To keep preview integrations working after a rollout, incremental update, or reindex, add support for the new paths before the new
-document shape reaches the index. Retain fallback reads from the old paths during the transition.
-{% endhint %}
-
-{% stepper %}
-{% step %}
-#### Add dual-read support
-
-Update consumers to read non-localized values from `_product_siteAware.<site>.mixins.<mixin>` and localized values from
-`_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`. Here, `<mixin>` is the base mixin key, `<site>` is the tenant
-site code used as the overlay suffix, and `<language>` is a language key found in the localized mixin data.
-
-Use the following legacy paths when the corresponding new path is absent:
-
-* For non-localized values, use the base `_product.mixins.<mixin>` and overlay `_product.mixins.<mixin>__<site>` paths.
-* For localized values, use the base `_product_i18n.<language>.mixins.<mixin>` and overlay
-  `_product_i18n.<language>.mixins.<mixin>__<site>` paths.
-
-The consumer deep-merges the legacy overlay value into the legacy base value during fallback. A `null` overlay value preserves the
-base value.
-{% endstep %}
-
-{% step %}
-#### Roll out the change
-
-Roll out the change and keep both reads while old and new document shapes coexist. Run a
-[full reindex](#how_to_reindex_existing_products) to migrate all products in a bounded operation. If you rely on incremental updates
-without a full reindex, both shapes can coexist indefinitely. Keep the fallback reads in that case.
-{% endstep %}
-
-{% step %}
-#### Remove fallbacks after a full reindex
-
-If you run a full reindex, wait until it reports `SUCCESS`, then allow Battery Included time to apply the transaction cleanup.
-Verify through your search integration that reindexed documents contain the `_product_siteAware` paths. Remove the old-path
-fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
-{% endstep %}
-{% endstepper %}
+### How site-aware mixins are indexed
 
 The Indexing Service recognizes a mixin as site-aware when the source product contains an overlay key in the form
 `{mixin}__{site}`. This key convention controls Battery Included indexing even if the mixin schema is not marked as site-aware.
@@ -433,6 +387,48 @@ siblings of `mixins` and `localeAware` under each `_product_siteAware.<site>` en
 Mixin filters also keep their existing behavior. The Indexing Service applies `includedMixinPaths` and `excludedMixinKeys` to the
 raw source mixin tree before it detects site-aware roots, merges overlays, or separates localized values. Filter patterns therefore
 match source paths such as `productInfo` and `productInfo__main`, not the generated `_product_siteAware` paths.
+
+### Migrating from legacy mixin paths
+
+{% hint style="danger" %}
+To keep existing integrations working after a rollout, incremental update, or reindex, add support for the new paths before the new
+document shape reaches the index. Retain fallback reads from the old paths during the transition.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+#### Add dual-read support
+
+Update consumers to read non-localized values from `_product_siteAware.<site>.mixins.<mixin>` and localized values from
+`_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`. Here, `<mixin>` is the base mixin key, `<site>` is the tenant
+site code used as the overlay suffix, and `<language>` is a language key found in the localized mixin data.
+
+Use the following legacy paths when the corresponding new path is absent:
+
+* For non-localized values, use the base `_product.mixins.<mixin>` and overlay `_product.mixins.<mixin>__<site>` paths.
+* For localized values, use the base `_product_i18n.<language>.mixins.<mixin>` and overlay
+  `_product_i18n.<language>.mixins.<mixin>__<site>` paths.
+
+The consumer deep-merges the legacy overlay value into the legacy base value during fallback. A `null` overlay value preserves the
+base value.
+{% endstep %}
+
+{% step %}
+#### Roll out the change
+
+Roll out the change and keep both reads while old and new document shapes coexist. Run a
+[full reindex](#how_to_reindex_existing_products) to migrate all products in a bounded operation. If you rely on incremental updates
+without a full reindex, both shapes can coexist indefinitely. Keep the fallback reads in that case.
+{% endstep %}
+
+{% step %}
+#### Remove fallbacks after a full reindex
+
+If you run a full reindex, wait until it reports `SUCCESS`, then allow Battery Included time to apply the transaction cleanup.
+Verify through your search integration that reindexed documents contain the `_product_siteAware` paths. Remove the old-path
+fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
+{% endstep %}
+{% endstepper %}
 
 ### How the base site is chosen
 
