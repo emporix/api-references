@@ -1578,6 +1578,8 @@ Without the `emporix-site` header, the response returns the base and overlay key
 
 The same `emporix-site` header behavior applies when you [retrieve all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) or [search for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search).
 
+When mixin fields use v2 language maps, including localized `OBJECT` attributes, send `Accept-Language` on product read endpoints to filter those maps to a single preferred language key. This applies with or without `emporix-site`. If you also send `emporix-site`, the service applies `Accept-Language` after the site merge. For the workflow and filter rules, see [How to use localized OBJECT mixin attributes](../../utilities/schema/schema.md#how-to-use-localized-object-mixin-attributes).
+
 ## How to update product mixins
 
 To change mixin fields, send a request to the [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) endpoint. To remove a mixin, send a full replacement to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
