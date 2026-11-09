@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+
+## Import Service - runs with nothing to import and retry runs
+
+#### Overview
+
+A manual run is now also refused with HTTP 400 when a stream with incremental files has imported every file in its queue, because it reads each file once. A snapshot stream with an imported file can still run with an empty queue: it reads its latest file again. Streams whose mappings have never been published are left out of the check, and a configuration with a run in progress returns HTTP 409 instead. The error message names each stream and what to do. The reference now lists `RETRY` among the values of a run's `trigger` field: a run created by retrying failed records has it.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 400 when no stream the run starts from has a file to read, including a stream with incremental files whose queue is fully imported. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Documents `RETRY`, the `trigger` of a run created by retrying failed records. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-06" tags="new-feature" %}
 
 ## Import Service - requeue of failed files

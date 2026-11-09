@@ -791,10 +791,10 @@ paths:
                   maxLength: 40
                   description: >-
                     What requested this run. Examples: `Dashboard`, an integration scenario name, or a scheduler name.
-                    The `trigger` field records only `MANUAL` or `SCHEDULED`. Use `origin` when more than one system
-                    calls this endpoint. If you omit `origin` or send a blank value, the service stores the `trigger`
-                    value. The service rejects values longer than 40 characters and values that contain control
-                    characters. It does not shorten them.
+                    The `trigger` field records only how the run started, for example `MANUAL`. Use `origin` when
+                    more than one system calls this endpoint. If you omit `origin` or send a blank value, the service
+                    stores the `trigger` value. The service rejects values longer than 40 characters and values that
+                    contain control characters. It does not shorten them.
                   example: Make scenario 42
                 streamIds:
                   type: array
@@ -847,12 +847,20 @@ paths:
                 Run response:
                   $ref: '#/components/examples/ImportRun_Example'
         '400':
-          description: >-
+          description: |-
             The request is invalid. For example, `dryRun` is `true` and `mappings` has a value other than
-            `published` or `draft`. Also returned for a run with nothing to import: every stream the run starts
-            from reads uploaded files and none has ever had a file, neither waiting nor imported. Upload a file
-            to a stream's queue first. A dry run is not refused for this, because it reads the connection's
-            sample file.
+            `published` or `draft`.
+
+            Also returned for a run with nothing to import: every stream the run starts from reads uploaded
+            files, and none of them has a file to read. A stream has a file to read when a file is waiting in
+            its queue, or when it is a snapshot stream with an imported file, which the run reads again. A
+            stream with incremental files reads each file once, so it has nothing to read when every file in
+            its queue has been imported. The message names each stream and what to do: upload a file to its
+            queue, or, when its latest file failed, queue that file again after fixing the cause.
+
+            Only streams that the run would execute are checked. A stream whose mappings have never been
+            published is not considered. A dry run, a scheduled run and a retry are not refused for this. When
+            the configuration already has a run in progress, the response is `409 Conflict` instead.
           content:
             application/json:
               schema:
@@ -2070,7 +2078,13 @@ components:
           enum:
             - MANUAL
             - SCHEDULED
-          description: What triggered the run.
+            - RETRY
+          description: |-
+            What triggered the run. Possible values:
+
+            * `MANUAL` – triggered with the run operation.
+            * `SCHEDULED` – started by the configuration's schedule.
+            * `RETRY` – created by retrying the failed records of an earlier run. `retryOfRunId` names that run.
           example: MANUAL
         dryRunSample:
           type: array
