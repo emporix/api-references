@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Indexing Service - Battery Included API URL per tenant
+
+#### Overview
+
+You can now set the Battery Included host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's Battery Included requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default Battery Included host. The service accepts only the `https` address of an allowed Battery Included host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
+
+For the steps, see [How to set the Battery Included API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-battery-included-api-url).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED` and validates the write key against that host. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED`. A request without `apiUrl` moves the tenant back to the default Battery Included host. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `apiUrl` value. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `apiUrl` value. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-09" tags="new-feature" %}
 
 ## Schema and Product Services - localized `OBJECT` mixins
