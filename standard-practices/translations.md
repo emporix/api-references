@@ -46,6 +46,10 @@ In other services, use language codes exactly as they are written in your langua
 For more information on language configurations, check out the [Language Tutorials](../configuration/configuration-service/language.md).
 {% endhint %}
 
+{% hint style="info" %}
+This page covers first-class localized fields on resources such as products and measurement units. Mixin attribute localization, including localized `OBJECT` maps when `languageSchemaVersion` is set to `v2`, is documented in [How to use localized OBJECT mixin attributes](../utilities/schema/schema.md#how-to-use-localized-object-mixin-attributes) and [Localized mixin attributes](mixins.md#localized-mixin-attributes). On reads, first-class fields can return a single string for one language, while filtered mixin language maps remain single-key maps.
+{% endhint %}
+
 ## How to create a localized object in a specific language
 
 To create an object where field values are specified in one language, you need to call a `POST` endpoint for a specific resource with the `Content-Language` header set to the language's [IETF BCP 47 tag](https://en.wikipedia.org/wiki/IETF_language_tag).
