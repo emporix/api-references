@@ -51,6 +51,78 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-06" tags="new-feature" %}
+
+## Import Service - requeue of failed files
+
+#### Overview
+
+You can now put a file whose import failed back in a file-based stream's queue, without uploading it again. The next run reads the content the service already holds for the file, so you can fix the cause, such as a mapping, and import the same file. Only a file with the `FAILED` status can be queued again. An imported file is never queued again, because an older snapshot would overwrite newer data. To reprocess the records that failed in an imported file, retry the run instead.
+
+When a run finds no file waiting for a file-based stream, the stream's progress `message` now says that nothing was imported and names the latest file if its import failed.
+
+For the workflow, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Queuing a failed file again](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files-fileid-requeue) | Puts a failed file back at the end of the stream's queue, using the content the service already holds. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | A file-based stream's `message` states when no file was waiting and names the latest file if its import failed. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-06" tags="minor-change" %}
+
+## Import Service - run responses and the last imported file
+
+#### Overview
+
+Triggering a run for an import job that does not exist, or retrying a run that does not exist, returns HTTP 404. Both returned HTTP 500 before. A manual run with nothing to import returns HTTP 400: every stream the run starts from reads uploaded files and none has ever had a file. Upload a file to the stream's queue first; a dry run is not refused for this. The file queue now names the newest file the stream imported, whatever the history page holds.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 404 for an import job that does not exist, and HTTP 400 when no stream the run starts from has ever had a file. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns HTTP 404 for a run that does not exist, as documented. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | The response adds `lastProcessed`, the newest file the stream imported. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-05" tags="minor-change" %}
+
+## IAM Service - non-deletable system groups
+
+#### Overview
+
+Deleting a group whose `code` is `CUSTOMER`, `BO_USER`, `BO_MANAGER`, `BO_ADMIN`, or `SUPPORT_USER`, in any letter case, returns HTTP 400. The group and its assignments stay. Setting `forceDelete` to `true` does not remove these groups. A group with no `code`, a blank `code`, or any other `code` still follows the existing delete rules.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Deleting a group](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/groups#delete-iam-tenant-groups-groupid) | The endpoint returns HTTP 400 with the detail `System group cannot be deleted.` when the group's `code` is one of the system codes above, including when `forceDelete` is `true`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-03" tags="deprecated" %}
 
 ## IAM Service - removal of deprecated endpoints and fields
