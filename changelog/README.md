@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-09" tags="new-feature" %}
 
 ## Schema and Product Services - localized `OBJECT` mixins
 
