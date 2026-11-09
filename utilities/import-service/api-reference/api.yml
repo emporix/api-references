@@ -16,8 +16,9 @@ info:
 
     **Configuring one** requires `importtool.import_manage`, and is grouped under the sections marked
     Administration: defining connections, and defining the field mappings that decide what each source
-    field becomes on the target. `importtool.import_manage` does not imply `importtool.import_trigger` —
-    a client that both configures and runs imports needs both.
+    field becomes on the target. `importtool.import_manage` also allows everything
+    `importtool.import_trigger` allows, so a client that both configures and runs imports needs only
+    `importtool.import_manage`.
   contact:
     name: Emporix
     url: https://emporix.com
@@ -253,7 +254,24 @@ paths:
       description: |-
         Creates a stream within an import configuration. A stream names one source dataset, the target it writes to, and how the two are related.
 
-        A composite child names its parent by NAME, so the parent must already exist.
+        A `COMPOSITE_CHILD`, `COMPOSITE_MERGE`, or `FAN_OUT` stream names its parent in `compositeParent`, so the parent must already exist.
+
+        The service checks the stream against its target writer before storing it. It rejects the request with HTTP 400 in the following cases:
+
+        * `targetWriter` names a writer the service does not provide. `GET /importtool/{tenant}/target-writers` lists the ones it provides.
+        * An `emporix.customEntity` stream, or one with no `targetWriter`, has no `targetType`.
+        * `writeStrategy` is one the target writer cannot use. The values each writer can use are listed under `writeStrategy`.
+        * An `emporix.product` or `emporix.category` stream is not `STANDALONE`, routes records with `discriminatorField`, or is the parent of a `COMPOSITE_CHILD` or `COMPOSITE_MERGE` stream.
+        * A `COMPOSITE_CHILD` or `COMPOSITE_MERGE` stream names a product stream, a category stream, or a `FAN_OUT` stream as its parent.
+        * In an `emporix.product` stream's `targetOptions`, `matchField` or `categoryMatchField` is not `CODE` or `ID`, or `schemas` is not a list.
+        * `fanOutPath` or `fanOutKey` is set on a stream that is not `FAN_OUT`.
+        * A `FAN_OUT` stream's `compositeParent` does not name another `STANDALONE` stream of the same configuration.
+        * A `FAN_OUT` stream sets `fanOutKey` without `fanOutPath`.
+        * An `emporix.availability` `FAN_OUT` stream sets `targetOptions.site` to `main`. Emporix builds the stock of `main` from every other site, so writing to `main` directly would hide the stock of the other sites.
+
+        A `FAN_OUT` stream reads no source of its own. The service therefore drops its `connectionId`, `deltaField`, `deleteConfig`, `discriminatorField`, `discriminatorMap`, and every `sourceDataset` property except `autoMap`.
+
+        When `writeStrategy` is omitted, the writer's default is stored. When the writer cannot use `PATCH`, the field's own default, the service also stores the writer's default instead.
 
       operationId: POST-importtool-create-stream
       tags:
@@ -274,6 +292,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportStream'
+        '400':
+          description: The stream breaks one of the rules in the endpoint description. Nothing is stored.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Write strategy not supported:
+                  value:
+                    resourceId: null
+                    status: Bad Request
+                    code: 400
+                    message: >-
+                      'Product' cannot update existing records with REPLACE_PUT — its API supports PATCH. Choose
+                      one of those write strategies.
+                    details: []
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -321,6 +355,10 @@ paths:
       description: |-
         Updates a stream. Identity fields — the source key columns — may only be changed while the stream has imported nothing, because changing them re-keys every record it has already written.
 
+        The update is checked against the same rules as creating a stream. In addition, a stream that `FAN_OUT` streams read from must stay `STANDALONE`. The rules on a stream's mode and parent are checked only while the stream is enabled, so a stream that breaks them can still be disabled by setting `enabled` to `false`.
+
+        An update that omits `targetOptions` keeps the stored settings. When the stored `writeStrategy` is one the target writer cannot use, an update that sends it unchanged stores the writer's default instead.
+
       operationId: PUT-importtool-update-stream
       tags:
         - Streams
@@ -340,6 +378,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ImportStream'
+        '400':
+          description: The stream breaks one of the rules in the endpoint description. Nothing is stored.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/errorMessage'
+              examples:
+                Write strategy not supported:
+                  value:
+                    resourceId: null
+                    status: Bad Request
+                    code: 400
+                    message: >-
+                      'Product' cannot update existing records with REPLACE_PUT — its API supports PATCH. Choose
+                      one of those write strategies.
+                    details: []
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -2246,7 +2300,7 @@ paths:
           $ref: '#/components/responses/InternalServiceError_500'
 
     put:
-      summary: Replacing a stream field mappings
+      summary: Replacing a stream's field mappings
       description: |-
         Replaces the whole mapping set for the stream. The set is authoritative: any mapping not present is
         removed. Every transformation is validated before anything is stored, so an invalid one rejects the
@@ -2257,6 +2311,17 @@ paths:
         hold, rejects the request. On a custom entity type that the import creates, a path whose
         `targetSchema` is the type's own schema, or is not set, is accepted as a new attribute. Publishing the
         mappings declares it on the schema.
+
+        For an `emporix.product` stream, the service also rejects the request with HTTP 400 in the following cases:
+
+        * The same field name is mapped into two schemas, for example `description` both as a standard field and as
+          a mixin field. Only one of them would be written.
+        * The stream creates missing products (`targetOptions.createMissing` is not `false`) and no mapping sets
+          the standard `name` field, or, when products are matched by ID, the standard `code` field. A product
+          cannot be created without them. A mapping counts as standard when its `targetSchema` is `product` or is
+          not set.
+
+        For an `emporix.availability` stream, a `site` mapping that sets the fixed value `main` is rejected.
 
       operationId: PUT-importtool-replace-mappings
       tags:
@@ -2386,6 +2451,22 @@ paths:
       description: |-
         Lists the attributes the target type actually declares, across every mixin schema that contributes to
         it, with the Emporix data type of each. These are the valid values for a mapping `targetPath`.
+
+        For the catalog writers, the attributes are the fields the writer sets:
+
+        * `emporix.product` – the standard product fields (`schemaId` `product`), the fields of the mixin schemas
+          in the stream's `targetOptions.schemas`, and the attributes of the product template in
+          `targetOptions.templateId` (`schemaId` `productTemplateAttributes`).
+        * `emporix.category` – `code`, `name`, `description`, `slug`, `parentCode`, `parentId`, `published`,
+          `position`, and `ecn`.
+        * `emporix.price` – `productId`, `currency`, `priceValue`, `countryCode`, `siteCode`, `priceModelId`,
+          `validFrom`, and `validTo`.
+        * `emporix.availability` – `productId`, `site`, `stockLevel`, `available`, `popularity`, and
+          `distributionChannel`.
+        * `emporix.media` – `productId` and `url`.
+        * `emporix.categoryAssignment` – `productId` and `category`.
+
+        In a `FAN_OUT` stream, `productId` defaults to the identifier of the product the record fans out from.
 
       operationId: GET-importtool-target-fields
       tags:
@@ -3049,7 +3130,9 @@ paths:
     get:
       summary: Retrieving the available target writers
       description: |-
-        Retrieves the target writers this deployment provides — the destinations a stream can write to, such as Emporix custom entities.
+        Retrieves the target writers the service provides. These are the destinations a stream can write to, such as Emporix custom entities or products. For each writer, `capabilities` describes what its target API supports.
+
+        The list includes the catalog writers whether or not the Management Dashboard offers them to the tenant.
 
       operationId: GET-importtool-list-target-writers
       tags:
@@ -3065,8 +3148,34 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  additionalProperties: true
+                  $ref: '#/components/schemas/TargetWriterDescriptor'
+              examples:
+                Target writers:
+                  value:
+                    - code: emporix.customEntity
+                      name: Custom entity (Schema Service)
+                      targetSchema: {}
+                      capabilities:
+                        bulkCreate: true
+                        bulkUpdate: true
+                        maxBulkSize: 1000
+                        sweepable: true
+                        ownsRecords: true
+                        writeStrategies:
+                          - PATCH
+                          - MERGE_PUT
+                          - REPLACE_PUT
+                    - code: emporix.product
+                      name: Product
+                      targetSchema: {}
+                      capabilities:
+                        bulkCreate: true
+                        bulkUpdate: false
+                        maxBulkSize: 200
+                        sweepable: false
+                        ownsRecords: false
+                        writeStrategies:
+                          - PATCH
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -4221,6 +4330,58 @@ components:
           type: string
           format: date-time
 
+    TargetWriterDescriptor:
+      type: object
+      description: A target writer the service provides.
+      properties:
+        code:
+          type: string
+          description: The identifier a stream names in `targetWriter`.
+          example: emporix.product
+        name:
+          type: string
+          description: The writer's display name.
+          example: Product
+        targetSchema:
+          type: object
+          additionalProperties: true
+          description: >-
+            The fields the writer accepts, when they are fixed. Empty for the writers whose fields come from the
+            target, such as a custom entity type's schema.
+        capabilities:
+          type: object
+          description: What the target's API supports.
+          properties:
+            bulkCreate:
+              type: boolean
+              description: Whether new objects are created in batches.
+            bulkUpdate:
+              type: boolean
+              description: Whether existing objects are updated in batches. When `false`, each one is updated with its own request.
+            maxBulkSize:
+              type: integer
+              description: The largest batch the target accepts.
+            sweepable:
+              type: boolean
+              description: >-
+                Whether a `SWEEP` purge can delete every object of the target. `false` for targets that hold objects
+                the import did not create, such as a tenant's products.
+            ownsRecords:
+              type: boolean
+              description: >-
+                Whether every object the import writes is one it created. When `false`, a `FULL` purge forgets what
+                the import loaded but does not delete the objects, because an object found by its code may have
+                existed before the import.
+            writeStrategies:
+              type: array
+              items:
+                type: string
+                enum:
+                  - PATCH
+                  - MERGE_PUT
+                  - REPLACE_PUT
+              description: The values a stream on this writer can use as `writeStrategy`. The first is the default.
+
     AdapterDescriptor:
       type: object
       description: A source adapter this deployment provides.
@@ -4693,18 +4854,31 @@ components:
           minimum: 100
           maximum: 599
         status:
-          description: HTTP status.
+          description: The HTTP status reason phrase, for example `Conflict`.
           type: string
         message:
           description: Descriptive error message for debugging.
           type: string
+        resourceId:
+          description: >-
+            Identifier of the resource the error concerns, for example the configuration of a run that conflicts with an
+            active run, or the run a retry was requested for. `null` when the error concerns no single resource.
+          type: string
+          nullable: true
         details:
           description: List of problems causing this error.
           type: array
           items:
             title: Error Detail
-            description: Error details.
-            type: string
+            description: One problem causing the error.
+            type: object
+            properties:
+              message:
+                type: string
+                description: What is wrong.
+              field:
+                type: string
+                description: The field the problem concerns, when there is one.
       required:
         - status
         - code
@@ -4894,20 +5068,99 @@ components:
           example: PRODUCT
         targetWriter:
           type: string
-          description: The target writer code, for example `emporix.customEntity`.
+          description: |-
+            Where the stream writes. Possible values:
+
+            * `emporix.customEntity` – instances of a custom entity type, named by `targetType`.
+            * `emporix.product` – products. `STANDALONE` streams only.
+            * `emporix.category` – categories of the tenant's category tree. `STANDALONE` streams only.
+            * `emporix.price` – prices of products.
+            * `emporix.availability` – stock of products at a site.
+            * `emporix.media` – images of products, linked by URL. The images stay where they are hosted.
+            * `emporix.categoryAssignment` – assignments of products to existing categories.
+
+            The price, availability, media, and category assignment writers are normally used by a `FAN_OUT`
+            stream whose parent is a product stream. The `FAN_OUT` stream supplies each product's identifier as
+            `productId`. A `STANDALONE` stream that uses them maps `productId` itself.
+
+            The writers other than `emporix.customEntity` are catalog writers. The Management Dashboard offers them
+            only to tenants for which Emporix has enabled catalog targets. To have them enabled, contact Emporix
+            support.
           example: emporix.customEntity
         targetType:
           type: string
-          description: The default target type (custom-entity type identifier).
+          description: >-
+            For `emporix.customEntity`, the custom entity type the stream writes to. For the other writers, a label
+            that groups the stream's imported records, for example in imported data and statistics. Defaults to
+            `PRODUCT` for `emporix.product` and `CATEGORY` for `emporix.category`. For a `FAN_OUT` stream into a
+            catalog writer, the service sets the label.
           example: product
+        seq:
+          type: integer
+          description: >-
+            The stream's position in the configuration. Streams are listed in this order. When dependencies do not
+            decide the run order, streams run in this order.
+          example: 0
         mode:
           type: string
           enum:
             - STANDALONE
             - COMPOSITE_CHILD
             - COMPOSITE_MERGE
-          description: How the stream contributes to the target.
+            - FAN_OUT
+          description: |-
+            How the stream contributes to the target. Possible values:
+
+            * `STANDALONE` – reads its source and writes its own target objects.
+            * `COMPOSITE_CHILD` – reads its source and writes into the objects of the stream named in
+              `compositeParent`.
+            * `COMPOSITE_MERGE` – reads its source and adds fields to the objects of the stream named in
+              `compositeParent`.
+            * `FAN_OUT` – has no source of its own. It reads the records the stream named in `compositeParent`
+              wrote in the same run, and writes further objects for each of them, for example a product's prices.
+              It runs after that stream. Objects it created earlier for a record that no longer lists them are
+              removed.
           example: STANDALONE
+        fanOutPath:
+          type: string
+          description: >-
+            `FAN_OUT` only. The array in the parent record whose elements each produce one target object, for example
+            `prices[]`. When omitted, one target object is written per parent record.
+          example: prices[]
+        fanOutKey:
+          type: string
+          description: >-
+            `FAN_OUT` only. The element field that identifies an element of `fanOutPath`, for example `currency`,
+            so that a target object keeps its identity when the elements change order. When omitted, a scalar
+            element identifies itself and an object element is identified by its position.
+          example: currency
+        fanOut:
+          type: boolean
+          readOnly: true
+          description: Whether the stream is a `FAN_OUT` stream with a parent. Derived from `mode` and `compositeParent`.
+          example: false
+        targetOptions:
+          type: object
+          additionalProperties: true
+          description: |-
+            Settings for the target writer. Absent when the writer needs none. `emporix.product` reads the
+            following settings:
+
+            * `matchField` – how existing products are found: `CODE` (the default) or `ID`.
+            * `createMissing` – whether products that are not found are created. Defaults to `true`.
+            * `schemas` – a list of the identifiers of the product mixin schemas the stream writes.
+            * `templateId` – the product template assigned to the products.
+            * `language` – the language of localized fields. Defaults to `en`.
+            * `categoryMatchField` – how the categories to assign are found: `CODE` (the default) or `ID`.
+
+            `emporix.category` reads `language`, and `emporix.categoryAssignment` reads `categoryMatchField`.
+            `emporix.price` reads `currency`, `countryCode`, `siteCode`, and `priceModelId`, and
+            `emporix.availability` reads `site`. The price and availability settings are used for a record that
+            does not map the field.
+          example:
+            matchField: CODE
+            createMissing: true
+            language: en
         deltaField:
           type: string
           description: >-
@@ -4924,7 +5177,9 @@ components:
           example: DATE
         compositeParent:
           type: string
-          description: For a composite child stream, the name of the stream it contributes to.
+          description: >-
+            For a `COMPOSITE_CHILD`, `COMPOSITE_MERGE`, or `FAN_OUT` stream, the name of the stream it contributes
+            to or fans out from.
           example: invoices
         linkingField:
           type: string
@@ -4947,10 +5202,20 @@ components:
             - PATCH
             - MERGE_PUT
             - REPLACE_PUT
-          description: >-
-            How an existing target object is updated. `PATCH` changes only the mapped fields and preserves
-            everything else; `REPLACE_PUT` replaces the whole object, so fields this import does not manage
-            are cleared.
+          description: |-
+            How an existing target object is updated. Possible values:
+
+            * `PATCH` – changes only the mapped fields and keeps everything else.
+            * `MERGE_PUT` – reads the object, merges the mapped fields into it, and writes it back whole.
+            * `REPLACE_PUT` – replaces the whole object, so fields this import does not manage are cleared.
+
+            The values a stream can use depend on its target writer. The following values are available per
+            writer, with the default listed first:
+
+            * `emporix.customEntity` – `PATCH`, `MERGE_PUT`, `REPLACE_PUT`.
+            * `emporix.product` and `emporix.category` – `PATCH`.
+            * `emporix.media` – `PATCH`, `REPLACE_PUT`.
+            * `emporix.price`, `emporix.availability`, and `emporix.categoryAssignment` – `REPLACE_PUT`.
           example: PATCH
         discriminatorField:
           type: string
@@ -5062,6 +5327,11 @@ components:
             written. A record missing from a newer file is not deleted. `INCREMENTAL`: each file is a change set, so every queued file is read in order and
             a later file's values win. Defaults to `SNAPSHOT`.
           example: SNAPSHOT
+        snapshotFiles:
+          type: boolean
+          readOnly: true
+          description: Whether the stream treats each file as a snapshot. `true` unless `fileMode` is `INCREMENTAL`.
+          example: true
         parentKeyField:
           type: string
           description: >-
@@ -6441,25 +6711,25 @@ components:
         status: forbidden
         code: 403
         message: The access to the requested resource has been forbidden.
-        details:
-          - Missing required scopes
     NotFound404_Example:
       value:
-        status: element_resource_non_existing
+        status: Not Found
         code: 404
         message: The requested resource does not exist.
     Conflict409_Example:
       value:
-        status: conflict
+        resourceId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        status: Conflict
         code: 409
-        message: An import run is already active for this configuration.
+        message: An import is already running for config 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        details:
+          - message: 'Active run: 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+            field: activeRunId
     InternalServiceError500_Example:
       value:
         status: internal_service_error
         code: 500
         message: A server-side exception occurred that prevented the system from correctly returning the result.
-        details:
-          - 'https://pattern.yaas.io/errortypes.html'
     ImportConfig_Example:
       value:
         id: 7c9e6679-7425-40de-944b-e07fc1f90ae7

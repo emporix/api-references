@@ -25,6 +25,36 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="minor-change" %}
+
+## Import Service - catalog target configuration
+
+#### Overview
+
+The Import Service administration reference now documents how to configure streams that write products, categories, prices, stock, product images, and category assignments:
+
+* The rules the service checks when a stream is saved, such as which modes each target writer accepts and how a `FAN_OUT` stream names the stream it reads from. A stream that breaks them is rejected with HTTP 400.
+* The write strategies each target writer supports, and the default the service stores when none is given.
+* The fields each catalog writer offers for mapping, and the mapping rules for product and stock streams.
+
+The introduction is also corrected: `importtool.import_manage` allows every operation that `importtool.import_trigger` allows, so a client that configures and runs imports needs only `importtool.import_manage`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#post-importtool-tenant-configs-configid-streams) | Lists the target-writer, mode, and `FAN_OUT` rules, and documents the 400 response. |
+| [Updating a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#put-importtool-tenant-streams-id) | Documents that the same rules apply, what an update keeps, and the 400 response. |
+| [Retrieving the available target writers](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-target-writers) | Documents the response, including each writer's `capabilities`. |
+| [Retrieving the target type attributes](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/mappings-administration#get-importtool-tenant-streams-streamid-mappings-target-fields) | Lists the fields each catalog writer offers. |
+| [Replacing a stream's field mappings](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/mappings-administration#put-importtool-tenant-streams-streamid-mappings) | Documents the checks for product and stock streams. |
+
+#### Known problems
+
+The Import Service is in preview mode, so some features may not be fully operational yet.
+
+{% endupdate %}
+
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
 ## Import Service - file connections
