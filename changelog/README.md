@@ -35,7 +35,7 @@ The Import Service reference for running and monitoring imports now matches the 
 
 * A manual run is also refused with HTTP 400 when a stream with incremental files has imported every file in its queue. A snapshot stream with an imported file can still run with an empty queue, because it reads its latest file again. Streams whose mappings have never been published are not checked, and a configuration with a run in progress returns HTTP 409 instead.
 * Error responses are documented with the body the service returns: `message`, `code`, `status`, `resourceId`, and `details` entries with `message` and `field`.
-* A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media and category assignments. The `FAN_OUT` mode and its fields are documented.
+* A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media, and category assignments, with the settings and write strategies each one supports. The `FAN_OUT` mode and its fields are documented.
 * Run progress events, run and stream status values, error codes, the imported-data search and the statistics filters are corrected.
 
 #### Updated endpoints
@@ -47,7 +47,7 @@ The Import Service reference for running and monitoring imports now matches the 
 | [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Documents the fields of each event. A `run` event names the run in `runId` and is also sent before the run finishes. |
 | [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A `409` returns the cancellation result with `accepted` set to `false`. |
 | [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Lists the conditions that return a 409. |
-| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents every `targetWriter`, the `FAN_OUT` mode, `fanOutPath`, `fanOutKey`, `targetOptions` and `seq`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents every `targetWriter`, the `FAN_OUT` mode, `fanOutPath`, `fanOutKey`, `targetOptions`, `seq`, and the `writeStrategy` values each writer can use. |
 | [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | `search` matches the start of the natural key or Emporix identifier, case-sensitively. `outcome` no longer lists `DELETED_TARGET`. |
 | [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Documents the 366-day window limit, the 404 for an unknown stream, and `summary.aborted`. |
 

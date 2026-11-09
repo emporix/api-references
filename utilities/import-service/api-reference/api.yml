@@ -1679,8 +1679,8 @@ components:
           type: string
         resourceId:
           description: >-
-            Identifier of the resource the error concerns, when there is one. For example, the configuration of a run that
-            conflicts with an active run, or the run a retry was requested for. `null` otherwise.
+            Identifier of the resource the error concerns, for example the configuration of a run that conflicts with an
+            active run, or the run a retry was requested for. `null` when the error concerns no single resource.
           type: string
           nullable: true
         details:
@@ -1891,19 +1891,26 @@ components:
             * `emporix.customEntity` – instances of a custom entity type, named by `targetType`.
             * `emporix.product` – products. `STANDALONE` streams only.
             * `emporix.category` – categories of the tenant's category tree. `STANDALONE` streams only.
-            * `emporix.price` – prices of the products a parent stream wrote. `FAN_OUT` streams only.
-            * `emporix.availability` – stock and availability of those products. `FAN_OUT` streams only.
-            * `emporix.media` – media linked to those products. `FAN_OUT` streams only.
-            * `emporix.categoryAssignment` – category assignments of those products. `FAN_OUT` streams only.
+            * `emporix.price` – prices of products.
+            * `emporix.availability` – stock of products at a site.
+            * `emporix.media` – images of products, linked by URL. The images stay where they are hosted.
+            * `emporix.categoryAssignment` – assignments of products to existing categories.
 
-            The writers other than `emporix.customEntity` are catalog writers. They are available to a tenant only
-            when Emporix has enabled catalog targets for it. To have them enabled, contact Emporix support.
+            The price, availability, media, and category assignment writers are normally used by a `FAN_OUT`
+            stream whose parent is a product stream. The `FAN_OUT` stream supplies each product's identifier as
+            `productId`. A `STANDALONE` stream that uses them maps `productId` itself.
+
+            The writers other than `emporix.customEntity` are catalog writers. The Management Dashboard offers them
+            only to tenants for which Emporix has enabled catalog targets. To have them enabled, contact Emporix
+            support.
           example: emporix.customEntity
         targetType:
           type: string
           description: >-
             For `emporix.customEntity`, the custom entity type the stream writes to. For the other writers, a label
-            that groups the stream's imported records, for example in imported data and statistics.
+            that groups the stream's imported records, for example in imported data and statistics. Defaults to
+            `PRODUCT` for `emporix.product` and `CATEGORY` for `emporix.category`. For a `FAN_OUT` stream into a
+            catalog writer, the service sets the label.
           example: product
         seq:
           type: integer
@@ -1953,16 +1960,20 @@ components:
           type: object
           additionalProperties: true
           description: |-
-            Settings for the target writer. Absent when the writer needs none. `emporix.product` reads:
+            Settings for the target writer. Absent when the writer needs none. `emporix.product` reads the
+            following settings:
 
-            * `matchField` – how existing products are found: `CODE` or `ID`.
+            * `matchField` – how existing products are found: `CODE` (the default) or `ID`.
             * `createMissing` – whether products that are not found are created. Defaults to `true`.
-            * `schemas` – the product mixin schemas the stream writes.
+            * `schemas` – a list of the identifiers of the product mixin schemas the stream writes.
             * `templateId` – the product template assigned to the products.
             * `language` – the language of localized fields. Defaults to `en`.
-            * `categoryMatchField` – how the categories to assign are found.
+            * `categoryMatchField` – how the categories to assign are found: `CODE` (the default) or `ID`.
 
-            `emporix.category` reads `language`.
+            `emporix.category` reads `language`, and `emporix.categoryAssignment` reads `categoryMatchField`.
+            `emporix.price` reads `currency`, `countryCode`, `siteCode`, and `priceModelId`, and
+            `emporix.availability` reads `site`. The price and availability settings are used for a record that
+            does not map the field.
           example:
             matchField: CODE
             createMissing: true
@@ -2008,10 +2019,20 @@ components:
             - PATCH
             - MERGE_PUT
             - REPLACE_PUT
-          description: >-
-            How an existing target object is updated. `PATCH` changes only the mapped fields and preserves
-            everything else; `REPLACE_PUT` replaces the whole object, so fields this import does not manage
-            are cleared.
+          description: |-
+            How an existing target object is updated. Possible values:
+
+            * `PATCH` – changes only the mapped fields and keeps everything else.
+            * `MERGE_PUT` – reads the object, merges the mapped fields into it, and writes it back whole.
+            * `REPLACE_PUT` – replaces the whole object, so fields this import does not manage are cleared.
+
+            The values a stream can use depend on its target writer. The following values are available per
+            writer, with the default listed first:
+
+            * `emporix.customEntity` – `PATCH`, `MERGE_PUT`, `REPLACE_PUT`.
+            * `emporix.product` and `emporix.category` – `PATCH`.
+            * `emporix.media` – `PATCH`, `REPLACE_PUT`.
+            * `emporix.price`, `emporix.availability`, and `emporix.categoryAssignment` – `REPLACE_PUT`.
           example: PATCH
         discriminatorField:
           type: string
