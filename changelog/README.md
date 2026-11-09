@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The browser downloads the private asset with the existing authenticated media endpoint. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The client downloads the private asset with the existing authenticated Media Service endpoint, which requires the `media.asset_read` scope. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
 
 The new built-in file generator (native tool type `file`) lets an agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it. You do not create this tool. Add its reserved ID `file_generator` to the agent's `nativeTools`. The agent creates images and files only when the caller's token includes the `media.asset_manage` scope.
 

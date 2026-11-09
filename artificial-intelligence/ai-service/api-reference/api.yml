@@ -2881,7 +2881,7 @@ components:
               type: string
               description: Unique identifier of the tool.
             type:
-              description: For `FileNativeTool`, it has to be set to `file`.
+              description: For `FileNativeToolResponse`, it has to be set to `file`.
               example: file
             config:
               $ref: '#/components/schemas/FileNativeToolConfig'
@@ -2948,6 +2948,16 @@ components:
     NativeToolsResponse:
       type: array
       description: List of native tools which agents should have access to.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/SlackNativeToolResponse'
+          - $ref: '#/components/schemas/RagCustomNativeToolResponse'
+          - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
+          - $ref: '#/components/schemas/TeamsNativeToolResponse'
+          - $ref: '#/components/schemas/SearchNativeToolResponse'
+    AgentNativeToolsResponse:
+      type: array
+      description: List of native tools enabled for the agent. It includes the built-in file generator (`file_generator`), which is not stored as a tool.
       items:
         oneOf:
           - $ref: '#/components/schemas/SlackNativeToolResponse'
@@ -3951,7 +3961,7 @@ components:
               type: string
               description: Identifier of the agent.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             mcpServers:
               $ref: '#/components/schemas/AgentMcpServersResponse'
     AgentRequest:
@@ -3991,7 +4001,7 @@ components:
               type: string
               description: Identifier of the agent.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -4025,7 +4035,7 @@ components:
               type: string
               description: Prompt inherited from the template at the time of this version.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -4293,7 +4303,7 @@ components:
             - pending
             - ready
             - failed
-          description: pending means an image is still generating. ready means the asset can be downloaded. failed means this item failed and the text answer continues.
+          description: '`pending` means an image is still generating. `ready` means the asset can be downloaded. `failed` means this item failed and the text answer continues.'
         error_code:
           type: string
           description: |-

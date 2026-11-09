@@ -1260,6 +1260,8 @@ Generated images and files are stored as private Media Service assets. The chat 
 
 The following scopes are required:
 
+* `ai.agent_manage` – to add the built-in file generator to the agent.
+* `ai.agentexecution_manage_own` for customer callers, or `ai.agentexecution_manage` for employee and integration callers – to chat with the agent.
 * `media.asset_manage` – in the token you use for chat. Without it, the agent answers in text only.
 * `media.asset_read` – in the token you use to download the images and files.
 
