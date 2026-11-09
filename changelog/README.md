@@ -57,7 +57,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-09" tags="new-feature" %}
 
 ## Indexing Service - Battery Included API URL per tenant
 
