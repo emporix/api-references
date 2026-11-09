@@ -90,6 +90,7 @@ The Configuration Service supports various configuration keys for different purp
 | `enableRecreationOfDeletedCustomer` | Whether a customer with the same customer number can be created after deletion | no |
 | `enableSyncBetweenRestrictionsAndSiteCodes` | Whether entity restrictions are synchronized with defined site codes | yes |
 | `invoiceSettings` | Invoice generation thresholds and statuses | no |
+| `languageSchemaVersion` | Language schema version for mixin localization (`v1` or `v2`). `v2` enables localized `OBJECT` mixin attributes and v2 language maps for array-of-localized fields. Missing values behave as `v1`. | no |
 | `maxNumberOfCouponsPerCart` | Maximum number of coupons that can be applied per cart | yes |
 | `openAiApiToken` | OpenAI API token used to connect Emporix AI features to OpenAI | yes |
 | `packagingConf` | Packaging groups and position options | no |
