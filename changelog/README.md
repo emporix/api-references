@@ -25,6 +25,35 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, improvement" %}
+<!-- emporix-ai-buddy:changelog:COP-7169 -->
+
+## AI Buddy Service - repository knowledge sync
+
+#### Overview
+
+AI Buddy now supports pull-based synchronization of service knowledge from repository files after a deployed default-branch commit. The new `POST /api/repo-sync` endpoint queues a sync for a specific repository and commit, so Buddy reflects merged and deployed knowledge instead of unmerged branch content.
+
+The `service_sync_from_repo` MCP tool remains available for on-demand refreshes from the repository default branch. This change also removes skill-driven knowledge pushes from feature and review flows, preserves hand-written Buddy-only sections, and removes synced sections when the corresponding repository knowledge files are deleted.
+
+#### New endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| [Syncing repository knowledge](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-buddy/api-reference/repository-sync#post-api-repo-sync) | Queues a repository knowledge sync for the deployed commit provided in the request body. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+|----------|-------------|
+| `service_sync_from_repo` | The tool now serves as the on-demand pull path and refreshes service knowledge from the repository default branch instead of relying on branch-time pushes from skills. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-09" tags="improvement" %}
 
 ## Returns Service - site on a return
