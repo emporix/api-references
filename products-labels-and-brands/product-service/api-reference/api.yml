@@ -3728,9 +3728,10 @@ components:
 
         * For first-class localized fields such as `name` and `description`, a specific language or ordered list returns the first matching translation.
         * If none of the requested languages has a translation for a first-class localized field, the field is returned as `null`.
-        * `*`, an omitted header, or an empty header returns all translations for first-class localized fields.
-        * For v2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
-        * A v2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
+        * `*` returns all translations for first-class localized fields.
+        * An omitted or empty header uses the tenant's default language for first-class localized fields.
+        * For v2 mixin language maps, a specific language or ordered list returns the first matching non-null translation as a single-key map.
+        * A v2 mixin language map without a matching non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
         * In an array of language maps, an element without a matching translation is omitted.
         * `*`, an omitted header, or an empty header leaves full v2 mixin language maps unchanged.
         * v1 `[{language,value}]` mixin arrays remain unchanged.

@@ -23,7 +23,7 @@ paths:
 
         Set `siteAware` to `true` when custom instances or products that use this mixin may store per-site overlays. Overlay keys use the form `{mixinName}__{siteCode}`. On custom instances, only schemas with `siteAware: true` accept those overlay keys.
 
-        The tenant's `languageSchemaVersion` configuration determines how localized attributes are generated. The following rules apply:
+        The tenant's `languageSchemaVersion` configuration determines how localized attributes are generated. Set that Configuration Service key to `v2` before you send localized `OBJECT` attributes. See [Creating configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) and [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey). The following rules apply:
 
         * With `v2`, localized `TEXT` attributes use language maps. Localized `OBJECT` attributes use maps whose keys are BCP 47 language tags and whose values are nested objects. Localized `TEXT` or `OBJECT` array items use the same v2 map shapes.
         * With `v1`, or when the configuration is missing, localized `TEXT` attributes use `[{language,value}]` arrays and localized `OBJECT` attributes are rejected.
@@ -3135,12 +3135,13 @@ components:
 
         The following rules apply:
 
-        * A specific language or ordered list filters first-class localized fields to the first matching translation. Their map response contains only that language.
-        * For v2 mixin language maps, a specific language or ordered list returns the first matching, non-null translation as a single-key map.
-        * A v2 mixin language map without a matching, non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
+        * A specific language or ordered list returns first-class localized fields as strings in the first matching language.
+        * `*` returns first-class localized fields as maps of translations.
+        * An omitted or empty header returns first-class localized fields as strings in the tenant's default language.
+        * For v2 mixin language maps, a specific language or ordered list returns the first matching non-null translation as a single-key map.
+        * A v2 mixin language map without a matching non-null translation is omitted. For a localized `OBJECT`, a whole-field `null` value is preserved.
         * In an array of language maps, an element without a matching translation is omitted.
-        * `*` returns all translations in first-class localized fields and leaves full v2 mixin language maps unchanged.
-        * An omitted or empty header uses the tenant's default language for first-class localized fields and filters v2 mixin language maps to that language.
+        * `*`, an omitted header, or an empty header leaves full v2 mixin language maps unchanged.
         * v1 `[{language,value}]` mixin arrays remain unchanged.
     trait_emporix_site_header:
       name: emporix-site

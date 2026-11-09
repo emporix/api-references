@@ -498,15 +498,17 @@ A nullable localized `OBJECT` can be `null` for the whole field, or `null` for a
 
 ### Read a preferred language with Accept-Language
 
-On product and custom-instance reads, send `Accept-Language` to filter v2 mixin language maps. Unlike first-class localized fields, which can return a single string for one language, a filtered mixin field remains a single-key map, for example `{ "de": { "city": "Berlin" } }`.
+On product and custom-instance reads, send `Accept-Language` to filter v2 mixin language maps. Unlike first-class localized fields, which return a string for one language (or a full map when the header is `*`), a filtered mixin field remains a single-key map, for example `{ "de": { "city": "Berlin" } }`.
 
-Accept-Language filtering follows these rules:
+Accept-Language filtering for v2 mixin maps follows these rules:
 
 * A specific language or ordered list returns the first matching non-null translation as a single-key map.
 * A map with no matching non-null translation is omitted. A whole-field `null` localized `OBJECT` is preserved.
 * In an array of language maps, an element without a matching translation is omitted.
-* `*`, an omitted header, or an empty header leaves full v2 maps unchanged.
+* `*`, an omitted header, or an empty header leaves full v2 mixin maps unchanged.
 * v1 `[{language,value}]` mixin arrays are not filtered.
+
+For first-class localized fields on the same responses, an omitted or empty header uses the tenant's default language. Only `*` returns every translation.
 
 For product reads, see [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid). For custom instances, see [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id).
 
