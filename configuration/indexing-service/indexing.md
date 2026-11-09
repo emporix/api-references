@@ -38,7 +38,7 @@ For details on how Battery Included builds product documents under `MERGE`, incl
 
 #### Write-key validation
 
-When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged.
+When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` against the host in `apiUrl`, or against the default Battery Included host when `apiUrl` is not set, before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged. For details, see [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url).
 
 Starting a product reindex while `BATTERY_INCLUDED` is active runs the same check against stored credentials before a reindex job is created.
 
@@ -157,6 +157,71 @@ curl -L \
 ```
 
 If `writeKey` or `indexName` is wrong, the create request fails with `400` and nothing is stored. Fix the credentials in Battery Included and retry.
+
+### How to set the Battery Included API URL
+
+The Indexing Service sends a tenant's product data to the default Battery Included host. If Battery Included set up your index on a different host, set that host as the API URL in the `apiUrl` field of the `BATTERY_INCLUDED` configuration. The Indexing Service then sends all of the tenant's Battery Included requests to that host, including product updates, deletions, and reindex uploads. If Battery Included did not give you a host, you don't need `apiUrl`.
+
+The `apiUrl` value must be the `https` address of a Battery Included host that Emporix accepts, for example `https://api.batteryincluded.io` or `https://api-next.batteryincluded.io`, without a path, query, fragment, user information, or port. A trailing slash is allowed. The service rejects any other value with `400` and does not store the configuration. The `apiUrl` field applies only to `BATTERY_INCLUDED`. Sending it in an `ALGOLIA` configuration also returns `400`.
+
+The host and the write key belong together. The service validates `writeKey` against the host in `apiUrl` before saving, so use the write key that Battery Included issued for that host. A write key that is not valid on that host returns `400` with the message `Battery Included credentials are invalid. Verify the write key and index name.`, and the stored configuration stays unchanged.
+
+#### Before you start
+
+* Get the host of your index and a write key for that host from Battery Included.
+* Make sure no product reindex is running for the tenant. Send a request to the [Retrieving reindex jobs](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs) endpoint and check that no `PRODUCT` job has the `IN_PROGRESS` status.
+
+{% hint style="warning" %}
+If you change `apiUrl` while a product reindex is running, the documents uploaded before the change stay on the old host, and the new host holds only the documents uploaded after the change.
+{% endhint %}
+
+#### Retrieve the current configuration
+
+The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`, and keep every field of the response, including `includedMixinPaths` or `excludedMixinKeys` when they are set. For the full update flow, see [How to update the index configuration](#how-to-update-the-index-configuration).
+
+#### Send the configuration with the API URL
+
+Send the whole configuration with `apiUrl` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint. The request requires an OAuth2 service token with the `indexing.search_manage` scope. To create a new configuration with an API URL, add `apiUrl` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint in the same way.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/indexing/{tenant}/configurations/BATTERY_INCLUDED' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": true,
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "BATTERY_INCLUDED",
+    "includedMixinPaths": [
+      "*_siteAware.*.OnlineIsService_P",
+      "*_siteAware.**"
+    ],
+    "apiUrl": "https://api-next.batteryincluded.io"
+  }'
+```
+
+A successful request returns `204`. The [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint then returns the `apiUrl` value. The public configuration endpoints do not return it. See [How to retrieve public search configuration](#how-to-retrieve-public-search-configuration).
+
+If the `apiUrl` value is not accepted, the response names the field:
+
+```json
+{
+  "code": 400,
+  "status": "Bad Request",
+  "message": "Invalid apiUrl: must be https on one of api.batteryincluded.io, api-next.batteryincluded.io"
+}
+```
+
+#### After the change
+
+Note the following behavior after you change `apiUrl`:
+
+* A changed `apiUrl` takes effect within 10 minutes. Until then, the Indexing Service can still send requests to the previous host.
+* If the index on the new host does not yet hold all of the tenant's products, wait 10 minutes, and then start a full product reindex. See [How to reindex existing products](#how_to_reindex_existing_products).
+* If you later update the configuration without `apiUrl`, the tenant goes back to the default Battery Included host, and the write key must be valid on the default host.
 
 
 ## How to update the index configuration
@@ -279,6 +344,8 @@ A successful response returns a reindex job, including its `id`. You can track p
 ### How Battery Included reindexing works
 
 When a product reindex job is created for `BATTERY_INCLUDED`, the Indexing Service uploads documents to Battery Included and cleans up the index after commit.
+
+Each upload and the final commit go to the Battery Included host that is configured for the tenant when that upload or commit is sent, with the write key from the same configuration. To avoid splitting a reindex across two hosts, don't change `apiUrl` while a reindex is running. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url).
 
 When the active provider is `BATTERY_INCLUDED`, a full product reindex does not empty the index at the start. Existing documents stay searchable while the Indexing Service uploads the new set. Emporix completes the upload and runs cleanup for you. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint.
 
