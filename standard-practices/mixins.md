@@ -186,6 +186,12 @@ For step-by-step procedures, see:
 
 Custom instances use the same overlay key pattern and `emporix-site` read behavior on the [Schema Service custom instance endpoints](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance).
 
+## Localized mixin attributes
+
+Mixin schemas can mark `TEXT` attributes as localized. With the tenant configuration `languageSchemaVersion` set to `v2`, you can also localize `OBJECT` attributes and array items of localized `TEXT` or `OBJECT`. Under `v2`, those fields store language-keyed maps. Under `v1`, localized mixin `TEXT` values can still use `[{language,value}]` arrays. On product and custom-instance reads, `Accept-Language` filters v2 maps to a single preferred language key and leaves v1 arrays unchanged.
+
+For the workflow, localization rules, and migration notes, see [How to use localized OBJECT mixin attributes](../utilities/schema/schema.md#how-to-use-localized-object-mixin-attributes). For first-class localized fields such as product `name`, see [Translations](translations.md).
+
 ## Updating and removing mixins
 
 How you update or remove mixins depends on the API.
