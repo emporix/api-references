@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-11-10" tags="major-change" %}
 
 ## Price Service - price list ranking in price matching
 
