@@ -43,6 +43,8 @@ paths:
         For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
 
+        `customerSegmentIds` contains each product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
+
         **Additional scope information**
 
         * The `product.product_read_unpublished` scope is only required if the response should contain unpublished products.
@@ -89,6 +91,8 @@ paths:
 
         For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
+
+        `customerSegmentIds` contains each product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
 
         **Additional scope information**
 
@@ -909,6 +913,8 @@ paths:
 
         For v2 mixins, `Accept-Language` filters localized `TEXT` and `OBJECT` maps, including maps nested under plain objects and maps used as array items.
         ***
+
+        `customerSegmentIds` contains the product's effective customer segment visibility. The field includes segments assigned through direct product assignment or category-based assignment, but a direct product exclusion removes that segment from the response even if another include source exists. Legacy assignments without an explicit mode continue to behave as includes.
 
         **Additional scope information**
 
