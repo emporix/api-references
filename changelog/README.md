@@ -83,6 +83,31 @@ The Import Service is in preview mode, so some features may not be fully operati
 
 {% endupdate %}
 
+{% update date="2026-11-10" tags="major-change" %}
+
+## Price Service - price list ranking in price matching
+
+#### Overview
+
+Price matching now gives the same rank to all price lists that match the customer: price lists for at least one of the customer's groups and price lists for the customer's legal entity or one of its parent legal entities. The number of matched customer groups no longer changes the rank. When these price lists are also assigned to the same countries and regions, the lowest of their prices is returned. Before, a customer group price list always won over a legal entity price list, and a price list that matched more of the customer's groups won over a price list that matched fewer, regardless of the price.
+
+Legal entity price lists now also rank above price lists without customer groups or a legal entity, the same way customer group price lists already did. Before, a cheaper price list without customer groups or a legal entity could win over a legal entity price list. Check your legal entity price lists: customers who buy for these legal entities can now get a different price.
+
+The ranking is described in [Influence of price lists on price matching](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/prices-and-taxes/price-service/price#influence-of-price-lists-on-price-matching).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Gives customer group and legal entity price lists the same rank, regardless of how many customer groups they match. Returns the lowest price from the first rank that contains a price for the item. |
+| [Matching prices for session context](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) | Ranks price lists the same way as the [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) endpoint. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-10" tags="minor-change" %}
 
 ## Import Service - reference corrections for running imports
