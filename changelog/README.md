@@ -54,6 +54,24 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="RELEASE_DATE" tags="major-change" %}
+
+## Indexing Service - site-aware Battery Included mixin paths
+
+#### Overview
+
+Battery Included product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+
+The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
+
+For details, see [How site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-site-aware-mixins-are-indexed). For migration guidance, see [Migrating from legacy mixin paths](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#migrating-from-legacy-mixin-paths).
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-09" tags="new-feature" %}
 
 ## Indexing Service - Battery Included API URL per tenant
