@@ -759,8 +759,8 @@ paths:
                     - DELTA
                   description: >-
                     The run mode, `FULL` or `DELTA`. When omitted, defaults to `DELTA`. The value is not
-                    case-sensitive. Send one of the listed values: the service does not reject another value, and runs
-                    it as `DELTA`.
+                    case-sensitive. Send one of the listed values. The service does not reject another value and runs
+                    the import as `DELTA`.
                   example: DELTA
                 dryRun:
                   type: boolean
@@ -865,7 +865,7 @@ paths:
             queue, or, when its latest file failed, queue that file again after fixing the cause.
 
             Only streams that the run would execute are checked. A stream whose mappings have never been
-            published is not considered. A dry run, a scheduled run and a retry are not refused for this. When
+            published is not considered. A dry run, a scheduled run, and a retry are not refused for this. When
             the configuration already has a run in progress, the response is `409 Conflict` instead.
           content:
             application/json:
