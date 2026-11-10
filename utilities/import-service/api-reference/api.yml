@@ -6708,9 +6708,11 @@ components:
   examples:
     Forbidden403_Example:
       value:
-        status: forbidden
+        resourceId: null
+        status: Forbidden
         code: 403
-        message: The access to the requested resource has been forbidden.
+        message: This request requires the scope importtool.import_trigger (or importtool.import_manage).
+        details: []
     NotFound404_Example:
       value:
         status: Not Found
