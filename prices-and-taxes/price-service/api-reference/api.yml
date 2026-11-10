@@ -587,7 +587,7 @@ paths:
           2. Country match: a price list assigned to the target country ranks above a price list that isn't.
           3. Region match: a price list assigned to more of the target country's regions ranks higher.
 
-        Price lists that are equal in all three criteria share a rank. Lower-ranked price lists are not checked, even if they contain a lower price. For an example and a flowchart, see [Influence of price lists on price matching](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/price#influence-of-price-lists-on-price-matching).
+        Price lists that are equal in all three criteria share a rank. The ranks are checked from the highest to the lowest, and only the first rank that contains a price for the item is used. Prices from the ranks below are not compared, even if they are lower. For an example and a flowchart, see [Influence of price lists on price matching](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/price#influence-of-price-lists-on-price-matching).
 
         To use the price matching functionality, you need to define appropriate tax classes in the Tax Service and then assign them to products for which prices are matched through the Product Service.
 

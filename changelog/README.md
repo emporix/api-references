@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="improvement" %}
+{% update date="RELEASE_DATE" tags="major-change" %}
 
 ## Price Service - price list ranking in price matching
 
@@ -41,7 +41,7 @@ The ranking is described in [Influence of price lists on price matching](https:/
 
 | Endpoint | Description |
 | --- | --- |
-| [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Gives customer group and legal entity price lists the same rank, regardless of how many customer groups they match, and returns the lowest price from the highest-ranked price lists that contain a price for the item. |
+| [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Gives customer group and legal entity price lists the same rank, regardless of how many customer groups they match. Returns the lowest price from the first rank that contains a price for the item. |
 | [Matching prices for session context](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) | Ranks price lists the same way as the [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) endpoint. |
 
 #### Known problems
