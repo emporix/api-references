@@ -47,6 +47,49 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-10" tags="major-change" %}
+
+## Indexing Service - site-aware Battery Included mixin paths
+
+#### Overview
+
+Battery Included product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+
+The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
+
+For details, see [How site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-site-aware-mixins-are-indexed). For migration guidance, see [Migrating from legacy mixin paths](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#migrating-from-legacy-mixin-paths).
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="new-feature" %}
+
+## Indexing Service - Battery Included API URL per tenant
+
+#### Overview
+
+You can now set the Battery Included host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's Battery Included requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default Battery Included host. The service accepts only the `https` address of an allowed Battery Included host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
+
+For the steps, see [How to set the Battery Included API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-battery-included-api-url).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED` and validates the write key against that host. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED`. A request without `apiUrl` moves the tenant back to the default Battery Included host. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `apiUrl` value. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `apiUrl` value. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-09" tags="new-feature" %}
 
 ## Schema and Product Services - localized `OBJECT` mixins
@@ -80,6 +123,44 @@ When a v2 tenant updates a mixin that still uses nested v1 arrays for array-of-l
 #### Known problems
 
 There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="improvement" %}
+
+## Product, Brand, Label, and Site Settings Services - custom language codes
+
+#### Overview
+
+The Product Service (including variants and product templates), Brand Service, Label Service, and Site Settings Service now accept custom language codes, such as `en-NL` or `en-SG`, not only codes from the former fixed list. A valid code is a two- or three-letter language code, optionally followed by hyphen-separated subtags of two to eight letters or digits (`^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$`). All previously accepted codes remain valid.
+
+The services compare language codes ignoring letter case, for example in `Content-Language` and `Accept-Language` headers and between a site's `defaultLanguage` and `languages`. Stored keys keep their original letter case. For example, sending `de-de` updates the stored `de-DE` value, and the key stays `de-DE`. With `Content-Language: *`, the keys of localized maps must still match the configured letter case exactly.
+
+{% hint style="warning" %}
+One validation rule is stricter. A localized map that contains the same language twice in different letter case, for example `de-DE` and `de-de`, is now rejected with the `400` status and the message `Language … is provided more than once with different letter case.` A code that does not match the format is rejected with the `400` status and the message `Language … has an invalid format.` In both messages, `…` is the submitted code.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Adding a new brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brand-brands) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Creating a label](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/label-service/api-reference/label#post-labels) | Accepts custom language codes in localized fields. |
+| [Creating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Fully updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Partially updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Translations](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/standard-practices/translations)
+* [Language Tutorials](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/configuration-service/language)
 
 {% endupdate %}
 
