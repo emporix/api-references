@@ -37,7 +37,7 @@ The Import Service reference for running and monitoring imports now matches the 
 * Error responses are documented with the body the service returns: `message`, `code`, `status`, `resourceId`, and `details` entries with `message` and `field`.
 * A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media, and category assignments, with the settings and write strategies each one supports. The `FAN_OUT` mode and its fields are documented.
 * Run progress events, run and stream status values, error codes, the imported-data search, and the statistics filters are corrected.
-* A `size` below 1 or a negative `page` returns HTTP 400 on the paged endpoints. A missing scope returns HTTP 403 with an error body that names the required scope.
+* A `size` below 1 or a negative `page` returns HTTP 400 on the paged endpoints. A missing scope returns HTTP 403 with an error body that names the required scope. A configuration or run that does not exist returns HTTP 404 with the same error body, which names the identifier.
 
 #### Updated endpoints
 

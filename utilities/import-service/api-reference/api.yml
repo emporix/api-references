@@ -3627,9 +3627,11 @@ components:
         details: []
     NotFound404_Example:
       value:
+        resourceId: null
         status: Not Found
         code: 404
-        message: The requested resource does not exist.
+        message: Run 9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d not found.
+        details: []
     Conflict409_Example:
       value:
         resourceId: 7c9e6679-7425-40de-944b-e07fc1f90ae7
