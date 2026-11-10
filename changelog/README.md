@@ -43,11 +43,11 @@ The introduction is also corrected: `importtool.import_manage` allows every oper
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#post-importtool-tenant-configs-configid-streams) | Lists the target-writer, mode, and `FAN_OUT` rules, and documents the 400 response. |
-| [Updating a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#put-importtool-tenant-streams-id) | Documents that the same rules apply, what an update keeps, and the 400 response. |
-| [Retrieving the available target writers](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-target-writers) | Documents the response, including each writer's `capabilities`. |
-| [Retrieving the target type attributes](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/mappings-administration#get-importtool-tenant-streams-streamid-mappings-target-fields) | Lists the fields each catalog writer offers. |
-| [Replacing a stream's field mappings](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/mappings-administration#put-importtool-tenant-streams-streamid-mappings) | Documents the checks for product and stock streams. |
+| [Creating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#post-importtool-tenant-configs-configid-streams) | Lists the target-writer, mode, and `FAN_OUT` rules, and documents the 400 response. |
+| [Updating a stream](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/streams#put-importtool-tenant-streams-id) | Documents that the same rules apply, what an update keeps, and the 400 response. |
+| [Retrieving the available target writers](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-target-writers) | Documents the response, including each writer's `capabilities`. |
+| [Retrieving the target type attributes](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/mappings-administration#get-importtool-tenant-streams-streamid-mappings-target-fields) | Lists the fields each catalog writer offers. |
+| [Replacing a stream's field mappings](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/mappings-administration#put-importtool-tenant-streams-streamid-mappings) | Documents the checks for product and stock streams. |
 
 #### Known problems
 
@@ -67,15 +67,15 @@ A connection's `sourceType` can be `file`, for delimited files that are uploaded
 
 | Endpoint | Description |
 | --- | --- |
-| [Uploading a sample file for a connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections-id-sample-file) | Stores a sample file whose columns are offered when setting up a stream. |
+| [Uploading a sample file for a connection](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections-id-sample-file) | Stores a sample file whose columns are offered when setting up a stream. |
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
-| [Updating a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#put-importtool-tenant-connections-id) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
-| [Retrieving a source connection](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-connections-id) | Returns `sampleFileLocator` and `sampleFileName` for a `file` connection with a stored sample file. |
+| [Creating a source connection](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/connections-administration#post-importtool-tenant-connections) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
+| [Updating a source connection](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/connections-administration#put-importtool-tenant-connections-id) | Accepts `file` as `sourceType` and the `file` connection settings in `config`. |
+| [Retrieving a source connection](https://developer.emporix.io/api-references/api-guides/utilities/import-service/api-reference/connections-administration#get-importtool-tenant-connections-id) | Returns `sampleFileLocator` and `sampleFileName` for a `file` connection with a stored sample file. |
 
 #### Known problems
 

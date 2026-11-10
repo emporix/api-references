@@ -5155,8 +5155,9 @@ components:
 
             `emporix.category` reads `language`, and `emporix.categoryAssignment` reads `categoryMatchField`.
             `emporix.price` reads `currency`, `countryCode`, `siteCode`, and `priceModelId`, and
-            `emporix.availability` reads `site`. The price and availability settings are used for a record that
-            does not map the field.
+            `emporix.availability` reads `site`. These price and availability settings are fallback values with no
+            default of their own: a record that does not map the field gets the stream's value. A price needs a
+            currency and a country, and stock needs a site, from a mapping or from these settings.
           example:
             matchField: CODE
             createMissing: true
@@ -6616,11 +6617,27 @@ components:
             Run already active:
               $ref: '#/components/examples/Conflict409_Example'
     InternalServiceError_500:
-      description: Internal Service Error occurred.
+      description: >-
+        An unexpected error occurred in the service. The body is the framework's default error body, not the error
+        schema of the other responses.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/errorMessage'
+            type: object
+            properties:
+              timestamp:
+                type: string
+                format: date-time
+                description: When the error occurred.
+              status:
+                type: integer
+                description: The HTTP status code.
+              error:
+                type: string
+                description: The HTTP status reason phrase.
+              path:
+                type: string
+                description: The request path.
           examples:
             Internal service error:
               $ref: '#/components/examples/InternalServiceError500_Example'
@@ -6729,9 +6746,10 @@ components:
             field: activeRunId
     InternalServiceError500_Example:
       value:
-        status: internal_service_error
-        code: 500
-        message: A server-side exception occurred that prevented the system from correctly returning the result.
+        timestamp: '2026-11-10T09:15:00.000+00:00'
+        status: 500
+        error: Internal Server Error
+        path: /importtool/mytenant/runs/9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d
     ImportConfig_Example:
       value:
         id: 7c9e6679-7425-40de-944b-e07fc1f90ae7
