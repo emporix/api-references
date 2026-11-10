@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="major-change" %}
+{% update date="2026-11-10" tags="major-change" %}
 
 ## Indexing Service - site-aware Battery Included mixin paths
 
