@@ -921,6 +921,8 @@ paths:
               examples:
                 Run history response:
                   $ref: '#/components/examples/ImportRunPage_Example'
+        '400':
+          $ref: '#/components/responses/InvalidPaging_400'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1099,6 +1101,8 @@ paths:
               examples:
                 Errors response:
                   $ref: '#/components/examples/ErrorRecordPage_Example'
+        '400':
+          $ref: '#/components/responses/InvalidPaging_400'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1307,6 +1311,8 @@ paths:
               examples:
                 Imported records response:
                   $ref: '#/components/examples/ImportedRecordPage_Example'
+        '400':
+          $ref: '#/components/responses/InvalidPaging_400'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -1368,6 +1374,8 @@ paths:
               examples:
                 Stream records response:
                   $ref: '#/components/examples/ImportedRecordPage_Example'
+        '400':
+          $ref: '#/components/responses/InvalidPaging_400'
         '401':
           $ref: '#/components/responses/Unauthorized_401'
         '403':
@@ -3463,6 +3471,20 @@ components:
           examples:
             Access to resource is forbidden:
               $ref: '#/components/examples/Forbidden403_Example'
+    InvalidPaging_400:
+      description: The `page` or `size` query parameter is out of range. The message names the parameter.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/errorMessage'
+          examples:
+            Invalid page size:
+              value:
+                resourceId: null
+                status: Bad Request
+                code: 400
+                message: Query parameter 'size' must be 1 or greater; got 0.
+                details: []
     NotFound_404:
       description: The requested resource does not exist.
       content:
@@ -3558,9 +3580,10 @@ components:
       name: page
       in: query
       required: false
-      description: The zero-based page number.
+      description: The zero-based page number. A negative value returns HTTP 400.
       schema:
         type: integer
+        minimum: 0
         default: 0
         example: 0
     trait_size:
@@ -3568,8 +3591,8 @@ components:
       in: query
       required: false
       description: >-
-        The page size. Defaults to 20 for run history, 50 for run errors, and 25 for imported records. Must be at
-        least 1.
+        The page size. Defaults to 20 for run history, 50 for run errors, and 25 for imported records. A value
+        below 1 returns HTTP 400.
       schema:
         type: integer
         minimum: 1
@@ -3577,9 +3600,11 @@ components:
   examples:
     Forbidden403_Example:
       value:
-        status: forbidden
+        resourceId: null
+        status: Forbidden
         code: 403
-        message: The access to the requested resource has been forbidden.
+        message: This request requires the scope importtool.import_trigger (or importtool.import_manage).
+        details: []
     NotFound404_Example:
       value:
         status: Not Found
