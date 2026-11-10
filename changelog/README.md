@@ -37,18 +37,22 @@ The Import Service reference for running and monitoring imports now matches the 
 * Error responses are documented with the body the service returns: `message`, `code`, `status`, `resourceId`, and `details` entries with `message` and `field`.
 * A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media, and category assignments, with the settings and write strategies each one supports. The `FAN_OUT` mode and its fields are documented.
 * Run progress events, run and stream status values, error codes, the imported-data search and the statistics filters are corrected.
+* A `size` below 1 or a negative `page` returns HTTP 400 on the paged endpoints. A missing scope returns HTTP 403 with an error body that names the required scope.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
 | [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Documents the "nothing to import" rule, the error body, and a 409 while a data purge is in progress. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Documents the 400 for an out-of-range `page` or `size`. |
 | [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Documents `RETRY` in `trigger`, `streamIds`, the `CANCELLED` stream status, and `payload`, `stage` and `FAN_OUT_REMOVE` on run errors. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Documents the 400 for an out-of-range `page` or `size`. |
 | [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Documents the fields of each event. A `run` event names the run in `runId` and is also sent before the run finishes. |
 | [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | A `409` returns the cancellation result with `accepted` set to `false`. |
 | [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Lists the conditions that return a 409. |
 | [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents every `targetWriter`, the `FAN_OUT` mode, `fanOutPath`, `fanOutKey`, `targetOptions`, `seq`, and the `writeStrategy` values each writer can use. |
-| [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | `search` matches the start of the natural key or Emporix identifier, case-sensitively. `outcome` no longer lists `DELETED_TARGET`. |
+| [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | `search` matches the start of the natural key or Emporix identifier, case-sensitively. `outcome` no longer lists `DELETED_TARGET`. Documents the 400 for an out-of-range `page` or `size`. |
+| [Searching a stream's imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Documents the 400 for an out-of-range `page` or `size`. |
 | [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Documents the 366-day window limit, the 404 for an unknown stream, and `summary.aborted`. |
 
 #### Known problems
