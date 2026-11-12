@@ -4393,8 +4393,7 @@ components:
           items:
             $ref: '#/components/schemas/externalDiscount'
         itemType:
-          allOf:
-            - $ref: '#/components/schemas/itemType'
+          $ref: '#/components/schemas/itemType'
           description: Optional field which allows fetching external prices if set to EXTERNAL.
         taxCode:
           description: Tax code. Tax indicated in this field overrides the site's default tax value.
@@ -4483,8 +4482,7 @@ components:
           type: string
           description: Unique identifier of the fee.
         name:
-          allOf:
-            - $ref: '#/components/schemas/localizedValue'
+          $ref: '#/components/schemas/localizedValue'
           description: Fee name.
         yrn:
           type: string
@@ -4707,8 +4705,7 @@ components:
                 - rate
                 - quantity
             couponDiscounts:
-              allOf:
-                - $ref: '#/components/schemas/couponDiscounts'
+              $ref: '#/components/schemas/couponDiscounts'
               description: "**This field is deprecated**. Please use `calculatedPrice.totalDiscounts.appliedDiscounts` instead.
                 The `calculatedPrice.totalDiscount.appliedDiscounts` field provides the same value with updated functionality."
               deprecated: true
@@ -5740,8 +5737,7 @@ components:
         itemYrn:
           $ref: '#/components/schemas/YRN'
         itemType:
-          allOf:
-            - $ref: '#/components/schemas/itemType'
+          $ref: '#/components/schemas/itemType'
           description: Optional field which allows fetching external prices if set to EXTERNAL.
         quantity:
           type: number

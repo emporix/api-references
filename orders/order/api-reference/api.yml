@@ -842,8 +842,7 @@ components:
             type: object
             properties:
               name:
-                allOf:
-                  - $ref: '#/components/schemas/localizedValue'
+                $ref: '#/components/schemas/localizedValue'
                 description: Fee name.
               yrn:
                 type: string
