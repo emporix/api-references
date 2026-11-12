@@ -47,6 +47,32 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-12" tags="new-feature" %}
+
+## Import Service - product variants
+
+#### Overview
+
+A product stream can now import parent products and their variants. Two new settings in a product stream's `targetOptions` describe what the stream imports:
+
+* `variantRole` – `NONE` (the default) for products without variants, `PARENT` for parent products, or `VARIANT` for variants of a parent
+* `variantModel` – `DYNAMIC` (the default) for dynamic variants, which take no `templateId`, or `TEMPLATE` for variants of the product template in `templateId`
+
+A `VARIANT` stream maps each record's parent to `parentCode` or `parentId`, and its variant attribute values to `variantAttributes.<attribute>`. When a stream of the same configuration imports the parents, the `VARIANT` stream lists it in `dependsOn`, so the parents are written first. With dynamic variants, a `VARIANT` stream can also take its parents from another `VARIANT` stream, which adds a level to the product hierarchy, up to four levels. `FAN_OUT` streams of the `VARIANT` stream write the variants' prices, stock, and images.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns `variantRole` and `variantModel` in a product stream's `targetOptions`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns `variantRole` and `variantModel` in a product stream's `targetOptions`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-10" tags="major-change" %}
 
 ## Price Service - price list ranking in price matching
