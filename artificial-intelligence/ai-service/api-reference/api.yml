@@ -4119,7 +4119,9 @@ components:
       description: Type of the job.
     Job:
       type: object
-      description: Contains information about the job result - whether it was successful or not, what was the agent output etc.
+      description: |-
+        Contains information about the job result - whether it was successful or not, what was the agent output etc.
+        A successful agent-chat job includes provenance details in `mixins`.
       properties:
         id:
           type: string
@@ -4283,14 +4285,17 @@ components:
               origin:
                 type: string
                 enum: [ai_generated]
+                description: Source of the content. `ai_generated` means the content was produced by AI.
               contentVersion:
                 type: integer
+                description: Version of the generated content.
               generationId:
                 type: string
                 description: Unique identifier of the generation.
               generatedAt:
                 type: string
                 format: date-time
+                description: Date and time when the content was generated.
               generator:
                 type: string
                 description: Identifier of the generator.
@@ -4303,6 +4308,7 @@ components:
               reviewStatus:
                 type: string
                 enum: [not_reviewed]
+                description: Review state of the generated content.
     ProvenanceMetadata:
       type: object
       description: Schema references for response mixins.
