@@ -794,9 +794,30 @@ Choose the chat endpoint based on how you want to receive the agent's response:
               "modifiedAt":"2025-09-25T04:42:42.607Z"
           }
       }",
-      "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b"
+      "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b",
+      "mixins": {
+          "provenance": [
+              {
+                  "origin": "ai_generated",
+                  "contentVersion": 1,
+                  "generationId": "req-1",
+                  "generatedAt": "2026-11-12T09:00:00Z",
+                  "generator": "de-agent",
+                  "generatorVersion": 1,
+                  "model": "gpt-4o-mini",
+                  "reviewStatus": "not_reviewed"
+              }
+          ]
+      },
+      "metadata": {
+          "mixins": {
+              "provenance": "https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"
+          }
+      }
   }
   ```
+
+  Clients that show this reply to a person use `mixins.provenance` to disclose that the content is AI-generated.
 
   Save `sessionId` and send it as the `session-id` header when you need conversational continuity. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 

@@ -4268,6 +4268,8 @@ components:
       description: |-
         Provenance details for generated content.
         Clients that display generated content to a person must disclose that the content is AI-generated.
+      required:
+        - provenance
       properties:
         provenance:
           type: array
