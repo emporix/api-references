@@ -31,20 +31,23 @@ layout:
 
 #### Overview
 
-Generative responses now carry a provenance mixin so a client can tell a person the text was produced by AI. Chat, stream, texts, and completions return the mixin on the response and do not store it. A successful agent-chat job stores the mixin with the reply. It is not stored on the session or another entity.
+Generative AI responses now include a provenance mixin. Integrations that display generated content to a person must use this mixin to disclose that the content is AI-generated.
 
-The mixin is on:
+#### Updated endpoints
 
-* `POST /ai-service/{tenant}/agentic/chat` when the agent produces a reply
-* the `done` event of `POST /ai-service/{tenant}/agentic/chat-stream` when the agent produces a reply
-* `GET /ai-service/{tenant}/jobs/{id}`, the job list, and job search, for an agent-chat job that succeeded with an assistant reply
-* `POST /ai-service/{tenant}/texts` and `POST /ai-service/{tenant}/completions` when generation succeeds
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns provenance details with a generated reply. |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns provenance details in the `done` event after generated output. |
+| [Retrieving available job](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Returns stored provenance details for a successful agent-chat job. |
+| [Listing available jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Returns stored provenance details for agent-chat jobs. |
+| [Searching jobs](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Returns stored provenance details for matching agent-chat jobs. |
+| [Generating text for an object description](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/text-generation#post-ai-service-tenant-texts) | Returns provenance details with generated text. |
+| [Generating AI Completions](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions#post-ai-service-tenant-completions) | Returns provenance details with generated completions. |
 
-`POST /ai-service/{tenant}/agentic/chat-async` is still only a job id. Failed and skipped jobs, and a chat or stream that fails before a reply, do not include the mixin.
+#### Known problems
 
-`generationId` on chat, the stream, and a successful job is the agent request log `requestId`. Texts and completions have no agent request log, so `generationId` is a new id for that response. For those two calls, `generator` and `model` are the configured model name. `generatorVersion` is omitted.
-
-A client that shows the generated text to a person must also show that the content is AI-generated.
+There are no known problems.
 
 {% endupdate %}
 
