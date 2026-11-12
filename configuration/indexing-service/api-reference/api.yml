@@ -27,6 +27,9 @@ paths:
 
         `apiUrl` applies only to `BATTERY_INCLUDED`. An `apiUrl` that is not an `https` address of an
         allowed Battery Included host, or an `apiUrl` sent for another provider, returns `400`.
+
+        `enrichments` applies only to `BATTERY_INCLUDED`. An `enrichments` list with an unknown or `null` value
+        returns `400`. An `enrichments` field sent for another provider also returns `400`, even as an empty list.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -62,6 +65,15 @@ paths:
                   writeKey: bi-api-key-abc123
                   provider: BATTERY_INCLUDED
                   apiUrl: https://api-next.batteryincluded.io
+              Create Battery Included configuration without customer segments:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  enrichments:
+                    - AVAILABILITY
+                    - PRICE
         description: ''
       responses:
         '201':
@@ -118,6 +130,9 @@ paths:
                       includedMixinPaths:
                         - "*_siteAware.*.OnlineIsService_P"
                         - "*_siteAware.**"
+                      enrichments:
+                        - AVAILABILITY
+                        - PRICE
               schema:
                 type: array
                 items:
@@ -166,6 +181,9 @@ paths:
                     includedMixinPaths:
                       - "*_siteAware.*.OnlineIsService_P"
                       - "*_siteAware.**"
+                    enrichments:
+                      - AVAILABILITY
+                      - PRICE
               schema:
                 $ref: '#/components/schemas/IndexConfiguration'
         '401':
@@ -190,6 +208,10 @@ paths:
         The request replaces the whole configuration. A request without `apiUrl` moves the tenant back to the
         default Battery Included host, so `writeKey` must be valid on that host. An `apiUrl` that is not an `https` address of an allowed
         Battery Included host, or an `apiUrl` sent for another provider, returns `400`.
+
+        A request without `enrichments` resets the tenant to the default set `AVAILABILITY`, `PRICE`, and
+        `CUSTOMER_SEGMENT`. An `enrichments` list with an unknown or `null` value returns `400`. An `enrichments`
+        field sent for another provider also returns `400`, even as an empty list.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -224,6 +246,15 @@ paths:
                   writeKey: bi-api-key-abc123
                   provider: BATTERY_INCLUDED
                   apiUrl: https://api-next.batteryincluded.io
+              Update Battery Included configuration without customer segments:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  enrichments:
+                    - AVAILABILITY
+                    - PRICE
       responses:
         '204':
           description: Configuration updated
@@ -703,6 +734,35 @@ components:
                 `includedMixinPaths` and `excludedMixinKeys` are mutually exclusive when
                 `includedMixinPaths` is non-empty. Malformed glob patterns are rejected with a
                 validation error on configuration writes.
+            enrichments:
+              type: array
+              items:
+                type: string
+                enum:
+                  - AVAILABILITY
+                  - PRICE
+                  - CUSTOMER_SEGMENT
+                  - FEE
+              description: >-
+                Optional list of the Emporix data dependencies that Battery Included product
+                indexing calls. Applies only to the `BATTERY_INCLUDED` provider. The Product,
+                Site Settings, and Configuration services are always called and are not listed.
+
+                `AVAILABILITY` adds availability data, `PRICE` adds prices, and
+                `CUSTOMER_SEGMENT` adds segment IDs to the site-specific data of the indexed
+                document. `FEE` calls the Fee Service, but fee data is not part of the Battery
+                Included document.
+
+                When this field is not set, the default set `AVAILABILITY`, `PRICE`, and
+                `CUSTOMER_SEGMENT` is used. An empty list means that no optional dependency is
+                called. Values are case sensitive. The stored list is returned as sent. When the
+                field is not set, the response does not contain it, and the default set applies.
+
+                A dependency that is not listed is not called for any site. Its condition counts
+                as met, so a site without prices or availability still contributes to the merged
+                document when `PRICE` or `AVAILABILITY` is not listed. Its data is not part of the indexed document or of
+                the `index.item-updated` webhook events. A change takes effect within 10 minutes.
+                For details, see [How to choose the data that Battery Included indexing uses](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-battery-included-indexing-uses).
           required:
             - provider
     IndexCreationResponse:
@@ -793,6 +853,16 @@ components:
                 code: 400
                 status: Bad Request
                 message: '''apiUrl'' applies to BATTERY_INCLUDED only'
+            Unknown enrichments value:
+              value:
+                code: 400
+                status: Bad Request
+                message: 'Invalid ''enrichments'': unknown value(s) [STOCK]; allowed: [AVAILABILITY, PRICE, CUSTOMER_SEGMENT, FEE]'
+            Enrichments for another provider:
+              value:
+                code: 400
+                status: Bad Request
+                message: '''enrichments'' applies to BATTERY_INCLUDED only'
     BadGateway_502:
       description: Upstream dependency was unavailable. Details will be provided in the response payload.
       content:

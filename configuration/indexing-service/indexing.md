@@ -116,6 +116,8 @@ For the `BATTERY_INCLUDED` provider, the same configuration endpoints also suppo
 - `excludedMixinKeys` - optional list of top-level mixin keys to exclude
 - `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
 
+The `BATTERY_INCLUDED` configuration also accepts `apiUrl` and `enrichments`. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url) and [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
+
 The `includedMixinPaths` option is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
 
 Supported glob syntax:
@@ -172,6 +174,10 @@ curl -L
 ```
 
 To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
+
+{% hint style="warning" %}
+The update request replaces the whole configuration. For `BATTERY_INCLUDED`, a request without `apiUrl` or `enrichments` resets these fields to their defaults. Send back every field from the response of the previous step. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url) and [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
+{% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -254,7 +260,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-Keep every field of the response for the next step, including `includedMixinPaths` or `excludedMixinKeys` when they are set.
+Keep every field of the response for the next step, including `includedMixinPaths`, `excludedMixinKeys`, or `enrichments` when they are set.
 {% endstep %}
 
 {% step %}
@@ -308,6 +314,120 @@ If the index on the new host does not yet hold all of the tenant's products, wai
 If you later update the configuration without `apiUrl`, the tenant goes back to the default Battery Included host, and the write key must be valid on the default host.
 {% endhint %}
 
+## How to choose the data that Battery Included indexing uses
+
+When the Indexing Service indexes a product for Battery Included, it always reads the product, the site settings, and the tenant configuration. It also calls other Emporix services for optional data in the search document, such as availability, prices, and customer segments. These services are the data dependencies of Battery Included indexing. If one of them is unavailable, indexing of the tenant's product updates can be delayed until it responds again. If your search does not use some of this data, you can stop calling those services. List the data dependencies to call in the `enrichments` field of the `BATTERY_INCLUDED` configuration.
+
+The following table shows what each `enrichments` value adds to the site-specific data in `_product_siteAware`, and what changes when the value is not in the list. For the structure of the document, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+
+| Value | What it adds to the Battery Included document | When the value is not listed |
+| --- | --- | --- |
+| `AVAILABILITY` | Availability per site | The Availability Service is not called. Availability does not decide whether a site contributes to the merged document. `index.item-updated` webhook events have no `availability`, `available`, or `popularity` values. |
+| `PRICE` | Prices per site, grouped by currency | The Price Service is not called. A site without prices still contributes to the merged document. `index.item-updated` webhook events have no `prices` values. |
+| `CUSTOMER_SEGMENT` | Segment IDs per site | The Customer Segment Service is not called. `index.item-updated` webhook events have no `segmentIds` values. |
+| `FEE` | No data, because fee data is not part of the Battery Included document | The Fee Service is not called. Battery Included search does not need `FEE`. |
+
+The following rules apply to the `enrichments` list:
+
+* When `enrichments` is not set, the Indexing Service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, and does not call the Fee Service. The configuration endpoints then do not return the field.
+* An empty list means that no data dependency is called.
+* Values are case sensitive. A list with an unknown or `null` value returns `400`, and the configuration is not stored.
+* The field applies only to `BATTERY_INCLUDED`. Sending it in an `ALGOLIA` configuration, even as an empty list, also returns `400`.
+* Algolia indexing and product reindex jobs with `rag` set to `true` ignore `enrichments` and always call every data dependency.
+
+For how a value that is not listed changes which sites contribute to the merged document, see [When a data dependency is not listed](#when-a-data-dependency-is-not-listed).
+
+{% hint style="warning" %}
+When you remove a value from the list, its data is removed from each product's Battery Included document the next time the product is updated or reindexed. A full product reindex removes it from all products at once. Search features that filter or sort by that data, for example by price, stop working for the affected products.
+
+Removing `PRICE` or `AVAILABILITY` can also add products to the index. Products that were left out because their default site had no prices or was unavailable are added after their next update or a reindex. Adding the value back removes those products again.
+{% endhint %}
+
+To choose the data when you create the configuration, add `enrichments` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
+
+### Prerequisites
+
+The following items are required before you change `enrichments`:
+
+* A `BATTERY_INCLUDED` configuration on a tenant that uses the `MERGE` strategy
+* The write key and index name of that configuration. The update request validates them again against the configured Battery Included host.
+* An OAuth2 service token with the `indexing.search_view` and `indexing.search_manage` scopes
+
+### Change the data on an existing configuration
+
+To change the data that Battery Included indexing uses, complete the following steps:
+
+{% stepper %}
+{% step %}
+#### Retrieve the current configuration
+
+The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/indexing/{tenant}/configurations/BATTERY_INCLUDED' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+Keep every field of the response for the next step, including `apiUrl`, `includedMixinPaths`, or `excludedMixinKeys` when they are set.
+{% endstep %}
+
+{% step %}
+#### Send the configuration with the `enrichments` list
+
+Send the whole configuration with `enrichments` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint. The following example keeps availability and prices, and stops calling the Customer Segment Service.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/indexing/{tenant}/configurations/BATTERY_INCLUDED' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": true,
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "BATTERY_INCLUDED",
+    "includedMixinPaths": [
+      "*_siteAware.*.OnlineIsService_P",
+      "*_siteAware.**"
+    ],
+    "enrichments": [
+      "AVAILABILITY",
+      "PRICE"
+    ]
+  }'
+```
+
+A successful request returns `204`. The [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint then returns the `enrichments` list as you sent it. The public configuration endpoints do not return it. See [How to retrieve public search configuration](#how-to-retrieve-public-search-configuration).
+
+If a value is not accepted, the response names the field:
+
+```json
+{
+  "code": 400,
+  "status": "Bad Request",
+  "message": "Invalid 'enrichments': unknown value(s) [STOCK]; allowed: [AVAILABILITY, PRICE, CUSTOMER_SEGMENT, FEE]"
+}
+```
+{% endstep %}
+
+{% step %}
+#### Apply the change to existing products
+
+A changed `enrichments` list takes effect within 10 minutes. After that, each product uses the new list the next time it is updated or reindexed.
+
+To apply the new list to all products at once, wait 10 minutes, and then start a full product reindex. See [How to reindex existing products](#how_to_reindex_existing_products).
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+If you later update the configuration without `enrichments`, the tenant goes back to the default list: `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`.
+{% endhint %}
+
 ## How Battery Included indexes products
 
 When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
@@ -338,6 +458,8 @@ For the `main` site, a product can still be indexed when it is unpublished, has 
 
 For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
 
+Missing prices affect these rules only while `PRICE` is in the tenant's `enrichments` list, and missing availability only while `AVAILABILITY` is in it. Both are in the default list. See [When a data dependency is not listed](#when-a-data-dependency-is-not-listed).
+
 ### When the default site is `main`
 
 When a tenant default site is `main`, the following applies:
@@ -353,6 +475,19 @@ When the matching tenant default site is not `main`, the following applies:
 - Base product fields come from that default site when it still contributes data.
 - If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
 - Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
+
+### When a data dependency is not listed
+
+When a value is not in the tenant's `enrichments` list, the Indexing Service does not call that data dependency for any site, including `main`. A missing price or missing availability then no longer stops a site from contributing to the merged document.
+
+The following applies when `PRICE` or `AVAILABILITY` is not listed:
+
+- Without `PRICE`, a site without prices still contributes to the merged document. A default site that is not `main` and has no prices does not remove the product from Battery Included.
+- Without `AVAILABILITY`, availability does not decide whether a site contributes to the merged document. A default site that is not `main` and is unavailable does not remove the product from Battery Included.
+
+These rules apply to product updates and to product reindexes. Other conditions still apply. For example, a site where the product is unpublished does not contribute to the merged document.
+
+The data of a value that is not listed is missing from `_product_siteAware` and from [`index.item-updated`](../../webhooks/events-index.md) webhook events. For the values and how to set them, see [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
 
 ### How site-aware mixins are indexed
 
