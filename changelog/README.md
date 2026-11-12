@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-You can now choose which Emporix services Battery Included product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the Battery Included document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events. Algolia indexing is not affected.
+You can now choose which Emporix services Battery Included product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the Battery Included document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events.
 
 For the values and the steps, see [How to choose the data that Battery Included indexing uses](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-battery-included-indexing-uses).
 

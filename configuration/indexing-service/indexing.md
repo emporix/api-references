@@ -332,8 +332,7 @@ The following rules apply to the `enrichments` list:
 * When `enrichments` is not set, the Indexing Service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, and does not call the Fee Service. The configuration endpoints then do not return the field.
 * An empty list means that no data dependency is called.
 * Values are case sensitive. A list with an unknown or `null` value returns `400`, and the configuration is not stored.
-* The field applies only to `BATTERY_INCLUDED`. Sending it in an `ALGOLIA` configuration, even as an empty list, also returns `400`.
-* Algolia indexing and product reindex jobs with `rag` set to `true` ignore `enrichments` and always call every data dependency.
+* The field applies only to `BATTERY_INCLUDED`. Sending it for another provider, even as an empty list, also returns `400`.
 
 For how a value that is not listed changes which sites contribute to the merged document, see [When a data dependency is not listed](#when-a-data-dependency-is-not-listed).
 
