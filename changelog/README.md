@@ -25,6 +25,31 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Indexing Service - data dependencies of Battery Included indexing
+
+#### Overview
+
+You can now choose which Emporix services Battery Included product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the Battery Included document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events.
+
+For the values and the steps, see [How to choose the data that Battery Included indexing uses](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-battery-included-indexing-uses).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. A request without `enrichments` moves the tenant back to the default list. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `enrichments` list. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `enrichments` list. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-12" tags="new-feature" %}
 
 ## Import Service - product variants
