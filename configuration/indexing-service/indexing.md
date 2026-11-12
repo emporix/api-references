@@ -12,7 +12,7 @@ layout:
 The Indexing service is designed to manage indexing configuration. Currently supported index providers:
 
 * [Algolia](https://www.algolia.com)
-* [Battery Included](https://www.batteryincluded.io)
+* [BatteryIncluded](https://www.batteryincluded.io)
 
 Proper indexing allows you to enhance your search mechanism within the Emporix system. By connecting an index provider to Commerce Engine, you get improved search functionality.
 
@@ -24,17 +24,17 @@ To learn more about the Indexing Service, see the [Indexing Service](./).
 
 Only one provider can be active at a time per tenant. This constraint is enforced by the configuration service.
 
-#### Battery Included limitations
+#### BatteryIncluded limitations
 
-Battery Included only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped. To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+BatteryIncluded only supports the `MERGE` site-aware fields strategy. Tenants configured with the `SPLIT` strategy will have BatteryIncluded indexing silently skipped. To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
 
 {% hint style="info" %}
-For details on how Battery Included builds product documents under `MERGE`, including behavior when the default site is or is not `main`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+For details on how BatteryIncluded builds product documents under `MERGE`, including behavior when the default site is or is not `main`, see [How BatteryIncluded indexes products](#how-batteryincluded-indexes-products).
 {% endhint %}
 
 #### Write-key validation
 
-When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` against the host in `apiUrl`, or against the default Battery Included host when `apiUrl` is not set, before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged. For details, see [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url).
+When you create or update a `BATTERY_INCLUDED` configuration, the indexing service validates `indexName` and `writeKey` against the host in `apiUrl`, or against the default BatteryIncluded host when `apiUrl` is not set, before saving. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. In both cases, the configuration is left unchanged. For details, see [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url).
 
 Starting a product reindex while `BATTERY_INCLUDED` is active runs the same check against stored credentials before a reindex job is created.
 
@@ -53,10 +53,10 @@ The Indexing service uses separate API keys for every tenant, so that you get mo
 
 You can choose between two indexing strategies for your search index configuration: `MERGE` and `SPLIT`. `MERGE` strategy creates a single index for all sites declared in the system, while `SPLIT` creates a separate index for each site.
 
-Battery Included supports only `MERGE`. If the strategy is `SPLIT`, Battery Included product indexing is skipped.
+BatteryIncluded supports only `MERGE`. If the strategy is `SPLIT`, BatteryIncluded product indexing is skipped.
 
 {% hint style="info" %}
-For details on how Battery Included indexes products under `MERGE`, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+For details on how BatteryIncluded indexes products under `MERGE`, see [How BatteryIncluded indexes products](#how-batteryincluded-indexes-products).
 {% endhint %}
 
 To choose the right mode for your index, send the request to the [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) endpoint. The request requires an OAuth2 service token with the `configuration.configuration_manage` scope.
@@ -116,7 +116,7 @@ For the `BATTERY_INCLUDED` provider, the same configuration endpoints also suppo
 - `excludedMixinKeys` - optional list of top-level mixin keys to exclude
 - `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
 
-The `BATTERY_INCLUDED` configuration also accepts `apiUrl` and `enrichments`. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url) and [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
+The `BATTERY_INCLUDED` configuration also accepts `apiUrl` and `enrichments`. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url) and [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
 
 The `includedMixinPaths` option is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
 
@@ -131,11 +131,11 @@ Matching is case sensitive and uses full-path matching. If a matched path points
 Behavior:
 
 - if `includedMixinPaths` is absent or an empty list (`[]`), allowlist filtering is inactive
-- if `includedMixinPaths` is non-empty, only matching mixin paths are sent to Battery Included
+- if `includedMixinPaths` is non-empty, only matching mixin paths are sent to BatteryIncluded
 - `includedMixinPaths` and `excludedMixinKeys` must not both be non-empty in the same request
 - malformed glob patterns are rejected with a `400` validation error on configuration writes
 
-Example of the Battery Included configuration:
+Example of the BatteryIncluded configuration:
 
 ```bash
 curl -L \
@@ -154,7 +154,7 @@ curl -L \
   }'
 ```
 
-If `writeKey` or `indexName` is wrong, the create request fails with `400` and nothing is stored. Fix the credentials in Battery Included and retry.
+If `writeKey` or `indexName` is wrong, the create request fails with `400` and nothing is stored. Fix the credentials in BatteryIncluded and retry.
 
 ## How to update the index configuration
 
@@ -176,7 +176,7 @@ curl -L
 To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
 
 {% hint style="warning" %}
-The update request replaces the whole configuration. For `BATTERY_INCLUDED`, a request without `apiUrl` or `enrichments` resets these fields to their defaults. Send back every field from the response of the previous step. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url) and [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
+The update request replaces the whole configuration. For `BATTERY_INCLUDED`, a request without `apiUrl` or `enrichments` resets these fields to their defaults. Send back every field from the response of the previous step. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url) and [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -200,18 +200,18 @@ curl -L
   }'
 ```
 
-For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing Battery Included mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`.
+For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing BatteryIncluded mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`.
 
 
 To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](indexing.md#how_to_reindex_existing_products) section.
 
-## How to set the Battery Included API URL
+## How to set the BatteryIncluded API URL
 
-The Indexing Service sends a tenant's product data to the default Battery Included host. If Battery Included set up your index on a different host, set that host as the API URL in the `apiUrl` field of the `BATTERY_INCLUDED` configuration. The Indexing Service then sends all of the tenant's Battery Included requests to that host, including product updates, deletions, and reindex uploads. If Battery Included did not give you a host, you don't need `apiUrl`.
+The Indexing Service sends a tenant's product data to the default BatteryIncluded host. If BatteryIncluded set up your index on a different host, set that host as the API URL in the `apiUrl` field of the `BATTERY_INCLUDED` configuration. The Indexing Service then sends all of the tenant's BatteryIncluded requests to that host, including product updates, deletions, and reindex uploads. If BatteryIncluded did not give you a host, you don't need `apiUrl`.
 
-The `apiUrl` value must be the `https` address of a Battery Included host that Emporix accepts, for example `https://api.batteryincluded.io` or `https://api-next.batteryincluded.io`, without a path, query, fragment, user information, or port. A trailing slash is allowed. The service rejects any other value with `400` and does not store the configuration. The `apiUrl` field applies only to `BATTERY_INCLUDED`. Sending it in an `ALGOLIA` configuration also returns `400`.
+The `apiUrl` value must be the `https` address of a BatteryIncluded host that Emporix accepts, for example `https://api.batteryincluded.io` or `https://api-next.batteryincluded.io`, without a path, query, fragment, user information, or port. A trailing slash is allowed. The service rejects any other value with `400` and does not store the configuration. The `apiUrl` field applies only to `BATTERY_INCLUDED`. Sending it in an `ALGOLIA` configuration also returns `400`.
 
-The host and the write key belong together. The service validates `writeKey` against the host in `apiUrl` before saving, so use the write key that Battery Included issued for that host. A write key that is not valid on that host returns `400` with the message `Battery Included credentials are invalid. Verify the write key and index name.`, and the stored configuration stays unchanged.
+The host and the write key belong together. The service validates `writeKey` against the host in `apiUrl` before saving, so use the write key that BatteryIncluded issued for that host. A write key that is not valid on that host returns `400` with the message `BatteryIncluded credentials are invalid. Verify the write key and index name.`, and the stored configuration stays unchanged.
 
 To set the API URL when you create the configuration, add `apiUrl` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
 
@@ -219,7 +219,7 @@ To set the API URL when you create the configuration, add `apiUrl` to the reques
 
 The following items are required before you change `apiUrl`:
 
-* The host of your index and a write key for that host, both provided by Battery Included
+* The host of your index and a write key for that host, both provided by BatteryIncluded
 * An OAuth2 service token with the `indexing.search_view` and `indexing.search_manage` scopes
 
 ### Set the API URL on an existing configuration
@@ -311,21 +311,21 @@ If the index on the new host does not yet hold all of the tenant's products, wai
 {% endstepper %}
 
 {% hint style="info" %}
-If you later update the configuration without `apiUrl`, the tenant goes back to the default Battery Included host, and the write key must be valid on the default host.
+If you later update the configuration without `apiUrl`, the tenant goes back to the default BatteryIncluded host, and the write key must be valid on the default host.
 {% endhint %}
 
-## How to choose the data that Battery Included indexing uses
+## How to choose the data that BatteryIncluded indexing uses
 
-When the Indexing Service indexes a product for Battery Included, it always reads the product, the site settings, and the tenant configuration. It also calls other Emporix services for optional data in the search document, such as availability, prices, and customer segments. These services are the data dependencies of Battery Included indexing. If one of them is unavailable, indexing of the tenant's product updates can be delayed until it responds again. If your search does not use some of this data, you can stop calling those services. List the data dependencies to call in the `enrichments` field of the `BATTERY_INCLUDED` configuration.
+When the Indexing Service indexes a product for BatteryIncluded, it always reads the product, the site settings, and the tenant configuration. It also calls other Emporix services for optional data in the search document, such as availability, prices, and customer segments. These services are the data dependencies of BatteryIncluded indexing. If one of them is unavailable, indexing of the tenant's product updates can be delayed until it responds again. If your search does not use some of this data, you can stop calling those services. List the data dependencies to call in the `enrichments` field of the `BATTERY_INCLUDED` configuration.
 
-The following table shows what each `enrichments` value adds to the site-specific data in `_product_siteAware`, and what changes when the value is not in the list. For the structure of the document, see [How Battery Included indexes products](#how-battery-included-indexes-products).
+The following table shows what each `enrichments` value adds to the site-specific data in `_product_siteAware`, and what changes when the value is not in the list. For the structure of the document, see [How BatteryIncluded indexes products](#how-batteryincluded-indexes-products).
 
-| Value | What it adds to the Battery Included document | When the value is not listed |
+| Value | What it adds to the BatteryIncluded document | When the value is not listed |
 | --- | --- | --- |
 | `AVAILABILITY` | Availability per site | The Availability Service is not called. Availability does not decide whether a site contributes to the merged document. `index.item-updated` webhook events have no `availability`, `available`, or `popularity` values. |
 | `PRICE` | Prices per site, grouped by currency | The Price Service is not called. A site without prices still contributes to the merged document. `index.item-updated` webhook events have no `prices` values. |
 | `CUSTOMER_SEGMENT` | Segment IDs per site | The Customer Segment Service is not called. `index.item-updated` webhook events have no `segmentIds` values. |
-| `FEE` | No data, because fee data is not part of the Battery Included document | The Fee Service is not called. Battery Included search does not need `FEE`. |
+| `FEE` | No data, because fee data is not part of the BatteryIncluded document | The Fee Service is not called. BatteryIncluded search does not need `FEE`. |
 
 The following rules apply to the `enrichments` list:
 
@@ -337,7 +337,7 @@ The following rules apply to the `enrichments` list:
 For how a value that is not listed changes which sites contribute to the merged document, see [When a data dependency is not listed](#when-a-data-dependency-is-not-listed).
 
 {% hint style="warning" %}
-When you remove a value from the list, its data is removed from each product's Battery Included document the next time the product is updated or reindexed. A full product reindex removes it from all products at once. Search features that filter or sort by that data, for example by price, stop working for the affected products.
+When you remove a value from the list, its data is removed from each product's BatteryIncluded document the next time the product is updated or reindexed. A full product reindex removes it from all products at once. Search features that filter or sort by that data, for example by price, stop working for the affected products.
 
 Removing `PRICE` or `AVAILABILITY` can also add products to the index. Products that were left out because their default site had no prices or was unavailable are added after their next update or a reindex. Adding the value back removes those products again.
 {% endhint %}
@@ -349,12 +349,12 @@ To choose the data when you create the configuration, add `enrichments` to the r
 The following items are required before you change `enrichments`:
 
 * A `BATTERY_INCLUDED` configuration on a tenant that uses the `MERGE` strategy
-* The write key and index name of that configuration. The update request validates them again against the configured Battery Included host.
+* The write key and index name of that configuration. The update request validates them again against the configured BatteryIncluded host.
 * An OAuth2 service token with the `indexing.search_view` and `indexing.search_manage` scopes
 
 ### Change the data on an existing configuration
 
-To change the data that Battery Included indexing uses, complete the following steps:
+To change the data that BatteryIncluded indexing uses, complete the following steps:
 
 {% stepper %}
 {% step %}
@@ -427,15 +427,15 @@ To apply the new list to all products at once, wait 10 minutes, and then start a
 If you later update the configuration without `enrichments`, the tenant goes back to the default list: `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`.
 {% endhint %}
 
-## How Battery Included indexes products
+## How BatteryIncluded indexes products
 
-When the tenant uses `MERGE`, the Indexing Service builds one Battery Included search document per product. Core product fields come from a single base site.
+When the tenant uses `MERGE`, the Indexing Service builds one BatteryIncluded search document per product. Core product fields come from a single base site.
 
-The Battery Included document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
+The BatteryIncluded document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
 Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
 even when that site has no prices.
 
-If your tenant uses `SPLIT`, Battery Included product indexing is skipped.
+If your tenant uses `SPLIT`, BatteryIncluded product indexing is skipped.
 
 {% hint style="info" %}
 To set the strategy, see [How to choose indexing strategy](#how-to-choose-indexing-strategy).
@@ -455,7 +455,7 @@ The merged document is stored under site code `main`, which is how `MERGE` keeps
 
 For the `main` site, a product can still be indexed when it is unpublished, has no prices, or is unavailable.
 
-For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from Battery Included.
+For any other site, those conditions mean that site does not contribute prices, availability, or segment IDs to the merged document. If the chosen base site is such a site, the product is removed from BatteryIncluded.
 
 Missing prices affect these rules only while `PRICE` is in the tenant's `enrichments` list, and missing availability only while `AVAILABILITY` is in it. Both are in the default list. See [When a data dependency is not listed](#when-a-data-dependency-is-not-listed).
 
@@ -464,7 +464,7 @@ Missing prices affect these rules only while `PRICE` is in the tenant's `enrichm
 When a tenant default site is `main`, the following applies:
 
 - Base product fields come from `main`.
-- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from Battery Included.
+- The `main` site rules above apply to the base site, so unpublished, no-price, or unavailable status on that default site does not by itself remove the product from BatteryIncluded.
 - Sites that still contribute data write their prices, availability, and segment IDs to `_product_siteAware`.
 
 ### When the default site is not `main`
@@ -472,7 +472,7 @@ When a tenant default site is `main`, the following applies:
 When the matching tenant default site is not `main`, the following applies:
 
 - Base product fields come from that default site when it still contributes data.
-- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from Battery Included.
+- If that default site would not index the product (for example because it is unpublished, has no price, or is unavailable), the product is removed from BatteryIncluded.
 - Otherwise, `_product_siteAware` still includes every site that contributed prices, availability, or segment IDs.
 
 ### When a data dependency is not listed
@@ -481,17 +481,17 @@ When a value is not in the tenant's `enrichments` list, the Indexing Service doe
 
 The following applies when `PRICE` or `AVAILABILITY` is not listed:
 
-- Without `PRICE`, a site without prices still contributes to the merged document. A default site that is not `main` and has no prices does not remove the product from Battery Included.
-- Without `AVAILABILITY`, availability does not decide whether a site contributes to the merged document. A default site that is not `main` and is unavailable does not remove the product from Battery Included.
+- Without `PRICE`, a site without prices still contributes to the merged document. A default site that is not `main` and has no prices does not remove the product from BatteryIncluded.
+- Without `AVAILABILITY`, availability does not decide whether a site contributes to the merged document. A default site that is not `main` and is unavailable does not remove the product from BatteryIncluded.
 
 These rules apply to product updates and to product reindexes. Other conditions still apply. For example, a site where the product is unpublished does not contribute to the merged document.
 
-The data of a value that is not listed is missing from `_product_siteAware` and from [`index.item-updated`](../../webhooks/events-index.md) webhook events. For the values and how to set them, see [How to choose the data that Battery Included indexing uses](#how-to-choose-the-data-that-battery-included-indexing-uses).
+The data of a value that is not listed is missing from `_product_siteAware` and from [`index.item-updated`](../../webhooks/events-index.md) webhook events. For the values and how to set them, see [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
 
 ### How site-aware mixins are indexed
 
 The Indexing Service recognizes a mixin as site-aware when the source product contains an overlay key in the form
-`{mixin}__{site}`. This key convention controls Battery Included indexing even if the mixin schema is not marked as site-aware.
+`{mixin}__{site}`. This key convention controls BatteryIncluded indexing even if the mixin schema is not marked as site-aware.
 However, mark the schema with `siteAware: true` so that the product follows the standard
 [site-aware mixin](../../standard-practices/mixins.md#site-aware-mixins) model. Declare only the base mixin under `metadata.mixins`.
 If no schema URL is declared or the schema lookup fails, the merged mixin stays under
@@ -698,13 +698,13 @@ without a full reindex, both shapes can coexist indefinitely. Keep the fallback 
 {% step %}
 #### Remove fallbacks after a full reindex
 
-If you run a full reindex, wait until it reports `SUCCESS`, then allow Battery Included time to apply the transaction cleanup.
+If you run a full reindex, wait until it reports `SUCCESS`, then allow BatteryIncluded time to apply the transaction cleanup.
 Verify through your search integration that reindexed documents contain the `_product_siteAware` paths. Remove the old-path
 fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
 {% endstep %}
 {% endstepper %}
 
-To rebuild the Battery Included index after configuration changes, see [How to reindex existing products](#how_to_reindex_existing_products).
+To rebuild the BatteryIncluded index after configuration changes, see [How to reindex existing products](#how_to_reindex_existing_products).
 
 ## How to reindex existing products <a href="#how_to_reindex_existing_products" id="how_to_reindex_existing_products"></a>
 
@@ -728,23 +728,23 @@ curl -i -X POST \
   }'
 ```
 
-A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`. For Battery Included product reindexes, see [How Battery Included reindexing works](#how-battery-included-reindexing-works).
+A successful response returns a reindex job, including its `id`. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint. The job runs in full mode for the selected `entityType`. For BatteryIncluded product reindexes, see [How BatteryIncluded reindexing works](#how-batteryincluded-reindexing-works).
 
-### How Battery Included reindexing works
+### How BatteryIncluded reindexing works
 
-When a product reindex job is created for `BATTERY_INCLUDED`, the Indexing Service uploads documents to Battery Included and cleans up the index after commit.
+When a product reindex job is created for `BATTERY_INCLUDED`, the Indexing Service uploads documents to BatteryIncluded and cleans up the index after commit.
 
-Each upload and the final commit go to the Battery Included host that is configured for the tenant when that upload or commit is sent, with the write key from the same configuration. To avoid splitting a reindex across two hosts, don't change `apiUrl` while a reindex is running. See [How to set the Battery Included API URL](#how-to-set-the-battery-included-api-url).
+Each upload and the final commit go to the BatteryIncluded host that is configured for the tenant when that upload or commit is sent, with the write key from the same configuration. To avoid splitting a reindex across two hosts, don't change `apiUrl` while a reindex is running. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url).
 
 When the active provider is `BATTERY_INCLUDED`, a full product reindex does not empty the index at the start. Existing documents stay searchable while the Indexing Service uploads the new set. Emporix completes the upload and runs cleanup for you. You can track progress with the [Retrieving a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#get-indexing-tenant-reindex-jobs-reindexjobid) endpoint.
 
-Use `processedCount` to see how many entities Emporix has already processed. When the count is close to `expectedCount`, Emporix has sent the remaining documents to Battery Included; allow a short time for Battery Included to finish applying them.
+Use `processedCount` to see how many entities Emporix has already processed. When the count is close to `expectedCount`, Emporix has sent the remaining documents to BatteryIncluded; allow a short time for BatteryIncluded to finish applying them.
 
 While a reindex job is `IN_PROGRESS`, live product updates are not written to the index immediately. They are queued and applied after the reindex completes.
 
-Each reindex job has an `id`, and that value is sent to Battery Included as `transactionId` on every document that belongs to the job. Eligible products are uploaded with this label. If a matching document is already in the index, it is updated in place in the same way as during normal incremental indexing, and labeled with the current `transactionId`. Products that are not eligible for reindexing are not sent. Eligibility follows the same Battery Included indexing rules as day-to-day updates; see [How Battery Included indexes products](#how-battery-included-indexes-products).
+Each reindex job has an `id`, and that value is sent to BatteryIncluded as `transactionId` on every document that belongs to the job. Eligible products are uploaded with this label. If a matching document is already in the index, it is updated in place in the same way as during normal incremental indexing, and labeled with the current `transactionId`. Products that are not eligible for reindexing are not sent. Eligibility follows the same BatteryIncluded indexing rules as day-to-day updates; see [How BatteryIncluded indexes products](#how-batteryincluded-indexes-products).
 
-When every document intended for the job has been sent, the upload is committed. A job status of `SUCCESS` means the reindex transaction was committed. After commit, Battery Included removes documents that were not sent with this `transactionId`, so the index should not retain documents that were not part of the job. The cleanup applies only to the Battery Included search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the documents labeled with that `transactionId`.
+When every document intended for the job has been sent, the upload is committed. A job status of `SUCCESS` means the reindex transaction was committed. After commit, BatteryIncluded removes documents that were not sent with this `transactionId`, so the index should not retain documents that were not part of the job. The cleanup applies only to the BatteryIncluded search index for the tenant and this reindex transaction; it does not delete products in Emporix. Until commit and cleanup are finished, search can still return documents that the current job has not replaced. After cleanup, the index matches the documents labeled with that `transactionId`.
 
 ```mermaid
 ---
@@ -772,7 +772,7 @@ flowchart LR
     ND["ndjson documents<br/>transactionId = X"]
   end
 
-  subgraph BI["Battery Included index"]
+  subgraph BI["BatteryIncluded index"]
     direction TB
     KEEP["Existing documents<br/>stay searchable"]
     LABELED["Docs labeled with X<br/>updated in place"]
@@ -803,7 +803,7 @@ flowchart LR
 ```
 
 {% hint style="warning" %}
-For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return `Battery Included credentials are invalid. Verify the write key and index name.` No reindex job is created. Update the configuration first, then retry. If Battery Included is temporarily unreachable, the request returns `502` with `Battery Included credential validation is temporarily unavailable. Try again later.`
+For `BATTERY_INCLUDED` product reindexes, invalid stored credentials return `BatteryIncluded credentials are invalid. Verify the write key and index name.` No reindex job is created. Update the configuration first, then retry. If BatteryIncluded is temporarily unreachable, the request returns `502` with `BatteryIncluded credential validation is temporarily unavailable. Try again later.`
 {% endhint %}
 
 ## How to retrieve public search configuration
