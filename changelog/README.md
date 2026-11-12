@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - provenance on generative responses
+
+#### Overview
+
+Generative responses now carry a provenance mixin so a client can tell a person the text was produced by AI. Chat, stream, texts, and completions return the mixin on the response and do not store it. A successful agent-chat job stores the mixin with the reply. It is not stored on the session or another entity.
+
+The mixin is on:
+
+* `POST /ai-service/{tenant}/agentic/chat` when the agent produces a reply
+* the `done` event of `POST /ai-service/{tenant}/agentic/chat-stream` when the agent produces a reply
+* `GET /ai-service/{tenant}/jobs/{id}`, the job list, and job search, for an agent-chat job that succeeded with an assistant reply
+* `POST /ai-service/{tenant}/texts` and `POST /ai-service/{tenant}/completions` when generation succeeds
+
+`POST /ai-service/{tenant}/agentic/chat-async` is still only a job id. Failed and skipped jobs, and a chat or stream that fails before a reply, do not include the mixin.
+
+`generationId` on chat, the stream, and a successful job is the agent request log `requestId`. Texts and completions have no agent request log, so `generationId` is a new id for that response. For those two calls, `generator` and `model` are the configured model name. `generatorVersion` is omitted.
+
+A client that shows the generated text to a person must also show that the content is AI-generated.
+
+{% endupdate %}
+
 {% update date="2026-11-12" tags="new-feature" %}
 
 ## Import Service - product variants

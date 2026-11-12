@@ -4119,7 +4119,17 @@ components:
           type: string
           description: Commerce event which triggered the job.
         metadata:
-          $ref: '#/components/schemas/MetadataResponse'
+          allOf:
+            - $ref: '#/components/schemas/MetadataResponse'
+            - type: object
+              description: On a successful agent-chat job with an assistant reply, `mixins.provenance` is the provenance schema URL. It is stored with the job when the job succeeds.
+              properties:
+                mixins:
+                  type: object
+                  additionalProperties:
+                    type: string
+        mixins:
+          $ref: '#/components/schemas/ProvenanceMixins'
     ImportResult:
       type: object
       properties:
@@ -4215,7 +4225,65 @@ components:
           description: Unique identifier of the session. Send this value back as the `session-id` header on later chat and attachment calls.
         message:
           type: string
-          description: Agent message.
+          description: Agent message. When this field is shown to a person, the client must also show that the content is AI-generated. The provenance mixin is the signal.
+        mixins:
+          $ref: '#/components/schemas/ProvenanceMixins'
+        metadata:
+          $ref: '#/components/schemas/ProvenanceMetadata'
+    ProvenanceMixins:
+      type: object
+      description: |-
+        Present when the response contains generated text. Chat, stream, texts, and completions do not store it. A successful agent-chat job stores it with the reply. `aiGeneratedFields` is omitted.
+        A client that shows the generated text to a person must also show that the content is AI-generated.
+      properties:
+        provenance:
+          type: object
+          properties:
+            provenance:
+              type: array
+              items:
+                type: object
+                required:
+                  - origin
+                  - contentVersion
+                  - generationId
+                  - generatedAt
+                  - generator
+                  - model
+                  - reviewStatus
+                properties:
+                  origin:
+                    type: string
+                    enum: [ai_generated]
+                  contentVersion:
+                    type: integer
+                  generationId:
+                    type: string
+                    description: For chat, stream, and a successful agent-chat job this is the agent request log `requestId`. Texts and completions use a new id for that response.
+                  generatedAt:
+                    type: string
+                    format: date-time
+                  generator:
+                    type: string
+                    description: Agent id for chat and jobs. Configured model name for texts and completions.
+                  generatorVersion:
+                    type: integer
+                    description: Agent version for chat and jobs. Omitted for texts and completions.
+                  model:
+                    type: string
+                  reviewStatus:
+                    type: string
+                    enum: [not_reviewed]
+    ProvenanceMetadata:
+      type: object
+      description: Schema URLs for response mixins. Chat, texts, completions, and the stream `done` event send only this map.
+      properties:
+        mixins:
+          type: object
+          additionalProperties:
+            type: string
+          example:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
@@ -4305,6 +4373,10 @@ components:
         session_id:
           type: string
           description: Unique identifier of the session. Send this value as the `session-id` header on later chat and attachment calls. Snake_case equivalent of `ChatResponse.sessionId`.
+        mixins:
+          $ref: '#/components/schemas/ProvenanceMixins'
+        metadata:
+          $ref: '#/components/schemas/ProvenanceMetadata'
     ChatStreamErrorData:
       title: Error event data
       type: object
@@ -4458,7 +4530,11 @@ components:
           description: 'Identifier of the text generation request. The value is populated only if the ID was provided in the request. '
         result:
           type: string
-          description: Text generation result.
+          description: Text generation result. When this field is shown to a person, the client must also show that the content is AI-generated.
+        mixins:
+          $ref: '#/components/schemas/ProvenanceMixins'
+        metadata:
+          $ref: '#/components/schemas/ProvenanceMetadata'
     CompletionRequest:
       title: CompletionRequest
       type: object
