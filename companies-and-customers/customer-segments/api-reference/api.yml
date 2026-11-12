@@ -1591,9 +1591,8 @@ components:
               type: string
               description: |
                 Determines whether the item is included in the customer segment or excluded from it. Possible values are `INCLUDE` and `EXCLUDE`.
-                When `mode` is omitted on create or update, the assignment is stored as `INCLUDE`. An assignment with no stored `mode` is returned as `INCLUDE`.
+                When `mode` is omitted on create or update, the assignment is stored as `INCLUDE`.
                 `EXCLUDE` is supported for products only. A category assignment with `mode` set to `EXCLUDE` is rejected.
-                A product with `EXCLUDE` does not match the segment in `POST /customer-segment/{tenant}/segments/match`, even when a category of the same segment contains the product.
               enum:
                 - INCLUDE
                 - EXCLUDE
@@ -1649,7 +1648,6 @@ components:
               type: string
               description: |
                 Assignment mode returned for every item assignment. Possible values are `INCLUDE` and `EXCLUDE`.
-                An assignment with no stored `mode` is returned as `INCLUDE`.
               enum:
                 - INCLUDE
                 - EXCLUDE
