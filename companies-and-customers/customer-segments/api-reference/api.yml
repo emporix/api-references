@@ -488,6 +488,8 @@ paths:
         
 
         Checks if the provided items match specified criteria - if ids of the products are assigned directly to one of the provided segments or indirectly through the category assignment. Only items assigned to the active segments will be returned.
+
+        A product assigned to a segment with `mode` set to `EXCLUDE` does not match that segment, even when a category of the same segment contains the product. The product is still returned when another requested segment includes it.
       security:
         - OAuth2:
             - customersegment.segment_manage
@@ -1266,6 +1268,8 @@ paths:
             - customersegment.segment_manage
       requestBody:
         required: false
+        description: |
+          Optional assignment payload. When the body is omitted, the assignment is stored with `mode` set to `INCLUDE`.
         content:
           application/json:
             schema:
@@ -1589,6 +1593,7 @@ components:
                 Determines whether the item is included in the customer segment or excluded from it. Possible values are `INCLUDE` and `EXCLUDE`.
                 When `mode` is omitted on create or update, the assignment is stored as `INCLUDE`. An assignment with no stored `mode` is returned as `INCLUDE`.
                 `EXCLUDE` is supported for products only. A category assignment with `mode` set to `EXCLUDE` is rejected.
+                A product with `EXCLUDE` does not match the segment in `POST /customer-segment/{tenant}/segments/match`, even when a category of the same segment contains the product.
               enum:
                 - INCLUDE
                 - EXCLUDE
@@ -1637,7 +1642,17 @@ components:
                 - CATEGORY
         - $ref: '#/components/schemas/ItemAssignmentUpsert'
         - type: object
+          required:
+            - mode
           properties:
+            mode:
+              type: string
+              description: |
+                Assignment mode returned for every item assignment. Possible values are `INCLUDE` and `EXCLUDE`.
+                An assignment with no stored `mode` is returned as `INCLUDE`.
+              enum:
+                - INCLUDE
+                - EXCLUDE
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
     CategoryTreeResponse:
