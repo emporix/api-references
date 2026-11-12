@@ -844,8 +844,7 @@ components:
               name:
                 allOf:
                   - $ref: '#/components/schemas/localizedValue'
-                  - type: object
-                    description: Fee name.
+                description: Fee name.
               yrn:
                 type: string
                 description: Unique identifier of the fee.
