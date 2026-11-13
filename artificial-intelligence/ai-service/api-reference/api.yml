@@ -254,7 +254,7 @@ paths:
                       createdAt: '2025-07-25T10:30:27.167Z'
                       modifiedAt: '2025-07-25T10:31:14.509Z'
                       mixins:
-                        provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
+                        provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
 
         '401':
           $ref: '#/components/responses/401_resp_common'
@@ -326,7 +326,7 @@ paths:
                               reviewStatus: not_reviewed
                       metadata:
                         mixins:
-                          provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
+                          provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -396,7 +396,7 @@ paths:
                     data: {"content":"delivery is available for order EON1243."}
 
                     event: done
-                    data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"}}}
+                    data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json"}}}
                 ToolActivity:
                   summary: Tool start, result, and end around a token delta
                   value: |-
@@ -413,7 +413,7 @@ paths:
                     data: {"content":"Quote Q1 is available."}
 
                     event: done
-                    data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"}}}
+                    data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json"}}}
                 StreamError:
                   summary: In-stream error before completion
                   value: |-
@@ -4326,7 +4326,7 @@ components:
           additionalProperties:
             type: string
           example:
-            provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
@@ -5150,7 +5150,7 @@ components:
                         reviewStatus: not_reviewed
                 metadata:
                   mixins:
-                    provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
+                    provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     200_resp_GET_jobs:
       description: List of available jobs.
       headers:
@@ -5208,7 +5208,7 @@ components:
                     createdAt: '2025-07-25T10:30:27.167Z'
                     modifiedAt: '2025-07-25T10:31:14.509Z'
                     mixins:
-                      provenance: https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json
+                      provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     200_resp_GET_agent_requests:
       description: List of agent requests.
       headers:
