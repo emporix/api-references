@@ -4258,7 +4258,7 @@ components:
           description: Unique identifier of the session. Send this value back as the `session-id` header on later chat and attachment calls.
         message:
           type: string
-          description: Agent message. When this field is shown to a person, the client must also show that the content is AI-generated. The provenance mixin is the signal.
+          description: Agent message.
         mixins:
           $ref: '#/components/schemas/ProvenanceMixins'
         metadata:
@@ -4309,7 +4309,6 @@ components:
                 description: AI model used to generate the content, when available.
               reviewStatus:
                 type: string
-                enum: [not_reviewed]
                 description: Review state of the generated content.
     ProvenanceMetadata:
       type: object
@@ -4567,7 +4566,7 @@ components:
           description: 'Identifier of the text generation request. The value is populated only if the ID was provided in the request. '
         result:
           type: string
-          description: Text generation result. When this field is shown to a person, the client must also show that the content is AI-generated.
+          description: Text generation result.
         mixins:
           $ref: '#/components/schemas/ProvenanceMixins'
         metadata:
