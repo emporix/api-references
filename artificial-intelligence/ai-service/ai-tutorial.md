@@ -796,18 +796,20 @@ Choose the chat endpoint based on how you want to receive the agent's response:
       }",
       "sessionId": "33a550d0-d812-4fb2-bb0d-d50dbfe3627b",
       "mixins": {
-          "provenance": [
-              {
-                  "origin": "ai_generated",
-                  "contentVersion": 1,
-                  "generationId": "req-1",
-                  "generatedAt": "2026-11-12T09:00:00Z",
-                  "generator": "de-agent",
-                  "generatorVersion": 1,
-                  "model": "gpt-4o-mini",
-                  "reviewStatus": "not_reviewed"
-              }
-          ]
+          "provenance": {
+              "entries": [
+                  {
+                      "origin": "ai_generated",
+                      "contentVersion": 1,
+                      "generationId": "req-1",
+                      "generatedAt": "2026-11-12T09:00:00Z",
+                      "generator": "de-agent",
+                      "generatorVersion": 1,
+                      "model": "gpt-4o-mini",
+                      "reviewStatus": "not_reviewed"
+                  }
+              ]
+          }
       },
       "metadata": {
           "mixins": {
@@ -817,7 +819,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   }
   ```
 
-  Clients that show this reply to a person use `mixins.provenance` to disclose that the content is AI-generated.
+  Clients that show this reply to a person use `mixins.provenance.entries` to disclose that the content is AI-generated.
 
   Save `sessionId` and send it as the `session-id` header when you need conversational continuity. See [How to reuse session memory in agent chat](#how-to-reuse-session-memory-in-agent-chat).
 
@@ -862,10 +864,10 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   data: {"content":"delivery is available for order EON1243."}
 
   event: done
-  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"}}}
+  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"}}}
   ```
 
-  Clients that show this reply to a person use `mixins.provenance` to disclose that the content is AI-generated.
+  Clients that show this reply to a person use `mixins.provenance.entries` to disclose that the content is AI-generated.
 
   In this example, the user-facing reply is `Standard delivery is available for order EON1243.` The `thinking` event is optional reasoning and is not part of that reply unless the client displays it. An in-stream failure arrives as `event: error` with `message` and/or `code` in `data`, for example `{"code":"AGENT_SETUP","message":"Agent setup failed"}`. HTTP `400`, `401`, `403`, and `500` remain JSON problem bodies when the request is rejected before the stream starts.
 
