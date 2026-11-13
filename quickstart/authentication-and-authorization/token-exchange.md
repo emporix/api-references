@@ -163,8 +163,8 @@ Provide the following information to use **online verification**:
 * `token_client_id` - Optional. Used to validate the `azp` (Authorized Party) claim. It recognizes if the token has been issued for the specific client, especially when a token has multiple potential recipients. For example, `my-backend-service`.
 * `audience` - Optional. Used to validate the `aud` claim. It recognizes the dedicated recipient of the token, such as a system, API or a service that accepts the token. For example, `https://your-api-url.some-domain.io`, `product-service`, `commerce-system`. It secures the token authorized usage.
 * `issuer` - Optional. Used to validate the `iss` claim. It represents the authentication server that issued the token. 
-* `storefront_client_id` - Optional. Your storefront Client ID credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
-* `storefront_client_secret` - Optional. Your storefront Client Secret credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/getting-started/developer-portal/manage-apikeys).
+* `storefront_client_id` - Optional. Your storefront Client ID credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/6GTRpjfleJymwcc6AX3v/getting-started/developer-portal/manage-apikeys).
+* `storefront_client_secret` - Optional. Your storefront Client Secret credential, can be checked in the [Developer Portal](https://app.gitbook.com/s/6GTRpjfleJymwcc6AX3v/getting-started/developer-portal/manage-apikeys).
 
 {% hint style="warning" %}
 The `token_client_id`, `audience`, and `issuer` fields are optional but recommended. When provided, Emporix validates their conformity; if not, the validation for these fields is skipped. For security reasons, Emporix recommends to always provide these parameters.
