@@ -813,7 +813,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
       },
       "metadata": {
           "mixins": {
-              "provenance": "https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"
+              "provenance": "https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json"
           }
       }
   }
@@ -864,7 +864,7 @@ Choose the chat endpoint based on how you want to receive the agent's response:
   data: {"content":"delivery is available for order EON1243."}
 
   event: done
-  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/v1794474500/provenance_lswyqe.json"}}}
+  data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b","mixins":{"provenance":{"entries":[{"origin":"ai_generated","contentVersion":1,"generationId":"req-1","generatedAt":"2026-11-12T09:00:00Z","generator":"generic-agent","generatorVersion":1,"model":"gpt-4o-mini","reviewStatus":"not_reviewed"}]}},"metadata":{"mixins":{"provenance":"https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json"}}}
   ```
 
   Clients that show this reply to a person use `mixins.provenance.entries` to disclose that the content is AI-generated.
