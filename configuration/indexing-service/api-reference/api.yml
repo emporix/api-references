@@ -30,6 +30,9 @@ paths:
 
         `enrichments` applies only to `BATTERY_INCLUDED`. An `enrichments` list with an unknown or `null` value
         returns `400`. An `enrichments` field sent for another provider also returns `400`, even as an empty list.
+
+        `siteAwareMixinsStrategy` applies only to `BATTERY_INCLUDED`. A value other than `FAN_OUT` or `INHERITANCE`
+        returns `400`. A `siteAwareMixinsStrategy` field sent for another provider also returns `400`.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -74,6 +77,13 @@ paths:
                   enrichments:
                     - AVAILABILITY
                     - PRICE
+              Create BatteryIncluded configuration with inherited site-aware mixins:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  siteAwareMixinsStrategy: INHERITANCE
         description: ''
       responses:
         '201':
@@ -133,6 +143,7 @@ paths:
                       enrichments:
                         - AVAILABILITY
                         - PRICE
+                      siteAwareMixinsStrategy: INHERITANCE
               schema:
                 type: array
                 items:
@@ -184,6 +195,7 @@ paths:
                     enrichments:
                       - AVAILABILITY
                       - PRICE
+                    siteAwareMixinsStrategy: INHERITANCE
               schema:
                 $ref: '#/components/schemas/IndexConfiguration'
         '401':
@@ -212,6 +224,10 @@ paths:
         A request without `enrichments` resets the tenant to the default set `AVAILABILITY`, `PRICE`, and
         `CUSTOMER_SEGMENT`. An `enrichments` list with an unknown or `null` value returns `400`. An `enrichments`
         field sent for another provider also returns `400`, even as an empty list.
+
+        A request without `siteAwareMixinsStrategy` resets the tenant to the default `FAN_OUT`. A value other than
+        `FAN_OUT` or `INHERITANCE` returns `400`. A `siteAwareMixinsStrategy` field sent for another provider also
+        returns `400`.
       security:
         - OAuth2:
             - indexing.search_manage
@@ -255,6 +271,13 @@ paths:
                   enrichments:
                     - AVAILABILITY
                     - PRICE
+              Update BatteryIncluded configuration with inherited site-aware mixins:
+                value:
+                  active: true
+                  indexName: exampleTenant
+                  writeKey: bi-api-key-abc123
+                  provider: BATTERY_INCLUDED
+                  siteAwareMixinsStrategy: INHERITANCE
       responses:
         '204':
           description: Configuration updated
@@ -763,6 +786,40 @@ components:
                 document when `PRICE` or `AVAILABILITY` is not listed. Its data is not part of the indexed document or of
                 the `index.item-updated` webhook events. A change takes effect within 10 minutes.
                 For details, see [How to choose the data that BatteryIncluded indexing uses](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+            siteAwareMixinsStrategy:
+              type: string
+              enum:
+                - FAN_OUT
+                - INHERITANCE
+              description: >-
+                Optional strategy that defines where BatteryIncluded product indexing writes
+                site-aware mixins. Applies only to the `BATTERY_INCLUDED` provider. A mixin is
+                site-aware when the product has a `{mixin}__{site}` overlay for it, or when the
+                schema file that the product references in `metadata.mixins` has
+                `siteAware: true` at its root.
+
+                `FAN_OUT` merges the base mixin with the site's overlay for every site that
+                contributes to the merged document and every other site with an
+                `_product_siteAware` entry, and writes the result to
+                `_product_siteAware.<site>.mixins` and
+                `_product_siteAware.<site>.localeAware.<language>.mixins`. A site without an
+                overlay receives the base mixin. Neither the base mixin nor its overlays are
+                written to `_product.mixins` or `_product_i18n.<language>.mixins`.
+
+                `INHERITANCE` keeps the base mixin in `_product.mixins` and
+                `_product_i18n.<language>.mixins`, and writes the merged value to
+                `_product_siteAware.<site>.mixins` and
+                `_product_siteAware.<site>.localeAware.<language>.mixins` only for sites that
+                have an overlay.
+
+                Overlay keys in the form `{mixin}__{site}` are not written to the document.
+
+                When this field is not set, `FAN_OUT` is used. Values are case sensitive. The
+                stored value is returned as sent. When the field is not set, the response does
+                not contain it. A change takes effect within 10 minutes and applies to each
+                product the next time it is updated or reindexed. To apply it to all products,
+                start a full product reindex after the change takes effect.
+                For details, see [How to choose how site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-how-site-aware-mixins-are-indexed).
           required:
             - provider
     IndexCreationResponse:

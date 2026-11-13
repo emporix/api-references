@@ -25,6 +25,47 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature, major-change" %}
+
+## Indexing and Schema Services - site-aware mixin strategy for BatteryIncluded
+
+#### Overview
+
+You can now choose where BatteryIncluded product indexing writes site-aware mixins. The `BATTERY_INCLUDED` configuration accepts an optional `siteAwareMixinsStrategy` field with the values `FAN_OUT` and `INHERITANCE`:
+
+* `FAN_OUT` (default) – every site that contributes to the merged document, and every other site with an `_product_siteAware` entry, receives the mixin in `_product_siteAware.<site>`. A site with an overlay receives the base value merged with its overlay, and a site without one receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
+* `INHERITANCE` – the base mixin stays in `_product.mixins` and `_product_i18n.<language>.mixins`. Only sites with a `{mixin}__{site}` overlay receive the merged mixin under `_product_siteAware.<site>`.
+
+A mixin is now site-aware when the product has an overlay for it, or when the schema version that the product references in `metadata.mixins` has `siteAware: true`. Schema Service writes the root `siteAware` value into the schema file it generates for each new schema version. Schema files generated before this change do not contain it, so those schema versions count as not site-aware. To apply the flag of an existing schema, update the schema to generate a new version, and point the products' `metadata.mixins` entry to the URL of that version.
+
+{% hint style="warning" %}
+Tenants whose `BATTERY_INCLUDED` configuration has no `siteAwareMixinsStrategy` use `FAN_OUT`. The next time a product is updated or reindexed, its BatteryIncluded document can change in two ways:
+
+* Sites that contribute to the merged document but have no prices, availability, or segment IDs now receive the product's site-aware mixins.
+* Mixins whose referenced schema version has `siteAware: true` and that have no overlay move from `_product.mixins` and `_product_i18n.<language>.mixins` to `_product_siteAware`.
+
+Search integrations that read these mixins from `_product` must read them from `_product_siteAware`, or switch the tenant to `INHERITANCE`, which keeps base values in `_product`.
+{% endhint %}
+
+For the strategies and the steps, see [How to choose how site-aware mixins are indexed](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-how-site-aware-mixins-are-indexed).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. A request without the field moves the tenant back to `FAN_OUT`. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Writes the schema's `siteAware` value at the root of the generated schema file. The request and response bodies do not change. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Writes the `siteAware` value of the new version at the root of the generated schema file. The request and response bodies do not change. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-13" tags="improvement" %}
 
 ## AI Service - provenance on generative responses

@@ -116,7 +116,7 @@ For the `BATTERY_INCLUDED` provider, the same configuration endpoints also suppo
 - `excludedMixinKeys` - optional list of top-level mixin keys to exclude
 - `includedMixinPaths` - optional list of glob patterns that allowlist mixin paths
 
-The `BATTERY_INCLUDED` configuration also accepts `apiUrl` and `enrichments`. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url) and [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+The `BATTERY_INCLUDED` configuration also accepts `apiUrl`, `enrichments`, and `siteAwareMixinsStrategy`. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url), [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses), and [How to choose how site-aware mixins are indexed](#how-to-choose-how-site-aware-mixins-are-indexed).
 
 The `includedMixinPaths` option is matched against full dot-notation mixin paths rooted at the mixin key, for example `class_EA673_toolsClassification.sk.OnlineIsService_P`.
 
@@ -176,7 +176,7 @@ curl -L
 To change configuration, make a call to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint, providing the `writeKey` from the previous step.
 
 {% hint style="warning" %}
-The update request replaces the whole configuration. For `BATTERY_INCLUDED`, a request without `apiUrl` or `enrichments` resets these fields to their defaults. Send back every field from the response of the previous step. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url) and [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+The update request replaces the whole configuration. For `BATTERY_INCLUDED`, a request without `apiUrl`, `enrichments`, or `siteAwareMixinsStrategy` resets these fields to their defaults. Send back every field from the response of the previous step. See [How to set the BatteryIncluded API URL](#how-to-set-the-batteryincluded-api-url), [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses), and [How to choose how site-aware mixins are indexed](#how-to-choose-how-site-aware-mixins-are-indexed).
 {% endhint %}
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -200,7 +200,7 @@ curl -L
   }'
 ```
 
-For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing BatteryIncluded mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`.
+For `BATTERY_INCLUDED`, `includedMixinPaths` filtering is applied to the raw source mixin tree before the localized and non-localized mixin split. The retained data is then written to the existing BatteryIncluded mixin fields, such as `_product.mixins` and `_product_i18n.<lang>.mixins`. Site-aware mixins are written according to the tenant's `siteAwareMixinsStrategy`. See [How site-aware mixins are indexed](#how-site-aware-mixins-are-indexed).
 
 
 To apply your configuration changes to existing data, run the reindexing process. See the [How to reindex existing products](indexing.md#how_to_reindex_existing_products) section.
@@ -260,7 +260,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-Keep every field of the response for the next step, including `includedMixinPaths`, `excludedMixinKeys`, or `enrichments` when they are set.
+Keep every field of the response for the next step, including `includedMixinPaths`, `excludedMixinKeys`, `enrichments`, or `siteAwareMixinsStrategy` when they are set.
 {% endstep %}
 
 {% step %}
@@ -370,7 +370,7 @@ curl -i -X GET \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-Keep every field of the response for the next step, including `apiUrl`, `includedMixinPaths`, or `excludedMixinKeys` when they are set.
+Keep every field of the response for the next step, including `apiUrl`, `includedMixinPaths`, `excludedMixinKeys`, or `siteAwareMixinsStrategy` when they are set.
 {% endstep %}
 
 {% step %}
@@ -427,13 +427,128 @@ To apply the new list to all products at once, wait 10 minutes, and then start a
 If you later update the configuration without `enrichments`, the tenant goes back to the default list: `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`.
 {% endhint %}
 
+## How to choose how site-aware mixins are indexed
+
+A [site-aware mixin](../../standard-practices/mixins.md#site-aware-mixins) has a base value for the product and optional per-site overlays in `{mixin}__{site}` keys. Your BatteryIncluded search can read a mixin value from the product-wide fields `_product.mixins` and `_product_i18n.<language>.mixins`, or from the site-specific data in `_product_siteAware.<site>`. Choose where the Indexing Service writes site-aware mixins with the `siteAwareMixinsStrategy` field of the `BATTERY_INCLUDED` configuration.
+
+The following table compares the two values:
+
+| Value | Where the base value is written | Which sites receive the merged value | When to use it |
+| --- | --- | --- | --- |
+| `FAN_OUT` (default) | Not in `_product.mixins` or `_product_i18n.<language>.mixins` | Every site that contributes to the merged document, and every other site with an `_product_siteAware` entry. A site without an overlay receives the base value. | Your search reads site-aware mixins only from `_product_siteAware`, and every site needs a resolved value. |
+| `INHERITANCE` | `_product.mixins` and `_product_i18n.<language>.mixins` | Only the sites that have an overlay for the mixin | Your search reads the shared value from `_product` and uses `_product_siteAware` only for sites that override it. The document stays smaller. |
+
+A site contributes to the merged document when the product is indexed for that site. For the rules, see [How BatteryIncluded indexes products](#how-batteryincluded-indexes-products). For the conditions that make a mixin site-aware, the rules for `_product_siteAware` entries, and an example of both layouts, see [How site-aware mixins are indexed](#how-site-aware-mixins-are-indexed).
+
+A search integration can read site-aware mixins in the same way under both strategies. For each site, read `_product_siteAware.<site>.mixins.<mixin>` and `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>` when they are present. They hold the complete merged value, so do not merge them with the base value again. When they are absent, read `_product.mixins.<mixin>` and `_product_i18n.<language>.mixins.<mixin>`.
+
+{% hint style="info" %}
+`FAN_OUT` keeps the layout that BatteryIncluded documents used before `siteAwareMixinsStrategy` was introduced, with two differences that apply the next time a product is updated or reindexed:
+
+* Sites that contribute to the merged document but have no prices, availability, or segment IDs now receive the product's site-aware mixins.
+* Mixins without an overlay whose referenced schema version is marked as site-aware move from `_product.mixins` and `_product_i18n.<language>.mixins` to `_product_siteAware`.
+{% endhint %}
+
+The following rules apply to `siteAwareMixinsStrategy`:
+
+* When the field is not set, the Indexing Service uses `FAN_OUT`. The configuration endpoints then do not return the field.
+* Values are case sensitive. A value other than `FAN_OUT` or `INHERITANCE` returns `400`, and the configuration is not stored.
+* The field applies only to `BATTERY_INCLUDED`. Sending it for another provider also returns `400`.
+* The field is a separate setting from the `MERGE` and `SPLIT` indexing strategy. BatteryIncluded indexing runs only with `MERGE`. See [How to choose indexing strategy](#how-to-choose-indexing-strategy).
+
+{% hint style="warning" %}
+A changed strategy moves site-aware mixin values between `_product` and `_product_siteAware` the next time each product is updated or reindexed. Until a full product reindex reports `SUCCESS`, documents in both layouts can exist in the index. Before you change the strategy, make sure that your search integration supports both layouts, for example with the read rule above.
+{% endhint %}
+
+To choose the strategy when you create the configuration, add `siteAwareMixinsStrategy` to the request body of the [Create a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) endpoint.
+
+### Prerequisites
+
+The following items are required before you change `siteAwareMixinsStrategy`:
+
+* A `BATTERY_INCLUDED` configuration on a tenant that uses the `MERGE` strategy
+* The write key and index name of that configuration. The update request validates them again against the configured BatteryIncluded host.
+* An OAuth2 service token with the `indexing.search_view` and `indexing.search_manage` scopes
+
+### Change the site-aware mixin strategy on an existing configuration
+
+To change how site-aware mixins are indexed, complete the following steps:
+
+{% stepper %}
+{% step %}
+#### Retrieve the current configuration
+
+The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/indexing/{tenant}/configurations/BATTERY_INCLUDED' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+Keep every field of the response for the next step, including `apiUrl`, `includedMixinPaths`, `excludedMixinKeys`, or `enrichments` when they are set.
+{% endstep %}
+
+{% step %}
+#### Send the configuration with `siteAwareMixinsStrategy`
+
+Send the configuration from the previous step with `siteAwareMixinsStrategy` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint. The following example keeps the base values of site-aware mixins in `_product.mixins` and `_product_i18n`. It is based on a configuration that also sets `enrichments`, and it keeps that list. Send your own fields from the previous step instead.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/indexing/{tenant}/configurations/BATTERY_INCLUDED' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "active": true,
+    "indexName": "exampleTenant",
+    "writeKey": "51ebe89215dddcf85e5dacd5643d17e7",
+    "provider": "BATTERY_INCLUDED",
+    "enrichments": [
+      "AVAILABILITY",
+      "PRICE"
+    ],
+    "siteAwareMixinsStrategy": "INHERITANCE"
+  }'
+```
+
+A successful request returns `204`. The [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint then returns `siteAwareMixinsStrategy` as you sent it. The public configuration endpoints do not return it. See [How to retrieve public search configuration](#how-to-retrieve-public-search-configuration).
+
+If the value is not accepted, the response names the field and the allowed values:
+
+```json
+{
+  "code": 400,
+  "status": "Bad Request",
+  "message": "Invalid value 'INHERIT' for 'siteAwareMixinsStrategy', allowed values: [FAN_OUT, INHERITANCE]"
+}
+```
+{% endstep %}
+
+{% step %}
+#### Apply the change to existing products
+
+A changed `siteAwareMixinsStrategy` takes effect within 10 minutes. After that, each product uses the new strategy the next time it is updated or reindexed.
+
+To apply the new strategy to all products at once, wait 10 minutes, and then start a full product reindex. See [How to reindex existing products](#how_to_reindex_existing_products).
+{% endstep %}
+{% endstepper %}
+
+{% hint style="info" %}
+If you later update the configuration without `siteAwareMixinsStrategy`, the tenant goes back to the default `FAN_OUT`. Site-aware mixin values then move back to `_product_siteAware` the next time each product is updated or reindexed.
+{% endhint %}
+
 ## How BatteryIncluded indexes products
 
 When the tenant uses `MERGE`, the Indexing Service builds one BatteryIncluded search document per product. Core product fields come from a single base site.
 
 The BatteryIncluded document stores site-specific data in `_product_siteAware`. This field is a map whose keys are site codes.
-Each value can contain prices grouped by currency, availability, and segment IDs for that site. Availability can appear for a site
-even when that site has no prices.
+Each value can contain prices grouped by currency, availability, segment IDs, and site-aware mixins for that site. Availability can
+appear for a site even when that site has no prices. For site-aware mixins, see [How site-aware mixins are indexed](#how-site-aware-mixins-are-indexed).
 
 If your tenant uses `SPLIT`, BatteryIncluded product indexing is skipped.
 
@@ -490,27 +605,48 @@ The data of a value that is not listed is missing from `_product_siteAware` and 
 
 ### How site-aware mixins are indexed
 
-The Indexing Service recognizes a mixin as site-aware when the source product contains an overlay key in the form
-`{mixin}__{site}`. This key convention controls BatteryIncluded indexing even if the mixin schema is not marked as site-aware.
-However, mark the schema with `siteAware: true` so that the product follows the standard
-[site-aware mixin](../../standard-practices/mixins.md#site-aware-mixins) model. Declare only the base mixin under `metadata.mixins`.
-If no schema URL is declared or the schema lookup fails, the merged mixin stays under
-`_product_siteAware.<site>.mixins.<mixin>`.
+The Indexing Service treats a mixin as site-aware when one of the following conditions is met:
 
-For each site in `_product_siteAware`, the Indexing Service deep-merges the matching overlay into the base mixin. Nested overlay
-fields replace matching base fields, while the other base fields remain. A `null` overlay value does not clear the base value. The
-existing site eligibility rules determine which prices, availability, and segment IDs contribute to the document. A site with
-contributing commercial data receives an `_product_siteAware` entry and gets the base mixin when it has no matching overlay. An
-overlay key also creates the site entry when no commercial data exists for that site.
+* The source product contains an overlay key for the mixin in the form `{mixin}__{site}`.
+* The schema file that the product references for the mixin in `metadata.mixins` is marked as site-aware.
+
+Mark the schema with `siteAware: true` so that the product follows the standard
+[site-aware mixin](../../standard-practices/mixins.md#site-aware-mixins) model, and declare only the base mixin under
+`metadata.mixins`.
+
+The Indexing Service reads `siteAware` from the root of the schema file at the URL in `metadata.mixins`. Each schema version
+has its own file and URL. Schema files of older versions might not contain `siteAware`, and then the mixin counts as not
+site-aware. To make an existing schema count as site-aware, update the schema with `siteAware: true`. The update creates a new
+schema version. Retrieve the schema to get the URL of that version, and point each product's `metadata.mixins` entry to it. See
+[How to create a site-aware mixin schema](../../utilities/schema/schema.md#how-to-create-a-site-aware-mixin-schema).
+
+Products that reference an older version are site-aware only through their overlay keys. Under `FAN_OUT`, the same mixin can
+therefore be in `_product` for some products and in `_product_siteAware` for others.
+
+If no schema URL is declared or the schema file cannot be loaded, only overlay keys make the mixin site-aware, and its localized
+fields are not separated. The whole mixin is then written to the non-localized paths, such as `_product_siteAware.<site>.mixins.<mixin>`.
+
+A site has an `_product_siteAware` entry when it has prices, availability, or segment IDs, or when the product has an overlay
+for that site. With `FAN_OUT`, every site that contributes to the merged document also gets an entry when the product has
+site-aware mixins. A site entry that would hold no data is not written.
+
+For each site that receives a site-aware mixin, the Indexing Service deep-merges the site's overlay into the base mixin. Nested
+overlay fields replace matching base fields, while the other base fields remain. Arrays and scalar values in the overlay replace the
+base value. A `null` overlay value does not clear the base value.
+
+Which sites receive the merged mixin depends on the tenant's `siteAwareMixinsStrategy`. For how to set it, see
+[How to choose how site-aware mixins are indexed](#how-to-choose-how-site-aware-mixins-are-indexed). The strategies work as follows:
+
+* `FAN_OUT` (default) – every site that contributes to the merged document receives the merged mixin, and so does every other site with an `_product_siteAware` entry, for example a site with an overlay key. A site without an overlay receives the base mixin. The base mixin is not written to `_product.mixins` or `_product_i18n.<language>.mixins`.
+* `INHERITANCE` – the base mixin stays in `_product.mixins` and `_product_i18n.<language>.mixins`. Only sites with an overlay key for the mixin receive the merged mixin in `_product_siteAware`.
 
 After the merge, schema-identified localized fields and non-localized fields use separate paths:
 
 * `_product_siteAware.<site>.mixins.<mixin>` contains the non-localized part of the merged mixin.
 * `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>` contains its localized part.
 
-The site-aware base and overlay roots do not remain in `_product.mixins` or `_product_i18n.<language>.mixins`. Mixins without an
-overlay key remain non-site-aware. Their non-localized fields use `_product.mixins`, and schema-identified localized fields use
-`_product_i18n.<language>.mixins`.
+Overlay keys never appear in the BatteryIncluded document. Mixins that are not site-aware keep using `_product.mixins` for
+non-localized fields and `_product_i18n.<language>.mixins` for schema-identified localized fields.
 
 The following source product fragment contains a `productInfo` base, a `main` overlay, and a non-site-aware `internalFlags` mixin.
 The mixin schemas identify `title` and `note` as localized fields:
@@ -559,7 +695,7 @@ The mixin schemas identify `title` and `note` as localized fields:
 }
 ```
 
-Assume both `main` and `germany` contribute commercial data to the document. The relevant output has the following shape:
+Assume both `main` and `germany` contribute to the merged document. With `FAN_OUT`, the relevant output has the following shape:
 
 ```json
 {
@@ -655,12 +791,98 @@ Assume both `main` and `germany` contribute commercial data to the document. The
 }
 ```
 
+With `INHERITANCE`, the base `productInfo` stays in `_product` and `_product_i18n`. Only `main`, which has an overlay, receives
+the merged mixin. The relevant output has the following shape:
+
+```json
+{
+  "_product": {
+    "mixins": {
+      "productInfo": {
+        "skuHint": "BASE",
+        "details": {
+          "material": "cotton",
+          "care": {
+            "temperature": 30
+          }
+        }
+      },
+      "internalFlags": {
+        "hidden": false
+      }
+    }
+  },
+  "_product_i18n": {
+    "en": {
+      "mixins": {
+        "productInfo": {
+          "title": "Shirt"
+        },
+        "internalFlags": {
+          "note": "Operations"
+        }
+      }
+    },
+    "de": {
+      "mixins": {
+        "productInfo": {
+          "title": "Hemd"
+        },
+        "internalFlags": {
+          "note": "Betrieb"
+        }
+      }
+    }
+  },
+  "_product_siteAware": {
+    "main": {
+      "segmentIds": [
+        "seg-main"
+      ],
+      "mixins": {
+        "productInfo": {
+          "skuHint": "MAIN",
+          "details": {
+            "material": "cotton",
+            "care": {
+              "temperature": 40
+            }
+          }
+        }
+      },
+      "localeAware": {
+        "en": {
+          "mixins": {
+            "productInfo": {
+              "title": "Shirt"
+            }
+          }
+        },
+        "de": {
+          "mixins": {
+            "productInfo": {
+              "title": "Premiumhemd"
+            }
+          }
+        }
+      }
+    },
+    "germany": {
+      "segmentIds": [
+        "seg-germany"
+      ]
+    }
+  }
+}
+```
+
 Commercial fields keep their existing paths and behavior. For example, `segmentIds`, `availability`, and `currencyAware` remain
 siblings of `mixins` and `localeAware` under each `_product_siteAware.<site>` entry.
 
-Mixin filters also keep their existing behavior. The Indexing Service applies `includedMixinPaths` and `excludedMixinKeys` to the
-raw source mixin tree before it detects site-aware roots, merges overlays, or separates localized values. Filter patterns therefore
-match source paths such as `productInfo` and `productInfo__main`, not the generated `_product_siteAware` paths.
+Mixin filters also keep their existing behavior under both strategies. The Indexing Service applies `includedMixinPaths` and
+`excludedMixinKeys` to the raw source mixin tree before it detects site-aware mixins, merges overlays, or separates localized
+values. Filter patterns therefore match source paths such as `productInfo` and `productInfo__main`, not the generated
+`_product_siteAware` paths. Excluding a base mixin with `excludedMixinKeys` also excludes its overlays.
 
 ### Migrating from legacy mixin paths
 
@@ -668,6 +890,9 @@ match source paths such as `productInfo` and `productInfo__main`, not the genera
 To keep existing integrations working after a rollout, incremental update, or reindex, add support for the new paths before the new
 document shape reaches the index. Retain fallback reads from the old paths during the transition.
 {% endhint %}
+
+In the legacy layout, site-aware mixins stayed under `_product.mixins` and `_product_i18n.<language>.mixins`, together with their
+`{mixin}__{site}` overlay keys. The following steps move a search integration from that layout to the `_product_siteAware` paths.
 
 {% stepper %}
 {% step %}
@@ -685,6 +910,9 @@ Use the following legacy paths when the corresponding new path is absent:
 
 The consumer deep-merges the legacy overlay value into the legacy base value during fallback. A `null` overlay value preserves the
 base value.
+
+With `INHERITANCE`, `_product.mixins.<mixin>` and `_product_i18n.<language>.mixins.<mixin>` remain the base paths for sites
+without an overlay. Treat only the `<mixin>__<site>` overlay paths as legacy.
 {% endstep %}
 
 {% step %}
@@ -699,8 +927,12 @@ without a full reindex, both shapes can coexist indefinitely. Keep the fallback 
 #### Remove fallbacks after a full reindex
 
 If you run a full reindex, wait until it reports `SUCCESS`, then allow BatteryIncluded time to apply the transaction cleanup.
-Verify through your search integration that reindexed documents contain the `_product_siteAware` paths. Remove the old-path
+Verify through your search integration that reindexed documents contain the `_product_siteAware` paths for site-aware mixins. Remove the old-path
 fallbacks after this verification. If you use only incremental updates, skip this step and keep the fallbacks.
+
+With `INHERITANCE`, sites without an overlay have no site-aware mixin in `_product_siteAware`. Keep reading the base value from
+`_product.mixins.<mixin>` and `_product_i18n.<language>.mixins.<mixin>` for those sites. Remove only the fallbacks to the
+`_product.mixins.<mixin>__<site>` and `_product_i18n.<language>.mixins.<mixin>__<site>` overlay paths.
 {% endstep %}
 {% endstepper %}
 
