@@ -54,6 +54,57 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-13" tags="improvement" %}
+
+## AI Service - provenance on generative responses
+
+#### Overview
+
+Generative AI responses now include a provenance mixin. Integrations that display generated content to a person must use this mixin to disclose that the content is AI-generated.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns provenance details with a generated reply. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns provenance details in the `done` event after generated output. |
+| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Returns stored provenance details for a successful agent-chat job. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Returns stored provenance details for agent-chat jobs. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Returns stored provenance details for matching agent-chat jobs. |
+| [Generating text for an object description](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/text-generation#post-ai-service-tenant-texts) | Returns provenance details with generated text. |
+| [Generating AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions#post-ai-service-tenant-completions) | Returns provenance details with generated completions. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-12" tags="new-feature" %}
+
+## Indexing Service - data dependencies of BatteryIncluded indexing
+
+#### Overview
+
+You can now choose which Emporix services BatteryIncluded product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the BatteryIncluded document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events.
+
+For the values and the steps, see [How to choose the data that BatteryIncluded indexing uses](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. A request without `enrichments` moves the tenant back to the default list. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `enrichments` list. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `enrichments` list. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-12" tags="new-feature" %}
 
 ## Import Service - product variants
@@ -145,11 +196,11 @@ There are no known problems.
 
 {% update date="2026-11-10" tags="major-change" %}
 
-## Indexing Service - site-aware Battery Included mixin paths
+## Indexing Service - site-aware BatteryIncluded mixin paths
 
 #### Overview
 
-Battery Included product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+BatteryIncluded product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
 
 The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
 
@@ -163,20 +214,20 @@ There are no known problems.
 
 {% update date="2026-11-09" tags="new-feature" %}
 
-## Indexing Service - Battery Included API URL per tenant
+## Indexing Service - BatteryIncluded API URL per tenant
 
 #### Overview
 
-You can now set the Battery Included host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's Battery Included requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default Battery Included host. The service accepts only the `https` address of an allowed Battery Included host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
+You can now set the BatteryIncluded host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's BatteryIncluded requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default BatteryIncluded host. The service accepts only the `https` address of an allowed BatteryIncluded host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
 
-For the steps, see [How to set the Battery Included API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-battery-included-api-url).
+For the steps, see [How to set the BatteryIncluded API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-batteryincluded-api-url).
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
 | [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED` and validates the write key against that host. |
-| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED`. A request without `apiUrl` moves the tenant back to the default Battery Included host. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED`. A request without `apiUrl` moves the tenant back to the default BatteryIncluded host. |
 | [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `apiUrl` value. |
 | [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `apiUrl` value. |
 
@@ -1556,19 +1607,19 @@ There are no known problems.
 
 {% update date="2026-09-04" tags="improvement" %}
 
-## Indexing Service - Battery Included credential validation
+## Indexing Service - BatteryIncluded credential validation
 
 #### Overview
 
-Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored BatteryIncluded credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
-| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
-| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates BatteryIncluded credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates BatteryIncluded credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored BatteryIncluded credentials before creating a product reindex job. |
 
 #### Known problems
 
@@ -1838,11 +1889,11 @@ There are no known problems.
 
 {% update date="2026-08-13" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6223 -->
-## Indexing Service - Battery Included site-aware availability
+## Indexing Service - BatteryIncluded site-aware availability
 
 #### Overview
 
-Battery Included site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only Battery Included output and does not change webhook payloads or Algolia data.
+BatteryIncluded site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only BatteryIncluded output and does not change webhook payloads or Algolia data.
 
 #### Known problems
 
@@ -2692,23 +2743,23 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-05-29" tags="new-feature" %}
-## Indexing Service - Battery Included provider support
+## Indexing Service - BatteryIncluded provider support
 
 #### Overview
 
-The Indexing Service now supports **Battery Included** as a new index provider alongside Algolia. Only one provider can be active per tenant at a time. Battery Included only supports the `MERGE` site-aware fields strategy; tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
+The Indexing Service now supports **BatteryIncluded** as a new index provider alongside Algolia. Only one provider can be active per tenant at a time. BatteryIncluded only supports the `MERGE` site-aware fields strategy; tenants configured with the `SPLIT` strategy will have BatteryIncluded indexing silently skipped.
 
-This feature is in a `preview` state and payload sent to battery included is subject to change.
+This feature is in a `preview` state and payload sent to BatteryIncluded is subject to change.
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#post-indexing-create-config)                               | Added `BATTERY_INCLUDED` provider support with new `excludedMixinKeys` field. Only one provider can be active per tenant at a time. |
-| [Retrieving all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include Battery Included configurations with `excludedMixinKeys`.                                                      |
+| [Retrieving all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include BatteryIncluded configurations with `excludedMixinKeys`.                                                      |
 | [Retrieving a configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-config)               | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
-| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating Battery Included configurations with `excludedMixinKeys`.                                                         |
-| [Retrieving all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include Battery Included public configurations.                                                                        |
+| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating BatteryIncluded configurations with `excludedMixinKeys`.                                                         |
+| [Retrieving all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include BatteryIncluded public configurations.                                                                        |
 | [Retrieving a public configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-public-config) | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
 
 #### Known problems
