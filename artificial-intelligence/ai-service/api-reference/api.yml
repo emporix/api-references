@@ -351,6 +351,9 @@ paths:
                     `ChatStreamThinkingData`
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
+                  * `artifact` — **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+                    One image or file the agent decided to publish. The agent needs the built-in file generator (`file_generator`) in `nativeTools`, and the caller's token must include `media.asset_manage`. The image can come from the configured provider's image generation, and the file can come from the built-in file generator or from a tool result the agent included in its final answer. Download the private asset with `GET /media/{tenant}/assets/{artifact_id}/download`. The event carries no bytes and no URL. Image generation first sends `status` `pending` with `generation_id`. A provider that cannot draw returns `status` `failed` and `error_code` `CAPABILITY_UNAVAILABLE`. That failure does not fail the text stream.
                   * `done` — `ChatStreamDoneData`
                   * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -364,6 +367,9 @@ paths:
 
                     event: token
                     data: {"content":"delivery is available for order EON1243."}
+
+                    event: artifact
+                    data: {"artifact_id":"6f1c0b2e-1a2b-4c3d-9e8f-112233445566","kind":"image","filename":"forest.png","mime_type":"image/png","size":184233,"status":"ready"}
 
                     event: done
                     data: {"agent_id":"generic-agent","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
@@ -416,6 +422,9 @@ paths:
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
+        * `artifact` — **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+          One image or file the agent decided to publish. `data` is `ChatStreamArtifactData`. The event carries no bytes and no URL.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present. At least one of these fields is sent.
         * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -2395,7 +2404,7 @@ components:
     # Native Tools:
     NativeToolType:
       type: string
-      enum: [ slack, rag_custom, rag_emporix, teams, search ]
+      enum: [ slack, rag_custom, rag_emporix, teams, search, file ]
       description: |-
         Type of the native tool. Possible values:
         * `slack`
@@ -2403,6 +2412,7 @@ components:
         * `rag_emporix`
         * `teams`
         * `search`
+        * `file` — the built-in file generator, enabled with the reserved ID `file_generator` in the agent's `nativeTools`.
     BaseNativeTool:
       type: object
       properties:
@@ -2855,6 +2865,28 @@ components:
               $ref: '#/components/schemas/SearchNativeToolConfig'
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
+    FileNativeToolConfig:
+      type: object
+      description: |-
+        The built-in file generator has no settings. It lets the agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it.
+
+        The built-in file generator is not stored as a tool. To enable it, add the reserved ID `file_generator` to the agent's `nativeTools`. Creating a tool with the ID `file_generator` returns `400`. A tool with type `file` and any other ID does not enable file or image generation. The agent creates files and images only when the caller's token includes the `media.asset_manage` scope.
+      additionalProperties: false
+    FileNativeToolResponse:
+      allOf:
+        - $ref: '#/components/schemas/BaseNativeTool'
+        - type: object
+          properties:
+            id:
+              type: string
+              description: Unique identifier of the tool.
+            type:
+              description: For `FileNativeToolResponse`, it has to be set to `file`.
+              example: file
+            config:
+              $ref: '#/components/schemas/FileNativeToolConfig'
+            metadata:
+              $ref: '#/components/schemas/MetadataResponse'
     RagCustomNativeToolRequest:
       allOf:
         - $ref: '#/components/schemas/BaseNativeTool'
@@ -2923,6 +2955,17 @@ components:
           - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
           - $ref: '#/components/schemas/TeamsNativeToolResponse'
           - $ref: '#/components/schemas/SearchNativeToolResponse'
+    AgentNativeToolsResponse:
+      type: array
+      description: List of native tools enabled for the agent. It includes the built-in file generator (`file_generator`), which is not stored as a tool.
+      items:
+        oneOf:
+          - $ref: '#/components/schemas/SlackNativeToolResponse'
+          - $ref: '#/components/schemas/RagCustomNativeToolResponse'
+          - $ref: '#/components/schemas/RagEmporixNativeToolResponse'
+          - $ref: '#/components/schemas/TeamsNativeToolResponse'
+          - $ref: '#/components/schemas/SearchNativeToolResponse'
+          - $ref: '#/components/schemas/FileNativeToolResponse'
 
     ConversationResponse:
       type: object
@@ -3918,7 +3961,7 @@ components:
               type: string
               description: Identifier of the agent.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             mcpServers:
               $ref: '#/components/schemas/AgentMcpServersResponse'
     AgentRequest:
@@ -3958,7 +4001,7 @@ components:
               type: string
               description: Identifier of the agent.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -3992,7 +4035,7 @@ components:
               type: string
               description: Prompt inherited from the template at the time of this version.
             nativeTools:
-              $ref: '#/components/schemas/NativeToolsResponse'
+              $ref: '#/components/schemas/AgentNativeToolsResponse'
             llmConfig:
               oneOf:
                 - $ref: '#/components/schemas/EmporixLlm'
@@ -4216,6 +4259,59 @@ components:
         message:
           type: string
           description: Agent message.
+    ChatStreamArtifactData:
+      title: Artifact event data
+      type: object
+      description: |-
+        **The `artifact` event is in preview mode** - some of the features may not be fully operational yet.
+
+        JSON object in the SSE `data` field when `event` is `artifact`. The agent published one image or file. Bytes stay in Media Service. A `failed` status does not fail the text stream.
+
+        The agent publishes artifacts only when it has the built-in file generator (`file_generator`) in `nativeTools` and the caller's token includes the `media.asset_manage` scope. Downloading a ready asset requires the `media.asset_read` scope. Only the chat stream sends artifacts. The synchronous chat endpoint and agent jobs do not.
+      required:
+        - kind
+        - filename
+        - mime_type
+        - size
+        - status
+      properties:
+        artifact_id:
+          type: string
+          description: Media Service asset id. Present when `status` is `ready`. Absent while `status` is `pending`. Download with `GET /media/{tenant}/assets/{artifact_id}/download`.
+        generation_id:
+          type: string
+          description: Correlates the pending image card with the later ready or failed event. Absent when the artifact was not produced by image generation.
+        kind:
+          type: string
+          enum:
+            - image
+            - file
+          description: Image preview or file download.
+        filename:
+          type: string
+          description: Display name of the artifact.
+        mime_type:
+          type: string
+          description: Media type of the stored asset.
+        size:
+          type: integer
+          minimum: 0
+          description: Size of the stored asset in bytes. `0` when generation failed before upload.
+        status:
+          type: string
+          enum:
+            - pending
+            - ready
+            - failed
+          description: '`pending` means an image is still generating. `ready` means the asset can be downloaded. `failed` means this item failed and the text answer continues.'
+        error_code:
+          type: string
+          description: |-
+            Stable failure code. Present when `status` is `failed`. Possible values:
+            * `CAPABILITY_UNAVAILABLE` — the agent's model provider cannot generate images.
+            * `INVALID_CONTENT` — the requested file content was rejected.
+            * `OVERSIZED` — the image or file exceeds the size limit.
+            * `UPLOAD_FAILED` — the asset could not be stored in Media Service.
     ChatStreamEventData:
       title: SSE data payload
       description: JSON object in one SSE `data` field. This is not the HTTP response body. The response body is `text/event-stream` text; each named event carries one of these objects in `data`.
@@ -4226,6 +4322,7 @@ components:
         - $ref: '#/components/schemas/ChatStreamToolResultData'
         - $ref: '#/components/schemas/ChatStreamDoneData'
         - $ref: '#/components/schemas/ChatStreamErrorData'
+        - $ref: '#/components/schemas/ChatStreamArtifactData'
     ChatStreamTokenData:
       title: Token event data
       type: object
