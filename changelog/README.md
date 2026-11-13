@@ -25,6 +25,32 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## AI Service - provenance on generative responses
+
+#### Overview
+
+Generative AI responses now include a provenance mixin. Integrations that display generated content to a person must use this mixin to disclose that the content is AI-generated.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns provenance details with a generated reply. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns provenance details in the `done` event after generated output. |
+| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Returns stored provenance details for a successful agent-chat job. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Returns stored provenance details for agent-chat jobs. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Returns stored provenance details for matching agent-chat jobs. |
+| [Generating text for an object description](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/text-generation#post-ai-service-tenant-texts) | Returns provenance details with generated text. |
+| [Generating AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions#post-ai-service-tenant-completions) | Returns provenance details with generated completions. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-12" tags="new-feature" %}
 
 ## Indexing Service - data dependencies of BatteryIncluded indexing
