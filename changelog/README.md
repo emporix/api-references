@@ -25,6 +25,29 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - machine-readable marking of generated images and files
+
+#### Overview
+
+Generated PNG and JPEG images now carry IPTC `DigitalSourceType` `trainedAlgorithmicMedia` in XMP. A provider C2PA manifest is left unchanged. Generated PDFs carry the same XMP packet, and their Info Subject and Keywords are `AI-generated`. Text, markdown, CSV, JSON, YAML, XML, and source files keep their bytes. Every generated Media asset also stores a provenance mixin with `origin` `ai_generated`. Marking cannot be turned off. An image the user attached is not modified. An image that cannot be marked is not stored.
+
+Starting agent chat returns those generated images and files in `artifacts`. The chat stream sends the same fields on an `artifact` event.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns `artifacts` for a generated image or file with status `ready` or `failed`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Documents the `artifact` event. `pending` applies to an image that is still generating. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-12" tags="new-feature" %}
 
 ## Indexing Service - data dependencies of Battery Included indexing
