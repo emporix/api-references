@@ -327,6 +327,13 @@ paths:
                       metadata:
                         mixins:
                           provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
+                      artifacts:
+                        - artifactId: 6ae990f848a9ad145cebb466
+                          kind: image
+                          filename: image.png
+                          mimeType: image/png
+                          size: 4
+                          status: ready
         '400':
           $ref: '#/components/responses/400_resp_common'
         '401':
@@ -341,6 +348,8 @@ paths:
         When the request includes `attachments`, each `attachments[].attachmentId` must reference a file already uploaded in this session. Send the upload `sessionId` as the `session-id` header. The attachment must already be attached to the `agentId` in the request body. After a file upload, send that same path `agentId` in the chat body. After reuse, send the target agent's path `agentId` in the chat body. If they differ, the request returns `400`. To use the file with a different agent, first assign the attachment to that agent with `attachmentId` on `POST /ai-service/{tenant}/agentic/{agentId}/attachments` using the target `agentId` in the path, then chat with that target agent.
 
         Generated replies include provenance details in `mixins` and the corresponding schema reference in `metadata`.
+
+        When the agent generates an image or a file, `artifacts` lists that file. Download a ready file with `artifactId`.
       security:
         - OAuth2:
             - ai.agentexecution_manage_own
@@ -381,6 +390,7 @@ paths:
                     `ChatStreamThinkingData`
                   * `tool_start` and `tool_end` — `ChatStreamToolMetaData`
                   * `tool_result` — `ChatStreamToolResultData`
+                  * `artifact` — `ChatStreamArtifactData`
                   * `done` — `ChatStreamDoneData`
                   * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -446,12 +456,13 @@ paths:
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
+        * `artifact` — Metadata for one generated image or file. `data` is `ChatStreamArtifactData`, with the same camelCase fields as `ChatArtifact`. `pending` is an image still generating.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present, plus provenance details for generated output. At least one identity field is sent.
         * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
           A failure during generation. `data` includes `message` and/or `code`. Example codes are `AGENT_SETUP` and `RECURSION_LIMIT`.
 
-        SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`).
+        SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`). Artifact fields use camelCase on both endpoints.
 
         HTTP `400`, `401`, `403`, and `500` responses are JSON problem bodies, not SSE events. They occur when the request is rejected before the stream starts. Unknown event names are not forwarded. Frames without an event name and with no data may appear as keepalives; ignore them.
       security:
@@ -4261,10 +4272,51 @@ components:
         message:
           type: string
           description: Agent message.
+        artifacts:
+          type: array
+          description: Generated images and files. Omitted when the reply has none.
+          items:
+            $ref: '#/components/schemas/ChatArtifact'
         mixins:
           $ref: '#/components/schemas/ProvenanceMixins'
         metadata:
           $ref: '#/components/schemas/ProvenanceMetadata'
+    ChatArtifact:
+      type: object
+      description: Metadata for one generated image or file.
+      required:
+        - kind
+        - filename
+        - mimeType
+        - size
+        - status
+      properties:
+        artifactId:
+          type: string
+          description: Media asset id. Present when `status` is `ready`.
+        kind:
+          type: string
+          enum: [image, file]
+          description: Generated content type.
+        filename:
+          type: string
+          description: File name.
+        mimeType:
+          type: string
+          description: Media type of the file.
+        size:
+          type: integer
+          description: Size in bytes.
+        status:
+          type: string
+          enum: [ready, failed]
+          description: `ready` or `failed`.
+        errorCode:
+          type: string
+          description: Failure code when `status` is `failed`.
+        generationId:
+          type: string
+          description: Generation identifier.
     ProvenanceMixins:
       type: object
       description: |-
@@ -4335,8 +4387,46 @@ components:
         - $ref: '#/components/schemas/ChatStreamThinkingData'
         - $ref: '#/components/schemas/ChatStreamToolMetaData'
         - $ref: '#/components/schemas/ChatStreamToolResultData'
+        - $ref: '#/components/schemas/ChatStreamArtifactData'
         - $ref: '#/components/schemas/ChatStreamDoneData'
         - $ref: '#/components/schemas/ChatStreamErrorData'
+    ChatStreamArtifactData:
+      title: Artifact event data
+      type: object
+      description: JSON object in the SSE `data` field when `event` is `artifact`. Same camelCase fields as `ChatArtifact`. `pending` is an image still generating.
+      required:
+        - kind
+        - filename
+        - mimeType
+        - size
+        - status
+      properties:
+        artifactId:
+          type: string
+          description: Media asset id. Present when `status` is `ready`.
+        kind:
+          type: string
+          enum: [image, file]
+          description: Generated content type.
+        filename:
+          type: string
+          description: File name.
+        mimeType:
+          type: string
+          description: Media type of the file.
+        size:
+          type: integer
+          description: Size in bytes.
+        status:
+          type: string
+          enum: [pending, ready, failed]
+          description: `pending`, `ready`, or `failed`.
+        errorCode:
+          type: string
+          description: Failure code when `status` is `failed`.
+        generationId:
+          type: string
+          description: Generation identifier. Required when `status` is `pending`.
     ChatStreamTokenData:
       title: Token event data
       type: object

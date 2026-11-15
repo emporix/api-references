@@ -767,6 +767,8 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
 
+  When the agent generates an image or a file, the response includes `artifacts`. Download a ready file with `artifactId`. The stream sends the same fields on an `artifact` event.
+
   In the above example, the German Translation Agent is triggered. The agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the agent gets back with the following response:
 
   ```
