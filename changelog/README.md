@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature, major-change" %}
+{% update date="2026-11-16" tags="new-feature, major-change" %}
 
 ## Indexing and Schema Services - site-aware mixin strategy for BatteryIncluded
 
