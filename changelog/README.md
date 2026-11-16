@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-Starting agent chat returns a generated image or file in `artifacts`. The chat stream sends the same fields on an `artifact` event. A ready artifact includes `artifactId`. A pending stream event is an image that is still generating and includes `generationId`.
+Starting agent chat returns a generated image or file in `artifacts`. A ready artifact includes `artifactId`. A pending stream event is an image that is still generating and includes `generation_id`. The stream event uses snake_case field names.
 
 #### Updated endpoints
 
@@ -39,6 +39,74 @@ Starting agent chat returns a generated image or file in `artifacts`. The chat s
 | --- | --- |
 | [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns `artifacts` for a generated image or file with status `ready` or `failed`. |
 | [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Documents the `artifact` event. `pending` applies to an image that is still generating. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-16" tags="new-feature, major-change" %}
+
+## Indexing and Schema Services - site-aware mixin strategy for BatteryIncluded
+
+#### Overview
+
+You can now choose where BatteryIncluded product indexing writes site-aware mixins. The `BATTERY_INCLUDED` configuration accepts an optional `siteAwareMixinsStrategy` field with the values `FAN_OUT` and `INHERITANCE`:
+
+* `FAN_OUT` (default) – every site that contributes to the merged document, and every other site with an `_product_siteAware` entry, receives the mixin in `_product_siteAware.<site>`. A site with an overlay receives the base value merged with its overlay, and a site without one receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
+* `INHERITANCE` – the base mixin stays in `_product.mixins` and `_product_i18n.<language>.mixins`. Only sites with a `{mixin}__{site}` overlay receive the merged mixin under `_product_siteAware.<site>`.
+
+A mixin is now site-aware when the product has an overlay for it, or when the schema version that the product references in `metadata.mixins` has `siteAware: true`. Schema Service writes the root `siteAware` value into the schema file it generates for each new schema version. Schema files generated before this change do not contain it, so those schema versions count as not site-aware. To apply the flag of an existing schema, update the schema to generate a new version, and point the products' `metadata.mixins` entry to the URL of that version.
+
+{% hint style="warning" %}
+Tenants whose `BATTERY_INCLUDED` configuration has no `siteAwareMixinsStrategy` use `FAN_OUT`. Under `FAN_OUT`, site-aware mixins are written only under `_product_siteAware`. Every site that contributes to the merged document receives the merged value, and so does every other site with an `_product_siteAware` entry. A site without an overlay receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
+
+Search integrations that read these mixins from `_product` must read them from `_product_siteAware`, or switch the tenant to `INHERITANCE`, which keeps base values in `_product`.
+{% endhint %}
+
+{% hint style="info" %}
+For the strategies and the steps, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. A request without the field moves the tenant back to `FAN_OUT`. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Writes the schema's `siteAware` value at the root of the generated schema file. The request and response bodies do not change. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Writes the `siteAware` value of the new version at the root of the generated schema file. The request and response bodies do not change. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-16" tags="new-feature" %}
+
+## AI Service - agent chat artifacts and built-in file generator
+
+#### Overview
+
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The client downloads the private asset with the existing authenticated Media Service endpoint, which requires the `media.asset_read` scope. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
+
+The new built-in file generator (native tool type `file`) lets an agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it. You do not create this tool. Add its reserved ID `file_generator` to the agent's `nativeTools`. The agent creates images and files only when the caller's token includes the `media.asset_manage` scope.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Sends the preview `artifact` event with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), and optional `artifact_id`, `generation_id`, and `error_code`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | With `expand=nativeTools`, returns the built-in file generator as a `file` native tool. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Rejects the reserved `file_generator` ID with `400`. |
+| [Exporting agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) | Includes the built-in file generator when an exported agent uses it. |
+| [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Does not create the built-in file generator as a tool. Imported agents keep `file_generator` in `nativeTools`. |
 
 #### Known problems
 
