@@ -47,6 +47,27 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-16" tags="improvement" %}
+
+## AI Service - generated files on agent chat
+
+#### Overview
+
+Starting agent chat can return a generated image or file in `artifacts` property.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns `artifacts` for a generated image or file with status `ready` or `failed`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Documents the `artifact` event. `pending` applies to an image that is still generating. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-16" tags="new-feature, major-change" %}
 
 ## Indexing and Schema Services - site-aware mixin strategy for BatteryIncluded
