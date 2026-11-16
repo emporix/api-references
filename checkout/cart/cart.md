@@ -642,9 +642,7 @@ curl -i -X POST
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' 
   -H 'Content-Type: application/json' 
   -d '{
-    "itemYrn": null,
     "price": {
-      "priceId": "external-price-001",
       "effectiveAmount": 49.99,
       "originalAmount": 59.99,
       "currency": "EUR"

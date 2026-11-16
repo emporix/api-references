@@ -542,6 +542,8 @@ curl -L
   }'
 ```
 
+When several price lists match a price matching request, the price matching algorithm ranks them and uses only the highest-ranked price lists that contain a price for the product. To learn how customer groups, legal entities, countries, and regions affect the ranking, see [Influence of price lists on price matching](price.md#influence-of-price-lists-on-price-matching).
+
 ### Create a price in the list
 
 Prices in lists are structured differently from catalog prices. Catalog prices are the ones defined for products in `Price` objects, as opposed to `PriceListPrice` objects. While each catalog price can be personalized on its own, the validity of all prices in a list is determined by the list's restrictions. A price in a price list needs to reference a relevant product, price model, and pricing tiers.
@@ -607,7 +609,8 @@ If you want the price matching functionality to compare prices expressed in mult
 * `siteCode` — Site for which the prices will be matched. The price matching functionality will only compare prices assigned to this site.
 * `targetLocation` — Country for which the prices should be returned.
 * `items` — List of products (and their quantities) for which the prices should be compared.
-* `principal` — Customer to whom the prices should apply. When specified, the price matching functionality will compare both non-personalized prices as well as the ones offered exclusively to the specified customer.
+* `principal` — Customer or customer group to whom the prices should apply. When specified, the price matching functionality compares non-personalized prices and the prices offered exclusively to the specified customer. For the `CUSTOMER` type, price lists assigned to any of the customer's groups also match. For the `GROUP` type, price lists assigned to that group match.
+* `legalEntityId` — Legal entity the customer buys for. It isn't derived from the `principal`, so send it in the request. When specified, price lists assigned to this legal entity or to one of its parent legal entities match. When not specified, price lists assigned to a legal entity don't match. The `legalEntityId` doesn't affect catalog prices.
 * `useFallback` — If no price that matches the criteria is found for the specified site, the price matching functionality will try to find the best price for the main site. To enable this option, this field needs to be set to `true`.
 
 Prices are stored in the system as defined in the price model, with no initial net or gross calculations. Calculations occur during the PriceMatch and PriceSearch algorithms. However, PriceSearch is related to catalog prices only.
@@ -617,8 +620,6 @@ The `includesTax` setting, defined at the site or price model level, determines 
 * Gross to Net: Returns a net price from a gross price for a specific country.
 * Net to Gross: Converts a net price to a gross price using a country's specific tax class.
 * Gross to Gross: Adjusts a gross price between countries by first converting to net, then applying the destination country's tax class.
-
-To find out how the price matching functionality works in detail, check out the flowchart.
 
 {% hint style="warning" %}
 The process shown in the flowchart is repeated for each product indicated in the request.
@@ -636,9 +637,83 @@ To check out the flowchart for the _Look for the best price in price lists_ subp
 
 Price lists take precedence over catalog prices. Catalog prices are the ones defined for products in `Price` objects, as opposed to `PriceListPrice` objects. If there are price lists that match the request criteria, the price matching algorithm checks whether these lists contain prices for requested products before searching through catalog prices.
 
-To find out how the price matching functionality handles price lists, check out the flowchart.
+A price list matches the request when all of the following conditions are met:
 
-<figure><img src="../../static/price/pricelist_matching.svg.svg" alt=""><figcaption></figcaption></figure>
+* The price list is assigned to the requested site or to no site.
+* The price list currency is the `targetCurrency`. Price lists in other currencies are not converted and don't match.
+* The price list is assigned to the target country, to one of the country's regions, or to no countries or regions.
+* The price list has no customer groups, or at least one of its customer groups matches the `principal`: one of the customer's groups for the `CUSTOMER` type, or the group itself for the `GROUP` type.
+* The price list has no legal entity, or its legal entity is the `legalEntityId` or one of its parent legal entities.
+* The price list is valid at the time of the request.
+
+The price matching algorithm ranks the matching price lists by the following criteria, in this order. Each criterion only decides between price lists that are equal in the criteria before it:
+
+1. The price list matches the customer. It is assigned to at least one of the customer groups of the `principal`, or to the `legalEntityId` or one of its parent legal entities. These price lists rank above the ones that don't match the customer. The number of matched customer groups doesn't change the rank, and customer group, legal entity, and parent legal entity price lists rank the same.
+2. The price list is assigned to the target country. These price lists rank above the ones assigned only to regions or to no countries or regions.
+3. The price list is assigned to more of the target country's regions. Price lists with more matched regions rank higher.
+
+Price lists that are equal in all three criteria share a rank. A price list without customer groups, a legal entity, countries, or regions has the lowest rank.
+
+For each product, the price matching algorithm checks the ranks from the highest to the lowest and stops at the first rank that contains a price for the product. From this rank, it returns the price with the lowest `effectiveValue`. The algorithm doesn't compare prices from the ranks below, even if they are lower. If no rank contains a price for the product, the algorithm searches through catalog prices.
+
+The algorithm also searches through catalog prices when the rank it stops at contains prices for the product, but none of these prices can be calculated for the request. For example, the requested quantity can't be converted to the unit of the price model, or the product has no tax class. In this case, the algorithm doesn't move on to the ranks below.
+
+{% hint style="warning" %}
+The country and regions still decide between price lists that match the customer. For example, a customer group price list assigned to the target country ranks above a legal entity price list assigned to no countries, even if the legal entity price is lower. To make the algorithm compare the prices of such price lists, assign them to the same countries and regions.
+{% endhint %}
+
+The following flowchart shows the _Look for the best price in price lists_ subprocess for each product:
+
+```mermaid
+---
+config:
+  layout: fixed
+  theme: base
+  look: classic
+  themeVariables:
+    background: transparent
+    lineColor: "#9CBBE3"
+    arrowheadColor: "#9CBBE3"
+    edgeLabelBackground: "#FFC128"
+    edgeLabelTextColor: "#4C5359"
+---
+flowchart TD
+    START(["Product from the request"]) --> FIND["Find matching price lists"]
+    FIND --> ANY{"Any matching price lists?"}
+    ANY -->|No| CATALOG(["Search through catalog prices"])
+    ANY -->|Yes| RANK["Rank the price lists:<br/>1. Match the customer<br/>2. Match the country<br/>3. Match more regions"]
+    RANK --> TOP["Take the highest rank"]
+    TOP --> HAS{"Price for the product in this rank?"}
+    HAS -->|Yes| CALC{"Can any of these prices be calculated?"}
+    CALC -->|Yes| LOWEST(["Return the lowest price in this rank"])
+    CALC -->|No| CATALOG
+    HAS -->|No| MORE{"Is there a lower rank?"}
+    MORE -->|Yes| NEXT["Take the next rank"]
+    NEXT --> HAS
+    MORE -->|No| CATALOG
+    style START fill:#A1BDDC,stroke:#4C5359
+    style LOWEST fill:#A1BDDC,stroke:#4C5359
+    style CATALOG fill:#A1BDDC,stroke:#4C5359
+    style FIND fill:#F2F6FA,stroke:#4C5359
+    style RANK fill:#F2F6FA,stroke:#4C5359
+    style TOP fill:#F2F6FA,stroke:#4C5359
+    style NEXT fill:#F2F6FA,stroke:#4C5359
+    style ANY fill:#DDE6EE,stroke:#4C5359
+    style HAS fill:#DDE6EE,stroke:#4C5359
+    style CALC fill:#DDE6EE,stroke:#4C5359
+    style MORE fill:#DDE6EE,stroke:#4C5359
+```
+
+For example, a customer belongs to customer groups A and B and buys for the legal entity L. The price matching request contains the customer as the `principal` with the `CUSTOMER` type, `L` as the `legalEntityId`, and `DE` as the target country. All of the following price lists are assigned to the `main` site and the `DE` country, use the `EUR` currency, and contain a price for the requested product:
+
+| Price list assigned to | Matches the customer | Price |
+| -------------- | -------------------- | ----- |
+| Customer groups A and B | Yes | 20 EUR |
+| Customer group A | Yes | 18 EUR |
+| Legal entity L | Yes | 15 EUR |
+| No customer groups and no legal entity | No | 12 EUR |
+
+The first three price lists share the highest rank, so the price matching algorithm returns 15 EUR from the legal entity price list. The algorithm stops at the highest rank, so it doesn't compare the 12 EUR price from the lower-ranked price list. If none of the first three price lists contained a price for the product, the algorithm would return 12 EUR.
 
 ### Before you start
 

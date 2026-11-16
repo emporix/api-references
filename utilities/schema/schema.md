@@ -335,6 +335,195 @@ curl -i -X PUT \
   }'
 ```
 
+## How to use localized OBJECT mixin attributes
+
+When your tenant's `languageSchemaVersion` configuration is `v2`, you can mark an `OBJECT` attribute as localized. Schema Service then generates a language-keyed map of nested objects. Array items of localized `TEXT` or `OBJECT` also use v2 language maps.
+
+Under `v1`, localized mixin `TEXT` values are often stored as arrays such as `[{ "language": "en", "value": "Organic" }]`. Under `v2`, the same kind of value is a language map such as `{ "en": "Organic", "de": "Bio" }`. Localized `TEXT` attributes work with either version. Localized `OBJECT` attributes require `v2`.
+
+### Prerequisites
+
+Before you start, complete the following prerequisites:
+
+1. Set the tenant configuration key `languageSchemaVersion` to the string value `v2`. Use the [Creating configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#post-configuration-tenant-configurations) endpoint, or [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/configuration-service/api-reference/tenant-configurations#put-configuration-tenant-configurations-propertykey) if the key already exists. For the broader workflow, see [Managing tenant configurations](../../configuration/configuration-service/configuration-service-tutorial.md#managing-tenant-configurations).
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/configuration/{tenant}/configurations' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+    {
+      "key": "languageSchemaVersion",
+      "secured": false,
+      "value": "v2",
+      "version": 1
+    }
+  ]'
+```
+
+2. Use language codes that exist in your tenant language configuration. See [Language Tutorials](../../configuration/configuration-service/language.md).
+
+{% hint style="info" %}
+If `languageSchemaVersion` is missing or set to `v1`, Schema Service rejects localized `OBJECT` attributes.
+{% endhint %}
+
+### Create a schema with a localized OBJECT
+
+Send a request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint. For an `OBJECT` attribute, set `"localized": true` in that attribute's `metadata`. For localized array items, set `"localized": true` on `arrayType`. Nested attributes inside a localized `OBJECT` must not set `localized` to `true`. Nested localized attributes remain allowed only under a plain (non-localized) `OBJECT`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/schema/{tenant}/schemas' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "name": {
+      "en": "Localized content attributes"
+    },
+    "types": [
+      "PRODUCT"
+    ],
+    "attributes": [
+      {
+        "key": "address",
+        "name": {
+          "en": "Address"
+        },
+        "type": "OBJECT",
+        "metadata": {
+          "localized": true,
+          "nullable": true
+        },
+        "attributes": [
+          {
+            "key": "city",
+            "name": {
+              "en": "City"
+            },
+            "type": "TEXT",
+            "metadata": {}
+          }
+        ]
+      },
+      {
+        "key": "labels",
+        "name": {
+          "en": "Labels"
+        },
+        "type": "ARRAY",
+        "metadata": {},
+        "arrayType": {
+          "type": "TEXT",
+          "localized": true
+        }
+      },
+      {
+        "key": "contentBlocks",
+        "name": {
+          "en": "Content blocks"
+        },
+        "type": "ARRAY",
+        "metadata": {},
+        "arrayType": {
+          "type": "OBJECT",
+          "localized": true,
+          "attributes": [
+            {
+              "key": "title",
+              "name": {
+                "en": "Title"
+              },
+              "type": "TEXT",
+              "metadata": {}
+            }
+          ]
+        }
+      }
+    ]
+  }'
+```
+
+Retrieve the schema with the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint. Use the returned `metadata.url` when you attach the mixin to a product or custom instance.
+
+### Store localized OBJECT values
+
+Unlike first-class localized fields in [Translations](../../standard-practices/translations.md), mixin writes are not reshaped by `Content-Language`. Always send full language maps in the mixin JSON body.
+
+Attach the mixin when you create or update a product or custom instance. Choose a stable mixin key, for example `localizedContentAttributes`, and put the schema URL under `metadata.mixins` for that same key. For products, see [Create a product](#create-a-product) or [How to update product mixins](../../products-labels-and-brands/product-service/product.md#how-to-update-product-mixins).
+
+Example product mixin payload:
+
+```json
+{
+  "mixins": {
+    "localizedContentAttributes": {
+      "address": {
+        "en": {
+          "city": "Berlin"
+        },
+        "de": {
+          "city": "Berlin"
+        }
+      },
+      "labels": [
+        {
+          "en": "Organic",
+          "de": "Bio"
+        }
+      ],
+      "contentBlocks": [
+        {
+          "en": {
+            "title": "Care instructions"
+          },
+          "de": {
+            "title": "Pflegehinweise"
+          }
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "mixins": {
+      "localizedContentAttributes": "{{schemaURL}}"
+    }
+  }
+}
+```
+
+A nullable localized `OBJECT` can be `null` for the whole field, or `null` for a single language key, for example `"en": null`.
+
+### Read a preferred language with Accept-Language
+
+On product and custom-instance reads, send `Accept-Language` to filter v2 mixin language maps. Unlike first-class localized fields, which return a string for one language (or a full map when the header is `*`), a filtered mixin field remains a single-key map, for example `{ "de": { "city": "Berlin" } }`.
+
+Accept-Language filtering for v2 mixin maps follows these rules:
+
+* A specific language or ordered list returns the first matching non-null translation as a single-key map.
+* A map with no matching non-null translation is omitted. A whole-field `null` localized `OBJECT` is preserved.
+* In an array of language maps, an element without a matching translation is omitted.
+* `*`, an omitted header, or an empty header leaves full v2 mixin maps unchanged.
+* v1 `[{language,value}]` mixin arrays are not filtered.
+
+For first-class localized fields on the same responses, an omitted or empty header uses the tenant's default language. Only `*` returns every translation.
+
+For product reads, see [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid). For custom instances, see [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id).
+
+### Localization rules
+
+Localization for mixin attributes follows these rules:
+
+* A localized `OBJECT` cannot contain another localized attribute anywhere in its subtree.
+* A plain (non-localized) `OBJECT` can contain nested localized `TEXT` or nested localized `OBJECT` attributes.
+* Under `v2`, creating or updating a schema regenerates array-of-localized `TEXT` and `OBJECT` fields as language maps.
+
+{% hint style="warning" %}
+When a `v2` tenant updates a schema that still uses nested v1 arrays for array-of-localized fields, Schema Service regenerates those fields as v2 maps. Stored values such as `[{ "language": "en", "value": "Organic" }]` then fail validation until you replace them with language maps such as `{ "en": "Organic", "de": "Bio" }`.
+{% endhint %}
+
 ## How to create a more complex schema
 
 In case you need to add a schema for more complex attribute types than those supported by default, instead of creating a schema, you can create a reference. This tutorial shows you how to upload more complex schemas.
