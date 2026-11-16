@@ -39,15 +39,14 @@ You can now choose where BatteryIncluded product indexing writes site-aware mixi
 A mixin is now site-aware when the product has an overlay for it, or when the schema version that the product references in `metadata.mixins` has `siteAware: true`. Schema Service writes the root `siteAware` value into the schema file it generates for each new schema version. Schema files generated before this change do not contain it, so those schema versions count as not site-aware. To apply the flag of an existing schema, update the schema to generate a new version, and point the products' `metadata.mixins` entry to the URL of that version.
 
 {% hint style="warning" %}
-Tenants whose `BATTERY_INCLUDED` configuration has no `siteAwareMixinsStrategy` use `FAN_OUT`. The next time a product is updated or reindexed, its BatteryIncluded document can change in two ways:
-
-* Sites that contribute to the merged document but have no prices, availability, or segment IDs now receive the product's site-aware mixins.
-* Mixins whose referenced schema version has `siteAware: true` and that have no overlay move from `_product.mixins` and `_product_i18n.<language>.mixins` to `_product_siteAware`.
+Tenants whose `BATTERY_INCLUDED` configuration has no `siteAwareMixinsStrategy` use `FAN_OUT`. Under `FAN_OUT`, site-aware mixins are written only under `_product_siteAware`. Every site that contributes to the merged document receives the merged value, and so does every other site with an `_product_siteAware` entry. A site without an overlay receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
 
 Search integrations that read these mixins from `_product` must read them from `_product_siteAware`, or switch the tenant to `INHERITANCE`, which keeps base values in `_product`.
 {% endhint %}
 
-For the strategies and the steps, see [How to choose how site-aware mixins are indexed](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-how-site-aware-mixins-are-indexed).
+{% hint style="info" %}
+For the strategies and the steps, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
+{% endhint %}
 
 #### Updated endpoints
 

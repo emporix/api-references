@@ -819,7 +819,7 @@ components:
                 not contain it. A change takes effect within 10 minutes and applies to each
                 product the next time it is updated or reindexed. To apply it to all products,
                 start a full product reindex after the change takes effect.
-                For details, see [How to choose how site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-how-site-aware-mixins-are-indexed).
+                For details, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
           required:
             - provider
     IndexCreationResponse:
