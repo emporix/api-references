@@ -332,7 +332,7 @@ paths:
                           kind: image
                           filename: image.png
                           mimeType: image/png
-                          size: 4
+                          size: 18432
                           status: ready
         '400':
           $ref: '#/components/responses/400_resp_common'
@@ -456,7 +456,7 @@ paths:
         * `tool_start` — The agent started a tool. `data` is `{ "tool_name": "...", "tool_call_id": "..." }`.
         * `tool_end` — The agent finished a tool. `data` uses the same fields as `tool_start`.
         * `tool_result` — Tool output. `data` is `{ "tool_name": "...", "tool_call_id": "...", "output": {} }`. `output` is a JSON object or array. Credential-like keys in `output` are omitted.
-        * `artifact` — Metadata for one generated image or file. `data` is `ChatStreamArtifactData`, with the same camelCase fields as `ChatArtifact`. `pending` is an image still generating.
+        * `artifact` — Metadata for one generated image or file. `data` is `ChatStreamArtifactData`, with the same fields as `ChatArtifact`. `pending` is only an image that is still generating, and that event includes `generationId`. A `ready` event includes `artifactId`.
         * `done` — The stream completed. `data` includes `agent_id`, `agent_type`, and `session_id` when present, plus provenance details for generated output. At least one identity field is sent.
         * `error` — **The `error` event is in preview mode** - some of the features may not be fully operational yet.
 
@@ -4282,9 +4282,15 @@ components:
         metadata:
           $ref: '#/components/schemas/ProvenanceMetadata'
     ChatArtifact:
-      type: object
       description: Metadata for one generated image or file.
+      oneOf:
+        - $ref: '#/components/schemas/ChatArtifactReady'
+        - $ref: '#/components/schemas/ChatArtifactFailed'
+    ChatArtifactReady:
+      type: object
+      description: A generated file whose bytes are stored. `artifactId` is present.
       required:
+        - artifactId
         - kind
         - filename
         - mimeType
@@ -4293,7 +4299,7 @@ components:
       properties:
         artifactId:
           type: string
-          description: Media asset id. Present when `status` is `ready`.
+          description: Media asset id.
         kind:
           type: string
           enum: [image, file]
@@ -4309,11 +4315,41 @@ components:
           description: Size in bytes.
         status:
           type: string
-          enum: [ready, failed]
-          description: `ready` or `failed`.
+          enum: [ready]
+          description: '`ready`.'
+        generationId:
+          type: string
+          description: Generation identifier.
+    ChatArtifactFailed:
+      type: object
+      description: A generated file that was not stored.
+      required:
+        - kind
+        - filename
+        - mimeType
+        - size
+        - status
+      properties:
+        kind:
+          type: string
+          enum: [image, file]
+          description: Generated content type.
+        filename:
+          type: string
+          description: File name.
+        mimeType:
+          type: string
+          description: Media type of the file.
+        size:
+          type: integer
+          description: Size in bytes.
+        status:
+          type: string
+          enum: [failed]
+          description: '`failed`.'
         errorCode:
           type: string
-          description: Failure code when `status` is `failed`.
+          description: Failure code.
         generationId:
           type: string
           description: Generation identifier.
@@ -4392,9 +4428,47 @@ components:
         - $ref: '#/components/schemas/ChatStreamErrorData'
     ChatStreamArtifactData:
       title: Artifact event data
+      description: JSON object in the SSE `data` field when `event` is `artifact`. Same fields as `ChatArtifact`. `pending` is only an image that is still generating.
+      oneOf:
+        - $ref: '#/components/schemas/ChatStreamArtifactPending'
+        - $ref: '#/components/schemas/ChatStreamArtifactReady'
+        - $ref: '#/components/schemas/ChatStreamArtifactFailed'
+    ChatStreamArtifactPending:
       type: object
-      description: JSON object in the SSE `data` field when `event` is `artifact`. Same camelCase fields as `ChatArtifact`. `pending` is an image still generating.
+      description: An image that is still generating. `kind` is `image` and `generationId` is present.
       required:
+        - kind
+        - filename
+        - mimeType
+        - size
+        - status
+        - generationId
+      properties:
+        kind:
+          type: string
+          enum: [image]
+          description: Generated content type. Only an image can be pending.
+        filename:
+          type: string
+          description: File name.
+        mimeType:
+          type: string
+          description: Media type of the file.
+        size:
+          type: integer
+          description: Size in bytes.
+        status:
+          type: string
+          enum: [pending]
+          description: '`pending`.'
+        generationId:
+          type: string
+          description: Generation identifier.
+    ChatStreamArtifactReady:
+      type: object
+      description: A generated file whose bytes are stored. `artifactId` is present.
+      required:
+        - artifactId
         - kind
         - filename
         - mimeType
@@ -4403,7 +4477,7 @@ components:
       properties:
         artifactId:
           type: string
-          description: Media asset id. Present when `status` is `ready`.
+          description: Media asset id.
         kind:
           type: string
           enum: [image, file]
@@ -4419,14 +4493,44 @@ components:
           description: Size in bytes.
         status:
           type: string
-          enum: [pending, ready, failed]
-          description: `pending`, `ready`, or `failed`.
-        errorCode:
-          type: string
-          description: Failure code when `status` is `failed`.
+          enum: [ready]
+          description: '`ready`.'
         generationId:
           type: string
-          description: Generation identifier. Required when `status` is `pending`.
+          description: Generation identifier.
+    ChatStreamArtifactFailed:
+      type: object
+      description: A generated file that was not stored.
+      required:
+        - kind
+        - filename
+        - mimeType
+        - size
+        - status
+      properties:
+        kind:
+          type: string
+          enum: [image, file]
+          description: Generated content type.
+        filename:
+          type: string
+          description: File name.
+        mimeType:
+          type: string
+          description: Media type of the file.
+        size:
+          type: integer
+          description: Size in bytes.
+        status:
+          type: string
+          enum: [failed]
+          description: '`failed`.'
+        errorCode:
+          type: string
+          description: Failure code.
+        generationId:
+          type: string
+          description: Generation identifier.
     ChatStreamTokenData:
       title: Token event data
       type: object
