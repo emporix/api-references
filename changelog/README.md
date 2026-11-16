@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-16" tags="new-feature" %}
 
 ## AI Service - agent chat artifacts and built-in file generator
 
