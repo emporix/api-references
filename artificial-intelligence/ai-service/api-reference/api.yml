@@ -2434,7 +2434,7 @@ components:
     # Native Tools:
     NativeToolType:
       type: string
-      enum: [ slack, rag_custom, rag_emporix, teams, search, file ]
+      enum: [ slack, rag_custom, rag_emporix, teams, search ]
       description: |-
         Type of the native tool. Possible values:
         * `slack`
@@ -2442,7 +2442,8 @@ components:
         * `rag_emporix`
         * `teams`
         * `search`
-        * `file` — the built-in file generator, enabled with the reserved ID `file_generator` in the agent's `nativeTools`.
+
+        The built-in file generator (type `file`) is returned only in agent responses and is not a creatable tool type. See `FileNativeToolResponse`.
     BaseNativeTool:
       type: object
       properties:
@@ -2904,13 +2905,15 @@ components:
       additionalProperties: false
     FileNativeToolResponse:
       allOf:
-        - $ref: '#/components/schemas/BaseNativeTool'
         - type: object
           properties:
             id:
               type: string
-              description: Unique identifier of the tool.
+              enum: [ file_generator ]
+              description: Reserved identifier of the built-in file generator.
             type:
+              type: string
+              enum: [ file ]
               description: For `FileNativeToolResponse`, it has to be set to `file`.
               example: file
             config:
@@ -4417,6 +4420,11 @@ components:
           description: '`pending` means an image is still generating. `ready` means the asset can be downloaded. `failed` means this item failed and the text answer continues.'
         error_code:
           type: string
+          enum:
+            - CAPABILITY_UNAVAILABLE
+            - INVALID_CONTENT
+            - OVERSIZED
+            - UPLOAD_FAILED
           description: |-
             Stable failure code. Present when `status` is `failed`. Possible values:
             * `CAPABILITY_UNAVAILABLE` — the agent's model provider cannot generate images.

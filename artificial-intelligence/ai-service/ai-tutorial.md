@@ -1292,6 +1292,8 @@ The following scopes are required:
 
 Only [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) returns images and files. [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) and [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) do not.
 
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
 {% stepper %}
 {% step %}
 #### Add the built-in file generator to the agent
