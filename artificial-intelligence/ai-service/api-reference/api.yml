@@ -462,7 +462,7 @@ paths:
 
           A failure during generation. `data` includes `message` and/or `code`. Example codes are `AGENT_SETUP` and `RECURSION_LIMIT`.
 
-        SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`). Artifact fields use camelCase on both endpoints.
+        SSE `data` fields use snake_case (`session_id`, `agent_id`, `agent_type`). They are not the camelCase fields of the synchronous chat `ChatResponse` (`sessionId`, `agentId`, `agentType`).
 
         HTTP `400`, `401`, `403`, and `500` responses are JSON problem bodies, not SSE events. They occur when the request is rejected before the stream starts. Unknown event names are not forwarded. Frames without an event name and with no data may appear as keepalives; ignore them.
       security:
