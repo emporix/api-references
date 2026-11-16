@@ -31,7 +31,7 @@ layout:
 
 #### Overview
 
-Starting agent chat returns a generated image or file in `artifacts`. A ready artifact includes `artifactId`. A pending stream event is an image that is still generating and includes `generation_id`. The stream event uses snake_case field names.
+Starting agent chat can return a generated image or file in `artifacts` property.
 
 #### Updated endpoints
 
