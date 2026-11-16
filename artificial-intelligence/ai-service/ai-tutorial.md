@@ -767,6 +767,8 @@ Choose the chat endpoint based on how you want to receive the agent's response:
 
   Trigger the specific agent providing its `agentId`. In the `message`, type in your query or data you want the agent to process.
 
+  When the agent generates an image or a file, the response includes `artifacts`. Download a ready file with `artifactId`.
+
   In the above example, the German Translation Agent is triggered. The agent acts according to its defined prompt - here, the agent is programmed to find the product `name` and `description` in the request message and translate the fields into German language. As a result, the agent gets back with the following response:
 
   ```
@@ -1290,7 +1292,7 @@ The following scopes are required:
 * `media.asset_manage` – in the token you use for chat. Without it, the agent answers in text only.
 * `media.asset_read` – in the token you use to download the images and files.
 
-Only [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) returns images and files. [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) and [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) do not.
+[Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) return images and files. The stream can also send a `pending` image. [Starting agent async chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-async) does not.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -1344,7 +1346,7 @@ event: token
 data: {"content":"Here is the summary of order EON1243."}
 
 event: artifact
-data: {"artifact_id":"6f1c0b2e1a2b4c3d9e8f1122","kind":"file","filename":"order-EON1243-summary.pdf","mime_type":"application/pdf","size":48213,"status":"ready"}
+data: {"artifactId":"6f1c0b2e1a2b4c3d9e8f1122","kind":"file","filename":"order-EON1243-summary.pdf","mimeType":"application/pdf","size":48213,"status":"ready"}
 
 event: done
 data: {"agent_id":"order-assistant","agent_type":"generic","session_id":"33a550d0-d812-4fb2-bb0d-d50dbfe3627b"}
@@ -1352,16 +1354,16 @@ data: {"agent_id":"order-assistant","agent_type":"generic","session_id":"33a550d
 
 Handle each `artifact` event by its `status`:
 
-* `pending` – An image is still being generated. Show a placeholder. A later event with the same `generation_id` replaces it.
-* `ready` – The asset is stored. Use `artifact_id` to download it.
-* `failed` – This image or file could not be created. `error_code` tells you why, for example `CAPABILITY_UNAVAILABLE` or `OVERSIZED`. Keep showing the text answer.
+* `pending` – An image is still being generated. Show a placeholder. A later event with the same `generationId` replaces it.
+* `ready` – The asset is stored. Use `artifactId` to download it.
+* `failed` – This image or file could not be created. `errorCode` tells you why, for example `CAPABILITY_UNAVAILABLE` or `OVERSIZED`. Keep showing the text answer.
 
 {% endstep %}
 
 {% step %}
 #### Download the image or file
 
-Use the `artifact_id` as the asset ID in [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url). The response contains a signed URL that expires after 15 minutes by default.
+Use the `artifactId` as the asset ID in [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url).
 
 ```bash
 curl -i \
