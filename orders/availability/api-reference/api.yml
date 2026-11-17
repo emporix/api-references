@@ -499,7 +499,6 @@ paths:
       security:
         - OAuth2:
             - availability.availability_manage
-            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -687,7 +686,6 @@ paths:
       security:
         - OAuth2:
             - availability.availability_manage
-            - availability.availability_manage_by_vendor
       requestBody:
         content:
           application/json:
@@ -966,6 +964,9 @@ components:
         op:
           type: string
           description: 'Patch operation. `REPLACE` sets the field. `REMOVE` removes the field.'
+          enum:
+            - REPLACE
+            - REMOVE
           example: REPLACE
         path:
           type: string

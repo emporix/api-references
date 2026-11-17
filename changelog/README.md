@@ -37,8 +37,8 @@ Availability Service can now update only the fields you send on one stored avail
 
 | Endpoint | Description |
 | --- | --- |
-| [Partially updating availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) | Updates the named fields on one stored availability and returns `204`. A missing availability returns `404` and is not created. |
-| [Partially updating multiple availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) | Updates up to 200 stored availabilities in one call and returns one result for each item. A missing availability returns `404` and is not created. |
+| [Partially updating availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) | Updates the named fields on one stored availability and returns `204`. A missing availability returns `404` and is not created. |
+| [Partially updating multiple availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) | Updates up to 200 stored availabilities in one call and returns one result for each item. A missing availability returns `404` and is not created. |
 
 #### Known problems
 
