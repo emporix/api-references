@@ -296,6 +296,7 @@ paths:
       security:
         - OAuth2:
             - product.product_manage
+        - OAuth2:
             - product.product_manage_by_vendor
       parameters:
         - $ref: '#/components/parameters/header_content_language'
@@ -2251,6 +2252,7 @@ components:
                   metadata:
                     version: 1
     productBulkPartialUpdateBody:
+      required: true
       content:
         application/json:
           schema:
@@ -3656,14 +3658,61 @@ components:
     productBulkPartialUpdate:
       type: object
       description: Partially updating an existing product in bulk.
-      allOf:
-        - $ref: '#/components/schemas/productPartialUpdate'
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/id'
-          required:
-            - id
+      additionalProperties: false
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/localizedValue'
+        code:
+          type: string
+          minLength: 1
+          description: 'Unique product identifier, defined by the user.'
+        description:
+          $ref: '#/components/schemas/localizedValue'
+        vendor:
+          $ref: '#/components/schemas/vendor'
+        taxClasses:
+          $ref: '#/components/schemas/taxClasses'
+        published:
+          $ref: '#/components/schemas/published'
+        weightDependent:
+          type: boolean
+          description: 'Mark the product as weight-dependent if the line item price could change after packaging, as this is necessary to ensure that credit card payments can be authorized.'
+        mixins:
+          $ref: '#/components/schemas/productMixins'
+        relatedItems:
+          description: |
+            List of items in a relationship with the main product. Assuming that in the system the following relation types are defined: `ACCESSORY` and `CONSUMABLE`, the two products: `Printer` and `Ink` exist, then the `Ink` product can be used as a related item with type `CONSUMABLE` for the Printer product.
+            In order to find all printers for which the ink is defined as a `CONSUMABLE` then `q-param` can be used:
+            `products?q=relatedItems.type:CONSUMABLE relatedItems.refId:Ink_Id`
+          type: array
+          items:
+            $ref: '#/components/schemas/relatedItem'
+        brandId:
+          type: string
+          description: 'ID of brand.'
+        brand:
+          $ref: '#/components/schemas/brand'
+        labelIds:
+          type: array
+          items:
+            type: string
+          description: 'Collection of label IDs.'
+        labels:
+          type: array
+          items:
+            $ref: '#/components/schemas/label'
+        template:
+          $ref: '#/components/schemas/template'
+        bundledProducts:
+          $ref: '#/components/schemas/bundledProducts'
+        variantAttributes:
+          $ref: '#/components/schemas/variantAttributes'
+        metadata:
+          $ref: '#/components/schemas/productMetadataWithVersion'
+      required:
+        - id
     vendor:
       type: object
       properties:
@@ -3728,7 +3777,7 @@ components:
         index:
           type: integer
           description: |
-            Index of the processed product, matching the price position in request body.
+            Index of the processed product, matching the product position in the request body.
         id:
           type: string
           description: Product unique identifier.

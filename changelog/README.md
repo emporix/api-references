@@ -37,7 +37,7 @@ Product Service can now partially update up to 200 existing products in one requ
 
 | Endpoint | Description |
 | --- | --- |
-| [Partially updating products in bulk](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) | Updates only the sent fields on each existing product and does not create a product that is missing. |
+| [Partially updating products in bulk](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) | Updates only the sent fields on each existing product and does not create a product that is missing. |
 
 #### Known problems
 
