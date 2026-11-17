@@ -384,16 +384,7 @@ paths:
         * A JSON `null` body returns `400` with the message `Required Body [referenceIds] not specified`. Nothing is deleted.
       operationId: DELETE-category-tree-delete-assignments-by-reference-bulk
       parameters:
-        - name: tenant
-          in: path
-          description: |
-            Your Emporix tenant name.
-
-            **Note**: The tenant should always be written in lowercase.
-          required: true
-          schema:
-            type: string
-            example: saasdev2
+        - $ref: '#/components/parameters/path_tenant'
         - name: categoryId
           in: path
           description: |
@@ -511,16 +502,7 @@ paths:
         * `category.category_publish` – Required only when `publish` is `true`.
       operationId: POST-category-tree-create-categories-bulk
       parameters:
-        - name: tenant
-          in: path
-          description: |
-            Your Emporix tenant name.
-
-            **Note**: The tenant should always be written in lowercase.
-          required: true
-          schema:
-            type: string
-            example: saasdev2
+        - $ref: '#/components/parameters/path_tenant'
         - name: publish
           in: query
           description: |
@@ -534,18 +516,7 @@ paths:
             type: boolean
             example: true
             default: false
-        - name: Content-Language
-          in: header
-          description: |
-            The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
-            * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
-            * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
-
-            **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
-          schema:
-            type: string
-            example: '*'
-            default: '*'
+        - $ref: '#/components/parameters/header_Content-Language'
       requestBody:
         required: true
         content:
@@ -656,16 +627,7 @@ paths:
         * `category.category_unpublish` – Required only when `publish` is `false`.
       operationId: PATCH-category-tree-patch-categories-bulk
       parameters:
-        - name: tenant
-          in: path
-          description: |
-            Your Emporix tenant name.
-
-            **Note**: The tenant should always be written in lowercase.
-          required: true
-          schema:
-            type: string
-            example: saasdev2
+        - $ref: '#/components/parameters/path_tenant'
         - name: publish
           in: query
           description: |
@@ -680,18 +642,7 @@ paths:
             type: boolean
             example: true
             default: false
-        - name: Content-Language
-          in: header
-          description: |
-            The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
-            * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
-            * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
-
-            **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
-          schema:
-            type: string
-            example: '*'
-            default: '*'
+        - $ref: '#/components/parameters/header_Content-Language'
       requestBody:
         required: true
         content:
@@ -3589,6 +3540,31 @@ paths:
             - category.category_manage
             - category.category_read_unpublished
 components:
+  parameters:
+    path_tenant:
+      name: tenant
+      in: path
+      description: |
+        Your Emporix tenant name.
+
+        **Note**: The tenant should always be written in lowercase.
+      required: true
+      schema:
+        type: string
+        example: saasdev2
+    header_Content-Language:
+      name: Content-Language
+      in: header
+      description: |
+        The Content-Language request HTTP header defines language(s) that can be used in the payload. Request body may contain only translations that are matching the languages specified in the header. Possible values:
+        * `*` - request body may contain translations for all languages specified in tenant configuration. This is also the default behaviour if the header is not set.
+        * `en`, `en,de`, `fr-CH, fr;q=0.9, en;q=0.8, de;q=0.7, *;q=0.5` - request body may contain only translations for languages specified in the header (if they are available in tenant configuration).
+
+        **Note**: For category requests, localized fields (such as `localizedName`, `localizedDescription`, `localizedSlug`) must always be provided as maps of language codes to values, regardless of the Content-Language header value.
+      schema:
+        type: string
+        example: '*'
+        default: '*'
   schemas:
     AssignmentDeprecated:
       type: object
