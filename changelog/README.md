@@ -27,6 +27,28 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
+## Category Service - bulk category and assignment changes
+
+#### Overview
+
+Category Service can now create categories, partially update categories, and delete category assignments by reference in batches of up to 200. Each call returns one result for each item.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories-bulk) | Creates up to 200 categories in one call and returns one result for each item. |
+| [Partially updating categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-bulk) | Updates only the sent fields on each existing category and does not create a category that is missing. |
+| [Deleting category assignments by reference in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-references-bulk) | Deletes up to 200 assignments of one category by reference id and leaves the same reference on another category in place. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
 ## Product Service - partial product updates in bulk
 
 #### Overview
