@@ -27,6 +27,27 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
+## Availability Service - partial availability updates
+
+#### Overview
+
+Availability Service can now update only the fields you send on one stored availability, or on up to 200 stored availabilities in one call. The call does not create an availability that is missing.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) | Updates the named fields on one stored availability and returns `204`. A missing availability returns `404` and is not created. |
+| [Partially updating multiple availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) | Updates up to 200 stored availabilities in one call and returns one result for each item. A missing availability returns `404` and is not created. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
 ## Category Service - bulk category and assignment changes
 
 #### Overview
