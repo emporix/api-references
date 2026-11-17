@@ -213,6 +213,7 @@ paths:
       security:
         - OAuth2:
             - media.asset_manage
+        - OAuth2:
             - media.asset_manage_by_vendor
       requestBody:
         required: true
@@ -336,6 +337,7 @@ paths:
       security:
         - OAuth2:
             - media.asset_manage
+        - OAuth2:
             - media.asset_manage_by_vendor
       requestBody:
         required: true
@@ -427,6 +429,7 @@ paths:
       security:
         - OAuth2:
             - media.asset_manage
+        - OAuth2:
             - media.asset_manage_by_vendor
       requestBody:
         required: true
@@ -1075,6 +1078,7 @@ components:
         type: object
         required:
           - id
+          - data
         properties:
           id:
             type: string

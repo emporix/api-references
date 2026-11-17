@@ -31,15 +31,15 @@ layout:
 
 #### Overview
 
-The Media Service can now create, partially update, and delete up to 200 assets in one call. Each call returns one result for each item.
+The Media Service can now create, partially update, and delete up to 200 assets in one call. For a valid request, the call returns one result for each item.
 
 #### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets-bulk) | Creates up to 200 link or blob assets in one call and returns one result for each item. |
-| [Partially updating assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) | Updates up to 200 stored assets in one call and returns one result for each item. A missing asset returns `404` and is not changed. |
-| [Deleting assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) | Deletes up to 200 assets in one call and returns one result for each item. An asset that is already absent returns `204`. |
+| [Creating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-bulk) | Creates up to 200 link or blob assets in one call and returns one result for each item. |
+| [Partially updating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) | Updates up to 200 stored assets in one call and returns one result for each item. A missing asset returns `404` and is not changed. |
+| [Deleting assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) | Deletes up to 200 assets in one call and returns one result for each item. An asset that is already absent returns `204`. |
 
 #### Known problems
 
