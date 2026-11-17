@@ -25,6 +25,26 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## Product Service - partial product updates in bulk
+
+#### Overview
+
+Product Service can now partially update up to 200 existing products in one request. The call changes only the fields you send and does not create a product that is missing.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating products in bulk](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) | Updates only the sent fields on each existing product and does not create a product that is missing. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-16" tags="improvement" %}
 
 ## AI Service - generated files on agent chat

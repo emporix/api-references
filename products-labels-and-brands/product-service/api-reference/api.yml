@@ -261,6 +261,60 @@ paths:
       summary: Upserting multiple products
       tags:
         - Products
+    patch:
+      summary: Partially updating products in bulk
+      operationId: PATCH-product-update-bulk-products
+      tags:
+        - Products
+      description: |-
+        Partially updates existing products in bulk. The maximum batch size is 200. A product that does not exist is not created.
+
+        Each item follows the same rules as [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid). Omitted fields remain unchanged. The response for a particular product is returned at the same index as that product in the request body. When the same product id appears more than once, the items are applied in request order, and a later item is applied to the result of the earlier item.
+
+        The following results apply to one item, and the call still returns `207`:
+
+        * An item without an id returns `400` with the message `Product id is required. Please provide a valid product id.`
+        * An item whose id does not exist returns `404` with the message `The product with id {id} has not been found.`
+        * An item whose `metadata.version` does not match the stored product returns `409`.
+
+        The following results apply to the whole call:
+
+        * A request body with more than 200 items returns `400`. The details include `Maximum size of the payload array is 200.`
+        * An empty body returns `400` with the message `Body cannot be empty.`
+
+        ***
+
+        **Additional scope information**
+
+        The following scopes are required only in specific cases:
+
+        * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
+        * The `product.product_publish` scope is only required if you want to publish the product when updating it.
+        * The `product.product_unpublish` scope is only required if you want to unpublish the product when updating it.
+
+        ***
+      security:
+        - OAuth2:
+            - product.product_manage
+            - product.product_manage_by_vendor
+      parameters:
+        - $ref: '#/components/parameters/header_content_language'
+        - $ref: '#/components/parameters/query_skip_variants_generation'
+        - $ref: '#/components/parameters/query_do_index'
+        - $ref: '#/components/parameters/query_skip_related_items_validation'
+      requestBody:
+        $ref: '#/components/requestBodies/productBulkPartialUpdateBody'
+      responses:
+        '207':
+          $ref: '#/components/responses/products_patch_in_bulk_response'
+        '400':
+          $ref: '#/components/responses/common_response_BadRequest_400'
+        '401':
+          $ref: '#/components/responses/common_response_Unauthorized_401'
+        '403':
+          $ref: '#/components/responses/common_response_Forbidden_403'
+        '500':
+          $ref: '#/components/responses/common_response_InternalServerError_500'
   /product/{tenant}/products/recalculate:
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1735,6 +1789,26 @@ components:
                   id: 62d65a15088ed94ebf093d8d
                   code: 204
                   status: NO_CONTENT
+    products_patch_in_bulk_response:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/bulkResponse'
+          examples:
+            Multi-Status response example:
+              value:
+                - index: 0
+                  id: 62d65a15088ed94ebf093d7d
+                  code: 204
+                  status: NO_CONTENT
+                - index: 1
+                  id: 5c332826a9812100098ff50a
+                  code: 404
+                  status: NOT_FOUND
+                  message: The product with id 5c332826a9812100098ff50a has not been found.
   requestBodies:
     productsSearchBody:
       content:
@@ -2176,6 +2250,23 @@ components:
                   name: "Product 3"
                   metadata:
                     version: 1
+    productBulkPartialUpdateBody:
+      content:
+        application/json:
+          schema:
+            type: array
+            maxItems: 200
+            items:
+              $ref: '#/components/schemas/productBulkPartialUpdate'
+          examples:
+            Partially update two products:
+              value:
+                - id: 62d65a15088ed94ebf093d7d
+                  code: SM-X2-2024
+                  metadata:
+                    version: 1
+                - id: 62d65a15088ed94ebf093d8d
+                  published: true
 
 
     productBulkCreateBody:
@@ -3562,6 +3653,17 @@ components:
               $ref: '#/components/schemas/variantAttributes'
             metadata:
               $ref: '#/components/schemas/productMetadataWithVersion'
+    productBulkPartialUpdate:
+      type: object
+      description: Partially updating an existing product in bulk.
+      allOf:
+        - $ref: '#/components/schemas/productPartialUpdate'
+        - type: object
+          properties:
+            id:
+              $ref: '#/components/schemas/id'
+          required:
+            - id
     vendor:
       type: object
       properties:
