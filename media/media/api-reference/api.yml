@@ -188,27 +188,9 @@ paths:
     post:
       summary: Creating assets in bulk
       description: |-
-        Creates up to 200 assets in one call.
-
-        A JSON array creates assets of the `LINK` type. A `multipart/form-data` request creates assets of the `BLOB` type. Its `body` part is a JSON array, and it has one `file` part for each object in that array, in the same order.
-
-        The response for a particular asset is returned at the same index as that asset in the request. The call still returns `207` when an item fails. A failed item is not stored and does not keep an id.
-
-        The following results apply to one item:
-
-        * A created item returns `201` and includes `id`.
-        * A JSON item whose `type` is `BLOB` returns `400` with the message `Asset of 'BLOB' type can only be created from mutltipart request.` The other items are still processed.
-        * A multipart item whose `type` is `LINK` returns `400` with the message `Only asset of 'BLOB' type can be created from mutltipart request.` The other items are still processed.
-        * An item whose `id` fails validation returns `400` with the message `There is a validation error. Please check the details.` The other items are still processed.
-        * When the `vendor-id` header is set, an item whose referenced product does not belong to that vendor returns `400` with the message `Provided product does not belong to vendor: '{vendor-id}'`. An item that is not a single product reference returns `400` with the message `Only 'Product' assets can be created by vendor.` The other items are still processed.
-
-        The following results apply to the whole call:
-
-        * A request body with more than 200 items returns `400` with the message `Maximum size of the payload array is 200.` Nothing is stored.
-        * A body that is not a JSON array returns `400` with the message `Bulk create body must be an array`. Nothing is stored.
-        * A multipart request that has no `body` part, or whose file count does not match the array, returns `400` with the message `The number of files must match the number of items.` Nothing is stored.
-        * A multipart `body` part that is not valid JSON returns `400` with the message ``Provided `body` part is incorrect. Cannot read JSON value.`` Nothing is stored.
-        * An empty list returns `207` and an empty array.
+        Creates up to 200 assets in one call. The response contains one result for each item.
+        - To create assets of the `BLOB` type, use the `multipart/form-data` request body. The `body` part is a JSON array, and the request has one `file` part for each object in that array, in the same order.
+        - To create assets of the `LINK` type, use the `application/json` request body.
       operationId: POST-media-create-assets-bulk
       security:
         - OAuth2:
@@ -316,23 +298,7 @@ paths:
     patch:
       summary: Partially updating assets in bulk
       description: |-
-        Partially updates up to 200 assets in one call. Each item has an `id` and `data`. `data` is the same JSON Patch document that [Partially updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) accepts.
-
-        The response for a particular asset is returned at the same index as that asset in the request. The call still returns `207` when an item fails.
-
-        The following results apply to one item:
-
-        * A patched item returns `204`.
-        * An item whose `data` is missing, or is not a JSON Patch list, returns `400` with the message `Bulk patch item is invalid`. The other items are still processed.
-        * An item whose asset does not exist returns `404` with the message `Error while getting asset`. The other items are still processed.
-        * An item whose asset belongs to another vendor returns `404` with the message `Error while getting asset`. That asset is not changed.
-
-        The following results apply to the whole call:
-
-        * A request body with more than 200 items returns `400` with the message `Maximum size of the payload array is 200.` Nothing is changed.
-        * A body that is not a JSON array returns `400` with the message `Bulk patch body must be an array`. Nothing is changed.
-        * An item without `id` returns `400` with the message `Each bulk patch item must have an id`. Nothing is changed.
-        * An empty list returns `207` and an empty array.
+        Partially updates up to 200 assets in one call. Each item has an `id` and `data`. `data` is the same JSON Patch document that [Partially updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid) accepts. The response contains one result for each item.
       operationId: PATCH-media-patch-assets-bulk
       security:
         - OAuth2:
@@ -410,21 +376,7 @@ paths:
     delete:
       summary: Deleting assets in bulk
       description: |-
-        Deletes up to 200 assets in one call. The body is a JSON array of asset ids.
-
-        The response for a particular id is returned at the same index as that id in the request. The call returns `207` for a valid array.
-
-        The following results apply to one item:
-
-        * A removed asset returns `204`.
-        * An asset that is already absent returns `204`.
-        * An asset that belongs to another vendor stays stored. That item still returns `204`.
-
-        The following results apply to the whole call:
-
-        * A request body with more than 200 ids returns `400` with the message `Maximum size of the payload array is 200.` Nothing is deleted.
-        * A body that is not a JSON array returns `400`. Nothing is deleted.
-        * An empty list returns `207` and an empty array.
+        Deletes up to 200 assets in one call. The body is a JSON array of asset ids. The response contains one result for each id.
       operationId: DELETE-media-delete-assets-bulk
       security:
         - OAuth2:
