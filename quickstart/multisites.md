@@ -399,13 +399,13 @@ R(AVAILABILITY: WarmTech_DE)
 S(SEGMENT: DE_WarmTech_Wholesaler)
 T(PRODUCT: ComfortHeat Thermalux Pro)
 
-subgraph d ["`**Products**`"]
+subgraph products ["Products"]
 G;
 M;
 T;
 end
 
-subgraph c ["`**Netherlands**`"]
+subgraph netherlands ["Netherlands"]
 A-->D;
 A-.->H;
 A-->I;
@@ -418,7 +418,7 @@ I-->G;
 H-.->G
 end
 
-subgraph a ["`**ThermoBrand_DE**`"]
+subgraph thermobrand ["ThermoBrand_DE"]
 B-->J;
 J-->K;
 K-->M;
@@ -429,7 +429,7 @@ N-.->K;
 N-.->M
 end
 
-subgraph b ["`**WarmTech_DE**`"]
+subgraph warmtech ["WarmTech_DE"]
 C-->O;
 C-->R;
 C-->S;
@@ -440,32 +440,32 @@ S-.->P;
 S-.->G;
 end
 
-A:::1
-B:::1
-C:::1
-D:::2
-J:::2
-O:::2
-E:::3
-F:::3
-K:::3
-P:::3
-G:::4
-M:::4
-I:::5
-L:::5
-R:::5
-H:::6
-N:::6
-S:::6
-T:::4
+A:::site
+B:::site
+C:::site
+D:::catalog
+J:::catalog
+O:::catalog
+E:::category
+F:::category
+K:::category
+P:::category
+G:::product
+M:::product
+I:::availability
+L:::availability
+R:::availability
+H:::segment
+N:::segment
+S:::segment
+T:::product
 
-classDef 1 fill:#A1BDDC, stroke:#4C5359
-classDef 2 fill:#DDE6EE, stroke:#4C5359
-classDef 3 fill:#F2F6FA, stroke:#4C5359
-classDef 4 fill:#3B73BB, stroke:#4C5359, color: #ffffff
-classDef 5 fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
-classDef 6 fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
+classDef site fill:#A1BDDC, stroke:#4C5359
+classDef catalog fill:#DDE6EE, stroke:#4C5359
+classDef category fill:#F2F6FA, stroke:#4C5359
+classDef product fill:#3B73BB, stroke:#4C5359, color: #ffffff
+classDef availability fill:#FFC128, stroke:#4C5359, stroke-dasharray: 5
+classDef segment fill:#FAFBFC, stroke:#4C5359, stroke-dasharray: 5
 ```
 
 <!-- <figure><img src="../.gitbook/assets/multisites_example.svg" alt="Example architecture"><figcaption>Example architecture</figcaption></figure> -->
@@ -864,5 +864,5 @@ Refer to the API documentation for each service to get better understanding what
 {% endhint %}
 
 {% hint style="info" %}
-When you have multiple sites available in the tenant, you are able to control access to the entities associated with these sites for the employees. You use sites codes as restrictions to limit view and manage rights for greater responsibilities separation and user experience. Learn more about the [Site Permissions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/authentication-and-authorization/site-permissions).
+When you have multiple sites available in the tenant, you are able to control access to the entities associated with these sites for the employees. You use sites codes as restrictions to limit view and manage rights for greater responsibilities separation and user experience. Learn more about the [Site Permissions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/authentication-and-authorization/authorization/site-permissions).
 {% endhint %}
