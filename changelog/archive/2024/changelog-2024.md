@@ -1322,7 +1322,7 @@ There are no known problems.
 
 We introduced a new attribute `customerEmail` for the quote creation schema that allows you to create a quote using the customer's email address.
 
-We updated the Quote Service so that it allows for using a service token (generated from the API Keys in Developer Portal), which is not linked to any specific user. You can perform all Quote Service API operations using the service token. The merchant and customer access tokens can still be used with the Quote API. For more information, see [Developer Portal](https://developer.emporix.io/user-guides/getting-started/developer-portal/manage-apikeys).
+We updated the Quote Service so that it allows for using a service token (generated from the API Keys in Developer Portal), which is not linked to any specific user. You can perform all Quote Service API operations using the service token. The merchant and customer access tokens can still be used with the Quote API. For more information, see [Developer Portal](https://app.gitbook.com/s/6GTRpjfleJymwcc6AX3v/getting-started/developer-portal/manage-apikeys).
 
 **Updated endpoints**
 
