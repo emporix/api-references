@@ -42,7 +42,7 @@ The Webhook Service now switches off a delivery target that keeps failing and st
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages) | Lists the stored failed messages, with filters, search, sorting, field selection, and offset or cursor paging. |
+| [Retrieving failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages) | Lists the stored failed messages, with filters, search, sorting, field selection, and paging by page number (`pageNumber`, `pageSize`) or by cursor (`next`, `prev`). |
 | [Retrieving a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages-failedmessageid) | Returns a single failed message, including its payload. |
 | [Resending a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-failedmessageid-resend) | Queues a single failed message for delivery again and removes it from the stored messages. |
 | [Restarting failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-restart) | Starts a job that queues the selected failed messages for delivery again. |
