@@ -8,7 +8,9 @@ description: Get familiar with Emporix API.
 
 ## API Quickstart
 
-Browse all services and open their interactive API references from the [List of API Services](list-of-api-services.md).
+Download API references:
+
+<a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API Specs - ZIP</a>
 
 For easier testing of Emporix API, use the public [Postman Collection](postman-collection.md) with example flows.
 
