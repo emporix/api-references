@@ -31,18 +31,18 @@ layout:
 
 #### Overview
 
-Agents and MCP servers accept schema-validated mixins. Send mixin values in `mixins` and the matching JSON Schema URLs in `metadata.mixins`. Schema validation runs when `metadata.mixins` names a schema for that key. Omitting mixin metadata skips schema validation. Each upsert replaces the stored mixin map, so clients send the full map. An invalid mixin schema returns 400 and leaves the resource unchanged. Clients may store applied AI provenance as `mixins.provenance.entries`. A generation response uses `reviewStatus` `not_reviewed` and omits `aiGeneratedFields`. An entry written on save uses `reviewStatus` `reviewed` and may include `aiGeneratedFields`. On create the client sets `contentVersion` to 1. On update the client sets `contentVersion` to the current `metadata.version` plus 1 and appends the entry to `entries`. A field named on the new entry is removed from older entries. An older entry with no fields left is dropped. The service stores that object as sent. `generatedAt` has no fractional seconds, or exactly three millisecond digits. Each agent update archives the previous `mixins` and `metadata.mixins` on that version. MCP servers have no version history. `GET ?version=` equal to the live `metadata.version` returns the current agent. An older version returns the archived mixins. A rollback sends that body with the live `metadata.version`.
+Agents and MCP servers now support mixins, consistent with other Emporix entities. Mixin values are provided through `mixins` and the JSON Schema URLs through `metadata.mixins`. Schemas are hosted and referenced manually.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | `version` equal to the live version returns the current agent. An older `version` returns the archived `mixins` and `metadata.mixins`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response includes `mixins` and `metadata.mixins`. |
 | [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request and response include `mixins` and `metadata.mixins`. |
-| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | An invalid mixin schema returns 400 and leaves the agent unchanged. |
-| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | The response includes `mixins` and `metadata.mixins` when the server stores them. |
-| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Custom and dynamic MCP servers include `mixins` and `metadata.mixins`. |
-| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | An invalid mixin schema returns 400 and leaves the MCP server unchanged. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request accepts `mixins` and `metadata.mixins`. |
+| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Response includes `mixins` and `metadata.mixins`. |
+| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Request and response include `mixins` and `metadata.mixins`. |
+| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Request accepts `mixins` and `metadata.mixins`. |
 
 #### Known problems
 

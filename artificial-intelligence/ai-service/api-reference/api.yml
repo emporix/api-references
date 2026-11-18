@@ -890,7 +890,7 @@ paths:
       description: |-
         Updates or creates a specified agent by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
-        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`. An invalid mixin schema returns `400` and leaves the stored agent unchanged.
+        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -920,7 +920,7 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
-        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`. An invalid mixin schema returns `400` and leaves the stored agent unchanged.
+        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1861,7 +1861,7 @@ paths:
         
         ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
-        The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant. An invalid mixin schema returns `400` and leaves the stored MCP server unchanged.
+        The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant.
 
         {% hint style="danger" %}
         Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
@@ -1896,7 +1896,7 @@ paths:
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
         
-        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled. An invalid mixin schema returns `400` and leaves the stored MCP server unchanged.
+        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -3203,21 +3203,9 @@ components:
             config:
               $ref: '#/components/schemas/McpServerConfigRequest'
             metadata:
-              allOf:
-                - $ref: '#/components/schemas/MetadataRequest'
-                - type: object
-                  properties:
-                    mixins:
-                      type: object
-                      additionalProperties:
-                        type: string
-                      description: Map of mixin names to the URLs of their JSON Schemas.
+              $ref: '#/components/schemas/McpMetadataRequest'
             mixins:
-              type: object
-              nullable: true
-              additionalProperties: true
-              description: |-
-                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
+              $ref: '#/components/schemas/MixinValuesRequest'
           required:
             - name
             - transport
@@ -3247,21 +3235,9 @@ components:
               items:
                 $ref: '#/components/schemas/McpToolRequest'
             metadata:
-              allOf:
-                - $ref: '#/components/schemas/MetadataRequest'
-                - type: object
-                  properties:
-                    mixins:
-                      type: object
-                      additionalProperties:
-                        type: string
-                      description: Map of mixin names to the URLs of their JSON Schemas.
+              $ref: '#/components/schemas/McpMetadataRequest'
             mixins:
-              type: object
-              nullable: true
-              additionalProperties: true
-              description: |-
-                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
+              $ref: '#/components/schemas/MixinValuesRequest'
           required:
             - name
             - type
@@ -3287,19 +3263,9 @@ components:
             config:
               $ref: '#/components/schemas/McpServerConfigResponse'
             metadata:
-              allOf:
-                - $ref: '#/components/schemas/MetadataResponse'
-                - type: object
-                  properties:
-                    mixins:
-                      type: object
-                      additionalProperties:
-                        type: string
-                      description: Map of mixin names to the URLs of their JSON Schemas.
+              $ref: '#/components/schemas/McpMetadataResponse'
             mixins:
-              type: object
-              additionalProperties: true
-              description: Mixin values keyed by name. Present when the MCP server stores mixins.
+              $ref: '#/components/schemas/McpMixinValuesResponse'
     DynamicMcpServerResponse:
       allOf:
         - $ref: '#/components/schemas/BaseManagedMcpServer'
@@ -3322,19 +3288,9 @@ components:
               items:
                 $ref: '#/components/schemas/McpToolResponse'
             metadata:
-              allOf:
-                - $ref: '#/components/schemas/MetadataResponse'
-                - type: object
-                  properties:
-                    mixins:
-                      type: object
-                      additionalProperties:
-                        type: string
-                      description: Map of mixin names to the URLs of their JSON Schemas.
+              $ref: '#/components/schemas/McpMetadataResponse'
             mixins:
-              type: object
-              additionalProperties: true
-              description: Mixin values keyed by name. Present when the MCP server stores mixins.
+              $ref: '#/components/schemas/McpMixinValuesResponse'
     McpServerResponse:
       oneOf:
         - $ref: '#/components/schemas/CustomMcpServerResponse'
@@ -4082,16 +4038,9 @@ components:
                       type: string
                       description: Optional note stored on this version. A blank value clears the live note. The next successful update archives the note with this version.
                     mixins:
-                      type: object
-                      additionalProperties:
-                        type: string
-                      description: Map of mixin names to the URLs of their JSON Schemas.
+                      $ref: '#/components/schemas/MixinSchemaUrls'
             mixins:
-              type: object
-              nullable: true
-              additionalProperties: true
-              description: |-
-                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
+              $ref: '#/components/schemas/MixinValuesRequest'
           required:
             - llmConfig
             - mcpServers
@@ -4204,6 +4153,35 @@ components:
         lastName:
           type: string
           description: Last name of the customer or employee.
+    MixinSchemaUrls:
+      type: object
+      additionalProperties:
+        type: string
+      description: Map of mixin names to the URLs of their JSON Schemas.
+    MixinValuesRequest:
+      type: object
+      nullable: true
+      additionalProperties: true
+      description: |-
+        Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
+    McpMetadataRequest:
+      allOf:
+        - $ref: '#/components/schemas/MetadataRequest'
+        - type: object
+          properties:
+            mixins:
+              $ref: '#/components/schemas/MixinSchemaUrls'
+    McpMetadataResponse:
+      allOf:
+        - $ref: '#/components/schemas/MetadataResponse'
+        - type: object
+          properties:
+            mixins:
+              $ref: '#/components/schemas/MixinSchemaUrls'
+    McpMixinValuesResponse:
+      type: object
+      additionalProperties: true
+      description: Mixin values keyed by name. Present when the MCP server stores mixins.
     MetadataRequest:
       type: object
       properties:
@@ -4239,10 +4217,7 @@ components:
               type: string
               description: Note stored for this live version.
             mixins:
-              type: object
-              additionalProperties:
-                type: string
-              description: Map of mixin names to the URLs of their JSON Schemas.
+              $ref: '#/components/schemas/MixinSchemaUrls'
 
     # Jobs:
     JobStatus:
@@ -4515,9 +4490,7 @@ components:
                   generatedAt:
                     type: string
                     format: date-time
-                    description: |-
-                      UTC time when the content was generated.
-                      No fractional seconds, or exactly three millisecond digits.
+                    description: 'Date and time when the content was generated. The value is approved as an ISO-8601 representation of an Instant. For example: `2022-04-30T13:18:02.379Z`'
                   generator:
                     type: string
                     description: Identifier of the generator.
@@ -5241,7 +5214,7 @@ components:
         type: integer
         minimum: 1
       description: |
-        Returns the agent at this version. When `version` equals the live `metadata.version`, the response is the current agent. An older version returns that version's archived configuration, including `mixins` and `metadata.mixins`. Omit the parameter to return the live agent.
+        Returns the configuration stored for this agent version. Omit the parameter to return the live agent.
         The response is `404` when the agent or this version does not exist.
         Cannot be combined with `allVersions` query parameter.
     allVersions:

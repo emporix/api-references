@@ -52,7 +52,7 @@ These services accept mixins in their API requests and responses, but require ma
 - **Prices** - Price Service
 - **Returns** - Returns Service
 - **Shopping List** - Shopping List Service
-- **Agents and MCP Servers** - AI Service (schema-validated `mixins` plus `metadata.mixins` schema URLs; schemas are hosted and referenced manually). An upsert sends the full mixin map. A missing or null `mixins` clears the stored map. On update, a field named on a new provenance entry is removed from older entries, and an older entry with no fields left is dropped. Agents archive each previous map on a version. MCP servers have no version history.
+- **Agents and MCP Servers** - AI Service (schema-validated `mixins` and `metadata.mixins`; schemas are hosted and referenced manually)
 
 
 {% hint style="warning" %}
