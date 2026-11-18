@@ -888,9 +888,9 @@ paths:
         '409':
           $ref: '#/components/responses/409_resp_common'
       description: |-
-        Updates or creates a specified product by replacing all of its existing data with data from the request body.
+        Updates or creates a specified agent by replacing all of its existing data with data from the request body.
         If the `metadata.version` is provided then optimistic locking is enabled and version must match the version in the database.
-        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`.
+        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`. An invalid mixin schema returns `400` and leaves the stored agent unchanged.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -920,7 +920,7 @@ paths:
           - `add` (adding an item to the items list)
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
-        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`.
+        A successful update increments `metadata.version` and stores the previous configuration. A request that sends a stale `metadata.version` returns `409`. An invalid mixin schema returns `400` and leaves the stored agent unchanged.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -1861,7 +1861,7 @@ paths:
         
         ***Important***: If MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
 
-        The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant.
+        The `type: dynamic` value and its `tools` definitions are in preview. When upserting an enabled dynamic MCP server, each tool's `config.invocation.functionId` is validated against the Automation service. The request returns `400` when a referenced function does not exist on the tenant. An invalid mixin schema returns `400` and leaves the stored MCP server unchanged.
 
         {% hint style="danger" %}
         Hosting of cloud functions and use of dynamic MCP servers is not included in standard billing plans and is billed separately on a pay-as-you-go basis. If you're interested in getting access to these features, contact the [Sales Team](mailto:support@emporix.com).
@@ -1896,7 +1896,7 @@ paths:
           - `remove` (removing an item from the items list)
           - `replace` (replacing an item with given ID with new definition)
         
-        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled.
+        ***Important***: If an MCP server is being used by an enabled agent then disabling MCP is not possible without `force` flag set to `true`. Only then the agent and MCP server are disabled. An invalid mixin schema returns `400` and leaves the stored MCP server unchanged.
       security:
         - OAuth2:
             - ai.agent_manage
@@ -3211,9 +3211,10 @@ components:
                       type: object
                       additionalProperties:
                         type: string
-                      description: Mixin name to the URL of its JSON Schema.
+                      description: Map of mixin names to the URLs of their JSON Schemas.
             mixins:
               type: object
+              nullable: true
               additionalProperties: true
               description: |-
                 Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
@@ -3254,9 +3255,10 @@ components:
                       type: object
                       additionalProperties:
                         type: string
-                      description: Mixin name to the URL of its JSON Schema.
+                      description: Map of mixin names to the URLs of their JSON Schemas.
             mixins:
               type: object
+              nullable: true
               additionalProperties: true
               description: |-
                 Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
@@ -3293,7 +3295,7 @@ components:
                       type: object
                       additionalProperties:
                         type: string
-                      description: Mixin name to the URL of its JSON Schema.
+                      description: Map of mixin names to the URLs of their JSON Schemas.
             mixins:
               type: object
               additionalProperties: true
@@ -3328,7 +3330,7 @@ components:
                       type: object
                       additionalProperties:
                         type: string
-                      description: Mixin name to the URL of its JSON Schema.
+                      description: Map of mixin names to the URLs of their JSON Schemas.
             mixins:
               type: object
               additionalProperties: true
@@ -4083,9 +4085,10 @@ components:
                       type: object
                       additionalProperties:
                         type: string
-                      description: Mixin name to the URL of its JSON Schema.
+                      description: Map of mixin names to the URLs of their JSON Schemas.
             mixins:
               type: object
+              nullable: true
               additionalProperties: true
               description: |-
                 Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
@@ -4239,7 +4242,7 @@ components:
               type: object
               additionalProperties:
                 type: string
-              description: Mixin name to the URL of its JSON Schema.
+              description: Map of mixin names to the URLs of their JSON Schemas.
 
     # Jobs:
     JobStatus:
@@ -5911,6 +5914,19 @@ components:
           authorizationHeaderName: Authorization
           authorizationHeaderToken:
             id: token-id
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 1
+                generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+        metadata:
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     McpServersResponse:
       value:
         - id: mcp-custom
@@ -5923,6 +5939,19 @@ components:
             authorizationHeaderName: Authorization
             authorizationHeaderToken:
               id: token-id
+          mixins:
+            provenance:
+              entries:
+                - origin: ai_generated
+                  contentVersion: 1
+                  generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                  generatedAt: '2026-11-13T10:00:00Z'
+                  generator: agent-chat
+                  model: gpt-4o-mini
+                  reviewStatus: reviewed
+          metadata:
+            mixins:
+              provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
         - id: mcp-dynamic
           name: Dynamic MCP Server
           type: dynamic
@@ -5941,6 +5970,21 @@ components:
                   functionId: fn-get-order
                   method: GET
                   argsLocation: query
+          mixins:
+            provenance:
+              entries:
+                - origin: ai_generated
+                  contentVersion: 1
+                  generationId: 7a2d3c1f-5b2e-4f4b-8d1c-2e3f4a5b6c7d
+                  generatedAt: '2026-11-13T10:00:00Z'
+                  generator: agent-chat
+                  model: gpt-4o-mini
+                  reviewStatus: reviewed
+                  aiGeneratedFields:
+                    - tools[0]
+          metadata:
+            mixins:
+              provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     CommerceEventsResponse:
       value:
         events:
@@ -6056,6 +6100,18 @@ components:
           - name: slack
             config:
               teamId: T0445953
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 2
+                generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+                aiGeneratedFields:
+                  - outputFormat
         metadata:
           version: 2
           createdAt: '2025-07-25T10:31:14.509Z'
@@ -6063,6 +6119,8 @@ components:
           modifiedBy:
             type: EMPLOYEE
             id: jane.doe
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     AgentWithVersionHistory:
       value:
         id: "123"
@@ -6089,12 +6147,26 @@ components:
             enabled: false
             triggers:
               - type: endpoint
+            mixins:
+              provenance:
+                entries:
+                  - origin: ai_generated
+                    contentVersion: 2
+                    generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                    generatedAt: '2026-11-13T10:00:00Z'
+                    generator: agent-chat
+                    model: gpt-4o-mini
+                    reviewStatus: reviewed
+                    aiGeneratedFields:
+                      - outputFormat
             metadata:
               version: 2
               modifiedAt: '2025-07-26T10:31:14.509Z'
               modifiedBy:
                 type: SYSTEM
               changeNote: deleted native tool
+              mixins:
+                provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     AgentsResponse:
       value:
         - id: "123"
@@ -6129,12 +6201,26 @@ components:
             - name: slack
               config:
                 teamId: T0445953
+          mixins:
+            provenance:
+              entries:
+                - origin: ai_generated
+                  contentVersion: 2
+                  generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                  generatedAt: '2026-11-13T10:00:00Z'
+                  generator: agent-chat
+                  model: gpt-4o-mini
+                  reviewStatus: reviewed
+                  aiGeneratedFields:
+                    - outputFormat
           metadata:
             version: 2
             createdAt: '2025-07-25T10:31:14.509Z'
             modifiedAt: '2025-07-26T10:31:14.509Z'
             modifiedBy:
               type: EXTERNAL
+            mixins:
+              provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     CustomMcpServerRequest:
       value:
         name: Custom MCP Server
@@ -6150,7 +6236,7 @@ components:
           provenance:
             entries:
               - origin: ai_generated
-                contentVersion: 2
+                contentVersion: 1
                 generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
                 generatedAt: '2026-11-13T10:00:00Z'
                 generator: agent-chat
@@ -6182,7 +6268,7 @@ components:
           provenance:
             entries:
               - origin: ai_generated
-                contentVersion: 2
+                contentVersion: 1
                 generationId: 7a2d3c1f-5b2e-4f4b-8d1c-2e3f4a5b6c7d
                 generatedAt: '2026-11-13T10:00:00Z'
                 generator: agent-chat
@@ -6206,6 +6292,19 @@ components:
           authorizationHeaderName: Authorization
           authorizationHeaderToken:
             id: token-id
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 1
+                generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+        metadata:
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     DynamicMcpServerResponse:
       value:
         id: mcp-dynamic
@@ -6226,6 +6325,21 @@ components:
                 functionId: fn-get-order
                 method: GET
                 argsLocation: query
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 1
+                generationId: 7a2d3c1f-5b2e-4f4b-8d1c-2e3f4a5b6c7d
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+                aiGeneratedFields:
+                  - tools[0]
+        metadata:
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     TokenRequest:
       value:
         name: OpenAI Token
@@ -6353,7 +6467,7 @@ components:
           provenance:
             entries:
               - origin: ai_generated
-                contentVersion: 2
+                contentVersion: 1
                 generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
                 generatedAt: '2026-11-13T10:00:00Z'
                 generator: agent-chat
