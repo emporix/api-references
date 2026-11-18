@@ -267,26 +267,12 @@ paths:
       tags:
         - Products
       description: |-
-        Partially updates existing products in bulk. The maximum batch size is 200. A product that does not exist is not created.
+        Partially updates existing products in a bulk. The maximum batch size is 200. A product that does not exist is not created.
 
-        Each item follows the same rules as [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid). Omitted fields remain unchanged. The response for a particular product is returned at the same index as that product in the request body. When the same product id appears more than once, the items are applied in request order, and a later item is applied to the result of the earlier item.
-
-        The following results apply to one item, and the call still returns `207`:
-
-        * An item without an id returns `400` with the message `Product id is required. Please provide a valid product id.`
-        * An item whose id does not exist returns `404` with the message `The product with id {id} has not been found.`
-        * An item whose `metadata.version` does not match the stored product returns `409`.
-
-        The following results apply to the whole call:
-
-        * A request body with more than 200 items returns `400`. The details include `Maximum size of the payload array is 200.`
-        * An empty body returns `400` with the message `Body cannot be empty.`
-
+        Response for a particular product is returned at the same position (index) at which it is located in the request body.
         ***
 
         **Additional scope information**
-
-        The following scopes are required only in specific cases:
 
         * The `product.product_manage_by_vendor` scope is only required for vendor employees to manage products belonging to the vendor.
         * The `product.product_publish` scope is only required if you want to publish the product when updating it.
