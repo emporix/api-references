@@ -38,7 +38,7 @@ Agents and MCP servers now support mixins, consistent with other Emporix entitie
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response includes `mixins` and `metadata.mixins`. |
-| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request and response include `mixins` and `metadata.mixins`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request accepts and persists `mixins` and `metadata.mixins`; retrieve the agent to read them. |
 | [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request accepts `mixins` and `metadata.mixins`. |
 | [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Response includes `mixins` and `metadata.mixins`. |
 | [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Request and response include `mixins` and `metadata.mixins`. |
