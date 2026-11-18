@@ -25,6 +25,27 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
+## AI Service - mixins on agents and MCP servers
+
+#### Overview
+
+Agents and MCP servers accept schema-validated mixins. Send mixin values in `mixins` and the matching JSON Schema URLs in `metadata.mixins`. Schema validation runs when `metadata.mixins` names a schema for that key. Omitting mixin metadata skips schema validation. Each upsert replaces the stored mixin map, so clients send the full map. An invalid mixin schema returns 400 and leaves the resource unchanged. Clients may store applied AI provenance as `mixins.provenance.entries`. A generation response uses `reviewStatus` `not_reviewed` and omits `aiGeneratedFields`. An entry written on save uses `reviewStatus` `reviewed` and may include `aiGeneratedFields`. On create the client sets `contentVersion` to 1. On update the client sets `contentVersion` to the current `metadata.version` plus 1 and appends the entry to `entries`. The service stores that object as sent. `generatedAt` has no fractional seconds, or exactly three millisecond digits. Each agent update archives the previous `mixins` and `metadata.mixins` on that version. `GET ?version=` equal to the live `metadata.version` returns the current agent. An older version returns the archived mixins. A rollback sends that body with the live `metadata.version`.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating or updating an agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request and response include `mixins` and `metadata.mixins`. |
+| [Creating or updating an MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Custom and dynamic MCP servers include `mixins` and `metadata.mixins`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-16" tags="improvement" %}
 
 ## AI Service - generated files on agent chat

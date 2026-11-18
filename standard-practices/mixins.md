@@ -52,6 +52,7 @@ These services accept mixins in their API requests and responses, but require ma
 - **Prices** - Price Service
 - **Returns** - Returns Service
 - **Shopping List** - Shopping List Service
+- **Agents and MCP Servers** - AI Service (schema-validated `mixins` plus `metadata.mixins` schema URLs; schemas are hosted and referenced manually)
 
 
 {% hint style="warning" %}

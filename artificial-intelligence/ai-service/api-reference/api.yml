@@ -3203,7 +3203,20 @@ components:
             config:
               $ref: '#/components/schemas/McpServerConfigRequest'
             metadata:
-              $ref: '#/components/schemas/MetadataRequest'
+              allOf:
+                - $ref: '#/components/schemas/MetadataRequest'
+                - type: object
+                  properties:
+                    mixins:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: Mixin name to the URL of its JSON Schema.
+            mixins:
+              type: object
+              additionalProperties: true
+              description: |-
+                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
           required:
             - name
             - transport
@@ -3233,7 +3246,20 @@ components:
               items:
                 $ref: '#/components/schemas/McpToolRequest'
             metadata:
-              $ref: '#/components/schemas/MetadataRequest'
+              allOf:
+                - $ref: '#/components/schemas/MetadataRequest'
+                - type: object
+                  properties:
+                    mixins:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: Mixin name to the URL of its JSON Schema.
+            mixins:
+              type: object
+              additionalProperties: true
+              description: |-
+                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
           required:
             - name
             - type
@@ -3259,7 +3285,19 @@ components:
             config:
               $ref: '#/components/schemas/McpServerConfigResponse'
             metadata:
-              $ref: '#/components/schemas/MetadataResponse'
+              allOf:
+                - $ref: '#/components/schemas/MetadataResponse'
+                - type: object
+                  properties:
+                    mixins:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: Mixin name to the URL of its JSON Schema.
+            mixins:
+              type: object
+              additionalProperties: true
+              description: Mixin values keyed by name. Present when the MCP server stores mixins.
     DynamicMcpServerResponse:
       allOf:
         - $ref: '#/components/schemas/BaseManagedMcpServer'
@@ -3282,7 +3320,19 @@ components:
               items:
                 $ref: '#/components/schemas/McpToolResponse'
             metadata:
-              $ref: '#/components/schemas/MetadataResponse'
+              allOf:
+                - $ref: '#/components/schemas/MetadataResponse'
+                - type: object
+                  properties:
+                    mixins:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: Mixin name to the URL of its JSON Schema.
+            mixins:
+              type: object
+              additionalProperties: true
+              description: Mixin values keyed by name. Present when the MCP server stores mixins.
     McpServerResponse:
       oneOf:
         - $ref: '#/components/schemas/CustomMcpServerResponse'
@@ -4029,6 +4079,16 @@ components:
                     changeNote:
                       type: string
                       description: Optional note stored on this version. A blank value clears the live note. The next successful update archives the note with this version.
+                    mixins:
+                      type: object
+                      additionalProperties:
+                        type: string
+                      description: Mixin name to the URL of its JSON Schema.
+            mixins:
+              type: object
+              additionalProperties: true
+              description: |-
+                Mixin values keyed by name. When `metadata.mixins` has a schema URL for a key, that value is validated against the schema. Omitting mixin metadata skips schema validation. Send the full map on every upsert. A missing or null `mixins` clears stored mixins.
           required:
             - llmConfig
             - mcpServers
@@ -4061,6 +4121,10 @@ components:
               description: Prompt which is inherited from the template (if agent is created based on the template). The prompt provided by the user is then concatenated with this prompt.
             metadata:
               $ref: '#/components/schemas/AgentMetadataResponse'
+            mixins:
+              type: object
+              additionalProperties: true
+              description: Mixin values keyed by name. Present when the agent stores mixins.
             versions:
               type: array
               description: Stored history of previous agent configurations. Present only when the request sets `allVersions=true`. Omitted otherwise.
@@ -4085,6 +4149,10 @@ components:
               $ref: '#/components/schemas/AgentMcpServersResponse'
             metadata:
               $ref: '#/components/schemas/AgentVersionMetadata'
+            mixins:
+              type: object
+              additionalProperties: true
+              description: Mixin values stored with this version.
           required:
             - metadata
     AgentVersionMetadata:
@@ -4104,6 +4172,11 @@ components:
         changeNote:
           type: string
           description: Note stored with this snapshot.
+        mixins:
+          type: object
+          additionalProperties:
+            type: string
+          description: JSON Schema URLs for the mixins stored in this version.
     ModifiedBy:
       type: object
       description: Who last changed the agent.
@@ -4162,6 +4235,11 @@ components:
             changeNote:
               type: string
               description: Note stored for this live version.
+            mixins:
+              type: object
+              additionalProperties:
+                type: string
+              description: Mixin name to the URL of its JSON Schema.
 
     # Jobs:
     JobStatus:
@@ -4434,7 +4512,9 @@ components:
                   generatedAt:
                     type: string
                     format: date-time
-                    description: Date and time when the content was generated.
+                    description: |-
+                      UTC time when the content was generated.
+                      No fractional seconds, or exactly three millisecond digits.
                   generator:
                     type: string
                     description: Identifier of the generator.
@@ -4446,7 +4526,16 @@ components:
                     description: AI model used to generate the content, when available.
                   reviewStatus:
                     type: string
-                    description: Review state of the generated content.
+                    description: |-
+                      Review state of the generated content. A generation response uses `not_reviewed`.
+                      An entry stored when a person saves applied AI content uses `reviewed`.
+                  aiGeneratedFields:
+                    type: array
+                    items:
+                      type: string
+                    description: |-
+                      Entity fields this generation wrote. Generation responses omit it.
+                      A client records it when the person applies the generation.
     ProvenanceMetadata:
       type: object
       description: Schema references for response mixins.
@@ -5149,7 +5238,7 @@ components:
         type: integer
         minimum: 1
       description: |
-        Returns the configuration stored for this agent version. Omit the parameter to return the live agent.
+        Returns the agent at this version. When `version` equals the live `metadata.version`, the response is the current agent. An older version returns that version's archived configuration, including `mixins` and `metadata.mixins`. Omit the parameter to return the live agent.
         The response is `404` when the agent or this version does not exist.
         Cannot be combined with `allVersions` query parameter.
     allVersions:
@@ -6057,6 +6146,20 @@ components:
           authorizationHeaderName: Authorization
           authorizationHeaderToken:
             id: token-id
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 2
+                generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+        metadata:
+          version: 1
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     DynamicMcpServerRequest:
       value:
         name: Dynamic MCP Server
@@ -6075,6 +6178,22 @@ components:
                 functionId: fn-get-order
                 method: GET
                 argsLocation: query
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 2
+                generationId: 7a2d3c1f-5b2e-4f4b-8d1c-2e3f4a5b6c7d
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+                aiGeneratedFields:
+                  - tools[0]
+        metadata:
+          version: 1
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     CustomMcpServerResponse:
       value:
         id: mcp-custom
@@ -6230,6 +6349,22 @@ components:
             allowedOperations:
               - sendMessage
               - collaborateOnChannel
+        mixins:
+          provenance:
+            entries:
+              - origin: ai_generated
+                contentVersion: 2
+                generationId: 6f1c2b0e-4a1d-4e3a-9c0b-1d2e3f4a5b6c
+                generatedAt: '2026-11-13T10:00:00Z'
+                generator: agent-chat
+                model: gpt-4o-mini
+                reviewStatus: reviewed
+                aiGeneratedFields:
+                  - outputFormat
+        metadata:
+          version: 1
+          mixins:
+            provenance: https://res.cloudinary.com/saas-ag/raw/upload/provenance_lswyqe.json
     ExportResponse:
       value:
         jobId: job-id-of-export-job
