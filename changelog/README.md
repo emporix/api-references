@@ -57,6 +57,31 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-18" tags="new-feature" %}
+
+## AI Service - mixins on agents and MCP servers
+
+#### Overview
+
+Agents and MCP servers now support mixins, consistent with other Emporix entities. Mixin values are provided through `mixins` and the JSON Schema URLs through `metadata.mixins`. Schemas are hosted and referenced manually.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving agent by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | Response includes `mixins` and `metadata.mixins`. |
+| [Upserting agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Request accepts and persists `mixins` and `metadata.mixins`; retrieve the agent to read them. |
+| [Partially updating agent](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Request accepts `mixins` and `metadata.mixins`. |
+| [Retrieving MCP server by ID](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#get-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Response includes `mixins` and `metadata.mixins`. |
+| [Upserting MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Request and response include `mixins` and `metadata.mixins`. |
+| [Partially updating MCP server](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) | Request accepts `mixins` and `metadata.mixins`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-16" tags="improvement" %}
 
 ## AI Service - generated files on agent chat
