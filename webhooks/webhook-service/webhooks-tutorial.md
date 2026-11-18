@@ -394,3 +394,7 @@ curl -i -X PATCH \
   }
 ]'
 ```
+
+{% hint style="info" %}
+The Webhook Service also switches off a target on its own when the target keeps failing. In that case, the endpoint returns `active: false` and a `suspendedAt` date, and its events are stored instead of dropped. To find out what happened and how to recover the stored events, see [Handling failed webhook deliveries](handling-failed-webhook-deliveries.md).
+{% endhint %}

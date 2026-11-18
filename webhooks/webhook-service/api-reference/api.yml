@@ -628,9 +628,9 @@ paths:
       description: |-
         Retrieves the events that the service stored instead of delivering them. An event is stored when its delivery target has failed too many times in a row, or when the configuration or entry that owns the target was switched off after such failures.
 
-        By default, a target is switched off after 100 failed deliveries in a row. To change this number, set the `webhookFailureThreshold` key in the Configuration Service to a positive integer.
+        By default, a target is switched off after 100 failed deliveries in a row. To change this number, set the `webhookFailureThreshold` key in the Configuration Service to an integer from 10 to 1000.
 
-        Stored events are kept for 14 days and then removed.
+        Stored events are kept for 14 days on production and 1 day on preprod, and then removed.
 
         The list returns the details of each event without its payload. To retrieve the payload, use the endpoint for retrieving a single failed message.
 

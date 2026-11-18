@@ -8,7 +8,7 @@ icon: graduation-cap
 
 When a webhook target keeps rejecting events, the Webhook Service stops sending to it and stores the events instead. This tutorial shows how to find out that a target is failing, switch it back on, and then resend, restart, or delete the stored events.
 
-The examples use the HTTP provider. If you prefer a visual interface, see the [Webhooks](https://developer.emporix.io/user-guides/management-dashboard/administration/webhooks#handling-failed-deliveries) user guide for Management Dashboard.
+To set up webhooks and endpoints first, see the [Webhooks Tutorial](webhooks-tutorial.md). The examples use the HTTP provider. If you prefer a visual interface, see the [Webhooks](https://developer.emporix.io/user-guides/management-dashboard/administration/webhooks#handling-failed-deliveries) user guide for Management Dashboard.
 
 ## How failure handling works
 
@@ -24,7 +24,7 @@ The examples use the HTTP provider. If you prefer a visual interface, see the [W
 {% hint style="warning" %}
 **Keep in mind**
 
-* **Retention** - failed messages are kept for 14 days on production and 1 day on dev and stage environments. After that, they are deleted automatically.
+* **Retention** - failed messages are kept for 14 days on production and 1 day on preprod. After that, they are deleted automatically.
 * **Payload** - a failed message stores the event as it was before field exclusion. When you resend or restart a message, the current field exclusions and the current target settings are applied. The endpoint `filter` is not evaluated again.
 * **At-least-once delivery** - a resent or restarted message can reach your system twice. Deduplicate events in your receiver by the event ID.
 {% endhint %}
@@ -50,7 +50,7 @@ The examples use the HTTP provider. If you prefer a visual interface, see the [W
 
 ### Check delivery health
 
-To see which targets are failing, send a request to the [Retrieving all webhook configs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config) endpoint with the `expand` query parameter set to `deliveryStatus`.
+To see which targets are failing, send a request to the [Retrieving a list of webhook configs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config) endpoint with the `expand` query parameter set to `deliveryStatus`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -80,7 +80,7 @@ In the response, the `deliveryStatus` object is returned for each `eventsConfigu
     "eventsConfiguration": [
       {
         "id": "3f1a2b4c-5d6e-7f80-91a2-b3c4d5e6f708",
-        "eventType": "PRODUCT.CREATED",
+        "eventType": "product.created",
         "destinationUrl": "https://gcp.cloudfunctions.net/webhook?name=Detailed",
         "active": false,
         "suspendedAt": "2026-11-17T09:58:40.512Z",
