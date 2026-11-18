@@ -25,6 +25,429 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="2026-11-16" tags="improvement" %}
+
+## AI Service - generated files on agent chat
+
+#### Overview
+
+Starting agent chat can return a generated image or file in `artifacts` property.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns `artifacts` for a generated image or file with status `ready` or `failed`. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Documents the `artifact` event. `pending` applies to an image that is still generating. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-16" tags="new-feature, major-change" %}
+
+## Indexing and Schema Services - site-aware mixin strategy for BatteryIncluded
+
+#### Overview
+
+You can now choose where BatteryIncluded product indexing writes site-aware mixins. The `BATTERY_INCLUDED` configuration accepts an optional `siteAwareMixinsStrategy` field with the values `FAN_OUT` and `INHERITANCE`:
+
+* `FAN_OUT` (default) – every site that contributes to the merged document, and every other site with an `_product_siteAware` entry, receives the mixin in `_product_siteAware.<site>`. A site with an overlay receives the base value merged with its overlay, and a site without one receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
+* `INHERITANCE` – the base mixin stays in `_product.mixins` and `_product_i18n.<language>.mixins`. Only sites with a `{mixin}__{site}` overlay receive the merged mixin under `_product_siteAware.<site>`.
+
+A mixin is now site-aware when the product has an overlay for it, or when the schema version that the product references in `metadata.mixins` has `siteAware: true`. Schema Service writes the root `siteAware` value into the schema file it generates for each new schema version. Schema files generated before this change do not contain it, so those schema versions count as not site-aware. To apply the flag of an existing schema, update the schema to generate a new version, and point the products' `metadata.mixins` entry to the URL of that version.
+
+{% hint style="warning" %}
+Tenants whose `BATTERY_INCLUDED` configuration has no `siteAwareMixinsStrategy` use `FAN_OUT`. Under `FAN_OUT`, site-aware mixins are written only under `_product_siteAware`. Every site that contributes to the merged document receives the merged value, and so does every other site with an `_product_siteAware` entry. A site without an overlay receives the base value. Site-aware mixins do not appear in `_product.mixins` or `_product_i18n.<language>.mixins`.
+
+Search integrations that read these mixins from `_product` must read them from `_product_siteAware`, or switch the tenant to `INHERITANCE`, which keeps base values in `_product`.
+{% endhint %}
+
+{% hint style="info" %}
+For the strategies and the steps, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `siteAwareMixinsStrategy` field for `BATTERY_INCLUDED`. A request without the field moves the tenant back to `FAN_OUT`. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns `siteAwareMixinsStrategy` when it is set. A configuration without the field uses `FAN_OUT`. |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Writes the schema's `siteAware` value at the root of the generated schema file. The request and response bodies do not change. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Writes the `siteAware` value of the new version at the root of the generated schema file. The request and response bodies do not change. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-16" tags="new-feature" %}
+
+## AI Service - agent chat artifacts and built-in file generator
+
+#### Overview
+
+Streaming agent chat can publish an image or a file the agent decided to include. The `artifact` event carries metadata only. The client downloads the private asset with the existing authenticated Media Service endpoint, which requires the `media.asset_read` scope. A failed artifact does not fail the text answer. The `artifact` event is in preview mode - some of the features may not be fully operational yet.
+
+The new built-in file generator (native tool type `file`) lets an agent create downloadable text, Markdown, source code, CSV, JSON, YAML, XML, and PDF files, and generate images when the agent's model supports it. You do not create this tool. Add its reserved ID `file_generator` to the agent's `nativeTools`. The agent creates images and files only when the caller's token includes the `media.asset_manage` scope.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Sends the preview `artifact` event with `kind`, `filename`, `mime_type`, `size`, `status` (`pending`, `ready`, or `failed`), and optional `artifact_id`, `generation_id`, and `error_code`. |
+| [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) | Accepts the reserved `file_generator` ID in `nativeTools`. |
+| [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) | With `expand=nativeTools`, returns the built-in file generator as a `file` native tool. |
+| [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) | Rejects the reserved `file_generator` ID with `400`. |
+| [Exporting agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) | Includes the built-in file generator when an exported agent uses it. |
+| [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) | Does not create the built-in file generator as a tool. Imported agents keep `file_generator` in `nativeTools`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-13" tags="improvement" %}
+
+## AI Service - provenance on generative responses
+
+#### Overview
+
+Generative AI responses now include a provenance mixin. Integrations that display generated content to a person must use this mixin to disclose that the content is AI-generated.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Starting agent chat](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) | Returns provenance details with a generated reply. |
+| [Starting agent chat stream](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) | Returns provenance details in the `done` event after generated output. |
+| [Retrieving available job](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs-jobid) | Returns stored provenance details for a successful agent-chat job. |
+| [Listing available jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#get-ai-service-tenant-jobs) | Returns stored provenance details for agent-chat jobs. |
+| [Searching jobs](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/job#post-ai-service-tenant-jobs-search) | Returns stored provenance details for matching agent-chat jobs. |
+| [Generating text for an object description](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/text-generation#post-ai-service-tenant-texts) | Returns provenance details with generated text. |
+| [Generating AI Completions](https://developer.emporix.io/api-references/api-guides/artificial-intelligence/ai-service/api-reference/ai-completions#post-ai-service-tenant-completions) | Returns provenance details with generated completions. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-12" tags="new-feature" %}
+
+## Indexing Service - data dependencies of BatteryIncluded indexing
+
+#### Overview
+
+You can now choose which Emporix services BatteryIncluded product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the BatteryIncluded document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events.
+
+For the values and the steps, see [How to choose the data that BatteryIncluded indexing uses](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `enrichments` list for `BATTERY_INCLUDED`. A request without `enrichments` moves the tenant back to the default list. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `enrichments` list. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `enrichments` list. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-12" tags="new-feature" %}
+
+## Import Service - product variants
+
+#### Overview
+
+A product stream can now import parent products and their variants. Two new settings in a product stream's `targetOptions` describe what the stream imports:
+
+* `variantRole` – `NONE` (the default) for products without variants, `PARENT` for parent products, or `VARIANT` for variants of a parent
+* `variantModel` – `DYNAMIC` (the default) for dynamic variants, which take no `templateId`, or `TEMPLATE` for variants of the product template in `templateId`
+
+A `VARIANT` stream maps each record's parent to `parentCode` or `parentId`, and its variant attribute values to `variantAttributes.<attribute>`. When a stream of the same configuration imports the parents, the `VARIANT` stream lists it in `dependsOn`, so the parents are written first. With dynamic variants, a `VARIANT` stream can also take its parents from another `VARIANT` stream, which adds a level to the product hierarchy, up to four levels. `FAN_OUT` streams of the `VARIANT` stream write the variants' prices, stock, and images.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns `variantRole` and `variantModel` in a product stream's `targetOptions`. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns `variantRole` and `variantModel` in a product stream's `targetOptions`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-10" tags="major-change" %}
+
+## Price Service - price list ranking in price matching
+
+#### Overview
+
+Price matching now gives the same rank to all price lists that match the customer: price lists for at least one of the customer's groups and price lists for the customer's legal entity or one of its parent legal entities. The number of matched customer groups no longer changes the rank. When these price lists are also assigned to the same countries and regions, the lowest of their prices is returned. Before, a customer group price list always won over a legal entity price list, and a price list that matched more of the customer's groups won over a price list that matched fewer, regardless of the price.
+
+Legal entity price lists now also rank above price lists without customer groups or a legal entity, the same way customer group price lists already did. Before, a cheaper price list without customer groups or a legal entity could win over a legal entity price list. Check your legal entity price lists: customers who buy for these legal entities can now get a different price.
+
+The ranking is described in [Influence of price lists on price matching](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/prices-and-taxes/price-service/price#influence-of-price-lists-on-price-matching).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) | Gives customer group and legal entity price lists the same rank, regardless of how many customer groups they match. Returns the lowest price from the first rank that contains a price for the item. |
+| [Matching prices for session context](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) | Ranks price lists the same way as the [Matching prices for specific attributes](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices) endpoint. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-10" tags="minor-change" %}
+
+## Import Service - reference corrections for running imports
+
+#### Overview
+
+The Import Service reference for running and monitoring imports now matches the service:
+
+* A manual run is also refused with HTTP 400 when every stream it starts from reads uploaded files and none of them has a file to read. A stream with incremental files has nothing to read once every file in its queue has been imported. A snapshot stream with an imported file can still run with an empty queue, because it reads its latest file again. Streams whose mappings have never been published are not checked, and a configuration with a run in progress returns HTTP 409 instead.
+* Error responses are documented with the body the service returns: `message`, `code`, `status`, `resourceId`, and `details` entries with `message` and `field`.
+* A stream's `targetWriter` lists every writer, including products, categories, prices, availability, media, and category assignments, with the settings and write strategies each one supports. The `FAN_OUT` mode and its fields are documented.
+* Run progress events, run and stream status values, error codes, the imported-data search, and the statistics filters are corrected.
+* A `size` below 1 or a negative `page` returns HTTP 400 on the paged endpoints. A missing scope returns HTTP 403 with an error body that names the required scope. A configuration or run that does not exist returns HTTP 404 with the same error body, which names the identifier.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Documents the "nothing to import" rule, the error body, and HTTP 409 while a data purge is in progress. |
+| [Retrieving run history](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-configs-configid-runs) | Documents HTTP 400 for an out-of-range `page` or `size`. |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | Documents `RETRY` in `trigger`, `streamIds`, and the `CANCELLED` stream status. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Documents `payload`, the `stage` values, the `FAN_OUT_REMOVE` error code, and HTTP 400 for an out-of-range `page` or `size`. |
+| [Streaming run progress](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-events) | Documents the fields of each event. A `run` event names the run in `runId` and is also sent before the run finishes. |
+| [Cancelling a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-cancel) | An HTTP 409 response returns the cancellation result with `accepted` set to `false`. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Lists the conditions that return HTTP 409. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Streams are listed by `seq`. Documents the same stream fields as retrieving a stream. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Documents every `targetWriter`, the `FAN_OUT` mode, `fanOutPath`, `fanOutKey`, `targetOptions`, `seq`, and the `writeStrategy` values each writer can use. |
+| [Retrieving the stream run order](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-stream-order) | A `FAN_OUT` stream runs after the parent whose records it reads. The streams' `seq` values break ties. |
+| [Searching imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-records) | `search` matches the start of the natural key or Emporix identifier, case-sensitively. `outcome` no longer lists `DELETED_TARGET`. Documents HTTP 400 for an out-of-range `page` or `size`. |
+| [Searching a stream's imported records](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/data#get-importtool-tenant-data-streams-streamid-records) | Documents HTTP 400 for an out-of-range `page` or `size`. |
+| [Retrieving import statistics](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/analytics#get-importtool-tenant-stats) | Documents the 366-day window limit, HTTP 404 for an unknown stream, and `summary.aborted`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-10" tags="major-change" %}
+
+## Indexing Service - site-aware BatteryIncluded mixin paths
+
+#### Overview
+
+BatteryIncluded product documents now deep-merge site-aware mixin overlays for each site. Non-localized values use `_product_siteAware.<site>.mixins.<mixin>`, and localized values use `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`.
+
+The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
+
+For details, see [How site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-site-aware-mixins-are-indexed). For migration guidance, see [Migrating from legacy mixin paths](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#migrating-from-legacy-mixin-paths).
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="new-feature" %}
+
+## Indexing Service - BatteryIncluded API URL per tenant
+
+#### Overview
+
+You can now set the BatteryIncluded host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's BatteryIncluded requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default BatteryIncluded host. The service accepts only the `https` address of an allowed BatteryIncluded host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
+
+For the steps, see [How to set the BatteryIncluded API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-batteryincluded-api-url).
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED` and validates the write key against that host. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Accepts the optional `apiUrl` field for `BATTERY_INCLUDED`. A request without `apiUrl` moves the tenant back to the default BatteryIncluded host. |
+| [Getting all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations) | Returns the stored `apiUrl` value. |
+| [Getting configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) | Returns the stored `apiUrl` value. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="new-feature" %}
+
+## Schema and Product Services - localized `OBJECT` mixins
+
+#### Overview
+
+Tenants with `languageSchemaVersion` set to `v2` can define localized `OBJECT` mixin attributes as language-keyed maps of nested objects. Array-of-localized `TEXT` and `OBJECT` fields now emit v2 language maps on mixin create and update instead of nested v1 arrays. A nullable localized `OBJECT` attribute allows both an outer `null` value and per-language `null` values.
+
+On product and custom-instance reads, `Accept-Language` filters localized `OBJECT` maps and arrays of language maps to a single preferred language key, matching existing v2 `TEXT` map behavior.
+
+Nested localization under a localized `OBJECT` remains forbidden. Nested localized `TEXT` or `OBJECT` under a plain `OBJECT` remains allowed. v1 tenants and v1 `[{language,value}]` arrays stay unchanged and are not filtered by `Accept-Language`.
+
+{% hint style="warning" %}
+When a v2 tenant updates a mixin that still uses nested v1 arrays for array-of-localized fields, Schema Service regenerates those fields as v2 maps. Stored nested v1 values then fail validation until you migrate them to language maps.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) | Accepts localized `OBJECT` attributes when `languageSchemaVersion` is `v2`, and emits v2 language maps for array-of-localized `TEXT` and `OBJECT`. |
+| [Updating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#put-schema-tenant-schemas-id) | Applies the same localized `OBJECT` and v2 array-of-localized generation rules used when creating a schema. |
+| [Providing a file](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas-file) | Round-trips localized `OBJECT` maps and array-item v2 `TEXT` `$ref`s on schema file import. |
+| [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving a custom instance](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances-id) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving all products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+| [Searching for products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-search) | Filters localized `OBJECT` maps and arrays of language maps with `Accept-Language`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="improvement" %}
+
+## Product, Brand, Label, and Site Settings Services - custom language codes
+
+#### Overview
+
+The Product Service (including variants and product templates), Brand Service, Label Service, and Site Settings Service now accept custom language codes, such as `en-NL` or `en-SG`, not only codes from the former fixed list. A valid code is a two- or three-letter language code, optionally followed by hyphen-separated subtags of two to eight letters or digits (`^[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*$`). All previously accepted codes remain valid.
+
+The services compare language codes ignoring letter case, for example in `Content-Language` and `Accept-Language` headers and between a site's `defaultLanguage` and `languages`. Stored keys keep their original letter case. For example, sending `de-de` updates the stored `de-DE` value, and the key stays `de-DE`. With `Content-Language: *`, the keys of localized maps must still match the configured letter case exactly.
+
+{% hint style="warning" %}
+One validation rule is stricter. A localized map that contains the same language twice in different letter case, for example `de-DE` and `de-de`, is now rejected with the `400` status and the message `Language … is provided more than once with different letter case.` A code that does not match the format is rejected with the `400` status and the message `Language … has an invalid format.` In both messages, `…` is the submitted code.
+{% endhint %}
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a new product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Partially updating a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-productid) | Accepts custom language codes in localized fields and keeps the letter case of stored keys. |
+| [Adding a new brand](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/brand-service/api-reference/brands#post-brand-brands) | Accepts custom language codes in localized fields and matches `Content-Language` ignoring letter case. |
+| [Creating a label](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/label-service/api-reference/label#post-labels) | Accepts custom language codes in localized fields. |
+| [Creating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#post-site-tenant-sites) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Fully updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#put-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+| [Partially updating a site](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/site-settings#patch-site-tenant-sites-sitecode) | Accepts custom language codes in `languages` and `defaultLanguage`, and compares them ignoring letter case. |
+
+#### Known problems
+
+There are no known problems.
+
+#### Links
+
+* [Translations](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/standard-practices/translations)
+* [Language Tutorials](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/configuration-service/language)
+
+{% endupdate %}
+
+{% update date="2026-11-09" tags="improvement" %}
+
+## Returns Service - site on a return
+
+#### Overview
+
+Returns now store the `siteCode` and `restriction` of the referenced orders. You can omit both fields when you create a return. A value that does not match the orders, or orders that disagree with each other, is rejected. The list can be filtered by your site code with `q=siteCode:{siteCode}` — for example, `q=siteCode:DE`. An employee scope with a site suffix, such as `returns.returns_read--DE` or `returns.returns_manage--DE`, can access only returns for that site. An employee scope without a suffix can still access every return.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#post-return-tenant-returns) | The service copies `siteCode` and `restriction` from the orders. A mismatch returns `400` with `site does not match order`. Mixed orders return `400` with `orders belong to different sites`. Creating a return outside a site-limited employee's site returns `403` with `Creating a return for this site is not allowed.` |
+| [Retrieving a list of returns](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns) | The list supports filtering by site code with `q=siteCode:{siteCode}` — for example, `q=siteCode:DE`. A site-limited employee receives only returns whose `restriction` is in that scope. `X-Total-Count` uses the same filter. |
+| [Retrieving a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#get-return-tenant-returns-returnid) | The response includes `siteCode` and `restriction`. A return outside the employee's site, including a return with no `restriction`, returns `404`. |
+| [Updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#put-return-tenant-returns-returnid) | The body does not accept `siteCode` or `restriction`. A mismatched new order returns `400`. A hidden return returns `404`. |
+| [Partially updating a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#patch-return-tenant-returns-returnid) | The body does not accept `siteCode` or `restriction`. A hidden return returns `404` before the patch is applied. |
+| [Deleting a single return](https://developer.emporix.io/api-documentation/api-guides/orders/returns/api-reference/returns#delete-return-tenant-returns-returnid) | A hidden return returns `404`. |
+
+#### Known problems
+
+Returns that already exist are not given a site by this change.
+
+{% endupdate %}
+
+{% update date="2026-11-06" tags="new-feature" %}
+
+## Import Service - requeue of failed files
+
+#### Overview
+
+You can now put a file whose import failed back in a file-based stream's queue, without uploading it again. The next run reads the content the service already holds for the file, so you can fix the cause, such as a mapping, and import the same file. Only a file with the `FAILED` status can be queued again. An imported file is never queued again, because an older snapshot would overwrite newer data. To reprocess the records that failed in an imported file, retry the run instead.
+
+When a run finds no file waiting for a file-based stream, the stream's progress `message` now says that nothing was imported and names the latest file if its import failed.
+
+For the workflow, see the [Import Service Tutorial](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/import-service/import-service).
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Queuing a failed file again](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files-fileid-requeue) | Puts a failed file back at the end of the stream's queue, using the content the service already holds. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid) | A file-based stream's `message` states when no file was waiting and names the latest file if its import failed. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-06" tags="minor-change" %}
+
+## Import Service - run responses and the last imported file
+
+#### Overview
+
+Triggering a run for an import job that does not exist, or retrying a run that does not exist, returns HTTP 404. Both returned HTTP 500 before. A manual run with nothing to import returns HTTP 400: every stream the run starts from reads uploaded files and none has ever had a file. Upload a file to the stream's queue first; a dry run is not refused for this. The file queue now names the newest file the stream imported, whatever the history page holds.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Triggering an import run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-configs-configid-runs) | Returns HTTP 404 for an import job that does not exist, and HTTP 400 when no stream the run starts from has ever had a file. |
+| [Retrying the failed records of a run](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#post-importtool-tenant-runs-runid-retry) | Returns HTTP 404 for a run that does not exist, as documented. |
+| [Retrieving a stream's files](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#get-importtool-tenant-streams-streamid-files) | The response adds `lastProcessed`, the newest file the stream imported. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-05" tags="minor-change" %}
 
 ## IAM Service - non-deletable system groups
@@ -1244,19 +1667,19 @@ There are no known problems.
 
 {% update date="2026-09-04" tags="improvement" %}
 
-## Indexing Service - Battery Included credential validation
+## Indexing Service - BatteryIncluded credential validation
 
 #### Overview
 
-Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored Battery Included credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
+Creating or updating a `BATTERY_INCLUDED` configuration now validates `indexName` and `writeKey` before the configuration is saved. Product reindex also validates stored BatteryIncluded credentials before a reindex job is created. Invalid credentials return `400`. If credential validation is temporarily unavailable, the request returns `502`. Failed validation leaves configuration and reindex job state unchanged.
 
 #### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
-| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates Battery Included credentials before storing the configuration. |
-| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates Battery Included credentials before updating the configuration. |
-| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored Battery Included credentials before creating a product reindex job. |
+| [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#post-indexing-tenant-configurations) | Validates BatteryIncluded credentials before storing the configuration. |
+| [Updating configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) | Validates BatteryIncluded credentials before updating the configuration. |
+| [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) | Validates stored BatteryIncluded credentials before creating a product reindex job. |
 
 #### Known problems
 
@@ -1526,11 +1949,11 @@ There are no known problems.
 
 {% update date="2026-08-13" tags="improvement" %}
 <!-- emporix-ai-buddy:changelog:COP-6223 -->
-## Indexing Service - Battery Included site-aware availability
+## Indexing Service - BatteryIncluded site-aware availability
 
 #### Overview
 
-Battery Included site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only Battery Included output and does not change webhook payloads or Algolia data.
+BatteryIncluded site-aware product data now includes availability for sites that do not have any prices. This change ensures that `productSiteAware.availability` remains exposed when a product has site availability but no site price, which helps integrations link unavailable or no-longer-sold products to newer versions. This change affects only BatteryIncluded output and does not change webhook payloads or Algolia data.
 
 #### Known problems
 
@@ -2380,23 +2803,23 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-05-29" tags="new-feature" %}
-## Indexing Service - Battery Included provider support
+## Indexing Service - BatteryIncluded provider support
 
 #### Overview
 
-The Indexing Service now supports **Battery Included** as a new index provider alongside Algolia. Only one provider can be active per tenant at a time. Battery Included only supports the `MERGE` site-aware fields strategy; tenants configured with the `SPLIT` strategy will have Battery Included indexing silently skipped.
+The Indexing Service now supports **BatteryIncluded** as a new index provider alongside Algolia. Only one provider can be active per tenant at a time. BatteryIncluded only supports the `MERGE` site-aware fields strategy; tenants configured with the `SPLIT` strategy will have BatteryIncluded indexing silently skipped.
 
-This feature is in a `preview` state and payload sent to battery included is subject to change.
+This feature is in a `preview` state and payload sent to BatteryIncluded is subject to change.
 
 #### Updated endpoints
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                                         |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | [Creating a new configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#post-indexing-create-config)                               | Added `BATTERY_INCLUDED` provider support with new `excludedMixinKeys` field. Only one provider can be active per tenant at a time. |
-| [Retrieving all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include Battery Included configurations with `excludedMixinKeys`.                                                      |
+| [Retrieving all configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-configs)                                | Response may include BatteryIncluded configurations with `excludedMixinKeys`.                                                      |
 | [Retrieving a configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-config)               | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
-| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating Battery Included configurations with `excludedMixinKeys`.                                                         |
-| [Retrieving all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include Battery Included public configurations.                                                                        |
+| [Updating a configuration](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#put-indexing-update-config)                                    | Supports updating BatteryIncluded configurations with `excludedMixinKeys`.                                                         |
+| [Retrieving all public configurations](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-list-public-configs)                  | Response may include BatteryIncluded public configurations.                                                                        |
 | [Retrieving a public configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference#get-indexing-retrieve-public-config) | `provider` path parameter now accepts `BATTERY_INCLUDED`.                                                                           |
 
 #### Known problems

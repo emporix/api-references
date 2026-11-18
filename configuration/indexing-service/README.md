@@ -12,5 +12,5 @@ Allows management of indexing configuration.
 
 * Supports the following index providers:
   * [Algolia](https://www.algolia.com/)
-  * [Battery Included](https://www.batteryincluded.io)
+  * [BatteryIncluded](https://www.batteryincluded.io)
 

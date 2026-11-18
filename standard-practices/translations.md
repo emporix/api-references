@@ -23,7 +23,31 @@ In the Emporix Commerce Engine, localized fields are stored in the form of Strin
 {% hint style="warning" %}
 Language codes must match the ones defined in your language configurations.
 
+In the Product Service (products, variants, and product templates), Brand Service, Label Service, and Site Settings Service, letter case matters only for language codes used as keys in the request body. The following rules assume that your language configuration contains `de-DE`:
+
+* Language in a header – any letter case works. `Content-Language: de-de`, `Content-Language: DE-DE`, and `Accept-Language: de-de` all mean `de-DE`, and the value is saved under the `de-DE` key.
+* Language as a key in the request body, with `Content-Language: *` – use the exact letter case from your language configuration, for example `"de-DE"`, not `"de-de"`.
+* The same language twice in one map, for example `"de-de"` and `"de-DE"` – the request is rejected with a `400` response and the message `Language de-DE is provided more than once with different letter case.`
+
+Both of the following requests save the name under the `de-DE` key:
+
+```bash
+-H 'Content-Language: de-de' \
+-d '{ "name": "Screw" }'
+```
+
+```bash
+-H 'Content-Language: *' \
+-d '{ "name": { "de-DE": "Screw" } }'
+```
+
+In other services, use language codes exactly as they are written in your language configuration.
+
 For more information on language configurations, check out the [Language Tutorials](../configuration/configuration-service/language.md).
+{% endhint %}
+
+{% hint style="info" %}
+This page covers first-class localized fields on resources such as products and measurement units. Mixin attribute localization, including localized `OBJECT` maps when `languageSchemaVersion` is set to `v2`, is documented in [How to use localized OBJECT mixin attributes](../utilities/schema/schema.md#how-to-use-localized-object-mixin-attributes) and [Localized mixin attributes](mixins.md#localized-mixin-attributes). On reads, first-class fields can return a single string for one language, while filtered mixin language maps remain single-key maps.
 {% endhint %}
 
 ## How to create a localized object in a specific language
