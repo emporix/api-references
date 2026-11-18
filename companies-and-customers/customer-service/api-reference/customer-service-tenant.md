@@ -232,7 +232,7 @@ You can import customers in bulk and migrate their passwords from a legacy syste
 * `passwordHash` – Use this only when the source hash is already compatible with the Emporix native hashing strategy. The hash is stored as a native hash immediately, so no retention configuration or first-login rehash is needed.
 
 {% hint style="info" %}
-For the retention timeline and customer email behavior, see [Password Migration Strategy](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/authentication-and-authorization/customer-authentication/password-migration-strategy).
+For the retention timeline and customer email behavior, see [Password Migration Strategy](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/authentication-and-authorization/authentication/customer-authentication/password-migration-strategy).
 {% endhint %}
 
 {% stepper %}
