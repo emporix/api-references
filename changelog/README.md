@@ -53,7 +53,7 @@ There are no known problems.
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
-## Availability Service - partial availability updates
+## Availability Service - bulk availability updates
 
 #### Overview
 
@@ -104,7 +104,7 @@ There are no known problems.
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
-## Product Service - partial product updates in bulk
+## Product Service - bulk product updates
 
 #### Overview
 
