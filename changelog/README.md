@@ -33,6 +33,10 @@ layout:
 
 Product Service can now partially update up to 200 existing products in one request. The call changes only the fields you send and does not create a product that is missing.
 
+{% hint style="info" %}
+For the details, see [How to partially update multiple products in one operation](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/product#how-to-partially-update-multiple-products-in-one-operation).
+{% endhint %}
+
 #### New endpoints
 
 | Endpoint | Description |
