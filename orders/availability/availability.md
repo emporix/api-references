@@ -132,7 +132,9 @@ To create or update multiple product availabilities at once, send a request to o
 
 - [Creating multiple product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#post-availability-tenant-availability-bulk)
 - [Upserting multiple availabilities information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#put-availability-tenant-availability-bulk)
-Example bulk request:
+- [Partially updating multiple availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk)
+
+Example bulk create request:
 
 ```bash
 curl -i -X POST \
@@ -156,6 +158,63 @@ curl -i -X POST \
 ```
 
 In this example, the same product has different availability on two sites: `site-a` and `site-b` where both records are created in a single bulk operation.
+
+### Partially update product availabilities
+
+To change only selected fields on a stored availability, send a JSON Patch array. Use `REPLACE` to set a field and `REMOVE` to clear it. Fields you do not name stay unchanged. A missing availability returns `404` and is not created.
+
+{% hint style="warning" %}
+The `availability.availability_manage` scope is required. The `availability.availability_manage_by_vendor` scope is only required when updating availabilities that belong to the vendor.
+{% endhint %}
+
+For one availability, send a request to the [Partially updating availability information of a product](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) endpoint:
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/availability/{{tenant}}/availability/{{productId}}/{{site}}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "op": "REPLACE",
+    "path": "/stockLevel",
+    "value": 42
+  }
+]'
+```
+
+To partially update up to 200 stored availabilities in one call, send a request to the [Partially updating multiple availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) endpoint. Each item identifies one availability by `productId` and `site`, and `data` holds the patch operations. A valid call returns `207` with one result for each item.
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/availability/{{tenant}}/availability/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "productId": "5f7c996173fc281cdd412345",
+    "site": "shop1",
+    "data": [
+      {
+        "op": "REPLACE",
+        "path": "/stockLevel",
+        "value": 42
+      }
+    ]
+  },
+  {
+    "productId": "5f7c996173fc281cdd412346",
+    "site": "shop1",
+    "data": [
+      {
+        "op": "REPLACE",
+        "path": "/stockLevel",
+        "value": 7
+      }
+    ]
+  }
+]'
+```
 
 ### Retrieve the availability information of a product
 
