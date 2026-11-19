@@ -364,7 +364,7 @@ You can adjust the failure handling of your tenant with the following keys of th
 | Key                          | Description                                                                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `webhookFailureThreshold`    | The number of failed deliveries in a row after which a target is switched off. It must be a positive integer. The default is 100 (minimum 10, maximum 1000) |
-| `webhookNotificationEmails`  | The email addresses notified when a target is switched off. When the list is empty, the default employee is notified                              |
+| `webhookNotificationEmails`  | The email addresses notified when a target is switched off. When the list is empty, the default contact is notified                              |
 
 ## Use the API Calls library
 
