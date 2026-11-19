@@ -367,7 +367,7 @@ paths:
         - Category Assignment Resources
       summary: Deleting category assignments by reference in bulk
       description: |
-        Deletes assignments for one category by reference id in bulk. The maximum batch size is 200. An assignment with the same reference id on another category is left in place.
+        Deletes assignments for one category by reference id in bulk. The maximum batch size is 200. An assignment with the same reference id on another category is left in place. An empty array returns `207` with an empty result list.
       operationId: DELETE-category-tree-delete-assignments-by-reference-bulk
       parameters:
         - $ref: '#/components/parameters/path_tenant'
@@ -466,7 +466,7 @@ paths:
         - Category Resources
       summary: Creating categories in bulk
       description: |
-        Creates categories in one call. The maximum batch size is 200. A supplied `id` is kept. When `id` is omitted, the service generates one.
+        Creates categories in one call. The maximum batch size is 200. A supplied `id` is kept. When `id` is omitted, the service generates one. An empty array returns `207` with an empty result list.
         ***
         ### Additional scope info
 
@@ -574,7 +574,7 @@ paths:
         - Category Resources
       summary: Partially updating categories in bulk
       description: |
-        Partially updates existing categories in one call. The maximum batch size is 200. A category that does not exist is not created. Omitted fields remain unchanged. The version specified in `metadata` must match the stored category.
+        Partially updates existing categories in one call. The maximum batch size is 200. A category that does not exist is not created. Omitted fields remain unchanged. The version specified in `metadata` must match the stored category. An empty array returns `207` with an empty result list.
         ***
         ### Additional scope info
 
@@ -4143,11 +4143,13 @@ components:
                   description: Description of one problem.
     CategoryBulkCreateRequest:
       type: array
+      description: Categories to create. The maximum batch size is 200.
       maxItems: 200
       items:
         $ref: '#/components/schemas/CategoryCreateRequest'
     CategoryBulkPatchRequest:
       type: array
+      description: Partial updates for existing categories. The maximum batch size is 200.
       maxItems: 200
       items:
         type: object
@@ -4224,6 +4226,7 @@ components:
                   - version
     AssignmentReferenceBulkDeleteRequest:
       type: array
+      description: Assignment reference ids to delete for the category. The maximum batch size is 200.
       maxItems: 200
       items:
         type: string
