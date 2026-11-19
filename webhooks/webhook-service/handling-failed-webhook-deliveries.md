@@ -15,8 +15,8 @@ To set up webhooks and endpoints first, see the [Webhooks Tutorial](webhooks-tut
 * **Delivery target** - the place that receives your events: an HTTP endpoint (an `eventsConfiguration` entry), the global HTTP destination, a Svix configuration, or the shared Svix configuration.
 * **Failure threshold** - the number of failed deliveries in a row after which the service gives up on a target. The default is 100 (minimum 10, maximum 1000). A successful delivery resets the counter. To change the threshold, see [Tune failure handling](handling-failed-webhook-deliveries.md#tune-failure-handling).
 * **What does not count as a failure** - Svix `409` and `413` responses, reaching the webhook limit, a payload that is empty after field exclusion, and timeouts.
+* **Failing target** - while deliveries fail and the number of failed deliveries in a row is below the threshold, the target is `FAILING`. Events are still sent, but the deliveries fail.
 * **What happens at the threshold**
-  * The target becomes `FAILING`.
   * The owner of the target is switched off and gets a `suspendedAt` date. For an endpoint, only that endpoint is switched off. For the global HTTP destination or a Svix configuration, the whole configuration is switched off.
   * Events for the target are no longer sent. They are stored as failed messages.
 * **No automatic recovery** - a suspended target never comes back on its own. You have to switch it on again.
@@ -100,7 +100,7 @@ In the response, the `deliveryStatus` object is returned for each `eventsConfigu
 
 | Field                 | Description                                                                                          |
 | --------------------- | ---------------------------------------------------------------------------------------------------- |
-| `status`              | `ACTIVE` when events are delivered, `FAILING` when the target reached the failure threshold          |
+| `status`              | `ACTIVE` when events are delivered, `FAILING` when deliveries fail                                   |
 | `consecutiveFailures` | The number of failed deliveries in a row. It is reset to `0` after a successful delivery             |
 | `lastErrorMessage`    | The error message of the last failed delivery                                                        |
 | `lastErrorStatusCode` | The HTTP status code returned by the target on the last failed delivery                              |
