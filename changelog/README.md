@@ -33,6 +33,10 @@ layout:
 
 Availability Service can now update only the fields you send on one stored availability, or on up to 200 stored availabilities in one call. The call does not create an availability that is missing.
 
+{% hint style="info" %}
+For the details, see [How to partially update product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/availability#partially-update-product-availabilities).
+{% endhint %}
+
 #### New endpoints
 
 | Endpoint | Description |
