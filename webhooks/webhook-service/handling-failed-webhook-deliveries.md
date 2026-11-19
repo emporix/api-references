@@ -4,29 +4,31 @@ layout:
 icon: graduation-cap
 ---
 
-# Handling failed webhook deliveries
+# Handling Failed Webhook Deliveries
 
 When a webhook target keeps rejecting events, the Webhook Service stops sending to it and stores the events instead. This tutorial shows how to find out that a target is failing, switch it back on, and then resend, restart, or delete the stored events.
 
-To set up webhooks and endpoints first, see the [Webhooks Tutorial](webhooks-tutorial.md). The examples use the HTTP provider. If you prefer a visual interface, see the [Webhooks](https://developer.emporix.io/user-guides/management-dashboard/administration/webhooks#handling-failed-deliveries) user guide for Management Dashboard.
+To set up webhooks and endpoints first, see the [Webhooks Tutorial](webhooks-tutorial.md). The examples use the HTTP provider. If you prefer a visual interface, see the [Webhooks](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/management-dashboard/administration/webhooks#handling-failed-deliveries) user guide for Management Dashboard.
 
 ## How failure handling works
 
-* **Delivery target** - the place that receives your events: an HTTP endpoint (an `eventsConfiguration` entry), the global HTTP destination, a Svix configuration, or the shared Svix configuration.
-* **Failure threshold** - the number of failed deliveries in a row after which the service gives up on a target. The default is 100 (minimum 10, maximum 1000). A successful delivery resets the counter. To change the threshold, see [Tune failure handling](handling-failed-webhook-deliveries.md#tune-failure-handling).
-* **What does not count as a failure** - Svix `409` and `413` responses, reaching the webhook limit, a payload that is empty after field exclusion, and timeouts.
-* **Failing target** - while deliveries fail and the number of failed deliveries in a row is below the threshold, the target is `FAILING`. Events are still sent, but the deliveries fail.
+The following concepts explain how failure handling works:
+
+* **Delivery target** – the place that receives your events: an HTTP endpoint (an `eventsConfiguration` entry), the global HTTP destination, a Svix configuration, or the shared Svix configuration.
+* **Failure threshold** – the number of failed deliveries in a row after which the service gives up on a target. The default is 100 (minimum 10, maximum 1000). A successful delivery resets the counter. To change the threshold, see [Tune failure handling](handling-failed-webhook-deliveries.md#tune-failure-handling).
+* **What does not count as a failure** – Svix `409` and `413` responses, reaching the webhook limit, a payload that is empty after field exclusion, and timeouts.
+* **Failing target** – while deliveries fail and the number of failed deliveries in a row is below the threshold, the target is `FAILING`. Events are still sent, but the deliveries fail.
 * **What happens at the threshold**
   * The owner of the target is switched off and gets a `suspendedAt` date. For an endpoint, only that endpoint is switched off. For the global HTTP destination or a Svix configuration, the whole configuration is switched off.
   * Events for the target are no longer sent. They are stored as failed messages.
-* **No automatic recovery** - a suspended target never comes back on its own. You have to switch it on again.
+* **No automatic recovery** – a suspended target never comes back on its own. You have to switch it on again.
 
 {% hint style="warning" %}
 **Keep in mind**
 
-* **Retention** - failed messages are kept for 14 days on production and 1 day on preprod. After that, they are deleted automatically.
-* **Payload** - a failed message stores the event as it was before field exclusion. When you resend or restart a message, the current field exclusions and the current target settings are applied. The endpoint `filter` is not evaluated again.
-* **At-least-once delivery** - a resent or restarted message can reach your system twice. Deduplicate events in your receiver by the event ID.
+* **Retention** – failed messages are kept for 14 days on production and 1 day on preprod. After that, they are deleted automatically.
+* **Payload** – a failed message stores the event as it was before field exclusion. When you resend or restart a message, the current field exclusions and the current target settings are applied. The endpoint `filter` is not evaluated again.
+* **At-least-once delivery** – a resent or restarted message can reach your system twice. Deduplicate events in your receiver by the event ID.
 {% endhint %}
 
 ## Required scopes
@@ -37,6 +39,8 @@ To set up webhooks and endpoints first, see the [Webhooks Tutorial](webhooks-tut
 | `webhook.subscription_manage`    | Reactivating targets, resending, restarting, and deleting messages |
 
 ## How to handle failed deliveries
+
+The following sections describe how to handle failed deliveries:
 
 * [Check delivery health](handling-failed-webhook-deliveries.md#check-delivery-health)
 * [Reactivate a target](handling-failed-webhook-deliveries.md#reactivate-a-target)
@@ -207,8 +211,8 @@ curl -i -G 'https://api.emporix.io/webhook/{tenant}/failed-messages' \
 
 You can page through the list in one of two ways:
 
-* **By offset** - use `pageNumber` and `pageSize`. The first page has the number `1`.
-* **By cursor** - use `next` or `prev` with the values returned in the `X-Next-Cursor` and `X-Prev-Cursor` response headers. The `X-Next-Cursor` header is missing on the last page. Keep the same `sort` value for all requests in a cursor series.
+* **By offset** – use `pageNumber` and `pageSize`. The first page has the number `1`.
+* **By cursor** – use `next` or `prev` with the values returned in the `X-Next-Cursor` and `X-Prev-Cursor` response headers. The `X-Next-Cursor` header is missing on the last page. Keep the same `sort` value for all requests in a cursor series.
 
 ```bash
 curl -i -G 'https://api.emporix.io/webhook/{tenant}/failed-messages' \
@@ -360,7 +364,7 @@ You can adjust the failure handling of your tenant with the following keys of th
 | Key                          | Description                                                                                                                                        |
 | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `webhookFailureThreshold`    | The number of failed deliveries in a row after which a target is switched off. It must be a positive integer. The default is 100 (minimum 10, maximum 1000) |
-| `webhookNotificationEmails`  | The e-mail addresses notified when a target is switched off. When the list is empty, the default employee is notified                              |
+| `webhookNotificationEmails`  | The email addresses notified when a target is switched off. When the list is empty, the default employee is notified                              |
 
 ## Use the API Calls library
 

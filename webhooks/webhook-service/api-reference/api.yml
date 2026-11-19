@@ -1244,7 +1244,7 @@ components:
             - FAILING
           description: |-
             * `ACTIVE` – Events are delivered to the target.
-            * `FAILING` – The target reached the failure limit. The service no longer calls it and stores its events as failed messages until you switch its configuration or entry back on.
+            * `FAILING` – Deliveries to the target fail. While the number of failed deliveries in a row is below the failure threshold, the service still sends events to the target. When the threshold is reached, the service stops calling the target and stores its events as failed messages until you switch its configuration or entry back on.
         consecutiveFailures:
           type: integer
           description: Number of failed deliveries in a row. Reset to `0` after a successful delivery. A target that never failed returns `ACTIVE` and `0`.
