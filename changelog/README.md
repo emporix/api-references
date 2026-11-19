@@ -33,6 +33,10 @@ layout:
 
 The Media Service can now create, partially update, and delete up to 200 assets in one call. For a valid request, the call returns one result for each item.
 
+{% hint style="info" %}
+For the details, see [How to create, update, and delete assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/media#how-to-create-update-and-delete-assets-in-bulk).
+{% endhint %}
+
 #### New endpoints
 
 | Endpoint | Description |
