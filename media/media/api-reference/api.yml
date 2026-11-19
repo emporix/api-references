@@ -255,7 +255,7 @@ paths:
                     - index: 0
                       code: 400
                       status: Bad Request
-                      message: Asset of 'BLOB' type can only be created from mutltipart request.
+                      message: Asset of 'BLOB' type can only be created from multipart request.
                     - index: 1
                       id: 567e06ecf0452c2d6c0b81391
                       code: 201
