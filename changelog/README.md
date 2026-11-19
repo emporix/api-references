@@ -27,6 +27,32 @@ layout:
 
 {% update date="RELEASE_DATE" tags="new-feature" %}
 
+## Media Service - bulk asset changes
+
+#### Overview
+
+The Media Service can now create, partially update, and delete up to 200 assets in one call. For a valid request, the call returns one result for each item.
+
+{% hint style="info" %}
+For the details, see [How to create, update, and delete assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/media#how-to-create-update-and-delete-assets-in-bulk).
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-bulk) | Creates up to 200 assets in one call and returns one result for each item. |
+| [Partially updating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) | Updates up to 200 stored assets in one call and returns one result for each item. |
+| [Deleting assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) | Deletes up to 200 assets in one call and returns one result for each item. An asset that is already absent returns `204`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="RELEASE_DATE" tags="new-feature" %}
+
 ## Availability Service - partial availability updates
 
 #### Overview
