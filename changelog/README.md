@@ -84,6 +84,10 @@ There are no known problems.
 
 Category Service can now create categories, partially update categories, and delete category assignments by reference in batches of up to 200. Each call returns one result for each item.
 
+{% hint style="info" %}
+For the details, see [How to create, update, and delete categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/category#how-to-create-update-and-delete-categories-in-bulk).
+{% endhint %}
+
 #### New endpoints
 
 | Endpoint | Description |
