@@ -11,7 +11,7 @@ All of our services are documented in the API sections of our docs, with referen
 
 Download the full API specification:
 
-<a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API References - ZIP</a>
+<a href="../.gitbook/assets/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API References - ZIP</a>
 
 To download an individual OpenAPI specification, you can do so directly from the repository. See the list of services with links.
 
