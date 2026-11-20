@@ -66,7 +66,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-20" tags="new-feature" %}
 
 ## AI Service - mixins on agents and MCP servers
 
