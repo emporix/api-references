@@ -14,4 +14,4 @@ Query tenant-wide change history for Emporix platform entities.
 * Filters results with the standard `q` parameter by entity, document ID, change type, actor, time range, and related entities
 * Returns flattened before/after field paths for each change
 * Supports compound logical queries with nested `OR` and `AND` expressions
-* Applies a default 30-day time window when no conjunctive `occurredAt` from-bound is provided
+* Applies a default 7-day time window when no conjunctive `occurredAt` from-bound is provided
