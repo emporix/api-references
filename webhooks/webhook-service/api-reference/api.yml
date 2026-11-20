@@ -628,9 +628,9 @@ paths:
       description: |-
         Retrieves the events that the service stored instead of delivering them. An event is stored when its delivery target has failed too many times in a row, or when the configuration or entry that owns the target was switched off after such failures.
 
-        By default, a target is switched off after 100 failed deliveries in a row. To change this number, set the `webhookFailureThreshold` key in the Configuration Service to a positive integer.
+        By default, a target is switched off after 100 failed deliveries in a row. To change this number, set the `webhookFailureThreshold` key in the Configuration Service to an integer from 10 to 1000.
 
-        Stored events are kept for 14 days and then removed.
+        Stored events are kept for 14 days on production and 1 day on preprod, and then removed.
 
         The list returns the details of each event without its payload. To retrieve the payload, use the endpoint for retrieving a single failed message.
 
@@ -1244,7 +1244,7 @@ components:
             - FAILING
           description: |-
             * `ACTIVE` – Events are delivered to the target.
-            * `FAILING` – The target reached the failure limit. The service no longer calls it and stores its events as failed messages until you switch its configuration or entry back on.
+            * `FAILING` – Deliveries to the target fail. While the number of failed deliveries in a row is below the failure threshold, the service still sends events to the target. When the threshold is reached, the service stops calling the target and stores its events as failed messages until you switch its configuration or entry back on.
         consecutiveFailures:
           type: integer
           description: Number of failed deliveries in a row. Reset to `0` after a successful delivery. A target that never failed returns `ACTIVE` and `0`.
