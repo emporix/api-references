@@ -45,7 +45,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-11-18" tags="new-feature" %}
+{% update date="2026-11-20" tags="new-feature" %}
 
 ## Webhook Service - failing targets, failed messages, and restart jobs
 
