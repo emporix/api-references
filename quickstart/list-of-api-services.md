@@ -1,64 +1,64 @@
 ---
 layout:
     width: wide
-description: Browse the list of our services with links to downloadable specification files.
+description: Browse the list of our services and download their API specification files.
 icon: atom-simple
 ---
 
 # API Services
 
-All of our services are documented in the API sections of our docs, with references presented in a developer-friendly format. The main `api.yml` files are stored in our GitHub repository.
+All of our services are documented in the API sections of our docs, with references presented in a developer-friendly format.
 
-Download the full API specification:
+Download the OpenAPI specifications of all services in one ZIP file:
 
 <a href="../.gitbook/assets/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API References - ZIP</a>
 
-To download an individual OpenAPI specification, you can do so directly from the repository. See the list of services with links.
+Each service's specification is a separate file in the ZIP. The file names are listed below.
 
-| Services documentation | Links to download the specifications |
-| ---------------------- | ------------------------------------ |
-| [AI Service](../artificial-intelligence/ai-service) | <p><a href="../artificial-intelligence/ai-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download AI API Reference</a></p> |
-| [AI RAG Indexer](../artificial-intelligence/ai-rag-indexer) | <p><a href="../artificial-intelligence/ai-rag-indexer/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download AI RAG Indexer API Reference</a></p> |
-| [Approval Service](../companies-and-customers/approval-service/) | <p><a href="../companies-and-customers/approval-service/approval-api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Approval API Reference</a></p> |
-| [Audit Logs (Changelog) Service](../utilities/audit-logs-changelog/) | <p><a href="../utilities/audit-logs-changelog/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Audit Logs (Changelog) API Reference</a></p> |
-| [Availability Service](../orders/availability/) | <p><a href="../orders/availability/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Availability API Reference</a></p> |
-| [Brand Service](../products-labels-and-brands/brand-service/) | <p><a href="../products-labels-and-brands/brand-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Brand API Reference</a></p> |
-| [Cart Service](../checkout/cart/) | <p><a href="../checkout/cart/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Cart API Reference</a></p> |
-| [Catalog Service](../catalogs-and-categories/catalog/) | <p><a href="../catalogs-and-categories/catalog/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Catalog API Reference</a></p> |
-| [Category Service](../catalogs-and-categories/category-tree/) | <p><a href="../catalogs-and-categories/category-tree/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Category API Reference</a></p> |
-| [Checkout Service](../checkout/checkout/) | <p><a href="../checkout/checkout/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Checkout API Reference</a></p> |
-| [Client Management Service](../companies-and-customers/client-management/) | <p><a href="../companies-and-customers/client-management/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Client Management API Reference</a></p> |
-| [Customer Service](../companies-and-customers/customer-management/) (customer-managed) | <p><a href="../companies-and-customers/customer-management/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Customer Management API Reference</a></p> |
-| [Customer Service](../companies-and-customers/customer-service/) (tenant-managed) | <p><a href="../companies-and-customers/customer-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Customer Service API Reference</a></p> |
-| [Customer Segments Service](../companies-and-customers/customer-segments/) | <p><a href="../companies-and-customers/customer-segments/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Customer Segments API Reference</a></p> |
-| [Currency Service](../configuration/currency-service/) | <p><a href="../configuration/currency-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Currency API Reference</a></p> |
-| [Country Service](../configuration/country-service/) | <p><a href="../configuration/country-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Country API Reference</a></p> |
-| [Coupon Service](../rewards-and-promotions/coupon/) | <p><a href="../rewards-and-promotions/coupon/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Coupon API Reference</a></p> |
-| [Configuration Service](../configuration/configuration-service/) | <p><a href="../configuration/configuration-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Configuration API Reference</a></p> |
-| [Fee Service](../checkout/fee/) | <p><a href="../checkout/fee/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Fee API Reference</a></p> |
-| [IAM Service](../users-and-permissions/iam/) | <p><a href="../users-and-permissions/iam/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download IAM API Reference</a></p> |
-| [Indexing Service](../configuration/indexing-service/) | <p><a href="../configuration/indexing-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Indexing API Reference</a></p> |
-| [Import Service](../utilities/import-service/) | <p><a href="../utilities/import-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Import API Reference</a></p> |
-| [Invoice Service](../orders/invoice/) | <p><a href="../orders/invoice/api-reference/api.yaml" class="button secondary" data-icon="arrow-down-right">Download Invoice API Reference</a></p> |
-| [Label Service](../products-labels-and-brands/label-service/) | <p><a href="../products-labels-and-brands/label-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Label API Reference</a></p> |
-| [Media Service](../media/media/) | <p><a href="../media/media/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Media API Reference</a></p> |
-| [OAuth Service](../authentication/oauth-service/) | <p><a href="../authentication/oauth-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download OAuth API Reference</a></p> |
-| [Order Service](../orders/order/) | <p><a href="../orders/order/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Order API Reference</a></p> |
-| [Payment Gateway Service](../checkout/payment-gateway/) | <p><a href="../checkout/payment-gateway/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Payment Gateway API Reference</a></p> |
-| [Price Service](../prices-and-taxes/price-service/) | <p><a href="../prices-and-taxes/price-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Price API Reference</a></p> |
-| [Product Service](../products-labels-and-brands/product-service/) | <p><a href="../products-labels-and-brands/product-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Product API Reference</a></p> |
-| [Quote Service](../quotes/quote/) | <p><a href="../quotes/quote/api-reference/api.yaml" class="button secondary" data-icon="arrow-down-right">Download Quote API Reference</a></p> |
-| [Returns Service](../orders/returns/) | <p><a href="../orders/returns/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Returns API Reference</a></p> |
-| [Reward Points Service](../rewards-and-promotions/reward-points/) | <p><a href="../rewards-and-promotions/reward-points/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Reward Points API Reference</a></p> |
-| [Schema Service](../utilities/schema/) | <p><a href="../utilities/schema/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Schema API Reference</a></p> |
-| [Search Service](../utilities/search-service/) | <p><a href="../utilities/search-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Search API Reference</a></p> |
-| [SequentialID Service](../utilities/sequential-id/) | <p><a href="../utilities/sequential-id/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download SequentialID API Reference</a></p> |
-| [Session-Context Service](../users-and-permissions/session-context/) | <p><a href="../users-and-permissions/session-context/api-reference/api.yaml" class="button secondary" data-icon="arrow-down-right">Download Session-Context API Reference</a></p> |
-| [Site-Settings Service](../configuration/site-settings-service/) | <p><a href="../configuration/site-settings-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Site-Settings API Reference</a></p> |
-| [Shipping Service](../delivery-and-shipping/shipping/) | <p><a href="../delivery-and-shipping/shipping/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Shipping API Reference</a></p> |
-| [Shopping List Service](../checkout/shopping-list/) | <p><a href="../checkout/shopping-list/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Shopping List API Reference</a></p> |
-| [Tax Service](../prices-and-taxes/tax-service/) | <p><a href="../prices-and-taxes/tax-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Tax API Reference</a></p> |
-| [Unit-Handling Service](../configuration/unit-handling-service/) | <p><a href="../configuration/unit-handling-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Unit-Handling API Reference</a></p> |
-| [Vendor Service](../companies-and-customers/vendor-service/) | <p><a href="../companies-and-customers/vendor-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Vendor API Reference</a></p> |
-| [Webhook Service](../webhooks/webhook-service/) | <p><a href="../webhooks/webhook-service/api-reference/api.yml" class="button secondary" data-icon="arrow-down-right">Download Webhook API Reference</a></p> |
+| Services documentation | File name in the ZIP |
+| ---------------------- | -------------------- |
+| [AI Service](../artificial-intelligence/ai-service) | `ai-api.yml` |
+| [AI RAG Indexer](../artificial-intelligence/ai-rag-indexer) | `ai-rag-indexer-api.yml` |
+| [Approval Service](../companies-and-customers/approval-service/) | `approval-api.yml` |
+| [Audit Logs (Changelog) Service](../utilities/audit-logs-changelog/) | `audit-logs-changelog-api.yml` |
+| [Availability Service](../orders/availability/) | `availability-api.yml` |
+| [Brand Service](../products-labels-and-brands/brand-service/) | `brand-api.yml` |
+| [Cart Service](../checkout/cart/) | `cart-api.yml` |
+| [Catalog Service](../catalogs-and-categories/catalog/) | `catalog-api.yml` |
+| [Category Service](../catalogs-and-categories/category-tree/) | `category-tree-api.yml` |
+| [Checkout Service](../checkout/checkout/) | `checkout-api.yml` |
+| [Client Management Service](../companies-and-customers/client-management/) | `client-management-api.yml` |
+| [Configuration Service](../configuration/configuration-service/) | `configuration-api.yml` |
+| [Country Service](../configuration/country-service/) | `country-api.yml` |
+| [Coupon Service](../rewards-and-promotions/coupon/) | `coupon-api.yml` |
+| [Currency Service](../configuration/currency-service/) | `currency-api.yml` |
+| [Customer Service](../companies-and-customers/customer-service/) (tenant-managed) | `customer-api.yml` |
+| [Customer Service](../companies-and-customers/customer-management/) (customer-managed) | `customer-management-api.yml` |
+| [Customer Segments Service](../companies-and-customers/customer-segments/) | `customer-segments-api.yml` |
+| [Fee Service](../checkout/fee/) | `fee-api.yml` |
+| [IAM Service](../users-and-permissions/iam/) | `iam-api.yml` |
+| [Import Service](../utilities/import-service/) | `import-api.yml` |
+| [Indexing Service](../configuration/indexing-service/) | `indexing-api.yml` |
+| [Invoice Service](../orders/invoice/) | `invoice-api.yaml` |
+| [Label Service](../products-labels-and-brands/label-service/) | `label-api.yml` |
+| [Media Service](../media/media/) | `media-api.yml` |
+| [OAuth Service](../authentication/oauth-service/) | `oauth-api.yml` |
+| [Order Service](../orders/order/) | `order-api.yml` |
+| [Payment Gateway Service](../checkout/payment-gateway/) | `payment-gateway-api.yml` |
+| [Price Service](../prices-and-taxes/price-service/) | `price-api.yml` |
+| [Product Service](../products-labels-and-brands/product-service/) | `product-api.yml` |
+| [Quote Service](../quotes/quote/) | `quote-api.yaml` |
+| [Returns Service](../orders/returns/) | `returns-api.yml` |
+| [Reward Points Service](../rewards-and-promotions/reward-points/) | `reward-points-api.yml` |
+| [Schema Service](../utilities/schema/) | `schema-api.yml` |
+| [Search Service](../utilities/search-service/) | `search-api.yml` |
+| [SequentialID Service](../utilities/sequential-id/) | `sequential-id-api.yml` |
+| [Session-Context Service](../users-and-permissions/session-context/) | `session-context-api.yaml` |
+| [Shipping Service](../delivery-and-shipping/shipping/) | `shipping-api.yml` |
+| [Shopping List Service](../checkout/shopping-list/) | `shopping-list-api.yml` |
+| [Site-Settings Service](../configuration/site-settings-service/) | `site-settings-api.yml` |
+| [Tax Service](../prices-and-taxes/tax-service/) | `tax-api.yml` |
+| [Unit-Handling Service](../configuration/unit-handling-service/) | `unit-handling-api.yml` |
+| [Vendor Service](../companies-and-customers/vendor-service/) | `vendor-api.yml` |
+| [Webhook Service](../webhooks/webhook-service/) | `webhook-api.yml` |
 

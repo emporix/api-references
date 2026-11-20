@@ -43,14 +43,29 @@ jobs:
       - name: Build zip of api.* files
         run: |
           set -euo pipefail
+          # The zip has no folders: each spec is named after its service folder
+          # without a "-service" suffix, e.g.
+          #   orders/availability/api-reference/api.yml   -> availability-api.yml
+          #   products-labels-and-brands/brand-service/... -> brand-api.yml
+          # These names are listed in quickstart/list-of-api-services.md.
+          # Hidden folders (.git, .gitbook, .style-guide templates) are skipped.
+          STAGE=$(mktemp -d)
+          find . -type f -name 'api.*' -not -path './.*' | while IFS= read -r file; do
+            service=$(basename "$(dirname "$(dirname "$file")")")
+            service=${service%-service}
+            target="$STAGE/$service-api.${file##*.}"
+            if [ -e "$target" ]; then
+              echo "Two specs would be named $(basename "$target") in the zip ($file)" >&2
+              exit 1
+            fi
+            cp "$file" "$target"
+          done
+          echo "Files: $(ls "$STAGE" | wc -l)"
           # Fixed timestamps and sorted entries keep the zip byte-identical when
           # the specs have not changed, so no empty update commits are made.
-          find . -type f -name 'api.*' -not -path './.git/*' -not -path './.gitbook/*' \
-            | LC_ALL=C sort > /tmp/api-files.txt
-          echo "Files: $(wc -l < /tmp/api-files.txt)"
-          xargs -d '\n' touch -t 198001010000 < /tmp/api-files.txt
+          touch -t 198001010000 "$STAGE"/*
           rm -f "$ZIP_PATH"
-          zip -X -D -q "$ZIP_PATH" -@ < /tmp/api-files.txt
+          (cd "$STAGE" && ls | LC_ALL=C sort | zip -X -D -q "$GITHUB_WORKSPACE/$ZIP_PATH" -@)
           ls -lh "$ZIP_PATH"
 
       - name: Commit and push if changed
