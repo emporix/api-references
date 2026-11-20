@@ -1155,8 +1155,28 @@ The following MIME types are supported:
 * application/pdf
 * text/csv
 * text/plain
+* application/json
+* application/xml or text/xml
+* text/html
+* application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+
+The file extension must match the MIME type, for example `.json` for `application/json` or `.xlsx` for the XLSX type. Legacy Excel files (`.xls`) are not supported.
 
 Media file size can be up to 10 MB.
+
+The agent reads the files as follows:
+
+* JSON and XML – the agent receives the file content as text.
+* HTML – the agent receives the visible text of the page. Scripts and styles are left out.
+* XLSX – the agent receives each sheet with its name and its cell values row by row. Formula cells show their last calculated value, not the formula.
+
+The agent refuses a file in the following cases:
+
+* The XML declares a document type definition (DTD) or entities. This is blocked for security reasons and also applies to the XML parts inside an XLSX file.
+* The content cannot be read as its file type, for example malformed JSON.
+* The content is too large to process, for example a very large spreadsheet.
+
+In these cases, the upload still succeeds with `201`, and the agent tells you in its chat reply that it cannot read the file. Correct or simplify the file, for example remove the DTD declaration, and upload it again.
 
 The later chat request must send the same `sessionId` as the upload. The chat `agentId` must be an agent that already has the attachment assigned:
 
@@ -1203,7 +1223,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 ```
 {
     "resourceId": null,
-    "message": "The provided 'image/svg+xml' content type is not supported for agent chat",
+    "message": "The provided 'image/svg+xml' content type is not supported for agent chat. Supported file extensions: csv, htm, html, jpeg, jpg, json, pdf, png, text, txt, xlsx, xml",
     "code": 400,
     "status": "Bad Request",
     "details": []
