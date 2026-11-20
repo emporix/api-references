@@ -9,7 +9,7 @@ Apply when `api.yml` or `api.yaml` files change under a service's `api-reference
 ## Structure
 
 - [ ] Spec follows per-service layout in `local-review-checks.md` (one spec per service; `api-reference/README.md` is a thin GitBook shell only)
-- [ ] New services update `SUMMARY.md` and `quickstart/list-of-api-services.md` (service and its file name in the ZIP, `<service folder without -service>-api.yml`, in alphabetical order) when applicable
+- [ ] New services update `SUMMARY.md` and `quickstart/list-of-api-services.md` (service and its file name in the ZIP: `<service folder without -service>-api.<ext>`, keeping the source extension `.yml` or `.yaml`; rows in alphabetical order) when applicable
 
 ## OpenAPI content
 
