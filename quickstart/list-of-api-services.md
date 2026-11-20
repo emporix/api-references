@@ -11,7 +11,7 @@ All of our services are documented in the API sections of our docs, with referen
 
 Download the OpenAPI specifications of all services in one ZIP file:
 
-<a href="../.gitbook/assets/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API References - ZIP</a>
+{% file src="../.gitbook/assets/api-references.zip" %}
 
 Each service's specification is a separate file in the ZIP. The file names are listed below.
 
