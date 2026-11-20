@@ -29,6 +29,9 @@ A tenant can have only one webhook configuration of each type: `svix`, `svix_sha
 * Subscribes and unsubscribes from events without having to provide the full configuration
 * Supports multiple webhook targets for the HTTP strategy: multiple `eventsConfiguration` entries per `eventType`, each with optional Jayway JsonPath `filter`, per-entry secrets/headers, and `excludedFields`
 * Supports filtering custom entity events (`schema.custom-instance-*`) with JsonPath predicates
+* Switches off a webhook target that keeps failing, stores its events instead of dropping them, and notifies the tenant by email
+* Shows the delivery status of every target, so you can see which one fails and why
+* Lets you resend, restart, or delete the stored events through the [failed messages endpoints](api-reference/README.md), and follow restarts as jobs
 * Supports hooking into the following objects:
   * Availability
   * Catalog
