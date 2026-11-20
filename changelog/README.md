@@ -51,7 +51,89 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-20" tags="new-feature" %}
+
+## Webhook Service - failing targets, failed messages, and restart jobs
+
+#### Overview
+
+The Webhook Service now switches off a delivery target that keeps failing and stores its events instead of retrying them indefinitely. The following behavior applies:
+
+* The service marks a target as `FAILING` while its deliveries fail, and keeps sending events to it. By default, when a target fails 100 times in a row, the service stops calling it and switches off its owner: the `eventsConfiguration` entry for an entry target, or the whole configuration for the global HTTP target or a Svix target. The owner returns `active: false` and a `suspendedAt` date. To use a different limit, set the `webhookFailureThreshold` key in the Configuration Service to an integer from 10 to 1000.
+* Events for a switched-off target are stored as failed messages for 14 days on production and 1 day on preprod. You can list them, resend a single message, restart a selection of messages, and delete them through the new failed messages endpoints. A restart runs as a job that you can follow through the new jobs endpoints.
+* To switch a target back on, set the `active` field of its configuration or entry to `true`. This removes `suspendedAt` and resets the target's delivery status.
+* When a target is switched off, the tenant receives an email with a link to the failed messages in the Management Dashboard. The email goes to the addresses in the `webhookNotificationEmails` Configuration Service key, or to the tenant's default contact when the key is empty. The service sends at most one email per target every 24 hours.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages) | Lists the stored failed messages, with filters, search, sorting, field selection, and paging by page number (`pageNumber`, `pageSize`) or by cursor (`next`, `prev`). |
+| [Retrieving a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages-failedmessageid) | Returns a single failed message, including its payload. |
+| [Resending a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-failedmessageid-resend) | Queues a single failed message for delivery again and removes it from the stored messages. |
+| [Restarting failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-restart) | Starts a job that queues the selected failed messages for delivery again. |
+| [Deleting a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#delete-webhook-tenant-failed-messages-failedmessageid) | Deletes a single failed message. |
+| [Deleting failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-delete) | Deletes all failed messages that match the selection. |
+| [Retrieving jobs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/jobs#get-webhook-tenant-jobs) | Lists the tenant's jobs, newest first. |
+| [Retrieving a job](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/jobs#get-webhook-tenant-jobs-jobid) | Returns a single job and its progress. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a list of webhook configs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config) | Returns `suspendedAt` for a switched-off configuration or entry. With `expand=deliveryStatus`, also returns the `deliveryStatus` of every target. |
+| [Retrieving a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code) | Returns `suspendedAt` for a switched-off configuration or entry. With `expand=deliveryStatus`, also returns the `deliveryStatus` of every target. |
+| [Updating a single webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code) | Setting `active` to `true` on a switched-off configuration or entry switches it back on and resets the delivery status of its targets. |
+| [Partially updating a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | Setting `active` to `true` on a switched-off configuration or entry switches it back on and resets the delivery status of its targets. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-18" tags="new-feature" %}
+
+## Webhook Service - failing targets, failed messages, and restart jobs
+
+#### Overview
+
+The Webhook Service now switches off a delivery target that keeps failing and stores its events instead of retrying them indefinitely. The following behavior applies:
+
+* By default, when a target fails 100 times in a row, the service marks it as `FAILING`, stops calling it, and switches off its owner: the `eventsConfiguration` entry for an entry target, or the whole configuration for the global HTTP target or a Svix target. The owner returns `active: false` and a `suspendedAt` date. To use a different limit, set the `webhookFailureThreshold` key in the Configuration Service to a positive integer.
+* Events for a switched-off target are stored as failed messages for 14 days. You can list them, resend a single message, restart a selection of messages, and delete them through the new failed messages endpoints. A restart runs as a job that you can follow through the new jobs endpoints.
+* To switch a target back on, set the `active` field of its configuration or entry to `true`. This removes `suspendedAt` and resets the target's delivery status.
+* When a target is switched off, the tenant receives an email with a link to the failed messages in the Management Dashboard. The email goes to the addresses in the `webhookNotificationEmails` Configuration Service key, or to the tenant's default contact when the key is empty. The service sends at most one email per target every 24 hours.
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages) | Lists the stored failed messages, with filters, search, sorting, field selection, and paging by page number (`pageNumber`, `pageSize`) or by cursor (`next`, `prev`). |
+| [Retrieving a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#get-webhook-tenant-failed-messages-failedmessageid) | Returns a single failed message, including its payload. |
+| [Resending a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-failedmessageid-resend) | Queues a single failed message for delivery again and removes it from the stored messages. |
+| [Restarting failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-restart) | Starts a job that queues the selected failed messages for delivery again. |
+| [Deleting a failed message](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#delete-webhook-tenant-failed-messages-failedmessageid) | Deletes a single failed message. |
+| [Deleting failed messages](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/failed-messages#post-webhook-tenant-failed-messages-delete) | Deletes all failed messages that match the selection. |
+| [Retrieving jobs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/jobs#get-webhook-tenant-jobs) | Lists the tenant's jobs, newest first. |
+| [Retrieving a job](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/jobs#get-webhook-tenant-jobs-jobid) | Returns a single job and its progress. |
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Retrieving a list of webhook configs](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config) | Returns `suspendedAt` for a switched-off configuration or entry. With `expand=deliveryStatus`, also returns the `deliveryStatus` of every target. |
+| [Retrieving a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#get-webhook-tenant-config-code) | Returns `suspendedAt` for a switched-off configuration or entry. With `expand=deliveryStatus`, also returns the `deliveryStatus` of every target. |
+| [Updating a single webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#put-webhook-tenant-config-code) | Setting `active` to `true` on a switched-off configuration or entry switches it back on and resets the delivery status of its targets. |
+| [Partially updating a webhook config](https://developer.emporix.io/api-documentation/api-guides/webhooks/webhook-service/api-reference/config#patch-webhook-tenant-config-code) | Setting `active` to `true` on a switched-off configuration or entry switches it back on and resets the delivery status of its targets. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-20" tags="new-feature" %}
 
 ## AI Service - mixins on agents and MCP servers
 
