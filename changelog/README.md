@@ -66,6 +66,26 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-20" tags="improvement" %}
+
+## AI Service - new attachment types for agent chat
+
+#### Overview
+
+Agents can now process JSON, XML, HTML, and XLSX attachments, in addition to JPG, PNG, PDF, CSV, and TXT files. For security reasons, the agent refuses XML that declares a document type definition (DTD) or entities, also inside XLSX files. Legacy Excel files (`.xls`) stay unsupported.
+
+#### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) | Accepts JSON, XML, HTML, and XLSX files. Ignores content type parameters, such as `charset=utf-8`. Lists the supported file extensions in the `400` error message. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-18" tags="new-feature" %}
 
 ## Webhook Service - failing targets, failed messages, and restart jobs
