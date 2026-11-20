@@ -480,7 +480,7 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tenant'
     post:
-      summary: Checking which items belong to segment
+      summary: Checking which items belong to a segment
       tags:
         - Segments
       operationId: POST-customer-segment-check-match
@@ -488,6 +488,8 @@ paths:
         
 
         Checks if the provided items match specified criteria - if ids of the products are assigned directly to one of the provided segments or indirectly through the category assignment. Only items assigned to the active segments will be returned.
+
+        A product assigned to a segment with `mode` set to `EXCLUDE` does not match that segment, even when a category of the same segment contains the product. The product is still returned when another requested segment includes it.
       security:
         - OAuth2:
             - customersegment.segment_manage
@@ -1075,12 +1077,12 @@ paths:
     parameters:
       - $ref: '#/components/parameters/tenant'
     get:
-      summary: 'Retrieving all items assignments for all customer segments'
+      summary: 'Retrieving all item assignments for all customer segments'
       tags:
         - Items Assignments
       description: |
         
-        Retrieves all items assignments for all customer segments.
+        Retrieves all item assignments for all customer segments. Each assignment includes `mode`. Filters stored values with the `q` parameter, for example `q=mode:EXCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1124,7 +1126,7 @@ paths:
         - Items Assignments
       description: |
         
-        Retrieves all item assignments for a given customer segment.
+        Retrieves all item assignments for a given customer segment. Each assignment includes `mode`. Filters stored values with the `q` parameter, for example `q=mode:EXCLUDE`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1166,7 +1168,7 @@ paths:
         - Items Assignments
       description: |
         
-        Retrieves all item assignments for a given customer segment.
+        Retrieves all item assignments for a given customer segment. Each assignment includes `mode`. Filters stored values with `q` in the request body, for example `{"q":"mode:EXCLUDE"}`.
       security:
         - CustomerAccessToken: []
         - OAuth2:
@@ -1177,8 +1179,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/SegmentsSearch'
-            example:
-              q: "type:PRODUCT"
+            examples:
+              Filter by type:
+                value:
+                  q: "type:PRODUCT"
+              Filter by mode:
+                value:
+                  q: "mode:EXCLUDE"
       responses:
         '200':
           description: Customer segment assignments were successfully retrieved.
@@ -1260,6 +1267,9 @@ paths:
         - OAuth2:
             - customersegment.segment_manage
       requestBody:
+        required: false
+        description: |
+          Optional assignment payload. When the body is omitted, the assignment is stored with `mode` set to `INCLUDE`.
         content:
           application/json:
             schema:
@@ -1310,7 +1320,9 @@ paths:
       operationId: PUT-customer-segment-update-items-bulk
       description: |
         
-        Performs `UPSERT` operation. Updates multiple item assignments to a customer segments. The maximum batch size is 200.
+        Performs `UPSERT` operation. Updates multiple item assignments to a customer segment. The maximum batch size is 200.
+
+        Each item accepts optional `mode` with the same rules as a single update. A category item with `mode` set to `EXCLUDE` returns a per-item 400 status in the HTTP 207 response, and the service still processes the other items. An unsupported `mode` value rejects the whole request with HTTP 400.
 
       security:
         - OAuth2:
@@ -1327,7 +1339,8 @@ paths:
                 $ref: '#/components/examples/ItemAssignmentsUpsert'
       responses:
         '207':
-          description: Multi-status response.
+          description: |
+            Multi-status response. Includes a per-item 400 status when a category item uses `mode` set to `EXCLUDE`, while successful items still complete.
           content:
             application/json:
               schema:
@@ -1577,6 +1590,15 @@ components:
       allOf:
         - type: object
           properties:
+            mode:
+              type: string
+              description: |
+                Determines whether the item is included in the customer segment or excluded from it. Possible values are `INCLUDE` and `EXCLUDE`.
+                When `mode` is omitted on create or update, the assignment is stored as `INCLUDE`.
+                `EXCLUDE` is supported for products only. A category assignment with `mode` set to `EXCLUDE` is rejected.
+              enum:
+                - INCLUDE
+                - EXCLUDE
             mixins:
               type: object
               description: A key-value map of additional attributes.
@@ -1622,7 +1644,16 @@ components:
                 - CATEGORY
         - $ref: '#/components/schemas/ItemAssignmentUpsert'
         - type: object
+          required:
+            - mode
           properties:
+            mode:
+              type: string
+              description: |
+                Assignment mode returned for every item assignment. Possible values are `INCLUDE` and `EXCLUDE`.
+              enum:
+                - INCLUDE
+                - EXCLUDE
             metadata:
               $ref: '#/components/schemas/MetadataResponse'
     CategoryTreeResponse:
@@ -2184,6 +2215,7 @@ components:
           name:
             en: Hammer
         type: PRODUCT
+        mode: INCLUDE
         metadata:
           createdAt: 2024-10-12T12:00:00.000Z
           modifiedAt: 2024-10-12T12:00:00.000Z
@@ -2198,6 +2230,7 @@ components:
             name:
               en: Screwdriver
           type: PRODUCT
+          mode: EXCLUDE
           metadata:
             createdAt: 2024-10-12T12:00:00.000Z
             modifiedAt: 2024-10-12T12:00:00.000Z
@@ -2244,10 +2277,17 @@ components:
             segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
     ItemAssignmentUpsert:
       value:
-        *mixins
+        mode: INCLUDE
+        mixins:
+          segmentAttributes:
+            membershipStatus: PREMIUM
+        metadata:
+          mixins:
+            segmentAttributes: https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/69537caeb3fd5d378296ae42_segmentAttributes.json
     ItemAssignmentsUpsert:
       value:
         - id: "12468504"
+          mode: EXCLUDE
           mixins:
             segmentAttributes:
               membershipStatus: PREMIUM
