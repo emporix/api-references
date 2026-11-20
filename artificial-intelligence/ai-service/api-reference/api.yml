@@ -565,14 +565,18 @@ paths:
 
         Send exactly one of `attachment` or `attachmentId`. Sending both or neither returns `400`.
 
-        **Upload a file:** Send the `attachment` form field. The response is `201` with the new attachment `id` and `sessionId`. Supported file extensions:
-          - jpg
-          - jpeg
-          - png
-          - pdf
-          - csv
-          - text
-          - txt
+        **Upload a file:** Send the `attachment` form field. The response is `201` with the new attachment `id` and `sessionId`. The following file extensions and content types are supported:
+          - jpg, jpeg – `image/jpeg`
+          - png – `image/png`
+          - pdf – `application/pdf`
+          - csv – `text/csv`
+          - text, txt – `text/plain`
+          - json – `application/json`
+          - xml – `application/xml` or `text/xml`
+          - html, htm – `text/html`
+          - xlsx – `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`
+
+        The file extension must match the content type of the `attachment` part. Content type parameters, such as `charset=utf-8`, are ignored. Legacy Excel files (`xls`) are not supported. An unsupported content type or file extension returns `400`, and the error message lists the supported file extensions.
 
         **Assign existing media:** Send `attachmentId` and the target agent's `agentId` in the path. Use either the `attachmentId` form field or an `application/json` body with `attachmentId`. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, the response includes the generated `sessionId`.
 
