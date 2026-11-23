@@ -28,7 +28,7 @@ The OAuth Service uses the **client credentials** grant type, so you receive an 
 
 {% stepper %}
 {% step %}
-#### Send an authentication request
+##### Send an authentication request
 
 Send a `POST` request to the token endpoint with form-encoded credentials.
 
@@ -70,7 +70,7 @@ Replace `{client_id}` and `{client_secret}` with your actual values.
 {% endstep %}
 
 {% step %}
-#### Use the response
+##### Use the response
 
 A successful response returns a JSON object containing the access token and metadata:
 
