@@ -88,7 +88,7 @@ Each finding must include:
 7. Auto-fixable: `yes` or `no`
 
 For structural findings marked `Auto-fixable: no`, include:
-8. Reworked structure suggestion: a concrete block-level rewrite blueprint that follows the applicable style rule and can be copied/adapted directly (for example `{% stepper %}` + `{% step %}` + `####` titles for `format-and-structure#steps`)
+8. Reworked structure suggestion: a concrete block-level rewrite blueprint that follows the applicable style rule and can be copied/adapted directly (for example `{% stepper %}` + `{% step %}` + `#####` titles for `format-and-structure#steps`)
 
 Grammar and spelling findings must include the original snippet and corrected snippet in the suggested fix field when auto-fixable.
 
