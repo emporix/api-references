@@ -332,7 +332,7 @@ The value of the `productId` from the response is the \{{bundle\_Id\}}.
 
 ## How to update multiple products in one operation
 
-If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) products endpoint.
+If you want to update multiple products, use the bulk update feature to update several products in one operation. Send a request to the [Upserting multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-bulk) endpoint. To change only selected fields on existing products without creating missing ones, see [How to partially update multiple products in one operation](#how-to-partially-update-multiple-products-in-one-operation).
 
 {% hint style="warning" %}
 The `product.product_update` scope is required. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
@@ -503,6 +503,58 @@ Media:
 {% content-ref url="../../media/media/api-reference/" %}
 [api-reference](../../media/media/api-reference/)
 {% endcontent-ref %}
+
+## How to partially update multiple products in one operation
+
+To change only the fields you send on up to 200 existing products in one request, send a request to the [Partially updating products in bulk](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) endpoint. Each item follows the same rules as a single product patch. A product that does not exist is not created. If the same product `id` appears more than once, a later item is applied on the earlier write.
+
+{% hint style="warning" %}
+The `product.product_manage` scope is required. The `product.product_manage_by_vendor` scope is required for vendor employees to manage products belonging to the vendor. The `product.product_publish` and `product.product_unpublish` scopes are only required if you want to publish or unpublish the products on the update.
+{% endhint %}
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/product/{{tenant}}/products/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "id": "62d65a15088ed94ebf093d7d",
+    "code": "SM-X2-2024",
+    "metadata": {
+      "version": 1
+    }
+  },
+  {
+    "id": "5c332826a9812100098ff50a",
+    "published": true
+  }
+]'
+```
+
+The response for each product is returned at the same position (index) as in the request body. A successful call returns `207` with one result per item:
+
+```json
+[
+  {
+    "index": 0,
+    "id": "62d65a15088ed94ebf093d7d",
+    "code": 204,
+    "status": "NO_CONTENT"
+  },
+  {
+    "index": 1,
+    "id": "5c332826a9812100098ff50a",
+    "code": 404,
+    "status": "NOT_FOUND",
+    "message": "The product with id 5c332826a9812100098ff50a has not been found."
+  }
+]
+```
+
+`404`: The second product was not found. Check that you provided the correct `id`. Missing products are not created.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
 
 ## How to create a parent variant product with variants
 
