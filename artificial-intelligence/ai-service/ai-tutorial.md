@@ -210,7 +210,7 @@ To follow this workflow:
 
 {% stepper %}
 {% step %}
-#### Create the MCP server
+##### Create the MCP server
 
 Call the [Upserting MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#put-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. The request replaces all existing data for that server ID. A successful create returns `201` with the server ID. A successful update returns `204`.
 
@@ -305,7 +305,7 @@ curl -L \
 {% endstep %}
 
 {% step %}
-#### Attach the server to an agent
+##### Attach the server to an agent
 
 Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the MCP server to an existing agent, for example an agent you created from a template. A successful request returns `204`.
 
@@ -404,7 +404,7 @@ You can also attach servers with the [Upserting agent](https://developer.emporix
 {% endstep %}
 
 {% step %}
-#### Verify the attachment
+##### Verify the attachment
 
 Call the [Retrieving agent by ID](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#get-ai-service-tenant-agentic-agents-agentid) endpoint with `expand=mcpServers` to return the full `mcpServer` object for `custom` and `dynamic` attachments. Without `expand`, `mcpServer` typically contains only the `id`.
 
@@ -448,7 +448,7 @@ The response includes the inline `tools`.
 {% endstep %}
 
 {% step %}
-#### Update the MCP server
+##### Update the MCP server
 
 Call the [Partially updating MCP server](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/mcp-server#patch-ai-service-tenant-agentic-mcp-servers-mcpserverid) endpoint. A successful request returns `204`.
 
@@ -548,7 +548,7 @@ To follow this workflow, the OAuth2 access token must include the `ai.agent_mana
 
 {% stepper %}
 {% step %}
-#### Create the search tool
+##### Create the search tool
 
 Call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint with `type` set to `search`. Set the `toolId` in the URL path, for example `search-customer` or `search-legal-entity`.
 
@@ -613,7 +613,7 @@ When you save the tool, the service prepares the search index for the selected e
 {% endstep %}
 
 {% step %}
-#### Trigger a reindex job
+##### Trigger a reindex job
 
 After you create the first search tool for an entity type, reindex that entity type. Until the reindex job finishes, the search index is empty and the tool returns no results. For more search tools of the same entity type, you don't need to reindex again.
 
@@ -658,7 +658,7 @@ You receive a `201` or `200` response with a reindex job ID, which you can use t
 {% endstep %}
 
 {% step %}
-#### Attach the tool to an agent
+##### Attach the tool to an agent
 
 Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint to add the tool ID to the `nativeTools` of an existing agent, for example an agent you [created from a template](#how-to-create-an-ai-agent-using-a-template). A successful request returns `204`.
 
@@ -932,7 +932,7 @@ The OAuth2 access token must include `ai.agent_manage` to set `enabledMemory` on
 
 {% stepper %}
 {% step %}
-#### Enable memory on the agent
+##### Enable memory on the agent
 
 Set `enabledMemory` to `true` on the agent. The default is `false`. You can set the flag when you create or replace the agent with the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint, or update an existing agent with the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint.
 
@@ -955,7 +955,7 @@ A successful request returns `204`. To keep conversational memory for collaborat
 {% endstep %}
 
 {% step %}
-#### Reuse the `session-id` header
+##### Reuse the `session-id` header
 
 Call a chat endpoint, for example [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat). Save `sessionId` from the JSON response. On [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream), save `session_id` from the SSE `done` event. On later turns, send that value as the `session-id` header.
 
@@ -978,7 +978,7 @@ If you omit `session-id` on a follow-up call, the API starts a new session.
 {% endstep %}
 
 {% step %}
-#### Keep collaborations in the same session
+##### Keep collaborations in the same session
 
 If the agent lists `agentCollaborations`, those collaborations stay in the caller's session. To keep conversational memory across those agents, it is recommended to set the flag to `true` on the calling agent (the supervisor) and each collaboration target. Listing an agent in `agentCollaborations` does not enable memory for it.
 
@@ -1014,7 +1014,7 @@ The OAuth2 access token must include `ai.agent_manage` to create or update an ag
 
 {% stepper %}
 {% step %}
-#### Set `additionalParams` when you create or replace an agent
+##### Set `additionalParams` when you create or replace an agent
 
 Call the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint. Include `additionalParams` inside `llmConfig`. The `PUT` replaces the whole agent document, so the body must include all required agent fields.
 
@@ -1064,7 +1064,7 @@ A successful create returns `201`. A successful replace returns `204`. Read APIs
 {% endstep %}
 
 {% step %}
-#### Update `additionalParams` on an existing agent
+##### Update `additionalParams` on an existing agent
 
 Call the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint. Replace `/llmConfig/additionalParams` with a JSON object.
 
@@ -1189,7 +1189,7 @@ To use the file with a different agent, first assign the attachment to that agen
 
 {% stepper %}
 {% step %}
-#### Upload a file to an agent
+##### Upload a file to an agent
 
 To upload a file to an agent, use the dedicated [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) endpoint. The `agentId` in the path assigns the file to that agent.
 
@@ -1233,7 +1233,7 @@ Attaching a media file of an unsupported type results in the `400` error, for ex
 {% endstep %}
 
 {% step %}
-#### Refer to the attachment in agent chat
+##### Refer to the attachment in agent chat
 
 The file is assigned to the agent. In the chat request, reference it and add any extra instructions. Call the agent, for example with the [Starting agent chat](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat) endpoint. Include the upload `id` as `attachments[].attachmentId` in the request body. Send the same `session-id` header and the same `agentId` as the upload path:
 
@@ -1273,7 +1273,7 @@ If the chat `agentId` does not match the agent that received the upload, the req
 {% endstep %}
 
 {% step %}
-#### Reuse an attachment with another agent
+##### Reuse an attachment with another agent
 
 To assign existing media to an agent, call [Uploading attachment](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-agentid-attachments) with `attachmentId` instead of a file. Put the target agent's `agentId` in the path. Send `attachmentId` in an `application/json` body. The `attachmentId` form field is also supported. The response is `200` with the attachment `id` and `sessionId`. If you omit the `session-id` header, save the `sessionId` from the response for later chat requests.
 
@@ -1318,7 +1318,7 @@ The following scopes are required:
 
 {% stepper %}
 {% step %}
-#### Add the built-in file generator to the agent
+##### Add the built-in file generator to the agent
 
 The built-in file generator is not a tool you create. Add its reserved ID, `file_generator`, to the agent's `nativeTools` with the [Partially updating agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#patch-ai-service-tenant-agentic-agents-agentid) endpoint. A successful request returns `204`.
 
@@ -1344,7 +1344,7 @@ Creating a tool with the ID `file_generator` through [Upserting tool](https://de
 {% endstep %}
 
 {% step %}
-#### Ask for an image or a file in the chat stream
+##### Ask for an image or a file in the chat stream
 
 Call [Starting agent chat stream](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent-chat#post-ai-service-tenant-agentic-chat-stream) and ask the agent for the result you need.
 
@@ -1381,7 +1381,7 @@ Handle each `artifact` event by its `status`:
 {% endstep %}
 
 {% step %}
-#### Download the image or file
+##### Download the image or file
 
 Use the `artifactId` as the asset ID in [Retrieving a download URL](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#get-media-tenant-assets-assetid-download-url).
 
@@ -1409,7 +1409,7 @@ You can use the export and import to:
 
 {% stepper %}
 {% step %}
-#### Export agents
+##### Export agents
 
 Collect the `agentIds` you want to export, then call the [Exporting agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-export) endpoint.
 
@@ -1436,7 +1436,7 @@ Store both `data` and `checksum`. You will need them when importing.
 {% endstep %}
 
 {% step %}
-#### Import agents
+##### Import agents
 
 Use the payload obtained during export and call the [Importing agents](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/import-export#post-ai-service-tenant-agentic-agents-import) endpoint. Import requires the `ai.agent_manage` scope.
 

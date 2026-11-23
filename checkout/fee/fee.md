@@ -41,7 +41,7 @@ Follow these steps to create a fee and connect it to a product.
 
 {% stepper %}
 {% step %}
-#### Create a fee
+##### Create a fee
 
 Send the request to the [Creating a fee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
@@ -74,7 +74,7 @@ Make sure you provide the relevant `siteCode` of a site that you want to apply t
 {% endstep %}
 
 {% step %}
-#### Copy the `feeId` of the created fee
+##### Copy the `feeId` of the created fee
 
 To add the fee to the specific product, send the request to the [Adding a list of fees to a product](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/product-fees-management#put-fee-tenant-productfees-productid-fees) endpoint. You need to add the `feeId` in the request.
 
@@ -95,7 +95,7 @@ In the request path parameter, provide the `productId` to add the fee to. The `s
 {% endstep %}
 
 {% step %}
-#### Review the fee
+##### Review the fee
 
 To make sure the fee has been added properly, you can send the request to the [Retrieving all fees with the given productId](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/product-fees-management#get-fee-tenant-productfees-productid-fees) endpoint.
 
@@ -139,7 +139,7 @@ The Fee Service supports adding fees to payments methods. See the example of cre
 
 {% stepper %}
 {% step %}
-#### Create a fee
+##### Create a fee
 
 Send the request to the [Creating a fee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/fee-management#post-fee-tenant-fees) endpoint.
 
@@ -172,7 +172,7 @@ Notice the `code` in the above payload corresponds to the payment mode `code` we
 {% endstep %}
 
 {% step %}
-#### Copy the `feeId` of the created fee
+##### Copy the `feeId` of the created fee
 
 To connect the fee to the specific payment type, create the item fee by sending the request to the [Creating itemFee](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-management#post-fee-tenant-itemfees) endpoint and specify the `itemYrn` of the chosen payment type in the request body.
 
@@ -189,7 +189,7 @@ Note that the part of `itemYrn` contains the payment mode `code` which is identi
 {% endstep %}
 
 {% step %}
-#### Apply the fee to the payment mode
+##### Apply the fee to the payment mode
 
 Send a request to the [Adding a list of fees to an item](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-management#put-fee-tenant-itemfees-itemyrn-fees) endpoint. You need to specify the `itemYrn` of the chosen payment type in the request path and pass the `feeId` in the body.
 
@@ -212,7 +212,7 @@ This operation overwrites the item's fees. For each payment mode you can create 
 {% endstep %}
 
 {% step %}
-#### Review the fee
+##### Review the fee
 
 Send the request to the [Checking of a fee has been applied](https://developer.emporix.io/api-documentation/api-guides/checkout/fee/api-reference/item-fee-search#post-fee-tenant-itemfees-search) endpoint.
 

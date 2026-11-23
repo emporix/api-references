@@ -27,15 +27,15 @@ To create a brand with media files and add it to a product created beforehand, f
 
 {% stepper %}
 {% step %}
-#### [Create a brand](brand.md#create-a-brand)
+##### [Create a brand](brand.md#create-a-brand)
 {% endstep %}
 
 {% step %}
-#### [Upload brand images](brand.md#upload-an-image)
+##### [Upload brand images](brand.md#upload-an-image)
 {% endstep %}
 
 {% step %}
-#### [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
+##### [Update an existing product with brand information](brand.md#update-an-existing-product-with-brand-information)
 {% endstep %}
 {% endstepper %}
 
