@@ -98,7 +98,7 @@ Not auto-fixable (mark `Auto-fixable: no`):
 
 Structural finding requirement:
 - If the issue is a structural format violation (especially `format-and-structure#steps`), provide a concrete `Reworked structure suggestion`.
-- For step violations that use headings like `## Step 1 - ...`, propose a GitBook stepper rewrite using `{% stepper %}`, `{% step %}`, and `####` step titles.
+- For step violations that use headings like `## Step 1 - ...`, propose a GitBook stepper rewrite using `{% stepper %}`, `{% step %}`, and `#####` step titles.
 - Keep this as `Auto-fixable: no` even when the rewrite is concrete.
 
 Severity policy:
@@ -137,13 +137,13 @@ When applicable for structural findings:
   ```md
   {% stepper %}
   {% step %}
-  #### First step title
+  ##### First step title
 
   Step content...
   {% endstep %}
 
   {% step %}
-  #### Second step title
+  ##### Second step title
 
   Step content...
   {% endstep %}

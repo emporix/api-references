@@ -25,7 +25,7 @@ In guided structural mode:
 2. Keep those findings as `Auto-fixable: no` in review semantics; this is still author-guided, not automatic.
 3. Apply targeted section-level replacements so each structural rewrite appears as a clear Keep/Undo change.
 4. Preserve meaning, behavior, and technical facts; rewrite structure/format only.
-5. Prefer exact rule-compliant patterns when relevant (for example `{% stepper %}` + `{% step %}` + `####` titles for `format-and-structure#steps`).
+5. Prefer exact rule-compliant patterns when relevant (for example `{% stepper %}` + `{% step %}` + `#####` titles for `format-and-structure#steps`).
 
 ## Auto-fixable examples
 - Title case: `# bad title` -> `# Good Title`

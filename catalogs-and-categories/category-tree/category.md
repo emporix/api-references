@@ -141,6 +141,90 @@ curl -L \
   --header 'Accept: */*'
 ```
 
+## How to create, update, and delete categories in bulk
+
+You can create categories, partially update categories, or delete a category’s assignments by reference id in batches of up to 200. For a valid request, the call returns `207` with one result for each item. An empty array returns `207` with an empty result list.
+
+{% hint style="warning" %}
+The `category.category_manage` scope is required. The `category.category_publish` scope is only required when you publish categories. The `category.category_unpublish` scope is only required when you unpublish categories on a bulk patch.
+{% endhint %}
+
+### Create categories in bulk
+
+Send a request to the [Creating categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories-bulk) endpoint. A supplied `id` is kept. When `id` is omitted, the service generates one.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/category/{{tenant}}/categories/bulk?publish=true' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "id": "beverages",
+    "localizedName": {
+      "en": "Beverages",
+      "de": "Getränke"
+    },
+    "published": true
+  },
+  {
+    "localizedName": {
+      "en": "Snacks",
+      "de": "Snacks"
+    },
+    "published": true
+  }
+]'
+```
+
+### Partially update categories in bulk
+
+Send a request to the [Partially updating categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-bulk) endpoint. Each item needs an `id` and `metadata.version`. Omitted fields remain unchanged. A category that does not exist is not created.
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/category/{{tenant}}/categories/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "id": "beverages",
+    "localizedName": {
+      "en": "Beverages and drinks"
+    },
+    "metadata": {
+      "version": 1
+    }
+  },
+  {
+    "id": "snacks",
+    "localizedName": {
+      "en": "Snacks and nuts"
+    },
+    "metadata": {
+      "version": 3
+    }
+  }
+]'
+```
+
+### Delete category assignments by reference in bulk
+
+Send a JSON array of reference ids to the [Deleting category assignments by reference in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-references-bulk) endpoint. Only assignments on that category are deleted. The same reference on another category stays in place.
+
+```bash
+curl -i -X DELETE \
+  'https://api.emporix.io/category/{{tenant}}/categories/{{categoryId}}/assignments/references/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "1639265",
+  "1639266"
+]'
+```
+
 ## How to delete resource assignments
 
 You can delete all resources assigned to a particular category, or just one specific assignment.
