@@ -785,7 +785,7 @@ components:
                 as met, so a site without prices or availability still contributes to the merged
                 document when `PRICE` or `AVAILABILITY` is not listed. Its data is not part of the indexed document or of
                 the `index.item-updated` webhook events. A change takes effect within 10 minutes.
-                For details, see [How to choose the data that BatteryIncluded indexing uses](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+                For details, see [Choosing the indexed data](https://developer.emporix.io/user-guides/system-management/search/batteryincluded/set-up-indexing#choosing-the-indexed-data).
             siteAwareMixinsStrategy:
               type: string
               enum:
@@ -819,7 +819,7 @@ components:
                 not contain it. A change takes effect within 10 minutes and applies to each
                 product the next time it is updated or reindexed. To apply it to all products,
                 start a full product reindex after the change takes effect.
-                For details, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
+                For details, see [Site-aware mixins](https://developer.emporix.io/user-guides/system-management/search/batteryincluded/mixins#site-aware-mixins).
           required:
             - provider
     IndexCreationResponse:

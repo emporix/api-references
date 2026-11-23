@@ -253,7 +253,7 @@ Search integrations that read these mixins from `_product` must read them from `
 {% endhint %}
 
 {% hint style="info" %}
-For the strategies and the steps, see [How to choose site-aware mixins indexing for BatteryIncluded](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-to-choose-site-aware-mixins-indexing-for-batteryincluded).
+For the strategies and the steps, see [Site-aware mixins](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/search/batteryincluded/mixins#site-aware-mixins).
 {% endhint %}
 
 ##### Updated endpoints
@@ -335,7 +335,7 @@ There are no known problems.
 
 You can now choose which Emporix services BatteryIncluded product indexing calls for optional data. The `BATTERY_INCLUDED` configuration accepts an optional `enrichments` list with the values `AVAILABILITY`, `PRICE`, `CUSTOMER_SEGMENT`, and `FEE`. When the list is not set, the service uses `AVAILABILITY`, `PRICE`, and `CUSTOMER_SEGMENT`, so the Fee Service is no longer called by default and the BatteryIncluded document does not change. A missing price or missing availability no longer removes a site when `PRICE` or `AVAILABILITY` is not listed. The data of a value that is not listed is missing from the document and from `index.item-updated` webhook events.
 
-For the values and the steps, see [How to choose the data that BatteryIncluded indexing uses](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-choose-the-data-that-batteryincluded-indexing-uses).
+For the values and the steps, see [Choosing the indexed data](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/search/batteryincluded/set-up-indexing#choosing-the-indexed-data).
 
 ##### Updated endpoints
 
@@ -451,7 +451,7 @@ BatteryIncluded product documents now deep-merge site-aware mixin overlays for e
 
 The site-aware base and `{mixin}__{site}` overlay roots are no longer present under `_product.mixins` or `_product_i18n.<language>.mixins`. Consumers that read site-aware mixins from the old roots must switch to the new `_product_siteAware` paths. Commercial site fields, raw source mixin filtering, and non-site-aware mixin paths keep their existing behavior.
 
-For details, see [How site-aware mixins are indexed](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#how-site-aware-mixins-are-indexed). For migration guidance, see [Migrating from legacy mixin paths](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/indexing#migrating-from-legacy-mixin-paths).
+For details, see [Site-aware mixins](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/search/batteryincluded/mixins#site-aware-mixins). For migration guidance, see [Migrating from the legacy layout](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/search/batteryincluded/mixins#migrating-from-the-legacy-layout).
 
 ##### Known problems
 
@@ -467,7 +467,7 @@ There are no known problems.
 
 You can now set the BatteryIncluded host for a tenant. The `BATTERY_INCLUDED` configuration accepts an optional `apiUrl` field. When it is set, the Indexing Service sends all of the tenant's BatteryIncluded requests to that host, including product updates, deletions, and reindex uploads. When it is not set, the service uses the default BatteryIncluded host. The service accepts only the `https` address of an allowed BatteryIncluded host and returns `400` for any other value, or for `apiUrl` in an `ALGOLIA` configuration. Change `apiUrl` when no product reindex is running.
 
-For the steps, see [How to set the BatteryIncluded API URL](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-to-set-the-batteryincluded-api-url).
+For the steps, see [Using a different BatteryIncluded host](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/system-management/search/batteryincluded/set-up-indexing#using-a-different-batteryincluded-host).
 
 ##### Updated endpoints
 
