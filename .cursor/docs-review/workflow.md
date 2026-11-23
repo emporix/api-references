@@ -69,13 +69,13 @@ Compliant rewrite:
 ```md
 {% stepper %}
 {% step %}
-#### Open the storefront
+##### Open the storefront
 
 ...
 {% endstep %}
 
 {% step %}
-#### Approve the quote
+##### Approve the quote
 
 ...
 {% endstep %}
