@@ -60,10 +60,10 @@ Avoid:
 * Use the following doc structure
 
 ```
-#### Overview
+##### Overview
 
 ...
-#### New features
+##### New features
 
 | Feature | Function | Benefit |
 | ------- | -------- | ------- |
@@ -71,15 +71,15 @@ Avoid:
 | **Feature two** | One or more sentences describing what the feature does or how it works. | One or more sentences describing its benefits. |
 | ... | ... | ... |
 
-#### Fixes and improvements
+##### Fixes and improvements
 
 None as this is a new feature/improvement.
 
-#### Known problems
+##### Known problems
 
 No known problems at the time of release.
 
-#### Documentation and links
+##### Documentation and links
 
 User Guides:
 *
