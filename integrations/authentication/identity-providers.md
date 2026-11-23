@@ -37,13 +37,13 @@ To set up multiple IDPs:
 
 {% stepper %}
 {% step %}
-#### Provide a unique name for each configuration
+##### Provide a unique name for each configuration
 
 The unique naming is necessary for the storefront reference, where the configuration uses the name to decide which IDP should be used in a given case. For example: `auth0_de`, `auth0_pl`, `keycloak_en`, `keycloak_de`.
 {% endstep %}
 
 {% step %}
-#### Initiate the authentication flow
+##### Initiate the authentication flow
 
 Use the OAuth2 `state` parameter when initiating the authentication flow on the storefront. The parameter must follow this format: `{configName}--{randomValue}`.
 {% endstep %}

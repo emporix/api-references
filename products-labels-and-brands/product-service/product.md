@@ -1602,7 +1602,7 @@ A PATCH request cannot remove a mixin. To remove a mixin, retrieve the product a
 
 {% stepper %}
 {% step %}
-#### Update selected mixin fields
+##### Update selected mixin fields
 
 This example updates `orderUnit` on `productCustomAttributes`. The product also has a `deliveryOptions` mixin.
 
@@ -1669,7 +1669,7 @@ Retrieve the product, omit the mixin from `mixins` and `metadata.mixins`, then s
 
 {% stepper %}
 {% step %}
-#### Retrieve the product
+##### Retrieve the product
 
 Send a request to the [Retrieving a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#get-product-tenant-products-productid) endpoint:
 
@@ -1717,7 +1717,7 @@ The response includes the mixins and their schema URLs. Use the current `metadat
 {% endstep %}
 
 {% step %}
-#### Replace the product without the mixin
+##### Replace the product without the mixin
 
 Omit `deliveryOptions` from `mixins` and `metadata.mixins`. Send the remaining product document to the [Upserting a product](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#put-product-tenant-products-productid) endpoint with `partial=false`.
 

@@ -57,7 +57,7 @@ An upload session creates an asset with the `PENDING` status and returns short-l
 
 {% stepper %}
 {% step %}
-#### Start the upload session
+##### Start the upload session
 
 Start an upload session by sending an `application/json` request to the [Starting an upload session](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets-upload-session) endpoint.
 
@@ -106,7 +106,7 @@ The response contains the pending asset ID and the exact storage request to send
 {% endstep %}
 
 {% step %}
-#### Upload the file to GCS
+##### Upload the file to GCS
 
 Send the file to the returned `upload.url` without an Emporix access token. Copy every returned header unchanged.
 
@@ -123,7 +123,7 @@ GCS signed upload credentials are valid for 15 minutes by default. The upload se
 {% endstep %}
 
 {% step %}
-#### Wait for the asset to become ready
+##### Wait for the asset to become ready
 
 Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure with the returned asset ID.
 {% endstep %}
@@ -133,7 +133,7 @@ Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure
 
 {% stepper %}
 {% step %}
-#### Start the form upload session
+##### Start the form upload session
 
 Set `uploadType` to `form` to receive a signed GCS POST policy.
 
@@ -185,7 +185,7 @@ A representative response is:
 {% endstep %}
 
 {% step %}
-#### Submit the multipart form
+##### Submit the multipart form
 
 Submit every field returned in `upload.fields` unchanged. Append the `file` part last. GCS form instructions do not include `x-goog-if-generation-match`.
 
@@ -207,7 +207,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Wait for the asset to become ready
+##### Wait for the asset to become ready
 
 Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure with the returned asset ID.
 {% endstep %}
@@ -217,7 +217,7 @@ Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure
 
 {% stepper %}
 {% step %}
-#### Start the public upload session
+##### Start the public upload session
 
 Create a session with `access` set to `PUBLIC`. Public blobs are stored in Cloudinary and always use a multipart POST.
 
@@ -273,7 +273,7 @@ A representative response is:
 {% endstep %}
 
 {% step %}
-#### Submit the Cloudinary form
+##### Submit the Cloudinary form
 
 The `api_key` is expected public form data. The Cloudinary API secret is never returned. Cloudinary form instructions are valid for one hour. Submit every returned field unchanged and append the `file` part last.
 
@@ -295,7 +295,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Wait for the asset to become ready
+##### Wait for the asset to become ready
 
 Follow the [Wait for the uploaded asset](#wait-for-the-uploaded-asset) procedure with the returned asset ID.
 {% endstep %}
@@ -368,7 +368,7 @@ Use [Retrieving a download URL](https://developer.emporix.io/api-documentation/a
 
 {% stepper %}
 {% step %}
-#### Request a download URL
+##### Request a download URL
 
 For a private GCS blob, omit `disposition` to use the default value, `attachment`.
 
@@ -424,7 +424,7 @@ curl -i \
 {% endstep %}
 
 {% step %}
-#### Retrieve the file from storage
+##### Retrieve the file from storage
 
 Use the returned URL directly. Do not send the Emporix access token to GCS or Cloudinary.
 
