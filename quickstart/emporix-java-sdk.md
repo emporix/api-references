@@ -32,7 +32,7 @@ This quick start shows how to add the Emporix Java SDK to your Spring Boot proje
 
 {% stepper %}
 {% step %}
-### Add the dependency to your project
+##### Add the dependency to your project
 
 **Gradle:**
 
@@ -54,7 +54,7 @@ dependencies {
 {% endstep %}
 
 {% step %}
-### Enable the SDK by adding the annotation to your Spring Boot application
+##### Enable the SDK by adding the annotation to your Spring Boot application
 
 ```java
 import io.emporix.config.EnableEmporixAutoConfiguration;
@@ -73,7 +73,7 @@ public class MyApplication {
 {% endstep %}
 
 {% step %}
-### Configure your credentials
+##### Configure your credentials
 
 **Recommended**: Use environment variables
 
@@ -102,7 +102,7 @@ emporix:
 {% endstep %}
 
 {% step %}
-### Use the SDK in your code
+##### Use the SDK in your code
 
 ```java
 import io.emporix.auth.service.EmporixTokenService;
@@ -504,19 +504,19 @@ each method). You obtain tokens using `EmporixTokenService` and pass them to cli
 
 {% stepper %}
 {% step %}
-### Obtain a token
+##### Obtain a token
 
 Get the token using `EmporixTokenService`.
 {% endstep %}
 
 {% step %}
-### Get the Bearer token
+##### Get the Bearer token
 
 Get the token using `token.bearerAccessToken()` (null-safe and idempotent).
 {% endstep %}
 
 {% step %}
-### Pass the Bearer token to the client method
+##### Pass the Bearer token to the client method
 Typically it's passed as the last parameter.
 {% endstep %}
 {% endstepper %}

@@ -54,19 +54,19 @@ The token approach ensures a consistent user experience, and centralized securit
 
 {% stepper %}
 {% step %}
-### Selection and verification
+##### Selection and verification
 When a B2B customer logs in, they choose the specific legal entity they want to represent for that session. The Customer Service then verifies that the user is assigned to this selected entity.
 {% endstep %}
 {% step %}
-### Token generation 
+##### Token generation
 Upon verification, the [Customer Service](../companies-and-customers/customer-service/api-reference/) issues a new refresh token that embeds the `legalEntityId` parameter.
 {% endstep %}
 {% step %}
-### Data access and scope 
+##### Data access and scope
 This updated token is passed to other services to determine the correct scopes and data visibility for the user. The `legalEntityId` header is injected into requests, ensuring the user only accesses relevant data, such as orders or segment-based product visibility tied to that specific legal entity.
 {% endstep %}
 {% step %}
-### Seamless switching
+##### Seamless switching
 If the customer needs to change the legal entity they are acting on behalf of, they do not need to log in again. The storefront triggers the [Refreshing a customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint to generate a new token based on the previous one, but with the updated `legalEntityId` information.
 {% endstep %}
 {% endstepper %}
