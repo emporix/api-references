@@ -66,6 +66,107 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-23" tags="new-feature" %}
+
+## Media Service - bulk asset changes
+
+#### Overview
+
+The Media Service can now create, partially update, and delete up to 200 assets in one call. For a valid request, the call returns one result for each item.
+
+{% hint style="info" %}
+For the details, see [How to create, update, and delete assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/media#how-to-create-update-and-delete-assets-in-bulk).
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#post-media-tenant-assets-bulk) | Creates up to 200 assets in one call and returns one result for each item. |
+| [Partially updating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) | Updates up to 200 stored assets in one call and returns one result for each item. |
+| [Deleting assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) | Deletes up to 200 assets in one call and returns one result for each item. An asset that is already absent returns `204`. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-23" tags="new-feature" %}
+
+## Availability Service - bulk availability updates
+
+#### Overview
+
+Availability Service can now update only the fields you send on one stored availability, or on up to 200 stored availabilities in one call. The call does not create an availability that is missing.
+
+{% hint style="info" %}
+For the details, see [How to partially update product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/availability#partially-update-product-availabilities).
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) | Updates the named fields on one stored availability and returns `204`. A missing availability returns `404` and is not created. |
+| [Partially updating multiple availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) | Updates up to 200 stored availabilities in one call and returns one result for each item. A missing availability returns `404` and is not created. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-23" tags="new-feature" %}
+
+## Category Service - bulk category and assignment changes
+
+#### Overview
+
+Category Service can now create categories, partially update categories, and delete category assignments by reference in batches of up to 200. Each call returns one result for each item.
+
+{% hint style="info" %}
+For the details, see [How to create, update, and delete categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/category#how-to-create-update-and-delete-categories-in-bulk).
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Creating categories in bulk](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#post-category-tenant-categories-bulk) | Creates up to 200 categories in one call and returns one result for each item. |
+| [Partially updating categories in bulk](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-bulk) | Updates only the sent fields on each existing category and does not create a category that is missing. |
+| [Deleting category assignments by reference in bulk](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-references-bulk) | Deletes up to 200 assignments of one category by reference id and leaves the same reference on another category in place. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
+{% update date="2026-11-23" tags="new-feature" %}
+
+## Product Service - bulk product updates
+
+#### Overview
+
+Product Service can now partially update up to 200 existing products in one request. The call changes only the fields you send and does not create a product that is missing.
+
+{% hint style="info" %}
+For the details, see [How to partially update multiple products in one operation](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/product#how-to-partially-update-multiple-products-in-one-operation).
+{% endhint %}
+
+#### New endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Partially updating products in bulk](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) | Updates only the sent fields on each existing product and does not create a product that is missing. |
+
+#### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-20" tags="improvement" %}
 
 ## AI Service - new attachment types for agent chat
@@ -86,7 +187,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="2026-11-18" tags="new-feature" %}
+{% update date="2026-11-20" tags="new-feature" %}
 
 ## Webhook Service - failing targets, failed messages, and restart jobs
 
