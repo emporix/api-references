@@ -29,7 +29,7 @@ layout:
 
 ## Media Service - bulk asset changes
 
-#### Overview
+##### Overview
 
 The Media Service can now create, partially update, and delete up to 200 assets in one call. For a valid request, the call returns one result for each item.
 
@@ -37,7 +37,7 @@ The Media Service can now create, partially update, and delete up to 200 assets 
 For the details, see [How to create, update, and delete assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/media#how-to-create-update-and-delete-assets-in-bulk).
 {% endhint %}
 
-#### New endpoints
+##### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
@@ -45,7 +45,7 @@ For the details, see [How to create, update, and delete assets in bulk](https://
 | [Partially updating assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) | Updates up to 200 stored assets in one call and returns one result for each item. |
 | [Deleting assets in bulk](https://developer.emporix.io/api-references/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) | Deletes up to 200 assets in one call and returns one result for each item. An asset that is already absent returns `204`. |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 
@@ -55,7 +55,7 @@ There are no known problems.
 
 ## Availability Service - bulk availability updates
 
-#### Overview
+##### Overview
 
 Availability Service can now update only the fields you send on one stored availability, or on up to 200 stored availabilities in one call. The call does not create an availability that is missing.
 
@@ -63,14 +63,14 @@ Availability Service can now update only the fields you send on one stored avail
 For the details, see [How to partially update product availabilities](https://developer.emporix.io/api-documentation/api-guides/orders/availability/availability#partially-update-product-availabilities).
 {% endhint %}
 
-#### New endpoints
+##### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
 | [Partially updating availability information of a product](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-productid-site) | Updates the named fields on one stored availability and returns `204`. A missing availability returns `404` and is not created. |
 | [Partially updating multiple availabilities](https://developer.emporix.io/api-references/api-guides/orders/availability/api-reference/availabilities#patch-availability-tenant-availability-bulk) | Updates up to 200 stored availabilities in one call and returns one result for each item. A missing availability returns `404` and is not created. |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 
@@ -80,7 +80,7 @@ There are no known problems.
 
 ## Category Service - bulk category and assignment changes
 
-#### Overview
+##### Overview
 
 Category Service can now create categories, partially update categories, and delete category assignments by reference in batches of up to 200. Each call returns one result for each item.
 
@@ -88,7 +88,7 @@ Category Service can now create categories, partially update categories, and del
 For the details, see [How to create, update, and delete categories in bulk](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/category#how-to-create-update-and-delete-categories-in-bulk).
 {% endhint %}
 
-#### New endpoints
+##### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
@@ -96,7 +96,7 @@ For the details, see [How to create, update, and delete categories in bulk](http
 | [Partially updating categories in bulk](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-resources#patch-category-tenant-categories-bulk) | Updates only the sent fields on each existing category and does not create a category that is missing. |
 | [Deleting category assignments by reference in bulk](https://developer.emporix.io/api-references/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#delete-category-tenant-categories-categoryid-assignments-references-bulk) | Deletes up to 200 assignments of one category by reference id and leaves the same reference on another category in place. |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 
@@ -106,7 +106,7 @@ There are no known problems.
 
 ## Product Service - bulk product updates
 
-#### Overview
+##### Overview
 
 Product Service can now partially update up to 200 existing products in one request. The call changes only the fields you send and does not create a product that is missing.
 
@@ -114,13 +114,13 @@ Product Service can now partially update up to 200 existing products in one requ
 For the details, see [How to partially update multiple products in one operation](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/product#how-to-partially-update-multiple-products-in-one-operation).
 {% endhint %}
 
-#### New endpoints
+##### New endpoints
 
 | Endpoint | Description |
 | --- | --- |
 | [Partially updating products in bulk](https://developer.emporix.io/api-references/api-guides/products-labels-and-brands/product-service/api-reference/products#patch-product-tenant-products-bulk) | Updates only the sent fields on each existing product and does not create a product that is missing. |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 
@@ -3058,7 +3058,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-05-27" tags="improvement" %}
-## Schema Service — explicit `owner` on custom instance creation
+## Schema Service - explicit `owner` on custom instance creation
 
 ##### Overview
 
@@ -3664,7 +3664,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-04-27" tags="improvement" %}
-## Product Service – dynamic variant product type and recalculation
+## Product Service - dynamic variant product type and recalculation
 
 ##### Overview
 
@@ -3855,7 +3855,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-04-13" tags="new-feature" %}
-## Schema Service — custom instance scopes, owner, and type-scoped access
+## Schema Service - custom instance scopes, owner, and type-scoped access
 
 ##### Overview
 
@@ -3882,7 +3882,7 @@ Tenant-wide scopes apply to all custom types, while type-specific scopes restric
 
 Custom instance responses include a read-only `owner` object indicating who created the instance: `type` (`EMPLOYEE`, `CUSTOMER`, or `SERVICE`), `userId`, and for customer owners an optional `legalEntityId`.
 
-##### Updated Endpoints
+##### Updated endpoints
 
 | Endpoint                                                                                                                                                                                          | Description                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -3905,7 +3905,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-04-13" tags="new-feature" %}
-## IAM Service — custom scopes and access controls
+## IAM Service - custom scopes and access controls
 
 ##### Overview
 
@@ -3934,7 +3934,7 @@ The endpoint for listing access controls supports the `q` search parameter. Addi
 | [Upserting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#put-iam-tenant-access-controls-accesscontrolid)   | New endpoint for upserting access controls. |
 | [Deleting an access control](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/iam/api-reference/access-controls#delete-iam-tenant-access-controls-accesscontrolid) | New endpoint for deleting access controls.  |
 
-##### Updated Endpoints
+##### Updated endpoints
 
 | Endpoint                                                                                                                                                                                      | Description                                                                                                                                   |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -4035,7 +4035,7 @@ There are no known problems.
 
 IAM Service has been enhanced by exposing information about user's last login in selected user GET endpoints.
 
-##### Updated Endpoints
+##### Updated endpoints
 
 | Endpoint                                                                                                                                                                 | Description                                             |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------- |
@@ -4054,7 +4054,7 @@ There are no known problems.
 
 Schema Service has been extended with new schema types - `CART_ITEM`, `ORDER_ENTRY`.
 
-##### Updated Endpoints
+##### Updated endpoints
 
 | Endpoint                                                                                                                                       | Description                                                                                           |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
@@ -4231,7 +4231,7 @@ A new `skipRelatedItemsValidation` parameter has been added to the method signat
 {% endupdate %}
 
 {% update date="2026-03-09" tags="improvement" %}
-## Product Service – skip related items validation
+## Product Service - skip related items validation
 
 ##### Overview
 
@@ -4525,7 +4525,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-02-06" tags="new-feature" %}
-## IAM Service – new endpoint for retrieving own user
+## IAM Service - new endpoint for retrieving own user
 
 ##### Overview
 
@@ -4543,7 +4543,7 @@ There are no known problems.
 {% endupdate %}
 
 {% update date="2026-02-04" tags="improvement" %}
-## Product Service – category and customer segment IDs no longer in preview
+## Product Service - category and customer segment IDs no longer in preview
 
 ##### Overview
 
