@@ -586,6 +586,95 @@ curl -L \
   --header 'X-Total-Count: false'
 ```
 
+## How to create, update, and delete assets in bulk
+
+You can create, partially update, or delete up to 200 assets in one call. For a valid request, the call returns `207` with one result for each item. Use a service OAuth2 token with the `media.asset_manage` scope. Vendor employees need `media.asset_manage_by_vendor` for assets that belong to the vendor.
+
+### Create LINK assets in bulk
+
+Send an `application/json` array to the [Creating assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#post-media-tenant-assets-bulk) endpoint. To create `BLOB` assets instead, use `multipart/form-data` with one `file` part per item in the `body` array, in the same order.
+
+{% hint style="warning" %}
+The `media.asset_manage` scope is required.
+{% endhint %}
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/media/{{tenant}}/assets/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "id": "123e06ecf0452c2d6c0b81390",
+    "type": "LINK",
+    "access": "PUBLIC",
+    "url": "https://example.com/media/category-banner.html",
+    "refIds": [
+      {
+        "id": "123e06ecf0452c2d6c0b81392",
+        "type": "CATEGORY"
+      }
+    ]
+  },
+  {
+    "id": "567e06ecf0452c2d6c0b81391",
+    "type": "LINK",
+    "access": "PRIVATE",
+    "url": "https://example.com/media/supplier-contract.html"
+  }
+]'
+```
+
+### Partially update assets in bulk
+
+Each item needs an `id` and a `data` JSON Patch document. Send the array to the [Partially updating assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-bulk) endpoint. `data` follows the same rules as [Partially updating an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#patch-media-tenant-assets-assetid).
+
+```bash
+curl -i -X PATCH \
+  'https://api.emporix.io/media/{{tenant}}/assets/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  {
+    "id": "123e06ecf0452c2d6c0b81390",
+    "data": [
+      {
+        "op": "replace",
+        "path": "/url",
+        "value": "https://example.com/media/category-banner-spring.html"
+      }
+    ]
+  },
+  {
+    "id": "567e06ecf0452c2d6c0b81391",
+    "data": [
+      {
+        "op": "replace",
+        "path": "/url",
+        "value": "https://example.com/media/supplier-contract-v2.html"
+      }
+    ]
+  }
+]'
+```
+
+### Delete assets in bulk
+
+Send a JSON array of asset ids to the [Deleting assets in bulk](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-bulk) endpoint. An asset that is already absent still returns `204` for that item.
+
+```bash
+curl -i -X DELETE \
+  'https://api.emporix.io/media/{{tenant}}/assets/bulk' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '[
+  "123e06ecf0452c2d6c0b81390",
+  "567e06ecf0452c2d6c0b81391"
+]'
+```
+
 ## How to clean up uploaded assets
 
 Delete assets that were created only for a temporary workflow by calling the [Deleting an asset](https://developer.emporix.io/api-documentation/api-guides/media/media/api-reference/assets#delete-media-tenant-assets-assetid) endpoint with the `media.asset_manage` scope.
