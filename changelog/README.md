@@ -25,7 +25,7 @@ layout:
 
 {% updates format="full" %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-23" tags="new-feature" %}
 
 ## Media Service - bulk asset changes
 
@@ -51,7 +51,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-23" tags="new-feature" %}
 
 ## Availability Service - bulk availability updates
 
@@ -76,7 +76,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-23" tags="new-feature" %}
 
 ## Category Service - bulk category and assignment changes
 
@@ -102,7 +102,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-23" tags="new-feature" %}
 
 ## Product Service - bulk product updates
 
