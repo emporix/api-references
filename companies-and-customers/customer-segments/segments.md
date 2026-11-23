@@ -1,17 +1,18 @@
 ---
 seo:
   title: Customer Segment Service Tutorials
-  description: Learn how to create customer segments, assign customers and IAM groups, and use segments on the storefront.
+  description: Learn how to create customer segments, include or exclude products, assign customers and IAM groups, and use segments on the storefront.
 icon: graduation-cap
 layout:
   width: wide
-description: Learn how to create customer segments, assign customers and IAM groups, and use segments on the storefront.
+description: Learn how to create customer segments, include or exclude products, assign customers and IAM groups, and use segments on the storefront.
 ---
 
 # Segments Tutorial
 
 The Customer Segment Service allows you to group customers for targeted campaigns and personalized storefront content.
 You can assign products, categories, individual customers, and IAM groups to a segment.
+A product belongs to a segment through a direct product assignment, or through a category assigned to that segment. Item assignments store `mode` as `INCLUDE` or `EXCLUDE`.
 Customers inherit segment membership through a direct assignment or through an IAM group assigned to the segment.
 
 ## How to add a customer segment
@@ -58,6 +59,8 @@ A successful request returns `201` with the segment `id`. If you omit `status`, 
 #### Assign products or categories
 
 Assign products or categories so the segment can drive customized storefront assortment and campaigns.
+
+A product with `mode` set to `INCLUDE`, or with `mode` omitted, belongs to the segment on its own. The product does not need to be in a category assigned to that segment. A category assignment includes the products in that category. To omit one of those products, see [How to exclude a product from a segment](#how-to-exclude-a-product-from-a-segment).
 
 To assign one product or category, send the request to the [Updating an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` or `CATEGORY`.
 
@@ -111,7 +114,7 @@ curl -i -X PUT \
 ```
 
 {% hint style="info" %}
-These operations perform an `UPSERT`. If the item is already assigned to the segment, the assignment is updated. If it is not assigned, the service creates the assignment.
+These operations perform an `UPSERT`. If the item is already assigned to the segment, the assignment is updated. If it is not assigned, the service creates the assignment. Omitting `mode` stores `INCLUDE`. On a single update, omitting the request body also stores `INCLUDE`.
 {% endhint %}
 {% endstep %}
 
@@ -205,6 +208,98 @@ These operations perform an `UPSERT`. If the customer is already assigned to the
 [api-reference](api-reference/)
 {% endcontent-ref %}
 
+{% endstepper %}
+
+## How to exclude a product from a segment
+
+Use `mode` set to `EXCLUDE` when a category of the segment already includes a product that should not belong to the segment. `EXCLUDE` is supported for products only.
+
+### Prerequisites
+
+Ensure you have:
+
+* An existing customer segment with the relevant category assigned – see [How to add a customer segment](#how-to-add-a-customer-segment)
+* The product ID to exclude
+
+{% hint style="warning" %}
+To create and update item assignments, and to call the match endpoint, you need the `customersegment.segment_manage` scope. To retrieve assignments, you need the `customersegment.segment_read` scope.
+{% endhint %}
+
+{% hint style="info" %}
+A single category assignment with `mode` set to `EXCLUDE` returns `400` and is not stored. On a bulk update, that case returns HTTP 207 with a per-item 400 status, and the service still processes the other items.
+{% endhint %}
+
+{% stepper %}
+{% step %}
+#### Exclude the product
+
+Send the request to the [Updating an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#put-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. Set `{type}` to `PRODUCT` and `mode` to `EXCLUDE`.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X PUT \
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/PRODUCT/{itemId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "mode": "EXCLUDE"
+  }'
+```
+
+A new assignment returns `201`. An update returns `204`.
+{% endstep %}
+
+{% step %}
+#### Verify the exclusion
+
+Send the request to the [Retrieving an item assignment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-segmentid-items-type-itemid) endpoint. The response includes `mode` set to `EXCLUDE`.
+
+```bash
+curl -i -X GET \
+  'https://api.emporix.io/customer-segment/{tenant}/segments/{segmentId}/items/PRODUCT/{itemId}' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Accept-Language: en'
+```
+
+To list excluded products for the segment, use [Retrieving all item assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-segmentid-items) with `q=mode:EXCLUDE`.
+{% endstep %}
+
+{% step %}
+#### Confirm with match
+
+Send the request to the [Checking which items belong to a segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments-match) endpoint. Pass the excluded product in `items` as a candidate to check. The response lists only the product IDs that belong to the requested segments.
+
+{% include "../../.gitbook/includes/example-hint-text.md" %}
+
+{% content-ref url="api-reference/" %}
+[api-reference](api-reference/)
+{% endcontent-ref %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/customer-segment/{tenant}/segments/match' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "siteCode": "main",
+    "segmentIds": [
+      "628cd20c6e8b2432b6346ca6"
+    ],
+    "items": [
+      {
+        "id": "12468504"
+      }
+    ]
+  }'
+```
+
+Because the product is excluded from that segment, the response is `[]`. The product ID is absent from the response, not from the request. If another requested segment includes the product, the response still returns that product ID.
+{% endstep %}
 {% endstepper %}
 
 ## How to assign IAM groups to a customer segment
@@ -446,7 +541,7 @@ To resolve which active segments apply to the authenticated customer, including 
 {% step %}
 #### Retrieve assigned products or categories
 
-Retrieve the products or categories assigned to the segments that apply to the customer. Send the request to the [Retrieving all items assignments for all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint.
+Retrieve the products or categories assigned to the segments that apply to the customer. Send the request to the [Retrieving all item assignments for all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint. Each assignment includes `mode`.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
 
@@ -462,7 +557,7 @@ curl -i -X GET \
   -H 'X-Total-Count: true'
 ```
 
-You can limit the results with the `q` parameter, for example `q=type:PRODUCT` or `q=type:CATEGORY`.
+You can limit the results with the `q` parameter, for example `q=type:PRODUCT` or `q=type:CATEGORY`. Assignment lists still return products with `mode` set to `EXCLUDE`. Omit those product IDs from the assortment you show the customer. See [How to exclude a product from a segment](#how-to-exclude-a-product-from-a-segment).
 {% endstep %}
 
 {% step %}
