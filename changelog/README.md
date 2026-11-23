@@ -29,7 +29,7 @@ layout:
 
 ## Audit Logs (Changelog) Service - cursor pagination and 7-day default window
 
-#### Overview
+##### Overview
 
 The Audit Logs (Changelog) Service now supports cursor pagination for retrieving logs. Use cursor mode to page through many entries without counting them, for example in a nightly sync or for the audit logs of a large tenant. Offset pagination with `page` and `size` stays the default mode and returns the same body as before. The default time window is now 7 days in both modes.
 
@@ -50,13 +50,13 @@ When `q` has no `occurredAt` lower bound outside an `OR` condition, the API now 
 For the steps and examples, see [How to page with cursors](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/utilities/audit-logs-changelog/audit-logs-changelog#how-to-page-with-cursors).
 {% endhint %}
 
-#### Updated endpoints
+##### Updated endpoints
 
 | Endpoint | Description |
 | --- | --- |
 | [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) | Accepts the new `pagination`, `next`, and `prev` query parameters. In cursor mode, returns only `items` in the body and the cursors in the `x-next-cursor` and `x-prev-cursor` response headers. Applies a default window of the last 7 days instead of 30 days when `q` has no `occurredAt` lower bound outside an `OR` condition. |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 

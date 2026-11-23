@@ -15,9 +15,9 @@ Emporix APIs support two pagination approaches for retrieving collections: offse
 Both approaches allow clients to retrieve large result sets in smaller chunks, but they are designed for different use cases. Offset-based pagination is convenient for conventional page navigation, while cursor-based pagination is optimized for efficiently processing large datasets.
 
 {% hint style="info" %}
-Cursor-based pagination is currently available for the following endpoints:
+Cursor-based pagination is currently available for the following services and endpoints:
 
-* Schema Service custom instance queries:
+* Schema Service:
   * [Retrieving all custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#get-schema-tenant-custom-entities-type-instances)
   * [Searching for custom instances](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-search)
 * Audit Logs (Changelog) Service:
@@ -155,10 +155,10 @@ This ensures that every record has a stable position within the result set and h
 
 The [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs) endpoint of the Audit Logs (Changelog) Service uses offset-based pagination by default and supports cursor-based pagination as an option. It differs from the Schema Service in the following ways:
 
-* Parameters – offset-based pagination uses `page` and `size` instead of `pageNumber` and `pageSize`. Cursor mode uses `next` or `prev` for every page after the first one. The `size` parameter is optional in both modes and defaults to `20`.
+* Parameters – offset-based pagination uses `page` and `size` instead of `pageNumber` and `pageSize`. Cursor mode uses `next` or `prev` for every page after the first one. The `size` parameter is optional in both modes, defaults to `20`, and has a maximum of `100`.
 * Activation – the first request must contain `pagination=cursor`. Without it, the endpoint uses offset-based pagination and returns no cursor headers. When `pagination` is omitted, a `next` or `prev` parameter also selects cursor mode. A request with `next` or `prev` and `pagination=offset` fails with `400 Bad Request`.
 * Page number – a request that contains `page` in cursor mode fails with `400 Bad Request`. The Schema Service ignores `pageNumber` instead.
-* Response – in cursor mode, the response body contains only `items`, with no totals. The cursors are returned in the `X-Next-Cursor` and `X-Prev-Cursor` response headers. In offset-based pagination, the totals are returned in the `totalElements` and `totalPages` fields of the response body.
+* Response – in cursor mode, the response body contains only `items`, with no totals. The cursors are returned in the `x-next-cursor` and `x-prev-cursor` response headers. In offset-based pagination, the totals are returned in the `totalElements` and `totalPages` fields of the response body.
 * Query binding – a cursor is valid only for the tenant, `q`, and `size` of the request that returned it. A request that sends a cursor with a different `q` or `size` fails with `400 Bad Request`.
 * Sorting – entries are always ordered newest first, and entries with the same timestamp keep a stable order across pages. The `_id` rules in [Stable sorting](#stable-sorting) do not apply.
 
@@ -171,4 +171,4 @@ curl -i -X GET 'https://api.emporix.io/changelog/{tenant}/changelogs?pagination=
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
 ```
 
-This request has no `occurredAt` lower bound in `q`, so the walk covers the 7 days before the first request. To cover a different period, add an `occurredAt` range to `q`. For the full walk through the pages, the time window that a cursor covers, and the error cases, see [How to page with cursors](../utilities/audit-logs-changelog/audit-logs-changelog.md#how-to-page-with-cursors).
+This request has no `occurredAt` lower bound in `q`, so the walk covers the 7 days before the first request. To cover a different period, add an `occurredAt` range to `q`. For the full walk through the pages, and the time window that a cursor covers, see [How to page with cursors](../utilities/audit-logs-changelog/audit-logs-changelog.md#how-to-page-with-cursors).

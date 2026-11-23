@@ -59,7 +59,7 @@ The first request needs `pagination=cursor`. Without it, the endpoint uses offse
 
 {% stepper %}
 {% step %}
-#### Request the first page
+##### Request the first page
 
 Send a request with `pagination=cursor` and the `size` you need. Set an explicit `occurredAt` range in `q` to choose the entries that the walk covers. Without it, the default window of the last 7 days applies.
 
@@ -80,7 +80,7 @@ x-next-cursor: {{X_NEXT_CURSOR}}
 {% endstep %}
 
 {% step %}
-#### Request the next page
+##### Request the next page
 
 Send the value of the `x-next-cursor` header in the `next` query parameter. Send the same `q` and `size` as in the first request, because a cursor is bound to the tenant, `q`, and `size` it was issued for.
 
@@ -97,9 +97,9 @@ The response contains the next, older entries. When the page is not empty, the r
 {% endstep %}
 
 {% step %}
-#### Stop at the last page
+##### Stop at the last page
 
-Repeat the previous step with the `x-next-cursor` value of each response. When a response has no `x-next-cursor` header, you have reached the oldest entry in the range.
+Repeat the previous step with the `x-next-cursor` value of each response. When a response has no `x-next-cursor` header, you have reached the oldest entries of the window.
 {% endstep %}
 {% endstepper %}
 
@@ -107,15 +107,7 @@ To go back to newer entries, send the value of the `x-prev-cursor` header in the
 
 A cursor pages inside the time window fixed by the first page. The window starts at the `occurredAt` lower bound in `q`, or 7 days before the first request if `q` has no `occurredAt` lower bound outside an `OR` condition. The window ends at the `occurredAt` upper bound in `q`. If `q` has no upper bound, the window ends at the time of the first request, and entries that occurred after it do not appear on later pages. To include them, request a new first page.
 
-{% hint style="warning" %}
-The API returns `400` in the following cases:
-
-* The cursor is malformed, or it was issued for a different tenant, `q`, or `size`. For a mismatch, the message says, for example, `The cursor in 'next' does not match the query (tenant, q, size) it was issued for. Request the first page again without a cursor.`
-* The request contains both `next` and `prev`.
-* The request contains `page` in cursor mode.
-
-To recover from a cursor error, request the first page again without a cursor.
-{% endhint %}
+If a request with a cursor fails with `400`, for example because `q` or `size` changed, request the first page again without a cursor. For all error cases, see [Retrieving logs](https://developer.emporix.io/api-documentation/api-guides/utilities/audit-logs-changelog/api-reference/changelogs#get-changelog-tenant-changelogs).
 
 ## How to filter by entity and document ID
 

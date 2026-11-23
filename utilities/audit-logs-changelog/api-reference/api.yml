@@ -77,7 +77,9 @@ paths:
             x-next-cursor:
               description: |-
                 Cursor mode only. Opaque cursor for the next page, which contains older entries. Send it in the `next` query parameter.
+
                 The header is returned in the following cases:
+
                 * on the first page or a `next` page, when older entries exist
                 * on a `prev` page, when the page is not empty
               schema:
@@ -85,7 +87,9 @@ paths:
             x-prev-cursor:
               description: |-
                 Cursor mode only. Opaque cursor for the previous page, which contains newer entries. Send it in the `prev` query parameter.
+
                 The header is returned in the following cases:
+
                 * on a `next` page, when the page is not empty
                 * on a `prev` page, when newer entries exist
 
