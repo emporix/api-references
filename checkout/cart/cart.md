@@ -83,7 +83,7 @@ One `/execute` request uses one `session-id` and one `legal-entity-id`. Commands
 
 {% stepper %}
 {% step %}
-#### Send AddCartItem and GetCart in one request
+##### Send AddCartItem and GetCart in one request
 
 Send `AddCartItem`, then send `GetCart` with `expandCalculation` set to `true`. The 207 `results` array contains the created item and the calculated cart, so you do not need a follow-up GET unless you want a later refresh.
 
@@ -122,7 +122,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Read the 207 results
+##### Read the 207 results
 
 The HTTP status is 207 Multi-Status when the chain is accepted. `results` is ordered. `results[0].data` is the same JSON as `POST .../items` (`itemId`, `yrn`). With default `versioning=skip`, that result has no `hybris-resource-version` header. `results[1].data` is the same JSON as `GET .../carts/{cartId}` including item `calculatedPrice`.
 
@@ -351,7 +351,7 @@ Use `versioning=explicit` only when every participating write sends `resourceVer
 
 {% stepper %}
 {% step %}
-#### Read `metadata.version` from the cart
+##### Read `metadata.version` from the cart
 
 Call [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) to read `metadata.version`. Use that value as `options.resourceVersion` on the first participating write. You can also take it from a prior `GetCart`.
 
@@ -374,7 +374,7 @@ curl -i -X GET \
 {% endstep %}
 
 {% step %}
-#### Send the follow chain
+##### Send the follow chain
 
 Send [Executing a chain of cart commands](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/execute#post-cart-tenant-carts-cartid-execute) with `versioning=follow`. Set `options.resourceVersion` on the first participating write to the `metadata.version` you read, and omit `resourceVersion` on later writes.
 
@@ -424,7 +424,7 @@ You can define custom attributes for a cart through `mixins`.
 
 {% stepper %}
 {% step %}
-#### Define your custom attributes schema
+##### Define your custom attributes schema
 
 Create a schema that defines the custom cart fields by sending a request to the [Creating a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#post-schema-tenant-schemas) endpoint.
 
@@ -470,7 +470,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Retrieve the schema URL
+##### Retrieve the schema URL
 
 Retrieve the created schema to get the schema URL by calling the [Retrieving a schema](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/schema#get-schema-tenant-schemas-id) endpoint.
 
@@ -484,7 +484,7 @@ curl -i -X GET \
 {% endstep %}
 
 {% step %}
-#### Update a cart with custom attributes
+##### Update a cart with custom attributes
 
 To add custom attributes to a cart, send a request to the [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
@@ -2701,7 +2701,7 @@ After you update the cart with a window and slot, Cart Service calls [Calculatin
 
 {% stepper %}
 {% step %}
-#### Retrieve available delivery windows
+##### Retrieve available delivery windows
 
 Fetch available delivery windows for a cart by calling the [Retrieving delivery windows by cart](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-windows#get-shipping-tenant-actualdeliverywindows-cartid) endpoint.
 
@@ -2720,7 +2720,7 @@ curl -L \
 {% endstep %}
 
 {% step %}
-#### Update the cart with destination and delivery window
+##### Update the cart with destination and delivery window
 
 Pick the delivery window you want to use and update the cart by calling the [Updating a cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#put-cart-tenant-carts-cartid) endpoint.
 
@@ -2745,7 +2745,7 @@ curl -L \
 {% endstep %}
 
 {% step %}
-#### Verify the shipping estimate
+##### Verify the shipping estimate
 
 Verify the results by retrieving the cart. Call the [Retrieving cart details by ID](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts-cartid) endpoint.
 

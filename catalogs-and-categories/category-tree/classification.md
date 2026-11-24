@@ -365,19 +365,19 @@ The validation process:
 
 {% stepper %}
 {% step %}
-### Identification of the required mixins
+##### Identification of the required mixins
 
 The system checks all classification mixins from the product's assigned categories (including inherited ones from parent categories).
 {% endstep %}
 
 {% step %}
-### Filtering for required mixins
+##### Filtering for required mixins
 
 Only mixins with `required: true` are considered.
 {% endstep %}
 
 {% step %}
-### Validating schema requirements
+##### Validating schema requirements
 
 For each required mixin, the system validates that:
 
