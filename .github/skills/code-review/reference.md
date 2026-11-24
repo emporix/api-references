@@ -119,7 +119,7 @@ When either file changes, verify **each new** `{% update %}…{% endupdate %}` b
 - Existing entries are not modified
 - `SUMMARY.md` is not updated
 - `tags` includes the correct change-type tag(s)
-- Inner sections use `####` headings (not `###`)
+- Inner sections use `#####` headings (not `###`)
 - Wording describes customer impact, not internal implementation (microservices, Kafka, Redis, feature flags, ETL, internal class names)
 
 Repo-specific requirements (product area tags, title format, placeholder text, Documentation and links grouping) belong in `.github/copilot-docs-review/local-review-checks.md` and `.github/instructions/*.instructions.md`.
@@ -205,7 +205,7 @@ Use `<sup>™</sup>` and `<sup>®</sup>` in markdown. Do not trademark **Autonom
 
 Flag violations of `.style-guide/writing-standards/format-and-structure.md` — for example incorrect heading levels, hint blocks, or step layout.
 
-For sequential instructions, steps must use GitBook `{% stepper %}` blocks with `####` titles inside `{% step %}` (see `format-and-structure#steps`). Flag:
+For sequential instructions, steps must use GitBook `{% stepper %}` blocks with `#####` titles inside `{% step %}` (see `format-and-structure#steps`). Flag:
 
 - `## Step 1 - ...` / `## Step 2 - ...` headings
 - Bare numbered lists used as the primary procedure format when steps are required

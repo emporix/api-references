@@ -23,7 +23,7 @@ Customer authentication is a fundamental part of the customer experience. This s
 
 {% stepper %}
 {% step %}
-### Requesting an anonymous token
+##### Requesting an anonymous token
 
 When a user enters your storefront, before they choose to log in, an anonymous user session is created. An anonymous token allows customers to browse products, view prices, and add products to the cart without being logged in.
 
@@ -55,7 +55,7 @@ The anonymous token is valid for one hour. After that time, it should be refresh
 {% endstep %}
 
 {% step %}
-### Refreshing an anonymous token
+##### Refreshing an anonymous token
 
 When the anonymous token is about to expire, use the refresh mechanism to maintain the same customer's session ID and allow them browsing without interruption.
 
@@ -86,7 +86,7 @@ It's recommended to use the `refresh_token` parameter instead of the deprecated 
 {% endstep %}
 
 {% step %}
-### Creating a new customer
+##### Creating a new customer
 
 To create a new customer account, send a request to the [Creating a new customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-signup) endpoint. Authorize the request with the anonymous access token.
 
@@ -150,7 +150,7 @@ By default, you cannot create a customer with a `customerNumber` that belongs to
 {% endstep %}
 
 {% step %}
-### Activating customer account as an employee
+##### Activating customer account as an employee
 The created customer's account is inactive and requires an action on the employee's side to enable and activate the account. To achieve this, you need the relevant **employee access token**. 
 
 {% hint style="success" %}
@@ -174,7 +174,7 @@ As a result, the customer is able to continue with logging in to their account.
 
 
 {% step %}
-### Logging in a customer
+##### Logging in a customer
 
 After creating and getting their account activated, customers can log in to the store using their email and password. This operation returns both a customer access token and a SaaS token.
 
@@ -213,7 +213,7 @@ The customer access token is valid for 30 days (2591999 seconds). The SaaS token
 {% endstep %}
 
 {% step %}
-### Refreshing a customer token
+##### Refreshing a customer token
 
 As the customer access tokens expire after 30 days, you need to introduce a mechanism to prolong the session. To maintain an active authenticated session without requiring the customer to log in again, refresh the customer token before it expires.
 Send a request to the [Refreshing a customer token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customer-tenant-refreshauthtoken) endpoint.
@@ -234,7 +234,7 @@ The `legalEntityId` parameter is optional. Use it when you want to associate the
 {% endstep %}
 
 {% step %}
-### Validating a token
+##### Validating a token
 
 Token validation allows you to verify whether a token is still valid and retrieve information about the token, such as expiration time, scopes, and associated session details. Validate tokens before making authenticated requests to ensure the token hasn't expired or been revoked. This helps prevent authentication errors and allows you to proactively refresh tokens before they expire.
 
@@ -269,7 +269,7 @@ If the token is invalid, the endpoint returns a `401 Unauthorized` status code.
 {% endstep %}
 
 {% step %}
-### Logging in a customer using social login
+##### Logging in a customer using social login
 
 Social login allows customers to authenticate using their existing social media accounts (for example, Google, Facebook) through Auth0. This provides a convenient login experience without requiring customers to create a new password. You can enable the social login option in your store by using a dedicated endpoint.
 
@@ -309,7 +309,7 @@ The `session-id` header is optional - use it to maintain the same session when t
 {% endstep %}
 
 {% step %}
-### Logging out the customer
+##### Logging out the customer
 
 When a customer wants to end their session, log them out to invalidate their customer access token. This ensures that the token cannot be used for further authenticated requests.
 
@@ -337,7 +337,7 @@ Once a customer is logged in, they can manage their profile information, includi
 
 {% stepper %}
 {% step %}
-### Retrieving a customer profile
+##### Retrieving a customer profile
 
 To allow a customer to check and modify the details associated with their account, fetch the current customer's profile information. Send a request to the [Retrieving a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#get-customer-tenant-me) endpoint.
 
@@ -396,7 +396,7 @@ Use the `expand` query parameter to include additional attributes like `addresse
 {% endstep %}
 
 {% step %}
-### Updating a customer profile
+##### Updating a customer profile
 
 Customers can update their personal details, preference settings, and B2B information. Send a request to the [Updating a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/account-and-profile#patch-customer-tenant-me) endpoint.
 
@@ -434,7 +434,7 @@ You can also use `application/merge-patch+json` as the Content-Type header for p
 {% endstep %}
 
 {% step %}
-### Adding an address to a customer profile
+##### Adding an address to a customer profile
 
 Customers can add shipping or billing addresses to their profile. Send a request to the [Adding a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#post-customer-tenant-me-addresses) endpoint.
 
@@ -476,7 +476,7 @@ Use the `tags` array to specify address types. Common values are `BILLING` and `
 {% endstep %}
 
 {% step %}
-### Retrieving customer addresses
+##### Retrieving customer addresses
 
 To retrieve all addresses associated with a customer profile, send a request to the [Retrieving customer addresses](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#get-customer-tenant-me-addresses) endpoint.
 
@@ -513,7 +513,7 @@ The response returns an array of addresses:
 {% endstep %}
 
 {% step %}
-### Retrieving a specific customer address
+##### Retrieving a specific customer address
 
 To retrieve details of a specific address, send a request to the [Retrieving a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#get-customer-tenant-me-addresses-addressid) endpoint.
 
@@ -553,7 +553,7 @@ The response returns the address details:
 {% endstep %}
 
 {% step %}
-### Updating a customer address
+##### Updating a customer address
 
 To update an existing address, send a request to the [Updating a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#patch-customer-tenant-me-addresses-addressid) endpoint.
 
@@ -588,7 +588,7 @@ Set the `isDefault` to `true` to mark the address as the default address for the
 {% endstep %}
 
 {% step %}
-### Adding tags to a customer address
+##### Adding tags to a customer address
 
 To add tags to an existing address, send a request to the [Adding tags to a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#post-customer-tenant-me-addresses-addressid-tags) endpoint.
 
@@ -604,7 +604,7 @@ Provide tags as a comma-separated list in the `tags` query parameter.
 {% endstep %}
 
 {% step %}
-### Deleting a customer address
+##### Deleting a customer address
 
 To remove an address from a customer profile, send a request to the [Deleting a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/addresses#delete-customer-tenant-me-addresses-addressid) endpoint.
 
@@ -631,7 +631,7 @@ Note that to properly handle customer notifications, you need to have a mailing 
 
 {% stepper %}
 {% step %}
-### Requesting a password reset
+##### Requesting a password reset
 
 When a customer forgets their password, they can request a password reset. This sends a unique token to their email address that they can use to set a new password.
 
@@ -658,7 +658,7 @@ The `site` parameter is optional and specifies the site from which the password 
 {% endstep %}
 
 {% step %}
-### Resetting a password using token
+##### Resetting a password using token
 
 After the customer receives the password reset token by email, they can use it to set a new password. Send a request to the [Resetting a customer password](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-password-reset-update) endpoint.
 
@@ -683,7 +683,7 @@ The token is sent to the customer's email address and is required to complete th
 {% endstep %}
 
 {% step %}
-### Changing a password
+##### Changing a password
 
 When a customer is logged in and wants to change their password, they can do so by providing their current password and the new password. Send a request to the [Changing a customer password](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-password-change) endpoint.
 
@@ -708,7 +708,7 @@ The customer must provide their current password to verify their identity before
 {% endstep %}
 
 {% step %}
-### Request an email change
+##### Request an email change
 
 Customers can request to change their email address. This sends a confirmation token to the new email address. Send a request to the [Sending a request to update a customer email address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-me-accounts-internal-email-change) endpoint.
 
@@ -735,7 +735,7 @@ Set `syncContactEmail` to `true` if you want the `contactEmail` field in the cus
 {% endstep %}
 
 {% step %}
-### Confirming an email change
+##### Confirming an email change
 
 After the customer receives the confirmation token by email at their new email address, they can confirm the email change. Send a request to the [Updating a customer email address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/credentials#post-customer-tenant-me-accounts-internal-email-change-confirm) endpoint.
 
