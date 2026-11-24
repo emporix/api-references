@@ -154,7 +154,7 @@ If `fileMode` is absent, the stream does not read uploaded files. An upload to s
 
 ## How to import files for a stream
 
-Use this workflow when a stream has `fileMode` set. The goal is to get a delimited file (CSV or one of its variants) into Emporix: check limits, upload the file, set the load order when the feed is incremental, then [trigger a run](#how-to-trigger-an-import-run).
+Use this workflow when a stream has `fileMode` set. The goal is to get a CSV or XML file into Emporix, in the format set on the stream's connection: check limits, upload the file, set the load order when the feed is incremental, then [trigger a run](#how-to-trigger-an-import-run).
 
 Uploading stores the bytes and records their content hash; nothing is imported until a run starts. The same bytes are never imported twice for that stream: a file the stream has already imported is refused rather than queued again. A file that previously failed (`status` `FAILED`) is accepted, because the usual reason is that it has been fixed. To import a failed file again without changing it, [queue it again](#queue-a-failed-file-again) instead of uploading it.
 
@@ -177,7 +177,7 @@ The response includes `maxUploadBytes`, whether that limit comes from the API ga
 
 ### Upload a file
 
-To queue a delimited file for the stream's next run, send a multipart request to the [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) endpoint.
+To queue a CSV or XML file for the stream's next run, send a multipart request to the [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) endpoint.
 
 ```bash
 curl -i -X POST \
@@ -185,6 +185,8 @@ curl -i -X POST \
   -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}' \
   -F 'file=@./vendors-2026-10-23.csv'
 ```
+
+An XML file is uploaded the same way, for example `-F 'file=@./vendors-2026-10-23.xml'`. The stream reads it with the records path stored on the stream, so every file is cut into records the same way.
 
 On success, save the returned file `id`. You need it to reorder, remove, or queue the file again. The request is refused with `409` while the stream's job has a run in flight if the upload would replace bytes the stream already holds. A file the stream has not seen before is accepted at any time.
 
