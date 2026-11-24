@@ -179,7 +179,7 @@ The following merchant information is necessary for the pdf file with quote to b
 
 {% stepper %}
 {% step %}
-#### Retrieve your site's mixins
+##### Retrieve your site's mixins
 
 First, you need to check the current site mixin configuration for the `merchantInfo` parameter by sending a request to the [Retrieving site mixins](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#get-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
@@ -197,7 +197,7 @@ curl -i -X GET \
 {% endstep %}
 
 {% step %}
-#### Update merchant information
+##### Update merchant information
 
 Update the merchant information for your tenant's site by sending a request to the [Partially updating a site mixin](https://developer.emporix.io/api-documentation/api-guides/configuration/site-settings-service/api-reference/mixins#patch-site-tenant-sites-sitecode-mixins-mixinname) endpoint.
 
@@ -219,7 +219,7 @@ curl -i -X PATCH \
 {% endstep %}
 
 {% step %}
-#### Update available quote status change reasons
+##### Update available quote status change reasons
 
 There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](quote.md#quote-decision-reasons).
 

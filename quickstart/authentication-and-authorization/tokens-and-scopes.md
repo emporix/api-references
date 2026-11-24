@@ -160,22 +160,22 @@ Make sure that your implementation covers the appropriate token issuance and ret
 
 {% stepper %}
 {% step %}
-### Authenticating a customer
+##### Authenticating a customer
 Upon a B2B customer logs in, a customer access token has to be issued.
 {% endstep %}
 
 {% step %}
-### Legal entity assignment
+##### Legal entity assignment
 When the B2B customer chooses a specific legal entity they want to represent and act on behalf of, the refreshing customer token has to be run to embed the selected legal entity to the token. The new refresh token embeds the `legalEntityId` parameter to the customer token.
 {% endstep %}
 
 {% step %}
-### Data access and scope 
+##### Data access and scope
 This updated token is populated in the subsequent requests to other services, triggered by the customer's actions, to determine the correct scopes and data visibility for the customer. The `legalEntityId` header is injected into requests, ensuring the user only accesses relevant data, such as orders or segment-based product visibility tied to that specific legal entity.
 {% endstep %}
 
 {% step %}
-### Seamless switching
+##### Seamless switching
 If the customer switches to a different legal entity, another refresh token request has to be called to issue a new token which is based on the previous one but with the changed `legalEntityId` information. Thanks to that the customer doesn't need to log in again and remains authenticated.
 {% endstep %}
 {% endstepper %}
@@ -386,7 +386,7 @@ The following flow describes how to enable a service-to-service integration to a
 
 {% stepper %}
 {% step %}
-### Create or upsert a custom entity type in Schema
+##### Create or upsert a custom entity type in Schema
 
 To create a custom entity type, call the [Creating a custom schema type](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-schema-type#post-schema-tenant-custom-entities) endpoint. 
 
@@ -408,7 +408,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-### Configure custom API credentials with the new scopes
+##### Configure custom API credentials with the new scopes
 
 In the [Emporix Developer Portal](https://app.emporix.io), create or update a set of custom API credentials and assign the auto-generated `custom.{lowerCaseType}_*` scopes to them. The custom credentials' `Client_ID` and `Secret` are then used to obtain a service access token that carries those scopes.
 
@@ -419,7 +419,7 @@ For step-by-step instructions, refer to the [Manage API Keys](https://app.gitboo
 {% endstep %}
 
 {% step %}
-### Request OAuth2 tokens and call Schema custom-instance APIs
+##### Request OAuth2 tokens and call Schema custom-instance APIs
 
 To request a service access token with the configured scopes, call the [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint, using the `Client_ID` and `Secret` of your custom API credentials.
 
