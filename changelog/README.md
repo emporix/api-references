@@ -83,6 +83,31 @@ The Import Service is in preview mode, so some features may not be fully operati
 
 {% endupdate %}
 
+{% update date="2026-11-24" tags="new-feature" %}
+
+## Import Service - XML files in the File source
+
+##### Overview
+
+A file-based stream can now import XML files as well as CSV files. The format comes from the stream's File connection. An XML stream cuts each file into records by the element in `sourceDataset.recordsPath`, either a dotted path below the root element (for example `CD` or `channel.item`) or an absolute path that starts with `/` (for example `/Invoice` for one record per document). When a stream is created in the Import Tool, the records path detected from the connection's sample file is stored on the stream. `sourceDataset.repeatingElements` lists elements that are always read as a list, named with `[]`, even in a record that contains only one of them.
+
+Each record's fields follow the XML convention of the HTTP source: attributes and child elements become fields, an element's text next to attributes is named `_text`, and repeated elements are named `name[]`. A records path that matches nothing in a file where another element repeats, or a file that is not well-formed, fails the stream with the error code `CONFIGURATION`. A record without a key value fails with `NO_KEY`, and a record with more elements and attributes than `maxColumns` allows fails alone with `REJECTED_BY_SOURCE`.
+
+##### Updated endpoints
+
+| Endpoint | Description |
+| --- | --- |
+| [Uploading a file for a stream to import](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/files#post-importtool-tenant-streams-streamid-files) | Accepts an XML file, also compressed as `.gz` or `.zip`, for a stream whose connection reads XML. |
+| [Retrieving all streams of a configuration](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-configs-configid-streams) | Returns `recordsPath` and `repeatingElements` in the `sourceDataset` of an XML file stream. |
+| [Retrieving a stream](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/streams#get-importtool-tenant-streams-id) | Returns `recordsPath` and `repeatingElements` in the `sourceDataset` of an XML file stream. |
+| [Retrieving run errors](https://developer.emporix.io/api-documentation/api-guides/utilities/import-service/api-reference/runs#get-importtool-tenant-runs-runid-errors) | Returns `CONFIGURATION` for an XML file that is not well-formed or a records path that matches nothing, and `REJECTED_BY_SOURCE` for an XML record with too many elements and attributes. |
+
+##### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-24" tags="major-change" %}
 
 ## Audit Logs (Changelog) Service - cursor pagination and 7-day default window
