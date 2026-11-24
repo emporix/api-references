@@ -29,12 +29,12 @@ Emporix receives the external token and performs validation against the configur
 
 {% stepper %}
 {% step %}
-### External authentication
+##### External authentication
 Authenticate a customer within your external authentication solution through the usual customer login process. Extract the access token which results from this process. 
 {% endstep %}
 
 {% step %}
-### Exchange of the authentication code for the authentication token
+##### Exchange of the authentication code for the authentication token
 Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/customer/{tenant}/exchangeauthtoken`, which takes care of changing the external access token into the Emporix authentication `access_token`. Provide the following parameters:
 
 * `subjectAccessToken` - The token received from the external IDP.
@@ -43,7 +43,7 @@ Call the Emporix Token Exchange endpoint using the `POST https://api.emporix.io/
 {% endstep %}
 
 {% step %}
-### Token validation
+##### Token validation
 Emporix runs validation of the received token to authenticate a customer and allow store's frontend access. There are two validation modes possible, depending on what you provide: online verification or offline verification methods.
 
 {% hint style="info" %}
@@ -52,7 +52,7 @@ Find out more about the token validation in the [Token validation](#token-valida
 {% endstep %} 
 
 {% step %}
-### Token issuance
+##### Token issuance
 If the token is proved valid, Emporix generates and returns an Emporix-specific access token, refresh token and Saas token, which are passed to the store's frontend and can be further used.
 
 The response returns JSON object containing `access_token`, `refresh_token`, `saas_token`, `expires_in`, and `scope`.
