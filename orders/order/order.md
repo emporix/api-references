@@ -101,7 +101,7 @@ To create an order, first get the credentials to log in as a customer on the sto
 
 {% stepper %}
 {% step %}
-#### Request a service access token
+##### Request a service access token
 
 Get the `access_token` by sending the request to the [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token).
 
@@ -120,7 +120,7 @@ curl -L \
 {% endstep %}
 
 {% step %}
-#### Request an anonymous token
+##### Request an anonymous token
 
 Retrieve the `anonymous_token` by sending a request to the [Requesting an anonymous token](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#get-customerlogin-auth-anonymous-login) endpoint.
 
@@ -130,7 +130,7 @@ curl 'https://api.emporix.io/customerlogin/auth/anonymous/login?tenant={tenant}&
 {% endstep %}
 
 {% step %}
-#### Log in as a customer
+##### Log in as a customer
 
 Log in as the customer by sending an authorization request to the [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
@@ -161,7 +161,7 @@ curl 'https://api.emporix.io/customer/{tenant}/login' \
 
 {% stepper %}
 {% step %}
-#### Create an order
+##### Create an order
 
 As a merchant acting on behalf of a customer, send the request to the [Creating a new order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#post-order-v2-tenant-salesorders) endpoint.
 
@@ -279,7 +279,7 @@ curl --location 'https://api.emporix.io/order-v2/{tenant}/salesorders' \
 {% endstep %}
 
 {% step %}
-#### Confirm order creation
+##### Confirm order creation
 
 You can retrieve the order details as a merchant or as the customer.
 
@@ -309,7 +309,7 @@ curl 'https://api.emporix.io/order-v2/{tenant}/orders' \
 {% endstep %}
 
 {% step %}
-#### Change the order status
+##### Change the order status
 
 * As a merchant, when the order has been prepared and dispatched, change the order status to `SHIPPED`. Send the request to the [Partially updating an order](https://developer.emporix.io/api-documentation/api-guides/orders/order/api-reference/orders-tenant-managed#patch-order-v2-tenant-salesorders-orderid) endpoint.
 
@@ -348,7 +348,7 @@ curl -L --request POST \
 {% endstep %}
 
 {% step %}
-#### Check the status transitions
+##### Check the status transitions
 
 Order Service APIs provide tools for checking possible next statuses and reviewing status change history.
 

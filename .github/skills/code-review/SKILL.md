@@ -72,7 +72,7 @@ Suggested fix:
 
 For grammar or spelling, show the original and corrected text.
 
-For structural issues (e.g. step format), include a concrete rewrite in the comment — for example GitBook `{% stepper %}` / `{% step %}` with `####` step titles.
+For structural issues (e.g. step format), include a concrete rewrite in the comment — for example GitBook `{% stepper %}` / `{% step %}` with `#####` step titles.
 
 ## Review completeness
 
