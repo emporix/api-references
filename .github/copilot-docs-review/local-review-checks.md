@@ -41,7 +41,7 @@ Apply when `changelog/README.md` changes or when API specs change (see [When a c
 - Do not update `changelog/SUMMARY.md`
 - Set change tags on the `{% update %}` block: `new-feature`, `improvement`, `major-change`, `minor-change`, `deprecated`
 - Title format: `## {Service Name} - {noun phrase}` — no date prefix, no verbs in the title (`.style-guide/templates/changelog.md`)
-- Inner sections use `####` headings: `Overview`, endpoint tables (`New endpoints`, `Updated endpoints`, `Deprecated endpoints`, `Removed endpoints`), and `Known problems`
+- Inner sections use `#####` headings: `Overview`, endpoint tables (`New endpoints`, `Updated endpoints`, `Deprecated endpoints`, `Removed endpoints`), and `Known problems`
 - Endpoint link text uses gerund form matching the endpoint summary in the API reference
 - Changelog wording describes customer impact, not internal implementation details
 - Removal of previously deprecated endpoints or fields uses `major-change` (not `deprecated`) and follows `.style-guide/templates/changelog.md#removal-of-deprecated-items`
@@ -113,10 +113,10 @@ Require a new changelog entry in the same PR when any `**/api-reference/api.y*ml
 
 | Change | Tag | Section |
 |--------|-----|---------|
-| New endpoints | `new-feature` | `#### New endpoints` |
-| Updated schemas, parameters, scopes, or behavior | `improvement` or `minor-change` | `#### Updated endpoints` |
-| Deprecation announced | `deprecated` | `#### Deprecated endpoints` |
-| Removal of endpoints or fields (especially previously deprecated) | `major-change` | `#### Removed endpoints` or `#### Removed endpoints & fields` per template |
+| New endpoints | `new-feature` | `##### New endpoints` |
+| Updated schemas, parameters, scopes, or behavior | `improvement` or `minor-change` | `##### Updated endpoints` |
+| Deprecation announced | `deprecated` | `##### Deprecated endpoints` |
+| Removal of endpoints or fields (especially previously deprecated) | `major-change` | `##### Removed endpoints` or `##### Removed endpoints & fields` per template |
 
 Changelog **not** required for:
 

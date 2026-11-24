@@ -32,7 +32,7 @@ Gather information about a customer's session on the storefront - you need detai
 
 {% stepper %}
 {% step %}
-#### Anonymous session start
+##### Anonymous session start
 
 When a user enters your storefront, before they choose to log in, an anonymous user session is created.
 
@@ -45,7 +45,7 @@ curl -i -X GET
 {% endstep %}
 
 {% step %}
-#### Log the customer in
+##### Log the customer in
 
 Send an authorization request to the [Logging in a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-management/api-reference/authentication-and-authorization#post-customer-tenant-login) endpoint.
 
@@ -80,7 +80,7 @@ Each country that you operate in may have different tax rules for different prod
 
 {% stepper %}
 {% step %}
-#### Add tax configuration
+##### Add tax configuration
 
 Send a request to the [Creating a new tax configuration](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/tax-service/api-reference/taxes#post-tax-tenant-taxes) endpoint.
 
@@ -138,7 +138,7 @@ Delivery zone is the area where you ship your goods to. You can define a country
 
 {% stepper %}
 {% step %}
-#### Define the delivery zone
+##### Define the delivery zone
 
 Send a request to the [Creating a shipping zone](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-zones#post-shipping-tenant-site-zones) endpoint.
 
@@ -163,7 +163,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Specify how the goods can be shipped to a customer
+##### Specify how the goods can be shipped to a customer
 
 Send a request to the [Creating a shipping method](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-methods#post-shipping-tenant-site-zones-zoneid-methods) endpoint.
 
@@ -220,7 +220,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Define the delivery time
+##### Define the delivery time
 
 The delivery time is matched with the delivery method and zone by sending the request to the [Creating a delivery time](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/delivery-times-management#post-shipping-tenant-delivery-times) endpoint.
 
@@ -269,7 +269,7 @@ curl -i -X POST
 
 {% stepper %}
 {% step %}
-#### Create and add multiple products to your store
+##### Create and add multiple products to your store
 
 Send the request to the [Creating multiple products](https://developer.emporix.io/api-documentation/api-guides/products-labels-and-brands/product-service/api-reference/products#post-product-tenant-products-bulk) endpoint.
 
@@ -315,7 +315,7 @@ Price model defines your pricing strategy. You can specify how you want to go ab
 
 {% stepper %}
 {% step %}
-#### Define a price model
+##### Define a price model
 
 Send a request to the [Creating a new price model](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-models#post-price-tenant-pricemodels) endpoint.
 
@@ -350,7 +350,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Create a price for a specific product
+##### Create a price for a specific product
 
 Send a request to the [Creating a new price](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/prices#post-price-tenant-prices) endpoint.
 
@@ -395,7 +395,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Match the price by session context
+##### Match the price by session context
 
 Allow your customers find the best price based on information retrieved from the session context. Send the request to the [Matching prices for session context](https://developer.emporix.io/api-documentation/api-guides/prices-and-taxes/price-service/api-reference/price-matching#post-price-tenant-match-prices-by-context) endpoint.
 
@@ -436,7 +436,7 @@ The following requests require using the customer's access token for authorizati
 
 {% stepper %}
 {% step %}
-#### Enable an option to create a cart on your site while a customer is browsing through your products
+##### Enable an option to create a cart on your site while a customer is browsing through your products
 
 Creating a cart takes care of things like gathering customer's session details, even anonymous, or setting up a proper cart's currency for final calculations at checkout. There are two options to create carts using API:
 
@@ -489,7 +489,7 @@ curl -i -X POST
 {% endstep %}
 
 {% step %}
-#### Add items to the cart
+##### Add items to the cart
 
 Send a request to the [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts) endpoint.
 
@@ -522,7 +522,7 @@ curl -i -X POST
 
 {% stepper %}
 {% step %}
-#### Configure the payment methods
+##### Configure the payment methods
 
 There are several options to configure your payment methods. Check all the available ones in the [Payment Systems](https://developer.emporix.io/api-documentation/api-guides/checkout/payment-gateway) documentation.
 {% endstep %}
@@ -562,7 +562,7 @@ Checkout Service validates the data that comes from the customer's session token
 
 {% stepper %}
 {% step %}
-#### List available shipping methods
+##### List available shipping methods
 
 Call [Calculating the final shipping cost](https://developer.emporix.io/api-documentation/api-guides/delivery-and-shipping/shipping-1/api-reference/shipping-cost#post-shipping-tenant-site-quote) to list methods and fees for the checkout address and cart total.
 
@@ -622,7 +622,7 @@ The response lists matching methods, grouped by zone:
 {% endstep %}
 
 {% step %}
-#### Start the checkout
+##### Start the checkout
 
 Send a request to the [Triggering a checkout](https://developer.emporix.io/api-documentation/api-guides/checkout/checkout/api-reference/checkouts) endpoint.
 

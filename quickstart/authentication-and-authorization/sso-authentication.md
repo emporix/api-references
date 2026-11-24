@@ -19,33 +19,33 @@ The following steps describe the end-to-end SSO authentication flow in the Empor
 
 {% stepper %}
 {% step %}
-### Initiation
+##### Initiation
 
 The storefront (frontend) initiates the SSO flow by redirecting the customer to your configured Identity Provider. The customer authenticates with the IDP using its native login (for example, corporate credentials or social login).
 
 {% endstep %}
 
 {% step %}
-### Callback with authentication code
+##### Callback with authentication code
 
 After successful authentication, the Identity Provider redirects the customer back to a designated Emporix callback endpoint, including a one-time authentication code in the request. This code is short-lived and must not be used directly by the customer.
 
 {% endstep %}
 
 {% step %}
-### Token exchange (backend)
+##### Token exchange (backend)
 
 The Emporix Authentication Service receives the callback and exchanges the authentication code with the OpenID Provider for an access token (and optionally a refresh token). This exchange happens server-side.
 {% endstep %}
 
 {% step %}
-### Emporix token generation
+##### Emporix token generation
 
 Emporix then issues the Emporix-specific OAuth token and returns it to the client (application/system). All subsequent API calls are authenticated using this Emporix token, not the IDP token.
 {% endstep %}
 
 {% step %}
-### API access
+##### API access
 
 The client uses the Emporix token to call Emporix APIs. Authentication and session management are handled by Emporix based on this token.
 {% endstep %}
