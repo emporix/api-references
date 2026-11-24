@@ -15,7 +15,7 @@ The steps described in this tutorial demonstrate how you, as an employee, can ma
 
 {% stepper %}
 {% step %}
-#### Get an employee access token
+##### Get an employee access token
 
 Firstly, obtain a relevant access token to be able to perform operations as an employee on behalf of a customer. Call the OAuth Service [Requesting a service access token](https://developer.emporix.io/api-documentation/api-guides/authentication/oauth-service/api-reference/service-access-token) endpoint to get credentials of a technical client with the `customer.customer_manage` and `customer.customer_manage_own` scopes assigned. The `customer.customer_manage_own` is required only when you want to let a customer manage customer profiles from the same company.
 
@@ -38,7 +38,7 @@ The returned `access_token` is required in the steps that follow.
 
 {% step %}
 
-#### Create a customer account
+##### Create a customer account
 Create a new customer by calling the [Creating a customer](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#post-customer-tenant-customers) endpoint.
 
 {% include "../../.gitbook/includes/example-hint-text.md" %}
@@ -80,7 +80,7 @@ By default, you cannot create a customer with a `customerNumber` that belongs to
 {% endstep %}
 
 {% step %}
-#### Update the customer account
+##### Update the customer account
 If you need to update any information in the customer's profile, send the request to the [Upserting a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#put-customer-tenant-customers-customernumber) endpoint. The endpoint performs the upsert operation replacing the primary data or creating a new customer's account if it doesn't exist.
 
 For example, update the customer's email:
@@ -100,7 +100,7 @@ curl -X PUT "https://api.emporix.io/customer/mytenant/customers/{customerNumber}
 
 {% step %}
 
-#### Add addresses to the profile
+##### Add addresses to the profile
 To add an address to the customer's profile, call the [Adding a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses) endpoint: 
 
 ```bash
@@ -134,7 +134,7 @@ The response (`201 Created`) returns the id of the created address, for example:
 
 {% step %}
 
-#### Add tags to customer addresses
+##### Add tags to customer addresses
 To add any tags to the address for easier address management, send the request to the [Adding tags to a customer address](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/addresses#post-customer-tenant-customers-customernumber-addresses-addressid-tags) endpoint.
 
 ```bash
@@ -148,7 +148,7 @@ To remove tags later, call the same path with `DELETE` operation.
 
 {% endstep %}
 {% step %}
-#### Activate the customer
+##### Activate the customer
 
 As the customer's account preparation is complete, activate their account. To do so, update the customer status using the `PATCH` endpoint for [Updating a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#patch-customer-tenant-customers-customernumber).
 
@@ -164,7 +164,7 @@ curl -X PATCH "https://api.emporix.io/customer/{tenant}/customers/{customerNumbe
 {% endstep %}
 
 {% step %}
-#### Retrieve the customer's profile
+##### Retrieve the customer's profile
 Verify the customer's details assigned to their profile by calling the [Retrieving a customer profile](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/account-and-profile#get-customer-tenant-customers-customernumber) endpoint.
 
 ```bash
@@ -237,7 +237,7 @@ For the retention timeline and customer email behavior, see [Password Migration 
 
 {% stepper %}
 {% step %}
-#### Get an employee access token
+##### Get an employee access token
 
 Obtain a service access token for a technical client with the `customer.import_manage` and `customer.import_read` scopes. These scopes are distinct from `customer.customer_manage`. Use `customer.import_manage` to configure retention, import customers, and remove the configuration. Use `customer.import_read` to retrieve the retention configuration.
 
@@ -261,7 +261,7 @@ The returned `access_token` is required in the steps that follow.
 {% endstep %}
 
 {% step %}
-#### Configure password migration retention
+##### Configure password migration retention
 
 Create or update the tenant password migration retention configuration before you import customers with `legacyAuth`. Call the [Configuring password migration retention](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-config-password-migration-retention) endpoint.
 
@@ -303,7 +303,7 @@ If emails must include storefront links, or if you need a non-standard email tem
 {% endstep %}
 
 {% step %}
-#### Retrieve the retention configuration
+##### Retrieve the retention configuration
 
 Verify the saved configuration by calling the [Retrieving password migration retention configuration](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#get-customer-tenant-config-password-migration-retention) endpoint.
 
@@ -326,7 +326,7 @@ If no configuration is set for the tenant, the endpoint returns `404 Not Found`.
 {% endstep %}
 
 {% step %}
-#### Import customers with non-native hash
+##### Import customers with non-native hash
 
 Import up to 200 customers in one request by calling the [Importing customers in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint. Repeat the request until you import the full customer base.
 
@@ -387,7 +387,7 @@ If an item is invalid, the result at that index is an error, and other items in 
 {% endstep %}
 
 {% step %}
-#### Import customers with native `passwordHash`
+##### Import customers with native `passwordHash`
 
 Use the same [Importing customers in bulk](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#post-customer-tenant-customers-import) endpoint only when the source hashes are compatible with the Emporix native password hashing strategy. Provide `passwordHash`. Do not send a non-native hash in `passwordHash`. Native-hash imports do not require a password migration retention configuration.
 
@@ -419,7 +419,7 @@ Use `legacyAuth` for a non-native hash and `passwordHash` for a native hash. Pro
 {% endstep %}
 
 {% step %}
-#### Remove the retention configuration
+##### Remove the retention configuration
 
 When no customer accounts contain a `legacyAuth` record, remove the configuration by calling the [Removing password migration retention configuration](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-service/api-reference/import-and-migration#delete-customer-tenant-config-password-migration-retention) endpoint.
 
