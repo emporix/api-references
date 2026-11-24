@@ -83,7 +83,7 @@ The Import Service is in preview mode, so some features may not be fully operati
 
 {% endupdate %}
 
-{% update date="2026-11-24" tags="new-feature, major-change" %}
+{% update date="2026-11-24" tags="major-change" %}
 
 ## Audit Logs (Changelog) Service - cursor pagination and 7-day default window
 

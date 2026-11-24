@@ -216,6 +216,7 @@ components:
         type: integer
       description: |
         Page number to be retrieved. The number of the first page is 1.
+
         **Note:** The `page` parameter is supported only in offset mode. If you send it in cursor mode, the request fails with `400`. In cursor mode, use `next` or `prev`.
     query_size:
       name: size
@@ -228,6 +229,7 @@ components:
         type: integer
       description: |
         Number of changed entries to be retrieved per page, in both pagination modes. Maximum value is 100.
+
         **Note:** In cursor mode, send the same `size` with every cursor that you received.
     query_pagination:
       name: pagination
@@ -253,6 +255,7 @@ components:
         type: string
       description: |
         Cursor mode only. Opaque cursor from the `x-next-cursor` response header. Use it to retrieve the next page, which contains older entries.
+
         **Note:** You cannot send `next` and `prev` in the same request. Send the same `q` and `size` as in the request that returned the cursor. Otherwise, the request fails with `400`.
     query_prev:
       name: prev
@@ -262,6 +265,7 @@ components:
         type: string
       description: |
         Cursor mode only. Opaque cursor from the `x-prev-cursor` response header. Use it to retrieve the previous page, which contains newer entries.
+
         **Note:** You cannot send `next` and `prev` in the same request. Send the same `q` and `size` as in the request that returned the cursor. Otherwise, the request fails with `400`.
   schemas:
     ChangelogHistoryResponse:
