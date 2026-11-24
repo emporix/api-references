@@ -44,7 +44,7 @@ The steps below use `wishlist` as the cart `type` in all examples. This is not a
 
 {% stepper %}
 {% step %}
-#### Create or retrieve a wishlist cart
+##### Create or retrieve a wishlist cart
 
 Retrieve an existing wishlist cart or create one if none exists by calling the [Retrieving a cart by criteria](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) with `type=wishlist` and `create=true`. If the customer has several wishlists, use the appropriate `type` in the query parameters (or create the cart with [Creating a new cart](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#post-cart-tenant-carts)) so you target the correct list.
 
@@ -64,7 +64,7 @@ Use the cart `id` from the response as `{{wishlistCartId}}` in the following ste
 {% endstep %}
 
 {% step %}
-#### Add a product to the wishlist
+##### Add a product to the wishlist
 
 Use the same cart item endpoints as for a shopping cart. Provide the wishlist cart ID in the `cartId` path parameter.
 
@@ -95,7 +95,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Remove a wishlist item
+##### Remove a wishlist item
 
 To remove a single item, call the [Deleting a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint with the wishlist cart ID and item ID. Use the item `id` from the wishlist cart response as `{{itemId}}`.
 
@@ -119,7 +119,7 @@ To move a wishlist item to the shopping cart, add the product to the customer's 
 
 {% stepper %}
 {% step %}
-#### Add the product to the shopping cart
+##### Add the product to the shopping cart
 
 * Retrieve the shopping cart and wishlist cart independently using the `type` query parameter on the [Retrieving a cart by criteria](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/carts#get-cart-tenant-carts) endpoint (`shopping` and `wishlist`). Use `create=true` on the shopping cart request if the customer does not have an open shopping cart yet.
 
@@ -167,7 +167,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Remove the product from the wishlist
+##### Remove the product from the wishlist
 
 Remove the product from the `type: "wishlist"` cart by calling the [Deleting a cart item](https://developer.emporix.io/api-documentation/api-guides/checkout/cart/api-reference/cart-items#delete-cart-tenant-carts-cartid-items-itemid) endpoint.
 
@@ -227,7 +227,7 @@ Follow these steps to implement wishlist functionality for guest customers on th
 
 {% stepper %}
 {% step %}
-#### Store the pending product
+##### Store the pending product
 
 This step belongs to the storefront logic, not a Cart Service call itself. Store the selected product before redirecting to login, for example, in the `sessionStorage`. After a successful login, read the stored value, add the product to the wishlist cart, then clear it. 
 
@@ -244,19 +244,19 @@ Example of storing the pending product:
 {% endstep %}
 
 {% step %}
-#### Redirect the customer to login
+##### Redirect the customer to login
 
 Redirect the customer to the login or registration page. Keep the pending product in `sessionStorage` until login succeeds.
 {% endstep %}
 
 {% step %}
-#### Log in the customer
+##### Log in the customer
 
 Log in the customer as described in [Prerequisites](#prerequisites).
 {% endstep %}
 
 {% step %}
-#### Add the product to the wishlist
+##### Add the product to the wishlist
 
 Read the stored `productId` from `sessionStorage`, then continue with [Create or retrieve a wishlist cart](#create-or-retrieve-a-wishlist-cart) and [Add a product to the wishlist](#add-a-product-to-the-wishlist). Clear the pending product from storage after the item is added.
 {% endstep %}

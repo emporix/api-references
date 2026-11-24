@@ -238,7 +238,7 @@ To set the API URL on an existing `BATTERY_INCLUDED` configuration, complete the
 
 {% stepper %}
 {% step %}
-#### Check that no product reindex is running
+##### Check that no product reindex is running
 
 {% hint style="warning" %}
 If you change `apiUrl` while a product reindex is running, the documents uploaded before the change stay on the old host, and the new host holds only the documents uploaded after the change.
@@ -258,7 +258,7 @@ Continue only when every `PRODUCT` job in the response has the `SUCCESS` or `FAI
 {% endstep %}
 
 {% step %}
-#### Retrieve the current configuration
+##### Retrieve the current configuration
 
 The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`.
 
@@ -274,7 +274,7 @@ Keep every field of the response for the next step, including `includedMixinPath
 {% endstep %}
 
 {% step %}
-#### Send the configuration with the API URL
+##### Send the configuration with the API URL
 
 Send the whole configuration with `apiUrl` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint.
 
@@ -312,7 +312,7 @@ If the `apiUrl` value is not accepted, the response names the field:
 {% endstep %}
 
 {% step %}
-#### Reindex the products on the new host
+##### Reindex the products on the new host
 
 A changed `apiUrl` takes effect within 10 minutes. Until then, the Indexing Service can still send requests to the previous host.
 
@@ -368,7 +368,7 @@ To change the data that BatteryIncluded indexing uses, complete the following st
 
 {% stepper %}
 {% step %}
-#### Retrieve the current configuration
+##### Retrieve the current configuration
 
 The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`.
 
@@ -384,7 +384,7 @@ Keep every field of the response for the next step, including `apiUrl`, `include
 {% endstep %}
 
 {% step %}
-#### Send the configuration with the `enrichments` list
+##### Send the configuration with the `enrichments` list
 
 Send the whole configuration with `enrichments` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint. The following example keeps availability and prices, and stops calling the Customer Segment Service.
 
@@ -425,7 +425,7 @@ If a value is not accepted, the response names the field:
 {% endstep %}
 
 {% step %}
-#### Apply the change to existing products
+##### Apply the change to existing products
 
 A changed `enrichments` list takes effect within 10 minutes. After that, each product uses the new list the next time it is updated or reindexed.
 
@@ -487,7 +487,7 @@ To change how site-aware mixins are indexed, complete the following steps:
 
 {% stepper %}
 {% step %}
-#### Retrieve the current configuration
+##### Retrieve the current configuration
 
 The update request replaces the whole configuration. Send a request to the [Get configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#get-indexing-tenant-configurations-provider) endpoint for `BATTERY_INCLUDED`.
 
@@ -503,7 +503,7 @@ Keep every field of the response for the next step, including `apiUrl`, `include
 {% endstep %}
 
 {% step %}
-#### Send the configuration with `siteAwareMixinsStrategy`
+##### Send the configuration with `siteAwareMixinsStrategy`
 
 Send the configuration from the previous step with `siteAwareMixinsStrategy` added to the [Update configuration by provider name](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/configuration#put-indexing-tenant-configurations-provider) endpoint. The following example keeps the base values of site-aware mixins in `_product.mixins` and `_product_i18n`. It is based on a configuration that also sets `enrichments`, and it keeps that list. Send your own fields from the previous step instead.
 
@@ -541,7 +541,7 @@ If the value is not accepted, the response names the field and the allowed value
 {% endstep %}
 
 {% step %}
-#### Apply the change to existing products
+##### Apply the change to existing products
 
 A changed `siteAwareMixinsStrategy` takes effect within 10 minutes. After that, each product uses the new strategy the next time it is updated or reindexed.
 
@@ -916,7 +916,7 @@ In the legacy layout, site-aware mixins stayed under `_product.mixins` and `_pro
 
 {% stepper %}
 {% step %}
-#### Add dual-read support
+##### Add dual-read support
 
 Update consumers to read non-localized values from `_product_siteAware.<site>.mixins.<mixin>` and localized values from
 `_product_siteAware.<site>.localeAware.<language>.mixins.<mixin>`. Here, `<mixin>` is the base mixin key, `<site>` is the tenant
@@ -936,7 +936,7 @@ without an overlay. Treat only the `<mixin>__<site>` overlay paths as legacy.
 {% endstep %}
 
 {% step %}
-#### Roll out the change
+##### Roll out the change
 
 Roll out the change and keep both reads while old and new document shapes coexist. Run a
 [full reindex](#how_to_reindex_existing_products) to migrate all products in a bounded operation. If you rely on incremental updates
@@ -944,7 +944,7 @@ without a full reindex, both shapes can coexist indefinitely. Keep the fallback 
 {% endstep %}
 
 {% step %}
-#### Remove fallbacks after a full reindex
+##### Remove fallbacks after a full reindex
 
 If you run a full reindex, wait until it reports `SUCCESS`, then allow BatteryIncluded time to apply the transaction cleanup.
 Verify through your search integration that reindexed documents contain the `_product_siteAware` paths for site-aware mixins. Remove the old-path

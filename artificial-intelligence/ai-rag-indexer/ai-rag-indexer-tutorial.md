@@ -40,7 +40,7 @@ Note that removing a custom entity from the Emporix system results in automatic 
 
 {% stepper %}
 {% step %}
-#### Discover indexable fields
+##### Discover indexable fields
 
 Before creating a RAG tool, call the AI RAG Indexer metadata endpoints for your entity type.
 
@@ -188,7 +188,7 @@ create a RAG tool in the upcoming step.
 {% endstep %}
 
 {% step %}
-#### Discover filterable fields
+##### Discover filterable fields
 
 Call the [Listing fields for vector search filtering](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-rag-indexer/api-reference/metadata#get-ai-rag-indexer-tenant-type-filter-metadata) endpoint to retrieve the field paths for filtering search.
 
@@ -325,7 +325,7 @@ Use the returned field paths in `filterFields[].key` when creating a tool in the
 {% endstep %}
 
 {% step %}
-#### Create an AI tool using RAG functionality
+##### Create an AI tool using RAG functionality
 
 When you know which fields to index and filter, call the [Upserting tool](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/tool#put-ai-service-tenant-agentic-tools-toolid) endpoint to create or update a `rag_emporix` tool. 
 
@@ -622,7 +622,7 @@ Align `indexedFields` and `filterFields` with the output of `rag-metadata` and `
 {% endstep %}
 
 {% step %}
-#### Trigger a reindex job
+##### Trigger a reindex job
 
 When the tool is configured, call the [Creating a reindex job](https://developer.emporix.io/api-documentation/api-guides/configuration/indexing-service/api-reference/reindex#post-indexing-tenant-reindex-jobs) endpoint to regenerate embeddings for the selected entity type. The reindex endpoint currently performs a full rebuild.
 
@@ -725,7 +725,7 @@ Reindexing is a computationally expensive and time-consuming operation, especial
 {% endstep %}
 
 {% step %}
-#### Attach the tool to an agent
+##### Attach the tool to an agent
 
 Assign the tool ID (for example, `rag-product`, `rag-order`, `rag-customer`, `rag-legal-entity`, or `rag-car-parts`) to an AI agent so it can be invoked during agentic chat. Use the [Upserting agent](https://developer.emporix.io/api-documentation/api-guides/artificial-intelligence/ai-service/api-reference/agent#put-ai-service-tenant-agentic-agents-agentid) endpoint or configure the agent in Management Dashboard.
 
