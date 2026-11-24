@@ -14,7 +14,7 @@ fail() { echo "FAIL: $1"; failures=$((failures + 1)); }
 
 entry() {
   # entry TITLE [DATE]
-  printf '{%% update date="%s" tags="improvement" %%}\n\n## %s\n\n#### Overview\n\nDetails for %s.\n\n{%% endupdate %%}\n' \
+  printf '{%% update date="%s" tags="improvement" %%}\n\n## %s\n\n##### Overview\n\nDetails for %s.\n\n{%% endupdate %%}\n' \
     "${2:-RELEASE_DATE}" "$1" "$1"
 }
 

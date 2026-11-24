@@ -32,7 +32,7 @@ Prepare a custom entity package, encode it, import it, and create sample instanc
 
 {% stepper %}
 {% step %}
-#### Build the custom entity JSON
+##### Build the custom entity JSON
 
 Create a package that defines the custom schema type and its mixin. The sample type id is `VEHICLE`. Its custom attributes belong to the `vehicleSearchAttributes` mixin:
 
@@ -103,7 +103,7 @@ Create a package that defines the custom schema type and its mixin. The sample t
 {% endstep %}
 
 {% step %}
-#### Encode the package as base64
+##### Encode the package as base64
 
 Encode the JSON package as a single-line base64 `data` value:
 
@@ -129,7 +129,7 @@ eyJjdXN0b21TY2hlbWFUeXBlcyI6W3siaWQiOiJWRUhJQ0xFIiwibmFtZSI6eyJlbiI6IlZlaGljbGUi
 {% endstep %}
 
 {% step %}
-#### Import the custom entity package
+##### Import the custom entity package
 
 Use a service OAuth2 token with the `schema.schema_manage` scope and call [Importing Custom Entities](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/export-import#post-schema-tenant-custom-entities-import):
 
@@ -153,7 +153,7 @@ If the `VEHICLE` type or `vehicleSearchAttributes` schema already exists, the Sc
 {% endstep %}
 
 {% step %}
-#### Create sample custom instances
+##### Create sample custom instances
 
 Use a service OAuth2 token with the `schema.custominstance_manage` scope and call [Creating custom instances in bulk](https://developer.emporix.io/api-documentation/api-guides/utilities/schema/api-reference/custom-instance#post-schema-tenant-custom-entities-type-instances-bulk):
 
@@ -217,7 +217,7 @@ An index defines which custom-instance fields support text matching, autocomplet
 
 {% stepper %}
 {% step %}
-#### Create the search index
+##### Create the search index
 
 Send a request to [Upserting a search index](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search-indexes#put-search-tenant-search-type-indexes-id).
 
@@ -283,7 +283,7 @@ A new index returns `202 Accepted` with the ID of the job that builds it:
 {% endstep %}
 
 {% step %}
-#### Monitor the index job
+##### Monitor the index job
 
 Use the job ID from the `202 Accepted` response with [Retrieving an index job](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/index-jobs#get-search-tenant-jobs-id). For job types and statuses, see [How to manage indexes and jobs](#how-to-manage-indexes-and-jobs).
 
@@ -317,7 +317,7 @@ If the job fails, inspect `response` and use [Retrieving a search index](https:/
 {% endstep %}
 
 {% step %}
-#### Search the indexed custom instances
+##### Search the indexed custom instances
 
 Send a request to [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) and define your query and filters. For query types, filter operators, and further examples, see [Available search criteria](#available-search-criteria).
 
@@ -633,7 +633,7 @@ A saved search stores its index, query shape, and filters. Running it requires o
 
 {% stepper %}
 {% step %}
-#### Save the search
+##### Save the search
 
 Send a request to [Upserting a saved search](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/saved-searches#put-search-tenant-search-type-queries-id).
 
@@ -670,7 +670,7 @@ A new saved search returns `201 Created` and its ID. Replacing an existing saved
 {% endstep %}
 
 {% step %}
-#### Run the saved search with new text
+##### Run the saved search with new text
 
 Call [Searching documents](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/search#post-search-tenant-search-type) with `searchQueryId` and `query`:
 
@@ -738,7 +738,7 @@ Export and import copy index definitions without copying saved searches, index s
 
 {% stepper %}
 {% step %}
-#### Export the selected indexes
+##### Export the selected indexes
 
 Send a non-empty list to [Exporting search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-export):
 
@@ -761,7 +761,7 @@ The response contains `exportedAt` and `data`. The `data` value is a base64-enco
 {% endstep %}
 
 {% step %}
-#### Import the package on the destination tenant
+##### Import the package on the destination tenant
 
 Pass the complete export response to [Importing search indexes](https://developer.emporix.io/api-documentation/api-guides/utilities/search-service/api-reference/export-import#post-search-tenant-search-indexes-import):
 
