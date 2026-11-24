@@ -54,7 +54,7 @@ There are no known problems.
 
 {% endupdate %}
 
-{% update date="RELEASE_DATE" tags="new-feature" %}
+{% update date="2026-11-24" tags="new-feature" %}
 
 ## Import Service - XML files in the File source
 
