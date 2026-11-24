@@ -21,7 +21,7 @@ Do **not** create separate changelog files. Do **not** update `changelog/SUMMARY
 ## Title and sections
 
 - [ ] Title is `## {Service Name} - {noun phrase}` — no date prefix, no verbs in the title (`.style-guide/templates/changelog.md`)
-- [ ] Inner sections use `####` headings (Overview, New endpoints, Updated endpoints, Deprecated endpoints, Removed endpoints, Known problems)
+- [ ] Inner sections use `#####` headings (Overview, New endpoints, Updated endpoints, Deprecated endpoints, Removed endpoints, Known problems)
 
 ## Content
 

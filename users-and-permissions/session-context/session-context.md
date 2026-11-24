@@ -114,7 +114,7 @@ The customer's session is terminated when the customer logs out.
 
 {% stepper %}
 {% step %}
-### Get the session ID
+##### Get the session ID
 
 When retrieving the session-context details, you must supply the `sessionId`. It can be retrieved from the storefront or by sending the request to the [Retrieving own session context](https://developer.emporix.io/api-documentation/api-guides/users-and-permissions/session-context/api-reference/own-session-management#get-session-context-tenant-me-context) endpoint with the `customerToken` in the request. Then, the response includes the `sessionId`.
 

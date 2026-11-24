@@ -25,7 +25,7 @@ To create and configure a segment, you need the `customersegment.segment_manage`
 
 {% stepper %}
 {% step %}
-#### Create a customer segment
+##### Create a customer segment
 
 Send the request to the [Creating a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/segments#post-customer-segment-tenant-segments) endpoint.
 
@@ -56,7 +56,7 @@ A successful request returns `201` with the segment `id`. If you omit `status`, 
 {% endstep %}
 
 {% step %}
-#### Assign products or categories
+##### Assign products or categories
 
 Assign products or categories so the segment can drive customized storefront assortment and campaigns.
 
@@ -119,7 +119,7 @@ These operations perform an `UPSERT`. If the item is already assigned to the seg
 {% endstep %}
 
 {% step %}
-#### Add customers
+##### Add customers
 
 Add B2B or B2C customers, depending on your setup.
 
@@ -323,7 +323,7 @@ Only IAM groups with `userType` `CUSTOMER` can be assigned to a segment. Assigni
 
 {% stepper %}
 {% step %}
-#### Assign a group to a segment
+##### Assign a group to a segment
 
 Send the request to the [Upserting a group assignment for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#put-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint. Provide the segment ID and the IAM group ID in the path.
 
@@ -356,7 +356,7 @@ A new assignment returns `201`. An update of an existing assignment returns `204
 {% endstep %}
 
 {% step %}
-#### Retrieve group assignments
+##### Retrieve group assignments
 
 To list all IAM groups assigned to a segment, send the request to the [Retrieving all group assignments for a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#get-customer-segment-tenant-segments-segmentid-groups) endpoint.
 
@@ -385,7 +385,7 @@ The response includes `segmentId`, the group `id` and localized `name`, and assi
 {% endstep %}
 
 {% step %}
-#### Search for a group assignment
+##### Search for a group assignment
 
 To find assignments that match specific criteria, send the request to the [Searching with parameters for group assignments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#post-customer-segment-tenant-segments-segmentid-groups-search) endpoint. Pass the criteria in the `q` parameter in the request body.
 
@@ -407,7 +407,7 @@ curl -i -X POST \
 {% endstep %}
 
 {% step %}
-#### Remove a group from a segment
+##### Remove a group from a segment
 
 To remove an IAM group assignment, send the request to the [Removing a group from a customer segment](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/groups-assignments#delete-customer-segment-tenant-segments-segmentid-groups-groupid) endpoint.
 
@@ -539,7 +539,7 @@ To resolve which active segments apply to the authenticated customer, including 
 
 {% stepper %}
 {% step %}
-#### Retrieve assigned products or categories
+##### Retrieve assigned products or categories
 
 Retrieve the products or categories assigned to the segments that apply to the customer. Send the request to the [Retrieving all item assignments for all customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items) endpoint. Each assignment includes `mode`.
 
@@ -561,7 +561,7 @@ You can limit the results with the `q` parameter, for example `q=type:PRODUCT` o
 {% endstep %}
 
 {% step %}
-#### Build a segment-based category tree
+##### Build a segment-based category tree
 
 To restrict storefront navigation to categories assigned to the customer's segments, send the request to the [Retrieving category trees for a customer segments](https://developer.emporix.io/api-documentation/api-guides/companies-and-customers/customer-segments/api-reference/items-assignments#get-customer-segment-tenant-segments-items-category-trees) endpoint. The tree is built from `ACTIVE` segments only.
 
@@ -582,7 +582,7 @@ The response includes categories assigned to the segment and their parent catego
 {% endstep %}
 
 {% step %}
-#### Filter products in a category
+##### Filter products in a category
 
 To return only products in a category that is assigned to the customer's segments, send the request to the [Retrieving resources assigned to a category](https://developer.emporix.io/api-documentation/api-guides/catalogs-and-categories/category-tree/api-reference/category-assignment-resources#get-category-tenant-categories-categoryid-assignments) endpoint. Pass the segment IDs in the `segmentsIds` query parameter.
 
