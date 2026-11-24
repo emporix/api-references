@@ -13,7 +13,7 @@ When you add a changelog entry in a PR, use the placeholder **`RELEASE_DATE`** i
 
    ## My feature title
 
-   #### Overview
+   ##### Overview
 
    …
 
@@ -34,7 +34,7 @@ When you add a changelog entry in a PR, use the placeholder **`RELEASE_DATE`** i
 | Minor change | `minor-change` |
 | Deprecation | `deprecated` |
 
-5. Use `####` for section headings inside an entry (for example `#### Overview`, `#### New endpoints`, `#### Updated endpoints`, `#### Known problems`).
+5. Use `#####` (heading level 5) for section headings inside an entry (for example `##### Overview`, `##### New endpoints`, `##### Updated endpoints`, `##### Known problems`).
 
 ### Full example
 
@@ -43,17 +43,17 @@ When you add a changelog entry in a PR, use the placeholder **`RELEASE_DATE`** i
 
 ## Cart Service - batch update endpoint for cart items
 
-#### Overview
+##### Overview
 
 The Cart Service API reference has been extended with a new endpoint …
 
-#### New endpoints
+##### New endpoints
 
 | Endpoint | Description |
 |---|---|
 | … | … |
 
-#### Known problems
+##### Known problems
 
 There are no known problems.
 
