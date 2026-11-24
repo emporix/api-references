@@ -9,7 +9,7 @@ Immediately after review findings are complete, in the same turn. Do not wait fo
 
 ## Rules
 1. Apply ONLY findings marked `Auto-fixable: yes`.
-2. Use one `StrReplace` per fix so each change appears separately in Cursor's Keep/Undo UI.
+2. Use one targeted replacement per fix (for example one `StrReplace` call) so each change appears separately in the tool's Keep/Undo (accept/reject) UI.
 3. Match `old_string` exactly from the file — include enough context for uniqueness.
 4. Replace with the suggested fix text from the review findings.
 5. Do not apply fixes marked `Auto-fixable: no`.
