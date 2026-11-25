@@ -137,7 +137,7 @@ paths:
                         postcode: '32131'
                         state: London
                       items:
-                        - id: 0972ef39-9a4a-4867-b3c1-f8c00f66ee0a
+                        - itemId: 0972ef39-9a4a-4867-b3c1-f8c00f66ee0a
                           quantity:
                             quantity: 1
                             unitCode: piece
@@ -172,7 +172,7 @@ paths:
                             taxClasses:
                               DE: STANDARD
                               PL: ZERO
-                        - id: ac16dd14-baa4-4ccb-bad3-756b36b89235
+                        - itemId: ac16dd14-baa4-4ccb-bad3-756b36b89235
                           quantity:
                             quantity: 3
                             unitCode: piece
@@ -246,7 +246,11 @@ paths:
       description: |
         Generates a new quote, which can be created either manually using a complete quote definition that includes items, or by copying the details from cart.
 
-        When you provide `legalEntityId` in a manual quote definition, `billingAddressId` is required and the legal entity must be assigned to that billing address; otherwise, the request fails with the `400` status code. The company name is filled in from the legal entity. A quote created from a cart copies the `legalEntityId` of the cart.
+        When you provide `legalEntityId` in a manual quote definition and the quote has a billing address, the legal entity must be assigned to that billing address; otherwise, the request fails with the `400` status code. The company name is filled in from the legal entity. A quote created from a cart copies the `legalEntityId` of the cart.
+
+        When you provide `legalEntityId`, you can omit `billingAddressId` and `shippingAddressId`, or send them empty or as `null`. Send both or neither. Without the addresses, the quote is calculated as net only (no tax and gross values), and it cannot be set to `OPEN` or `ACCEPTED` until both addresses are set.
+
+        An item can be created without a price. Such an item has the `MISSING` price status in the response, and the quote has `incompletePricing` set to `true`. To enter a price by hand, omit `priceId`, set `type` to `EXTERNAL`, and send `totalNetValue`. The `tax` object is optional for such a price; when you send it, `taxClass` must not be blank. A price with `priceId` comes from the catalog and requires `tax`.
 
         ***
 
@@ -254,7 +258,7 @@ paths:
         One of the scopes is required.
 
         * The `quote.quote_manage_own` scope is required for customers to create a quote from cart.
-        * The additional `cart.cart_manage_external_prices` scope is required for managing external prices.
+        * Either the `quote.quote_manage_external_prices` scope or the `cart.cart_manage_external_prices` scope is required for sending a price of the `EXTERNAL` type. Without one of them, the request fails with the `403` status code.
 
         ***
       operationId: POST-quote-create-quote
@@ -436,13 +440,14 @@ paths:
                     status: Forbidden
                     message: You need a scope for this action.
                     details:
-                      - 'Required scope(s): quote.quote_manage'
+                      - 'Required scope(s): quote.quote_manage, quote.quote_manage_own, quote.quote_read'
         '404':
           $ref: '#/components/responses/Not_Found_404'
       security:
         - OAuth2:
             - quote.quote_manage
             - quote.quote_manage_own
+            - quote.quote_read
   '/quote/{tenant}/quotes/{quoteId}/history':
     get:
       tags:
@@ -732,7 +737,7 @@ paths:
                       postcode: '32131'
                       state: London
                     items:
-                      - id: 0972ef39-9a4a-4867-b3c1-f8c00f66ee0a
+                      - itemId: 0972ef39-9a4a-4867-b3c1-f8c00f66ee0a
                         quantity:
                           quantity: 1
                           unitCode: piece
@@ -785,7 +790,7 @@ paths:
                         metadata:
                           mixins:
                             customAttributes: 'https://res.cloudinary.com/saas-ag/raw/upload/emporix-docs/695297f5b3fd5d378296ae41_customAttributes_v2.json'
-                      - id: ac16dd14-baa4-4ccb-bad3-756b36b89235
+                      - itemId: ac16dd14-baa4-4ccb-bad3-756b36b89235
                         quantity:
                           quantity: 3
                           unitCode: piece
@@ -867,9 +872,15 @@ paths:
 
         After events are saved, some of the information is retrieved in the async way from other services: full price definition is based on the provided price ID, and the full product name is based on the provided product ID.
 
-        The `/legalEntityId` path links the quote to a legal entity and fills the company name from it. The legal entity must be assigned to the quote billing address; otherwise, the request fails with the `400` status code. Removing `/legalEntityId` or `/companyName` clears both the company and `legalEntityId`, and changes the quote to B2C.
+        The `/legalEntityId` path links the quote to a legal entity and fills the company name from it. The legal entity must be assigned to the quote billing address; otherwise, the request fails with the `400` status code. The exception is a legal entity without locations: when the request does not replace the billing address and the quote has one, the request succeeds, the company is linked, and the billing and shipping addresses of the quote are cleared and the quote becomes B2B. The quote is then calculated as net only and cannot be set to `OPEN` or `ACCEPTED` until both addresses are set. Sending an address in the same request for such a legal entity fails with the `400` status code. Removing `/legalEntityId` or `/companyName` clears both the company and `legalEntityId`, and changes the quote to B2C.
 
         When the request uses a B2B customer token, the quote must be linked to the legal entity from the token; otherwise, the request fails with the `404` status code. When the approval process is enabled, a customer who is not the quote owner can update the quote only if the approval service permits it for the legal entity from the token, and a quote can be accepted only after the approval check passes. Otherwise, the request fails with the `403` status code.
+
+        Use the `replace` operation on the `/items/{itemId}` path to add the first price to an item without a price or to change the tax class. For this, send a price, for example of the `EXTERNAL` type. The `/items/{itemId}/price` path changes only `price.totalNetValue` of an existing price of any type; the price ID, list price, tax class, and type are kept. For an item without a price, this path fails with the `400` status code.
+
+        An employee can change the status from `CREATING` or `OPEN` to `IN_PROGRESS`; the `quoteReasonId` is optional then.
+
+        Changing the status to `OPEN` or `ACCEPTED`, or any change that would leave an `OPEN` quote incomplete, fails with the `400` status code and an `errorCode` when an item has no price (`QUOTE_ITEMS_WITHOUT_PRICE`), the quote has no billing or shipping address (`QUOTE_ADDRESS_MISSING`), or an item with an `EXTERNAL` price or product has no tax class (`QUOTE_ITEMS_WITHOUT_TAX_CLASS`). Sending an empty or `null` value for `/billingAddressId` or `/shippingAddressId` is a request validation error: it fails with the `400` status code and without an `errorCode`.
 
         ***
 
@@ -879,13 +890,32 @@ paths:
         * The `quote.quote_manage_own` scope allows customers to modify only their own quotes.
         * Customers can update the `status`, `customerReference`, and `customerComment` fields.
         * Customer status updates are limited to `ACCEPTED`, `DECLINED`, and `IN_PROGRESS`.
+        * Either the `quote.quote_manage_external_prices` scope or the `cart.cart_manage_external_prices` scope is required for every change of a price of the `EXTERNAL` type: when the sent price is external, when the stored price of the changed item is external, and when such an item is removed. Without one of them, the request fails with the `403` status code.
 
         ***
       responses:
         '204':
           description: The request was successful. The quote has been updated.
         '400':
-          $ref: '#/components/responses/Bad_request_400_cl'
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Quote has an item without a price:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    errorCode: QUOTE_ITEMS_WITHOUT_PRICE
+                    message: The quote cannot be OPEN while any of its items has no price.
+                Unsupported content language:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: Language header validation failed
+                    details:
+                      - 'Following languages are not supported: ''ru'''
         '401':
           $ref: '#/components/responses/Unathorized_401'
         '403':
@@ -1528,7 +1558,13 @@ components:
         priceId:
           type: string
           description: The ID of the matched price
-        unitePrice:
+        type:
+          type: string
+          description: Defines if the price is from the catalog or entered by hand. A price without `priceId` must have the `EXTERNAL` type.
+          enum:
+            - INTERNAL
+            - EXTERNAL
+        unitPrice:
           minimum: 0
           type: number
           description: The effective unit price of the product
@@ -1538,7 +1574,7 @@ components:
           description: The total net value for the entire quantity of the item.
         tax:
           type: object
-          description: The tax information of the item.
+          description: The tax information of the item. Optional for a price without `priceId`; when sent, `taxClass` must not be blank.
           required:
             - taxClass
           properties:
@@ -1548,15 +1584,19 @@ components:
             taxRate:
               type: number
               description: The tax rate of the item.
-      required:
-        - tax
     QuoteUpdateStatus:
       type: object
       description: Quote status.
       properties:
         value:
           type: string
-          description: The status value of the code.
+          description: The status value that the client requests. Statuses that the service sets itself (`AWAITING`, `CREATING` and `EXPIRED`) cannot be requested by the client; a request to change the status to one of them fails with the `400` status code.
+          enum:
+            - OPEN
+            - IN_PROGRESS
+            - ACCEPTED
+            - DECLINED
+            - DECLINED_BY_MERCHANT
         comment:
           type: string
           description: The comment to the status.
@@ -1564,9 +1604,10 @@ components:
           type: string
           description: |-
             The ID of the quote reason. Can be provided only in following scenarios:
-            - when changing state from OPEN to IN_PROGRESS - quote reason has to be of CHANGE type
-            - when changing state from OPEN to DECLINED - quote reason has to be of DECLINE type
-            - when changing state from IN_PROGRESS to DECLINED_BY_MERCHANT - quote reason has to be of DECLINE type
+            - when a customer changes state from OPEN to IN_PROGRESS - quote reason is required and has to be of CHANGE type
+            - when an employee changes state from OPEN or CREATING to IN_PROGRESS - quote reason is optional; if provided, it has to be of CHANGE type
+            - when changing state from OPEN to DECLINED - quote reason is required and has to be of DECLINE type
+            - when changing state from IN_PROGRESS or AWAITING to DECLINED_BY_MERCHANT - quote reason is required and has to be of DECLINE type
       required:
         - value
     ErrorResponse:
@@ -1590,6 +1631,18 @@ components:
           type: array
           items:
             type: string
+        errorCode:
+          type: string
+          description: |-
+            Machine-readable code of the error. Present only for the quote completeness checks, which run when the status is changed to `OPEN` or `ACCEPTED`, and when a change would leave an `OPEN` quote incomplete:
+            - `QUOTE_ITEMS_WITHOUT_PRICE` - an item has no price.
+            - `QUOTE_ADDRESS_MISSING` - the quote has no billing or shipping address.
+            - `QUOTE_ITEMS_WITHOUT_TAX_CLASS` - an item with an `EXTERNAL` price or product has no tax class, so the tax cannot be calculated.
+          enum:
+            - QUOTE_ITEMS_WITHOUT_PRICE
+            - QUOTE_ADDRESS_MISSING
+            - QUOTE_ITEMS_WITHOUT_TAX_CLASS
+          example: QUOTE_ITEMS_WITHOUT_PRICE
     QuoteIdResponse:
       type: object
       properties:
@@ -1633,9 +1686,7 @@ components:
             productId:
               type: string
       required:
-        - itemType
         - quantity
-        - price
         - product
     QuoteItemsReplaceUpdate:
       type: array
@@ -1836,9 +1887,21 @@ components:
               type: string
               description: Employee comment
         billingAddress:
-          $ref: '#/components/schemas/AddressResponse'
+          type: object
+          nullable: true
+          description: The billing address of the quote. Absent or `null` when the quote has no billing address.
+          allOf:
+            - $ref: '#/components/schemas/AddressResponse'
         shippingAddress:
-          $ref: '#/components/schemas/AddressResponse'
+          type: object
+          nullable: true
+          description: The shipping address of the quote. Absent or `null` when the quote has no shipping address.
+          allOf:
+            - $ref: '#/components/schemas/AddressResponse'
+        incompletePricing:
+          type: boolean
+          readOnly: true
+          description: Calculated on read. It is `true` while any item of the quote has no price. The total values of the quote then include only the items with a price.
         totalPrice:
           type: object
           description: The calculated total price details.
@@ -1851,10 +1914,10 @@ components:
               description: The total net value.
             grossValue:
               type: number
-              description: The total gross value.
+              description: The total gross value. Not present while the tax cannot be calculated, that is, without a shipping address or when an item with an `EXTERNAL` price or product has no tax class.
             taxValue:
               type: number
-              description: The amount of the tax for the total price.
+              description: The amount of the tax for the total price. Not present while the tax cannot be calculated, that is, without a shipping address or when an item with an `EXTERNAL` price or product has no tax class.
         subtotalPrice:
           type: object
           description: The calculated quote subtotal price.
@@ -1867,10 +1930,10 @@ components:
               description: The subtotal net value.
             grossValue:
               type: number
-              description: The subtotal gross value.
+              description: The subtotal gross value. Not present while the tax cannot be calculated, that is, without a shipping address or when an item with an `EXTERNAL` price or product has no tax class.
             taxValue:
               type: number
-              description: The subtotal tax value.
+              description: The subtotal tax value. Not present while the tax cannot be calculated, that is, without a shipping address or when an item with an `EXTERNAL` price or product has no tax class.
         taxAggregate:
           type: object
           description: Tax aggregation of the total price.
@@ -1905,15 +1968,25 @@ components:
                   description: Localized name of the shipping method selected by the customer.
                   additionalProperties:
                     type: string
+                taxRate:
+                  type: number
+                  description: Tax rate applied to the shipping cost.
         items:
           type: array
           description: A list of quote items.
           items:
             type: object
             properties:
-              id:
+              itemId:
                 type: string
                 description: The ID of the quote item used for patch operations on the item.
+              priceStatus:
+                type: string
+                readOnly: true
+                description: Calculated on read. `MISSING` for an item without a price, `PRICED` otherwise.
+                enum:
+                  - MISSING
+                  - PRICED
               quantity:
                 type: object
                 description: The attribute contains details about the item quantity.
@@ -1926,7 +1999,8 @@ components:
                     description: The unit code of the quantity (it must be one of the units defined in the Unit Handling Service).
               price:
                 type: object
-                description: Item price details.
+                nullable: true
+                description: Item price details. Absent or `null` for an item without a price.
                 properties:
                   type:
                     type: string
@@ -1937,6 +2011,15 @@ components:
                   priceId:
                     type: string
                     description: The ID of the price that was initially assigned to the item.
+                  priceListId:
+                    type: string
+                    description: The ID of the price list the price belongs to, when it belongs to any.
+                  currency:
+                    type: string
+                    description: The currency of the price.
+                  includesTax:
+                    type: boolean
+                    description: Defines whether the price includes tax.
                   unitPrice:
                     type: number
                     description: The original unit price of the item that is copied from the initial price.
@@ -2129,7 +2212,7 @@ components:
             **This field is deprecated**. Use `legalEntityId` instead. When `legalEntityId` is omitted and exactly one legal entity assigned to the billing address has this name, the quote is linked to that legal entity. When several legal entities share the name, the quote stores the name only.
         legalEntityId:
           type: string
-          description: Identifier of the legal entity assigned to `billingAddressId`. When present, this value is used instead of `companyName`.
+          description: Identifier of the legal entity assigned to `billingAddressId` (when the quote has a billing address). When present, this value is used instead of `companyName`.
         siteCode:
           type: string
           description: The site code for which the quote is created.
@@ -2138,10 +2221,10 @@ components:
           description: The currency for which the quote is created.
         billingAddressId:
           type: string
-          description: For B2B customers, it represents the location which should specify the billing address. For B2C customers, it represents identifier of customer's billing address.
+          description: For B2B customers, it represents the location which should specify the billing address. For B2C customers, it represents identifier of customer's billing address. Required unless `legalEntityId` is set. When it is set, both address IDs can be omitted, `null`, or empty. Send both or neither.
         shippingAddressId:
           type: string
-          description: For B2B customers, it represents the location which should specify the shipping address. For B2C customers, it represents identifier of customer's shipping address.
+          description: For B2B customers, it represents the location which should specify the shipping address. For B2C customers, it represents identifier of customer's shipping address. Required unless `legalEntityId` is set. When it is set, both address IDs can be omitted, `null`, or empty. Send both or neither.
         validTo:
           type: string
           format: date-time
@@ -2166,10 +2249,9 @@ components:
                     description: The quantity of quote items.
                   unitCode:
                     type: string
-                    description: The unit of the quantity as defined in the Unit Handling Service.
+                    description: The unit of the quantity as defined in the Unit Handling Service. Required for an item with a price from the catalog (with `priceId`).
                 required:
                   - quantity
-                  - unitCode
               product:
                 type: object
                 description: Product reference.
@@ -2217,17 +2299,17 @@ components:
                         additionalProperties: true
               price:
                 type: object
-                description: Matched price of the product.
+                description: Matched price of the product. The price can be omitted; the item then has no price until one is added. The required fields depend on the price source. A price with `priceId` requires `tax`, and a price without it requires `totalNetValue`.
                 properties:
                   type:
                     type: string
-                    description: Defines if price is internal or external. If the price is internal, it's taken from the Emporix Price Service. If the price is external, it's a custom price from external system.
+                    description: Defines if price is internal or external. If the price is internal, it's taken from the Emporix Price Service. If the price is external, it's a custom price from external system. A price without `priceId` must have the `EXTERNAL` type.
                     enum:
                       - INTERNAL
                       - EXTERNAL
                   priceId:
                     type: string
-                    description: ID of the matched price. Required only for type=`INTERNAL`.
+                    description: ID of the matched price from the catalog. Without it, the price is entered by hand and must have the `EXTERNAL` type and `totalNetValue`.
                   priceListId:
                     type: string
                     description: Identifier of price list. The field should be populated only in case when the price belongs to any price list.
@@ -2236,25 +2318,19 @@ components:
                     description: Effective unit price of the product.
                   totalNetValue:
                     type: number
-                    description: Total net value for the entire quantity of the item.
+                    description: Total net value for the entire quantity of the item. Required for a price without `priceId`.
                   tax:
                     type: object
-                    description: Tax information of the item.
+                    description: Tax information of the item. Required for a price with `priceId`; optional for a price without it.
                     required:
                       - taxClass
-                      - taxRate
                     properties:
                       taxClass:
                         type: string
-                        description: Matched tax class of the item.
+                        description: Matched tax class of the item. It must not be blank.
                       taxRate:
                         type: number
                         description: Tax rate of the item.
-                required:
-                  - priceId
-                  - unitPrice
-                  - totalNetValue
-                  - tax
               mixins:
                 type: object
                 description: Mixins request.
@@ -2290,8 +2366,6 @@ components:
         - customerId
         - siteCode
         - currency
-        - billingAddressId
-        - shippingAddressId
     QuoteShipping:
       type: object
       description: The shipping cost of the quote.
@@ -2308,6 +2382,11 @@ components:
         shippingTaxCode:
           type: string
           description: Tax code of the shipping method.
+      required:
+        - value
+        - methodId
+        - zoneId
+        - shippingTaxCode
     QuoteItemIds:
       type: array
       description: List of item IDs.
@@ -2344,6 +2423,8 @@ components:
               - /customerId
               - /shipping
               - /restriction
+              - /customerReference
+              - /customerComment
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
@@ -2401,6 +2482,8 @@ components:
               - /customerId
               - /shipping
               - /restriction
+              - /customerReference
+              - /customerComment
               - /items
               - '/items/{itemId}'
               - '/items/{itemId}/price'
@@ -2482,6 +2565,7 @@ components:
             quote.quote_read_own: Needed to retrieve own quotes by the customer.
             quote.quote_manage: Needed to manage quotes.
             quote.quote_manage_own: Needed to manage own quotes by the customer.
+            quote.quote_manage_external_prices: Needed to manage external prices on quotes.
   parameters:
     trait_paged_pageNumber:
       name: pageNumber
