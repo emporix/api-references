@@ -97,7 +97,10 @@ Exception: Approval Service uses `approval-api-reference/api.yml`. Three legacy 
 - One spec per service under `api-reference/` (or `approval-api-reference/`); `api.yml` is the source of truth — endpoint docs are not authored as separate markdown pages
 - `api-reference/README.md` is a thin GitBook page shell only; do not add endpoint documentation there
 - New services must update `SUMMARY.md`: service README, `api-reference/README.md`, `builtin:openapi` block with a unique spec ID (e.g. `cart-api`)
-- Update `quickstart/list-of-api-services.md` (service and its file name in the ZIP: `<service folder without -service>-api.<ext>`, keeping the source extension `.yml` or `.yaml`; rows in alphabetical order) when adding a new service spec
+- When you add a new service spec, add a row to `quickstart/list-of-api-services.md` with the service name and the spec's file name in the ZIP.
+  - The file name comes from the folder that contains `api-reference/` (or `approval-api-reference/`): start with that folder name; if it ends with `-service`, remove that ending; add `-api`, then the source file's extension (`.yml` or `.yaml`).
+  - Examples: `cart/` → `cart-api.yml`, `brand-service/` → `brand-api.yml`, `invoice/` → `invoice-api.yaml`.
+  - Keep the rows sorted alphabetically by file name. `release-api-files.yaml` applies the same rule when it builds the ZIP.
 - Required OpenAPI sections: `openapi: 3.0.0`, `info` (`version: ''`), `servers`, `paths`, `components`, `security` (`.style-guide/writing-standards/api-references.md`)
 - Path keys include the service prefix and start with `/` (e.g. `/cart/{tenant}/carts`)
 - Operation summaries use gerund form (e.g. "Retrieving a quote")
