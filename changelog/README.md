@@ -47,6 +47,24 @@ There are no known problems.
 
 {% endupdate %}
 
+{% update date="2026-11-26" tags="new-feature" %}
+
+## Indexing Service - variant group ID for dynamic variants in BatteryIncluded
+
+##### Overview
+
+BatteryIncluded product documents of `DYNAMIC_VARIANT` products now contain `_product.variantGroupId`, the ID of the family root. A root product gets its own ID, and each variant gets the last ID of its `parentVariantPath`, which is the root. A storefront can group search hits by `_product.variantGroupId` to show one hit per dynamic variant family, with the root in the same group as its variants. A variant without a `parentVariantPath` gets no `variantGroupId` until its variant tree is recalculated in the Product Service. Other product types are not changed, and `_product.parentVariantId` still holds the immediate parent.
+
+Existing documents get the field with their next product update. To add it to all products at once, run a product reindex.
+
+For the rules and an example, see [How dynamic variant families are grouped](https://app.gitbook.com/s/d4POTWomuSS7d3dnh4Dg/api-guides/configuration/indexing-service/indexing#how-dynamic-variant-families-are-grouped).
+
+##### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-24" tags="new-feature" %}
 
 ## Import Service - XML files in the File source
