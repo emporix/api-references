@@ -59,8 +59,8 @@ paths:
                   writeKey: bi-api-key-abc123
                   provider: BATTERY_INCLUDED
                   includedMixinPaths:
-                    - "*_siteAware.*.OnlineIsService_P"
-                    - "*_siteAware.**"
+                    - "productInfo.**"
+                    - "productInfo__*.**"
               Create BatteryIncluded configuration with API URL:
                 value:
                   active: true
@@ -138,8 +138,8 @@ paths:
                       provider: BATTERY_INCLUDED
                       apiUrl: https://api-next.batteryincluded.io
                       includedMixinPaths:
-                        - "*_siteAware.*.OnlineIsService_P"
-                        - "*_siteAware.**"
+                        - "productInfo.**"
+                        - "productInfo__*.**"
                       enrichments:
                         - AVAILABILITY
                         - PRICE
@@ -190,8 +190,8 @@ paths:
                     provider: BATTERY_INCLUDED
                     apiUrl: https://api-next.batteryincluded.io
                     includedMixinPaths:
-                      - "*_siteAware.*.OnlineIsService_P"
-                      - "*_siteAware.**"
+                      - "productInfo.**"
+                      - "productInfo__*.**"
                     enrichments:
                       - AVAILABILITY
                       - PRICE
