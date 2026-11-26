@@ -49,6 +49,7 @@ jobs:
           publish "customer-client-management-api" "companies-and-customers/client-management/api-reference/api.yml"
           publish "customer-managed-api" "companies-and-customers/customer-management/api-reference/api.yml"
           publish "customer-tenant-api" "companies-and-customers/customer-service/api-reference/api.yml"
+          publish "deployment-center-api" "utilities/deployment-center/api-reference/api.yml"
           publish "fee-api" "checkout/fee/api-reference/api.yml"
           publish "iam-api" "users-and-permissions/iam/api-reference/api.yml"
           publish "import-service-api" "utilities/import-service/api-reference/api.yml"

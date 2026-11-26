@@ -567,6 +567,18 @@
               kind: openapi
               spec: audit-logs-changelog-api
         ```
+  * [Deployment Center](utilities/deployment-center/README.md)
+    * [API Reference](utilities/deployment-center/api-reference/README.md)
+      * ```yaml
+        props:
+          models: true
+        type: builtin:openapi
+        dependencies:
+          spec:
+            ref:
+              kind: openapi
+              spec: deployment-center-api
+        ```
   * [Import Service](utilities/import-service/README.md)
     * [Import Service Tutorial](utilities/import-service/import-service.md)
     * [API Reference](utilities/import-service/api-reference/README.md)

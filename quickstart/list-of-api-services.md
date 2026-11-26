@@ -35,6 +35,7 @@ Each service's specification is a separate file in the ZIP. The file names are l
 | [Customer Service](../companies-and-customers/customer-service/) (tenant-managed) | `customer-api.yml` |
 | [Customer Service](../companies-and-customers/customer-management/) (customer-managed) | `customer-management-api.yml` |
 | [Customer Segments Service](../companies-and-customers/customer-segments/) | `customer-segments-api.yml` |
+| [Deployment Center](../utilities/deployment-center/) | `deployment-center-api.yml` |
 | [Fee Service](../checkout/fee/) | `fee-api.yml` |
 | [IAM Service](../users-and-permissions/iam/) | `iam-api.yml` |
 | [Import Service](../utilities/import-service/) | `import-api.yml` |
