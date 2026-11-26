@@ -1,4 +1,5 @@
 *.zip
+!.gitbook/assets/api-references.zip
 .DS_Store
 
 #IntelliJ
