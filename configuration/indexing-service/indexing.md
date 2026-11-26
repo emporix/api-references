@@ -618,6 +618,35 @@ These rules apply to product updates and to product reindexes. Other conditions 
 
 The data of a value that is not listed is missing from `_product_siteAware` and from [`index.item-updated`](../../webhooks/events-index.md) webhook events. For the values and how to set them, see [How to choose the data that BatteryIncluded indexing uses](#how-to-choose-the-data-that-batteryincluded-indexing-uses).
 
+### How dynamic variant families are grouped
+
+A storefront that lists [dynamic variant products](../../products-labels-and-brands/product-service/product.md#how-to-work-with-dynamic-variant-products) usually shows one tile per family, which is the root product together with all variants in its tree. Grouping hits by `_product.parentVariantId` does not give one group per family. The root has no `parentVariantId`, and in deeper trees `parentVariantId` holds the immediate parent, not the root.
+
+To group a family, use `_product.variantGroupId` in the `_product` object of the BatteryIncluded document. The Indexing Service sets it on `DYNAMIC_VARIANT` documents to the ID of the family root, except in the case listed below. In a BatteryIncluded query, group by this field, for example `groupBy: _product.variantGroupId`.
+
+The following values are written to `_product.variantGroupId`:
+
+* Root product (no `parentVariantId`) – the product's own `id`.
+* Variant with a `parentVariantPath` – the last ID in `parentVariantPath`. The path lists the ancestors from the immediate parent to the root, so its last ID is the root.
+* Variant without a `parentVariantPath` – no `variantGroupId`.
+* `BASIC`, `BUNDLE`, `PARENT_VARIANT`, and `VARIANT` products – no `variantGroupId`.
+
+The following `_product` fragments belong to a root, a first-level variant, and a second-level variant of the same family. All three documents carry the same `variantGroupId`:
+
+```json
+[
+  { "id": "00992", "variantGroupId": "00992" },
+  { "id": "00992-blue", "parentVariantId": "00992", "parentVariantPath": ["00992"], "variantGroupId": "00992" },
+  { "id": "00992-blue-xl", "parentVariantId": "00992-blue", "parentVariantPath": ["00992-blue", "00992"], "variantGroupId": "00992" }
+]
+```
+
+`_product.parentVariantId` and `_product.parentVariantPath` keep their values, so you can still find the immediate parent of a variant.
+
+Product Service stores `parentVariantPath` when a variant is saved and its ancestors already exist. A variant saved before its parent, for example in a bulk import, has no path, so its document has no `variantGroupId` and stays outside its family's group. A reindex alone does not add the field to such a variant. To store the missing paths, run a recalculation of the variant trees. See [How to recalculate dynamic variant trees after a bulk import](../../products-labels-and-brands/product-service/product.md#how-to-recalculate-dynamic-variant-trees-after-a-bulk-import). Then reindex the products.
+
+Product documents indexed before this field was introduced get `variantGroupId` with their next product update. To add it to all existing documents at once, run a product reindex. See [How to reindex existing products](#how_to_reindex_existing_products).
+
 ### How site-aware mixins are indexed
 
 The Indexing Service treats a mixin as site-aware when one of the following conditions is met:

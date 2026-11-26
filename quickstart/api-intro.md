@@ -10,7 +10,7 @@ description: Get familiar with Emporix API.
 
 Download API references:
 
-<a href="https://github.com/emporix/api-references/releases/latest/download/api-references.zip" class="button primary" data-icon="down-to-line">Download all Emporix API Specs - ZIP</a>
+{% file src="../.gitbook/assets/api-references.zip" %}
 
 For easier testing of Emporix API, use the public [Postman Collection](postman-collection.md) with example flows.
 
