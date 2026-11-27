@@ -1129,6 +1129,10 @@ paths:
         {% endhint %}
 
         Retrieves the items of one area on the source tenant, each compared with the latest packaged version (`new`, `changed`, `unchanged` or `removed`). The request is synchronous, and the `area` parameter is required. The result shows what can go into the next version.
+
+        The first call on an operator tenant may register the tenant's own catalog entry from the developer portal. If that is not possible, the request fails with `409 SELF_TENANT_UNAVAILABLE`.
+
+        Listings are cached by the service for up to 60 seconds per package, area and latest version, so paging through one listing reads the source tenant once. Send `Cache-Control: no-cache` to force a fresh read of the source tenant.
       tags:
         - Package
       security:
@@ -1194,8 +1198,12 @@ paths:
           $ref: '#/components/responses/403_resp_common'
         '404':
           $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_self_tenant'
         '500':
           $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/source-items/{area}/{itemId}/diff':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1212,7 +1220,9 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Retrieves the content of an item in the latest packaged version and on the source tenant as JSON, so that a client can show the difference without unzipping an archive. The server masks known secret fields in the returned content.
+        Retrieves the content of an item in the latest packaged version and on the source tenant as JSON, so that a client can show the difference without unzipping an archive. The server masks known secret fields in the returned content. Instance and index items have ids of the form `{typeId}/{id}`; read them with the nested path that has the type as its own segment.
+
+        The first call on an operator tenant may register the tenant's own catalog entry from the developer portal. If that is not possible, the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Package
       security:
@@ -1248,8 +1258,73 @@ paths:
           $ref: '#/components/responses/403_resp_common'
         '404':
           $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_self_tenant'
         '500':
           $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
+  '/deployment-center/{tenant}/packages/{packageId}/source-items/{area}/{typeId}/{itemId}/diff':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_packageId'
+      - $ref: '#/components/parameters/path_area'
+      - $ref: '#/components/parameters/path_typeId'
+      - $ref: '#/components/parameters/path_itemId'
+    get:
+      summary: Comparing a source item with a type-scoped id with its packaged version
+      operationId: GET-deploymentcenter-get-nested-source-item-diff
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the content of an item in the latest packaged version and on the source tenant as JSON, so that a client can show the difference without unzipping an archive. The server masks known secret fields in the returned content. Use this path for instance and index items, whose ids are `{typeId}/{id}`.
+
+        The first call on an operator tenant may register the tenant's own catalog entry from the developer portal. If that is not possible, the request fails with `409 SELF_TENANT_UNAVAILABLE`.
+      tags:
+        - Package
+      security:
+        - OAuth2:
+            - deploymentcenter.package_read
+      responses:
+        '200':
+          description: The request was successful. The previous and the current content of the item are returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemDiff'
+              examples:
+                Item diff:
+                  value:
+                    area: schemas
+                    itemId: product-extra
+                    previous:
+                      id: product-extra
+                      name:
+                        en: Product extra
+                    current:
+                      id: product-extra
+                      name:
+                        en: Product extra
+                      description:
+                        en: Extra attributes of a product
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_self_tenant'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1374,6 +1449,8 @@ paths:
         {% endhint %}
 
         Starts a job that reads the source tenant, stores the delta archive and marks the version `packaged`. The server assigns the number `latest + 1`. `expectedLatestVersion` is an optimistic guard, and a mismatch is rejected with `409 VERSION_CONFLICT`. Only one build per package can be queued or running, otherwise `409 ACTIVE_JOB_EXISTS` names the running job. A failed or cancelled build removes its draft. The optional `Idempotency-Key` header makes a retry return the original job.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Version
       security:
@@ -1474,6 +1551,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}':
@@ -1551,6 +1636,8 @@ paths:
         {% endhint %}
 
         Deletes the latest packaged version and steps the package back to the previous one. It is only allowed while the version has not reached any target, otherwise the request is rejected with `409 VERSION_NOT_DELETABLE`. The archive is removed with it.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Version
       security:
@@ -1580,6 +1667,12 @@ paths:
                     status: Conflict
                     message: Only the latest packaged version that has not reached any target can be deleted.
                     errorCode: VERSION_NOT_DELETABLE
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/items':
@@ -1598,6 +1691,8 @@ paths:
         {% endhint %}
 
         Retrieves the items a version contains as JSON, so clients never unzip an archive. The `fields` parameter can leave out the content. The server masks known secret fields in the returned content.
+
+        A version that is still a draft is rejected with `409 VERSION_NOT_PACKAGED`. An archive that cannot be read fails the request with `502`.
       tags:
         - Version
       security:
@@ -1648,8 +1743,12 @@ paths:
           $ref: '#/components/responses/403_resp_common'
         '404':
           $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_version_items'
         '500':
           $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/items/{area}/{itemId}':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1667,7 +1766,9 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Retrieves the content of one item in a version as JSON. The server masks known secret fields in the returned content.
+        Retrieves the content of one item in a version as JSON. The server masks known secret fields in the returned content. Instance and index items have ids of the form `{typeId}/{id}`; read them with the nested path that has the type as its own segment.
+
+        A version that is still a draft is rejected with `409 VERSION_NOT_PACKAGED`. An archive that cannot be read fails the request with `502`.
       tags:
         - Version
       security:
@@ -1699,8 +1800,70 @@ paths:
           $ref: '#/components/responses/403_resp_common'
         '404':
           $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_version_items'
         '500':
           $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
+  '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/items/{area}/{typeId}/{itemId}':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_packageId'
+      - $ref: '#/components/parameters/path_versionId'
+      - $ref: '#/components/parameters/path_area'
+      - $ref: '#/components/parameters/path_typeId'
+      - $ref: '#/components/parameters/path_itemId'
+    get:
+      summary: Retrieving one item of a version by type-scoped id
+      operationId: GET-deploymentcenter-get-nested-version-item
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Retrieves the content of one item in a version as JSON. The server masks known secret fields in the returned content. Use this path for instance and index items, whose ids are `{typeId}/{id}`.
+
+        A version that is still a draft is rejected with `409 VERSION_NOT_PACKAGED`. An archive that cannot be read fails the request with `502`.
+      tags:
+        - Version
+      security:
+        - OAuth2:
+            - deploymentcenter.package_read
+      responses:
+        '200':
+          description: The request was successful. The item is returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionItem'
+              examples:
+                Version item:
+                  value:
+                    area: schemas
+                    itemId: product-extra
+                    name: Product extra
+                    contentVersion: 3
+                    content:
+                      id: product-extra
+                      name:
+                        en: Product extra
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          $ref: '#/components/responses/409_resp_version_items'
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/previews':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -1717,6 +1880,8 @@ paths:
         {% endhint %}
 
         Starts a dry-run job that compares a version with a target step and writes nothing. The per-item result (action, target drift, breaking changes and dependencies) is read from `/jobs/{jobId}/items`. A version that is still a draft is rejected with `409 VERSION_NOT_PACKAGED`. Previews do not block other jobs and can run in parallel.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Deployment
       security:
@@ -1810,6 +1975,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/pushes':
@@ -1833,6 +2006,8 @@ paths:
         * Only one push, release or rollback per package and target step can be queued or running, otherwise the request is rejected with `409 ACTIVE_JOB_EXISTS` and `activeJobId`.
         * The parent step must have this version or a newer one installed or released, unless the parent is the source. Otherwise the request is rejected with `409 PROMOTION_BLOCKED`, `blockedByStepId` and `missingVersion`.
         * Items with target drift or breaking changes must be listed in `acknowledgedItemIds`, each id in the form `{area}/{itemId}`, for example `schemas/product-extra`. Otherwise the request is rejected with `409 ACKNOWLEDGEMENT_REQUIRED`.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Deployment
       security:
@@ -1879,7 +2054,7 @@ paths:
                     versionId: '6563d4c3c3d4e5f607182933'
                     targetStepId: prod
                     availablePackageId: null
-                    installationId: '6563e5d4c3d4e5f607182935'
+                    installationId: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
                     progress:
                       phase: null
                       done: 0
@@ -1953,6 +2128,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/versions/{versionId}/releases':
@@ -1970,7 +2153,9 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Starts a job that publishes the version to the target environment, where its own Deployment Center service offers it as an available package for a later local install. The job calls the target's `available-packages` API with the stored target credentials, which must be allowed to manage packages on the target, and uploads only the versions the target does not have yet. A repeat is safe, because an upload with the same hash is a no-op. The release writes to the target's available package, whose id is the package's id. The same one-job-per-target and promotion rules as for a push apply: `409 ACTIVE_JOB_EXISTS` and `409 PROMOTION_BLOCKED`.
+        Starts a job that publishes the version to the target environment, where its own Deployment Center service offers it as an available package for a later local install. The job calls the target's `available-packages` API with the stored target credentials, which must be allowed to manage packages on the target, and uploads only the versions the target does not have yet. A repeat is safe, because an upload with the same hash is a no-op. The release writes to the target's available package, whose id is the package's id. The same one-job-per-target and promotion rules as for a push apply: `409 ACTIVE_JOB_EXISTS` and `409 PROMOTION_BLOCKED`. A release to a step that targets the operator tenant itself (`self`) is rejected with `400`. If the target refuses the package upsert, the job fails with `RELEASE_FAILED`; a failed version upload fails it with `ITEM_FAILURES`, naming the version.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Deployment
       security:
@@ -2077,6 +2262,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/packages/{packageId}/coverage':
@@ -2201,7 +2394,7 @@ paths:
               examples:
                 List of installations:
                   value:
-                    - id: '6563e5d4c3d4e5f607182934'
+                    - id: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U'
                       packageId: '6563c3b2c3d4e5f607182932'
                       packageName: Loyalty configuration
                       direction: release
@@ -2216,7 +2409,7 @@ paths:
                       lastJobId: '6563e5d0c3d4e5f607182933'
                       activeJobId: null
                       canRollback: false
-                    - id: '6563e5d4c3d4e5f607182935'
+                    - id: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
                       packageId: '6563c3b2c3d4e5f607182932'
                       packageName: Loyalty configuration
                       direction: push
@@ -2231,7 +2424,7 @@ paths:
                       lastJobId: '6563e5d0c3d4e5f607182936'
                       activeJobId: '6563e5d0c3d4e5f607182936'
                       canRollback: false
-                    - id: '6563e5d4c3d4e5f607182937'
+                    - id: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZC1ldQ'
                       packageId: '6563c3b2c3d4e5f607182932'
                       packageName: Loyalty configuration
                       direction: push
@@ -2290,7 +2483,7 @@ paths:
               examples:
                 Installation:
                   value:
-                    id: '6563e5d4c3d4e5f607182935'
+                    id: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
                     packageId: '6563c3b2c3d4e5f607182932'
                     packageName: Loyalty configuration
                     direction: push
@@ -2315,6 +2508,137 @@ paths:
           $ref: '#/components/responses/404_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
+  '/deployment-center/{tenant}/installations/{installationId}/rollback-preview':
+    parameters:
+      - $ref: '#/components/parameters/path_tenant'
+      - $ref: '#/components/parameters/path_installationId'
+    get:
+      summary: Previewing the rollback of an installation
+      operationId: GET-deploymentcenter-preview-installation-rollback
+      description: |-
+        ![Preview](https://res.cloudinary.com/saas-ag/image/upload/v1752824268/emporix/icons/preview_api1.png)
+
+        {% hint style="danger" %}
+        This functionality is in preview mode - some of the features may not be fully operational yet.
+        {% endhint %}
+
+        Shows what a rollback of the installation would change, without writing anything. The answer is synchronous and is not a job. For every item of the last successful run, it compares the backup taken before that run (`restored`) with the current state of the target (`current`), and gives the `action` a rollback would take: `create` for an item the run deleted, `update` for an item the run changed, `delete` for an item the run created, and `skip` for an item that already matches the backup. Values that hold secrets are masked.
+
+        The preview is available under the same rule as `POST /deployment-center/{tenant}/installations/{installationId}/rollbacks`: only the latest successful run of a push or local installation can be rolled back. Otherwise the request is rejected with `409 NOT_ROLLBACKABLE`. The `errorCode` is always `NOT_ROLLBACKABLE` and the `message` names the reason, in the form `Installation {id} cannot be rolled back: {reason}`. The reasons are: the installation has no run yet; the installation was created by a release, which only offers versions to the target without changing its configuration; the run is not the latest run of the installation; the latest run did not succeed; the latest run was itself a rollback, which cannot be rolled back again; the latest run changed nothing, so there is nothing to restore; the backup is no longer available; or the target workflow step was deleted. While a push, release or rollback job is queued or running for the installation, the request is rejected with `409 ACTIVE_JOB_EXISTS` and `activeJobId`.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
+      tags:
+        - Deployment
+      security:
+        - OAuth2:
+            - deploymentcenter.deployment_read
+      parameters:
+        - name: itemIds
+          in: query
+          required: false
+          schema:
+            type: string
+          description: 'Comma-separated ids of the items to preview, each in the form `{area}/{itemId}`, for example `schemas/product-extra,agents/loyalty-agent`. Absent previews every item of the installation.'
+        - $ref: '#/components/parameters/query_pageSize'
+        - $ref: '#/components/parameters/query_pageNumber'
+        - $ref: '#/components/parameters/header_X-Total-Count'
+      responses:
+        '200':
+          description: The request was successful. A list of rollback preview items is returned.
+          headers:
+            X-Total-Count:
+              description: 'Total number of results. Returned when the request sets the `X-Total-Count` header parameter.'
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RollbackPreviewItem'
+              examples:
+                List of rollback preview items:
+                  value:
+                    - id: schemas/product-extra
+                      area: schemas
+                      name: Product extra
+                      action: update
+                      current:
+                        id: product-extra
+                        name:
+                          en: Product extra
+                        attributes:
+                          - key: loyaltyPoints
+                            type: INTEGER
+                      restored:
+                        id: product-extra
+                        name:
+                          en: Product extra
+                        attributes: []
+                    - id: agents/loyalty-agent
+                      area: agents
+                      name: Loyalty agent
+                      action: delete
+                      current:
+                        id: loyalty-agent
+                        name: Loyalty agent
+                      restored: null
+        '400':
+          $ref: '#/components/responses/400_resp_common'
+        '401':
+          $ref: '#/components/responses/401_resp_common'
+        '403':
+          $ref: '#/components/responses/403_resp_common'
+        '404':
+          $ref: '#/components/responses/404_resp_common'
+        '409':
+          description: 'The request conflicts with the current state. The `errorCode` field tells which rule was hit.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictError'
+              examples:
+                Installation created by a release:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: A release only offers versions to the target and cannot be rolled back.'
+                    errorCode: NOT_ROLLBACKABLE
+                Latest run was a rollback:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The latest run was a rollback, which cannot be rolled back again.'
+                    errorCode: NOT_ROLLBACKABLE
+                Latest run changed nothing:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The latest run changed nothing, so there is nothing to roll back.'
+                    errorCode: NOT_ROLLBACKABLE
+                Installation has no run yet:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The installation has no run to roll back.'
+                    errorCode: NOT_ROLLBACKABLE
+                ACTIVE_JOB_EXISTS:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: A rollback on step prod-eu is already queued or running for this package. Follow it instead of starting a new one.
+                    errorCode: ACTIVE_JOB_EXISTS
+                    activeJobId: '6563e5d0c3d4e5f607182938'
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '500':
+          $ref: '#/components/responses/500_resp_common'
+        '502':
+          $ref: '#/components/responses/502_resp_common'
   '/deployment-center/{tenant}/installations/{installationId}/rollbacks':
     parameters:
       - $ref: '#/components/parameters/path_tenant'
@@ -2329,7 +2653,9 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Starts a job that returns the target to its state before the last successful run of a push or local installation. Only the latest successful run can be rolled back. A release installation cannot be rolled back, because a release only offers versions to the target without changing its configuration, and is rejected with `409 NOT_ROLLBACKABLE`. Any other installation whose last successful run is not the latest run, or that has none, is rejected with `409 NOT_ROLLBACKABLE` as well. The rollback of a push installation is rejected with `409 ACTIVE_JOB_EXISTS` while a push, release or rollback of the same package on the same target step is queued or running. The rollback of a local installation is rejected with `409 ACTIVE_JOB_EXISTS` while a local install or rollback of the same available package is queued or running. Previews do not block it.
+        Starts a job that returns the target to its state before the last successful run of a push or local installation. Only the latest successful run can be rolled back. Otherwise the request is rejected with `409 NOT_ROLLBACKABLE`. The `errorCode` is always `NOT_ROLLBACKABLE` and the `message` names the reason, in the form `Installation {id} cannot be rolled back: {reason}`. The reasons are: the installation has no run yet; the installation was created by a release, which only offers versions to the target without changing its configuration; the run is not the latest run of the installation; the latest run did not succeed; the latest run was itself a rollback, which cannot be rolled back again; the latest run changed nothing, so there is nothing to restore; the backup is no longer available; or the target workflow step was deleted. While a push, release or rollback job is queued or running for the installation, the request is rejected with `409 ACTIVE_JOB_EXISTS` and `activeJobId`; for a push installation the job is one on the same package and target step, for a local installation one on the same available package. Previews do not block it.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Deployment
       security:
@@ -2374,7 +2700,7 @@ paths:
                     versionId: '6563d4b1c3d4e5f607182931'
                     targetStepId: prod-eu
                     availablePackageId: null
-                    installationId: '6563e5d4c3d4e5f607182937'
+                    installationId: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZC1ldQ'
                     progress:
                       phase: null
                       done: 0
@@ -2411,11 +2737,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/ConflictError'
               examples:
-                NOT_ROLLBACKABLE:
+                Installation created by a release:
                   value:
                     code: 409
                     status: Conflict
-                    message: Installation 6563e5d4c3d4e5f607182934 was created by a release and cannot be rolled back.
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: A release only offers versions to the target and cannot be rolled back.'
+                    errorCode: NOT_ROLLBACKABLE
+                Latest run was a rollback:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The latest run was a rollback, which cannot be rolled back again.'
+                    errorCode: NOT_ROLLBACKABLE
+                Latest run changed nothing:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The latest run changed nothing, so there is nothing to roll back.'
+                    errorCode: NOT_ROLLBACKABLE
+                Installation has no run yet:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: 'Installation czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6c3RhZ2U cannot be rolled back: The installation has no run to roll back.'
                     errorCode: NOT_ROLLBACKABLE
                 ACTIVE_JOB_EXISTS:
                   value:
@@ -2430,6 +2774,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/logs':
@@ -2701,7 +3053,7 @@ paths:
         This functionality is in preview mode - some of the features may not be fully operational yet.
         {% endhint %}
 
-        Retrieves the jobs of the operator tenant, newest first. The filters narrow the result to a package, a target, a type or a status.
+        Retrieves the jobs of the operator tenant, newest first. The filters narrow the result to a package, an available package, a target, a type or a status.
       tags:
         - Job
       security:
@@ -2726,6 +3078,12 @@ paths:
           schema:
             type: string
           description: Only jobs of this package.
+        - name: availablePackageId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Only jobs of this available package. It works like `packageId`, for jobs that run on the receiving tenant.
         - name: targetStepId
           in: query
           required: false
@@ -2761,7 +3119,7 @@ paths:
                       versionId: '6563d4c3c3d4e5f607182933'
                       targetStepId: prod
                       availablePackageId: null
-                      installationId: '6563e5d4c3d4e5f607182935'
+                      installationId: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
                       progress:
                         phase: definitions
                         done: 6
@@ -2869,7 +3227,7 @@ paths:
                     versionId: '6563d4c3c3d4e5f607182933'
                     targetStepId: prod
                     availablePackageId: null
-                    installationId: '6563e5d4c3d4e5f607182935'
+                    installationId: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
                     progress:
                       phase: definitions
                       done: 6
@@ -3331,11 +3689,17 @@ paths:
         {% endhint %}
 
         Receives the archive of one version as `multipart/form-data` with a `metadata` part (JSON) and an `archive` part (binary). The upload is idempotent by SHA-256: the same hash is a no-op, and a different hash for an existing version is rejected with `409 VERSION_IMMUTABLE`.
+
+        The upload is rejected with `400` when the manifest version inside the archive differs from the version in the path, when the archive references an earlier version that is not uploaded yet, or when `archiveSha256` does not match the `archive` part. An `Idempotency-Key` header is accepted and is informational only: the SHA-256 comparison decides whether a repeated upload is a no-op.
+
+        An `archive` part larger than the receiving limit is rejected with `413`. The limit is 50 MB by default and is set per environment.
       tags:
         - Available Package
       security:
         - OAuth2:
             - deploymentcenter.package_manage
+      parameters:
+        - $ref: '#/components/parameters/header_Idempotency-Key_informational'
       requestBody:
         required: true
         content:
@@ -3406,6 +3770,8 @@ paths:
                     status: Conflict
                     message: Version 2 already exists with a different archive hash.
                     errorCode: VERSION_IMMUTABLE
+        '413':
+          $ref: '#/components/responses/413_resp_archive_too_large'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/available-packages/{availablePackageId}/versions/{version}/previews':
@@ -3424,6 +3790,8 @@ paths:
         {% endhint %}
 
         Starts a dry-run job that compares an available version with this tenant and writes nothing. Per-item results, including target drift and breaking changes, are read from the job items.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Available Package
       security:
@@ -3509,6 +3877,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
   '/deployment-center/{tenant}/available-packages/{availablePackageId}/versions/{version}/installs':
@@ -3527,6 +3903,8 @@ paths:
         {% endhint %}
 
         Starts a local-install job that applies the available version on this tenant. Only one local install or rollback per available package can be queued or running, otherwise the request is rejected with `409 ACTIVE_JOB_EXISTS` and `activeJobId`. Items with drift or breaking changes must be listed in `acknowledgedItemIds`, each id in the form `{area}/{itemId}`, for example `schemas/product-extra`. Otherwise the request is rejected with `409 ACKNOWLEDGEMENT_REQUIRED`.
+
+        The operator tenant's own catalog entry is registered from the developer portal on first use; if that is not possible the request fails with `409 SELF_TENANT_UNAVAILABLE`.
       tags:
         - Available Package
       security:
@@ -3571,7 +3949,7 @@ paths:
                     versionId: '6563d4c3c3d4e5f607182933'
                     targetStepId: null
                     availablePackageId: '6563c3b2c3d4e5f607182932'
-                    installationId: '6563e5d4c3d4e5f607182942'
+                    installationId: 'bDo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI'
                     progress:
                       phase: null
                       done: 0
@@ -3629,6 +4007,14 @@ paths:
                     status: Conflict
                     message: The Idempotency-Key was already used with a different request body.
                     errorCode: IDEMPOTENCY_KEY_REUSED
+                SELF_TENANT_UNAVAILABLE:
+                  value:
+                    code: 409
+                    status: Conflict
+                    message: The operator tenant is not registered and could not be created from the developer portal.
+                    errorCode: SELF_TENANT_UNAVAILABLE
+        '503':
+          $ref: '#/components/responses/503_resp_common'
         '500':
           $ref: '#/components/responses/500_resp_common'
 components:
@@ -3721,12 +4107,29 @@ components:
             - errorCode
           properties:
             errorCode:
-              description: 'Machine-readable reason. `JOB_ABANDONED`: the job stopped making progress and was ended as failed; its target can be used by a new job. Clients must tolerate new values.'
+              description: 'Machine-readable reason. `JOB_ABANDONED`: the job stopped making progress and was ended as failed; its target can be used by a new job. `ITEM_FAILURES`: the job ran to the end but one or more items failed; the per-item results name them. `ROLLBACK_STALE`: the target changed since the run that is being rolled back, so the backup no longer matches it. `STEP_CHANGED`: the target workflow step was edited after the job was started. `STEP_GONE`: the target workflow step was deleted after the job was started. `JOB_FAILED`: generic failure; the `message` tells more. `BACKUP_FAILED`: the backup of the target taken before the run could not be written. `BACKUP_READ_FAILED`: the stored backup could not be read for a rollback. `BACKUP_TARGET_MISMATCH`: the backup does not belong to the target of the rollback. `RELEASE_FAILED`: the target environment refused or could not be reached for the available-package upsert of a release. `ITEM_UNREADABLE`, `SCHEMA_READ_FAILED`, `AGENT_EXPORT_FAILED`, `PACKAGE_READ_FAILED`: an item, schema, agent export or stored version archive could not be read. `MISSING_FUNCTION_DEPLOYMENT`, `MISSING_HOSTING_DEPLOYMENT`: a cloud function or hosting has no deployment to capture. `VSM_CREDENTIALS_MISSING`, `VSM_REQUEST_FAILED`: value streams need a VSM client pair on the tenant entry, or the value-stream API call failed. Conflict codes (see `ConflictCode`) may also appear as `errorCode` when a job fails on a rule that is checked at run time. Clients must tolerate new values.'
               type: string
               x-extensible-enum:
                 - JOB_ABANDONED
+                - ITEM_FAILURES
+                - ROLLBACK_STALE
+                - STEP_CHANGED
+                - STEP_GONE
+                - JOB_FAILED
+                - BACKUP_FAILED
+                - BACKUP_READ_FAILED
+                - BACKUP_TARGET_MISMATCH
+                - RELEASE_FAILED
+                - ITEM_UNREADABLE
+                - MISSING_FUNCTION_DEPLOYMENT
+                - MISSING_HOSTING_DEPLOYMENT
+                - VSM_REQUEST_FAILED
+                - VSM_CREDENTIALS_MISSING
+                - SCHEMA_READ_FAILED
+                - AGENT_EXPORT_FAILED
+                - PACKAGE_READ_FAILED
     ConflictCode:
-      description: Machine-readable reason of a 409 response.
+      description: 'Machine-readable reason of a 409 response. `SELF_TENANT_UNAVAILABLE`: the operator tenant''s own catalog entry is missing and could not be created from the developer portal; register the tenant on the Tenants page.'
       type: string
       enum:
         - ACTIVE_JOB_EXISTS
@@ -3741,6 +4144,7 @@ components:
         - DUPLICATE_TENANT
         - RESOURCE_IN_USE
         - IDEMPOTENCY_KEY_REUSED
+        - SELF_TENANT_UNAVAILABLE
     ConflictError:
       description: 'A 409 response. It is an ErrorMessage plus the machine-readable `errorCode` and the ids the client needs to resolve the conflict.'
       allOf:
@@ -3981,6 +4385,10 @@ components:
             - network
             - rejected
             - missing_token
+        detail:
+          description: 'Short explanation from the target of why it rejected the credentials. Present only when `reason` is `rejected`.'
+          type: string
+          maxLength: 200
         missingScopes:
           description: Scopes the target client lacks. Absent when none are missing.
           type: array
@@ -4630,7 +5038,7 @@ components:
           description: Display name of the item.
           type: string
         contentVersion:
-          description: Version of the item content format.
+          description: Version whose archive holds this item's content.
           type: integer
         content:
           description: Item content as stored in the version. The server masks known secret fields in the returned content.
@@ -4693,7 +5101,7 @@ components:
       type: object
       properties:
         itemIds:
-          description: 'Restrict the rollback to these items, each in the form `{area}/{itemId}`, for example `schemas/product-extra`. Absent rolls back every item of the installation.'
+          description: 'Restrict the rollback to these items, each in the form `{area}/{itemId}`, for example `schemas/product-extra`. Absent rolls back every item of the installation. A rollback, partial or full, uses up the run''s backup: the items that were not selected cannot be rolled back afterwards; push again to change them.'
           type: array
           items:
             type: string
@@ -4750,7 +5158,7 @@ components:
         - canRollback
       properties:
         id:
-          description: Unique identifier of the installation.
+          description: 'Opaque, server-derived identifier of an installation (one per package and target step, or per available package on the receiving tenant). Stable across runs; do not parse it.'
           type: string
         packageId:
           description: "Id of the installed package. For a local installation it is the id of the available package, which equals the sender's package id."
@@ -4810,7 +5218,7 @@ components:
           description: 'The latest run succeeded and can be rolled back. It is `false` when the latest run failed or was cancelled, while a queued or running job blocks a new job on this installation, and always for a release installation.'
           type: boolean
       example:
-        id: '6563e5d4c3d4e5f607182935'
+        id: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
         packageId: '6563c3b2c3d4e5f607182932'
         packageName: Loyalty configuration
         direction: push
@@ -5617,7 +6025,7 @@ components:
         versionId: '6563d4c3c3d4e5f607182933'
         targetStepId: prod
         availablePackageId: null
-        installationId: '6563e5d4c3d4e5f607182935'
+        installationId: 'czo2NTYzYzNiMmMzZDRlNWY2MDcxODI5MzI6cHJvZA'
         progress:
           phase: definitions
           done: 6
@@ -5809,6 +6217,61 @@ components:
         breaking: null
         dependencies: []
         requiresAcknowledgement: true
+    RollbackPreviewItem:
+      description: One item of a rollback preview.
+      type: object
+      required:
+        - id
+        - area
+        - name
+        - action
+      properties:
+        id:
+          description: 'Id of the item, in the form `{area}/{itemId}`, for example `schemas/product-extra`.'
+          type: string
+          pattern: '^(schemas|instances|indexes|agents|cloud-functions|hostings|vsm)/.+$'
+        area:
+          $ref: '#/components/schemas/Area'
+        name:
+          description: Display name of the item.
+          type: string
+        action:
+          description: 'What a rollback would do on the target: `create` recreates an item the run deleted, `update` restores the previous content, `delete` removes an item the run created, `skip` leaves an item that already matches the backup.'
+          type: string
+          enum:
+            - create
+            - update
+            - delete
+            - skip
+        current:
+          description: Current content of the item on the target. The server masks known secret fields. It is `null` when the item does not exist on the target.
+          type: object
+          additionalProperties: true
+          nullable: true
+          x-masked: true
+        restored:
+          description: Content the item would have after the rollback, taken from the backup. The server masks known secret fields. It is `null` when the rollback deletes the item. For value streams the encoded export `data` is omitted.
+          type: object
+          additionalProperties: true
+          nullable: true
+          x-masked: true
+      example:
+        id: schemas/product-extra
+        area: schemas
+        name: Product extra
+        action: update
+        current:
+          id: product-extra
+          name:
+            en: Product extra
+          attributes:
+            - key: loyaltyPoints
+              type: INTEGER
+        restored:
+          id: product-extra
+          name:
+            en: Product extra
+          attributes: []
     AppliedItem:
       description: Item of a push, local-install or rollback job.
       type: object
@@ -6000,6 +6463,14 @@ components:
         type: string
         maxLength: 128
       description: 'Optional client-chosen key that makes a job start safe to retry. The key is unique per tenant for 24 hours. The same key with the same body returns the original job with `Idempotent-Replayed: true`. The same key with a different body is rejected with `409 IDEMPOTENCY_KEY_REUSED`. Without a key, a retry starts a new job or is rejected with `409 ACTIVE_JOB_EXISTS` naming the job to follow.'
+    header_Idempotency-Key_informational:
+      name: Idempotency-Key
+      in: header
+      required: false
+      schema:
+        type: string
+        maxLength: 128
+      description: 'Accepted for symmetry with the job-starting operations and informational only. A repeated upload is decided by the SHA-256 of the archive, never by this key.'
     path_tenantId:
       name: tenantId
       in: path
@@ -6042,6 +6513,13 @@ components:
       schema:
         $ref: '#/components/schemas/Area'
       description: The content area of the item.
+    path_typeId:
+      name: typeId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: 'Type id of an instance or index item, the first part of its `{typeId}/{id}` item id.'
     path_itemId:
       name: itemId
       in: path
@@ -6055,7 +6533,7 @@ components:
       required: true
       schema:
         type: string
-      description: 'Installation''s unique identifier.'
+      description: 'Opaque, server-derived identifier of an installation (one per package and target step, or per available package on the receiving tenant). Stable across runs; do not parse it.'
     path_logId:
       name: logId
       in: path
@@ -6141,6 +6619,74 @@ components:
                 code: 404
                 status: Not Found
                 message: The resource with id 628cd20c6e8b2432b6346ca6 has not been found.
+    409_resp_self_tenant:
+      description: 'The request conflicts with the current state. The `errorCode` field tells which rule was hit.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConflictError'
+          examples:
+            SELF_TENANT_UNAVAILABLE:
+              value:
+                code: 409
+                status: Conflict
+                message: The operator tenant is not registered and could not be created from the developer portal.
+                errorCode: SELF_TENANT_UNAVAILABLE
+    409_resp_version_items:
+      description: 'The request conflicts with the current state. The `errorCode` field tells which rule was hit.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConflictError'
+          examples:
+            VERSION_NOT_PACKAGED:
+              value:
+                code: 409
+                status: Conflict
+                message: The version is still being built.
+                errorCode: VERSION_NOT_PACKAGED
+            SELF_TENANT_UNAVAILABLE:
+              value:
+                code: 409
+                status: Conflict
+                message: The operator tenant is not registered and could not be created from the developer portal.
+                errorCode: SELF_TENANT_UNAVAILABLE
+    413_resp_archive_too_large:
+      description: The archive is larger than the receiving limit.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Archive too large:
+              value:
+                code: 413
+                status: Payload Too Large
+                message: The archive is larger than this service accepts (52428800 bytes).
+    503_resp_common:
+      description: 'The service cannot accept the job right now (queue full, shutting down, or the target did not answer in time). No job was created; retry later.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Job queue full:
+              value:
+                code: 503
+                status: Service Unavailable
+                message: The job queue is full. Retry the request later.
+    502_resp_common:
+      description: An upstream Emporix API call failed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorMessage'
+          examples:
+            Upstream failure:
+              value:
+                code: 502
+                status: Bad Gateway
+                message: A call to an upstream Emporix API failed.
     500_resp_common:
       description: A server-side error occurred.
       content:

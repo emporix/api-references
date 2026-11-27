@@ -11,3 +11,5 @@
 .DS_Store
 .style-guide/.DS_Store
 .style-guide/.gitbook/.DS_Store
+# Emporix agent local artifacts
+/.ai
