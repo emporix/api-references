@@ -3689,6 +3689,10 @@ paths:
         The upload is rejected with `400` when the manifest version inside the archive differs from the version in the path, when the archive references an earlier version that is not uploaded yet, or when `archiveSha256` does not match the `archive` part. An `Idempotency-Key` header is accepted and is informational only: the SHA-256 comparison decides whether a repeated upload is a no-op.
 
         An `archive` part larger than the receiving limit is rejected with `413`. The limit is 50 MB by default and is set per environment.
+
+        #### Archives in parts
+
+        A large version archive is split into parts, each a zip in the same layout, and uploaded one part per call with `part` and `parts` in the metadata. The parts above 1 are uploaded first; they are stored, but the version is not listed yet. Part 1 is uploaded last and lists the SHA-256 of every part in `partSha256s`. It is accepted only when every other part is stored with the listed hash; the archive is then validated as a whole and the version becomes available. Until then, uploading a part again replaces it. An archive of one part is uploaded without `part`, `parts` and `partSha256s`.
       tags:
         - Available Package
       security:
@@ -4103,7 +4107,7 @@ components:
             - errorCode
           properties:
             errorCode:
-              description: 'Machine-readable reason. `JOB_ABANDONED`: the job stopped making progress and was ended as failed; its target can be used by a new job. `ITEM_FAILURES`: the job ran to the end but one or more items failed; the per-item results name them. `ROLLBACK_STALE`: the target changed since the run that is being rolled back, so the backup no longer matches it. `STEP_CHANGED`: the target workflow step was edited after the job was started. `STEP_GONE`: the target workflow step was deleted after the job was started. `JOB_FAILED`: generic failure; the `message` tells more. `BACKUP_FAILED`: the backup of the target taken before the run could not be written. `BACKUP_READ_FAILED`: the stored backup could not be read for a rollback. `BACKUP_TARGET_MISMATCH`: the backup does not belong to the target of the rollback. `RELEASE_FAILED`: the target environment refused or could not be reached for the available-package upsert of a release. `ITEM_UNREADABLE`, `SCHEMA_READ_FAILED`, `AGENT_EXPORT_FAILED`, `PACKAGE_READ_FAILED`: an item, schema, agent export or stored version archive could not be read. `MISSING_FUNCTION_DEPLOYMENT`, `MISSING_HOSTING_DEPLOYMENT`: a cloud function or hosting has no deployment to capture. `VSM_CREDENTIALS_MISSING`, `VSM_REQUEST_FAILED`: value streams need a VSM client pair on the tenant entry, or the value-stream API call failed. Conflict codes (see `ConflictCode`) may also appear as `errorCode` when a job fails on a rule that is checked at run time. Clients must tolerate new values.'
+              description: 'Machine-readable reason. `JOB_ABANDONED`: the job stopped making progress and was ended as failed; its target can be used by a new job. `ITEM_FAILURES`: the job ran to the end but one or more items failed; the per-item results name them. `ROLLBACK_STALE`: the target changed since the run that is being rolled back, so the backup no longer matches it. `STEP_CHANGED`: the target workflow step was edited after the job was started. `STEP_GONE`: the target workflow step was deleted after the job was started. `JOB_FAILED`: generic failure; the `message` tells more. `BACKUP_FAILED`: the backup of the target taken before the run could not be written. `BACKUP_READ_FAILED`: the stored backup could not be read for a rollback. `BACKUP_TARGET_MISMATCH`: the backup does not belong to the target of the rollback. `RELEASE_FAILED`: the target environment refused or could not be reached for the available-package upsert of a release. `ITEM_UNREADABLE`, `SCHEMA_READ_FAILED`, `AGENT_EXPORT_FAILED`, `PACKAGE_READ_FAILED`: an item, schema, agent export or stored version archive could not be read. `MISSING_FUNCTION_DEPLOYMENT`, `MISSING_HOSTING_DEPLOYMENT`: a cloud function or hosting has no deployment to capture. `VSM_CREDENTIALS_MISSING`, `VSM_REQUEST_FAILED`: value streams need a VSM client pair on the tenant entry, or the value-stream API call failed. `ARCHIVE_ENTRY_TOO_LARGE`, `ARCHIVE_TOO_LARGE`, `ARCHIVE_TOO_MANY_ENTRIES`, `ARCHIVE_PART_TOO_LARGE`: the version archive or backup would exceed the archive limits (one item, all items together, the number of files, or a part above what Media stores); the `message` names the item or the limit, and nothing was stored. Conflict codes (see `ConflictCode`) may also appear as `errorCode` when a job fails on a rule that is checked at run time. Clients must tolerate new values.'
               type: string
               x-extensible-enum:
                 - JOB_ABANDONED
@@ -4124,6 +4128,10 @@ components:
                 - SCHEMA_READ_FAILED
                 - AGENT_EXPORT_FAILED
                 - PACKAGE_READ_FAILED
+                - ARCHIVE_ENTRY_TOO_LARGE
+                - ARCHIVE_TOO_LARGE
+                - ARCHIVE_TOO_MANY_ENTRIES
+                - ARCHIVE_PART_TOO_LARGE
     ConflictCode:
       description: 'Machine-readable reason of a 409 response. `SELF_TENANT_UNAVAILABLE`: the operator tenant''s own catalog entry is missing and could not be created from the developer portal; register the tenant on the Tenants page.'
       type: string
@@ -5640,6 +5648,22 @@ components:
         archiveSha256:
           description: 'SHA-256 of the archive part. A repeated upload with the same hash is a no-op; a different hash is rejected with `VERSION_IMMUTABLE`.'
           type: string
+        part:
+          description: 'Number of the part this call uploads, starting at 1. Omit it for an archive of one part.'
+          type: integer
+          minimum: 1
+          default: 1
+        parts:
+          description: 'Number of parts of the archive. Omit it for an archive of one part.'
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 1
+        partSha256s:
+          description: 'SHA-256 of every part of the archive, in part order. Required on part 1 when `parts` is greater than 1; its first entry is `archiveSha256`.'
+          type: array
+          items:
+            type: string
     AvailablePackageVersionUpload:
       description: Multipart body to upload one version of an available package.
       type: object
@@ -5651,7 +5675,7 @@ components:
           $ref: '#/components/schemas/AvailablePackageVersionMetadata'
           description: Metadata of the version, as JSON.
         archive:
-          description: The version archive (delta zip).
+          description: 'The version archive (delta zip), or the part of it that `part` names.'
           type: string
           format: binary
     JobType:
