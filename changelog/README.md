@@ -25,6 +25,28 @@ layout:
 
 {% updates format="full" %}
 
+{% update date="RELEASE_DATE" tags="improvement" %}
+
+## Cloud Functions - form posts, redirects, and page policy
+
+##### Overview
+
+Hosted cloud functions can now receive form posts from systems that you cannot change, such as procurement systems that start a punchout session. A call to `/cloud-functions/{tenant}/functions/{functionId}` or `/public-cloud-functions/{tenant}/functions/{functionId}` forwards any request body to the function byte for byte, with its original `Content-Type`. This includes `application/x-www-form-urlencoded` and `multipart/form-data` with its boundary. Form posts were previously rejected with `500`.
+
+A redirect from the function (`301`, `302`, `303`, `307`, or `308`) reaches the caller with its `Location` header, cookies, and body. Emporix no longer follows the redirect itself, so the caller's browser does.
+
+Every response still carries `X-Frame-Options: SAMEORIGIN` and a `Content-Security-Policy` that limits framing and form targets by default. When a function sends its own `Content-Security-Policy` or `X-Frame-Options`, the caller receives the function's headers instead. A punchout page can then be shown in a frame of a procurement system and post a cart back to a buyer address on `http`.
+
+Emporix answers `404` for a function that was created but never deployed, `413` for a request body over 10 MB, `502` when the function cannot be reached, and `504` when it does not respond in time. Errors returned by the function itself reach the caller unchanged.
+
+For the request and response rules and examples, see [Invoking cloud functions](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting#invoking-cloud-functions). For the page policy, see [Framing and form targets](https://app.gitbook.com/s/bTY7EwZtYYQYC6GOcdTj/extensibility-and-integrations/extensibility-cases/extension-hosting#framing-and-form-targets).
+
+##### Known problems
+
+There are no known problems.
+
+{% endupdate %}
+
 {% update date="2026-11-26" tags="new-feature" %}
 
 ## Indexing Service - variant group ID for dynamic variants in BatteryIncluded
