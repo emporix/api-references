@@ -1,0 +1,26 @@
+{
+  "baseBranch": "auto",
+  "tracker": "jira",
+  "codeHost": "github",
+  "jira": {
+    "project": "COP",
+    "site": "emporix.atlassian.net",
+    "buddyUrl": "http://ai-buddy.vpn.emporix.io"
+  },
+  "buddy": {
+    "service": "Emporix API References",
+    "sync": true
+  },
+  "validation": {
+    "commands": []
+  },
+  "app": {
+    "kind": "backend",
+    "start": "",
+    "baseUrl": "",
+    "readyPath": "/"
+  },
+  "labels": {
+    "enabled": false
+  }
+}

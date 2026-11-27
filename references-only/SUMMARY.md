@@ -199,6 +199,17 @@
             kind: openapi
             spec: segments-api
       ```
+  * [Deployment Center](../utilities/deployment-center/api-reference/README.md)
+    * ```yaml
+      props:
+        models: true
+      type: builtin:openapi
+      dependencies:
+        spec:
+          ref:
+            kind: openapi
+            spec: deployment-center-api
+      ```
   * [Fee](../checkout/fee/api-reference/README.md)
     * ```yaml
       props:
