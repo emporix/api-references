@@ -36,7 +36,7 @@ The Quote Service supports the following status values:
 | `CREATING`             | Quote is being created (temporary state)  | System            | During quote creation process                       |
 | `AWAITING`             | Quote is ready for employee review        | System            | After quote is created by a customer                |
 | `OPEN`                 | Quote is ready for customer review        | Merchant/Employee | When employee sends the quote for customer approval |
-| `IN_PROGRESS`          | Active negotiation/changes are being made | Employee          | When employee is modifying the quote                |
+| `IN_PROGRESS`          | Active negotiation/changes are being made | Employee/Customer | When employee is modifying the quote, or customer requests changes |
 | `ACCEPTED`             | Customer accepted the quote               | Customer          | Customer agrees to terms, triggers order creation   |
 | `DECLINED`             | Customer rejected the quote               | Customer          | Customer doesn't want to proceed                    |
 | `DECLINED_BY_MERCHANT` | Employee/merchant rejected the quote      | Employee          | Merchant cannot fulfill the request                 |
@@ -47,6 +47,7 @@ Possible status transitions:
 * `AWAITING` -> `OPEN`
 * `AWAITING` -> `DECLINED_BY_MERCHANT`
 * `CREATING` -> `OPEN`
+* `CREATING` -> `IN_PROGRESS` (employee only)
 * `EXPIRED` -> `OPEN`
 * `IN_PROGRESS` -> `OPEN`
 * `IN_PROGRESS` -> `DECLINED_BY_MERCHANT`
@@ -72,43 +73,51 @@ config:
     background: transparent
     lineColor: "#9CBBE3"
     arrowheadColor: "#9CBBE3"
-    edgeLabelBackground: "#FFC128" 
+    edgeLabelBackground: "#FFC128"
     edgeLabelTextColor: "#4C5359"
     actorBorder: '#4C5359'
 ---
 graph TD
     CUSTOMER1(CUSTOMER)
     PRODUCTS(PRODUCTS)
-    
+
     CUSTOMER1 -->|Browses for products| PRODUCTS
-    
-    PRODUCTS -->|Adds to cart| CART(CART)    
+
+    PRODUCTS -->|Adds to cart| CART(CART)
     PRODUCTS -->|Contacts employee| EMPLOYEE1(EMPLOYEE)
-    
+
     EMPLOYEE1 -->|Creates quote| CREATING(QUOTE: CREATING)
     CART -->|Requests quote| QUOTE_REQUEST(QUOTE: AWAITING)
-    
+
     QUOTE_REQUEST -->|Notifies| EMPLOYEE2(EMPLOYEE)
-    
-    CREATING -->|Quote created| OPEN(QUOTE: OPEN)
-    
-    IN_PROGRESS -->|Approves| OPEN   
-    EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT) 
-    EMPLOYEE2 -->|Approves| OPEN
-    
+
+    CREATING --> COMPLETE{Prices and addresses complete?}
+    COMPLETE -->|Yes - employee sends the quote, complete data required| OPEN(QUOTE: OPEN)
+    COMPLETE -->|No - employee starts work| IN_PROGRESS(QUOTE: IN PROGRESS)
+
+    IN_PROGRESS --> EMPLOYEE3(EMPLOYEE)
+    EMPLOYEE3 -->|Sends quote - complete data required| OPEN
+    EMPLOYEE3 -->|Declines| DECLINED_MERCHANT
+
+    EMPLOYEE2 -->|Declines| DECLINED_MERCHANT(QUOTE: DECLINED_BY_MERCHANT)
+    EMPLOYEE2 -->|Approves - complete data required| OPEN
+
     DECLINED_MERCHANT -->|Notifies| CUSTOMER3(CUSTOMER)
 
     CUSTOMER2 -->|Validity expired| EXPIRED(QUOTE: EXPIRED)
-    
+    EXPIRED --> EMPLOYEE5(EMPLOYEE)
+    EMPLOYEE5 -->|Sends quote again - complete data required| OPEN
+
     OPEN -->|Sent to customer| CUSTOMER2(CUSTOMER)
-    
-    CUSTOMER2 -->|Approves| ACCEPTED(QUOTE: ACCEPTED)
+    OPEN --> EMPLOYEE4(EMPLOYEE)
+    EMPLOYEE4 -->|Starts negotiation - optional CHANGE reason and comment| IN_PROGRESS
+
+    CUSTOMER2 -->|Approves - complete data required, approval check if enabled| ACCEPTED(QUOTE: ACCEPTED)
     CUSTOMER2 -->|Rejects| DECLINED(QUOTE: DECLINED)
-    CUSTOMER2 -->|Requests changes| EMPLOYEE3(EMPLOYEE)
-    EMPLOYEE3 -->|Changes| IN_PROGRESS(QUOTE: IN PROGRESS)
-    
+    CUSTOMER2 -->|Requests changes| IN_PROGRESS
+
     ACCEPTED -->|Triggers| ORDER(Order Created)
-    
+
     style CREATING fill:#F2FAFE, stroke:#4C5359
     style OPEN fill:#F2FAFE, stroke:#4C5359
     style IN_PROGRESS fill:#F2FAFE, stroke:#4C5359
@@ -116,6 +125,7 @@ graph TD
     style DECLINED fill:#F2FAFE, stroke:#4C5359
     style DECLINED_MERCHANT fill:#F2FAFE, stroke:#4C5359
     style EXPIRED fill:#F2FAFE, stroke:#4C5359
+    style COMPLETE fill:#FFFFFF, stroke:#4C5359
 
     style CUSTOMER1 fill:#A1BDDC, stroke:#4C5359
     style CUSTOMER2 fill:#A1BDDC, stroke:#4C5359
@@ -123,6 +133,8 @@ graph TD
     style EMPLOYEE1 fill:#99ACBC, stroke:#4C5359
     style EMPLOYEE2 fill:#99ACBC, stroke:#4C5359
     style EMPLOYEE3 fill:#99ACBC, stroke:#4C5359
+    style EMPLOYEE4 fill:#99ACBC, stroke:#4C5359
+    style EMPLOYEE5 fill:#99ACBC, stroke:#4C5359
     style CART fill:#DDE6EE, stroke:#4C5359
     style PRODUCTS fill:#DDE6EE, stroke:#4C5359
     style QUOTE_REQUEST fill:#F2FAFE, stroke:#4C5359
@@ -131,9 +143,9 @@ graph TD
 
 ## Quote decision reasons
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action.
+A quote reason is required when a customer changes the quote status from `OPEN` to `DECLINED` or `IN_PROGRESS`, and when an employee changes the quote status from `AWAITING` or `IN_PROGRESS` to `DECLINED_BY_MERCHANT`. When an employee changes the status from `OPEN` or `CREATING` to `IN_PROGRESS`, the reason is optional. Other status changes do not accept a reason.
 
-There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses:
+There are four default reasons that your customers and employees can select for the `DECLINED` or `IN_PROGRESS` quote statuses:
 
 | Quote status | Reason code                                                                                              |
 | ------------ | -------------------------------------------------------------------------------------------------------- |
@@ -221,7 +233,7 @@ curl -i -X PATCH \
 {% step %}
 ##### Update available quote status change reasons
 
-There are four default reasons that your customers and employees can select for the `DECLINED` or `CHANGED` quote statuses, as mentioned in [Quote decision reasons](quote.md#quote-decision-reasons).
+There are four default reasons that your customers and employees can select for the `DECLINED` or `IN_PROGRESS` quote statuses, as mentioned in [Quote decision reasons](quote.md#quote-decision-reasons).
 
 You can create new quote status change reasons, by sending a request to the [Creating a reason for changing the quote status](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-reason#post-quote-tenant-quote-reasons) endpoint.
 
@@ -309,7 +321,7 @@ The following scope is required:
 `quote.quote_manage`
 {% endhint %}
 
-Use `legalEntityId` to link the quote to a company. The legal entity must be assigned to the quote's `billingAddressId`, and the company name is populated from that legal entity. The `companyName` field is deprecated.
+Use `legalEntityId` to link the quote to a company. When the quote has a billing address, the legal entity must be assigned to it, and the company name is populated from that legal entity. When you set `legalEntityId`, you can omit `billingAddressId` and `shippingAddressId`, or send them empty or as `null`. Send both or neither. A quote without addresses is calculated as net only, without tax and gross values. The quote cannot be set to `OPEN` or `ACCEPTED` until both addresses are set. The `companyName` field is deprecated.
 
 Requests made with a B2B customer token work only with quotes linked to the legal entity from that token. Approval checks use the same legal entity.
 
@@ -501,6 +513,24 @@ curl -i -X PATCH \
   }'
 ```
 
+### Sending a pending quote to the customer
+
+An employee can send a quote that is in the `IN_PROGRESS` status to the customer in the notification email, with the quote pdf attached, without changing its status. It is useful when the quote cannot be `OPEN` yet, for example when it has no addresses or some items have no price. The quote is not changed and nothing is validated, so the quote can be incomplete.
+
+{% hint style="warning" %}
+The following scope is required:
+
+`quote.quote_manage`
+{% endhint %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/send' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+The request fails with the `400` status code when the quote is not in the `IN_PROGRESS` status.
+
 ### Accepting a quote by a customer
 
 When a customer accepts a quote on the storefront, or accepts a quote as an approver, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
@@ -529,7 +559,7 @@ curl -i -X PATCH \
 
 ### Declining a quote by a customer
 
-When a customer changes the quote status to `DECLINED` or `IN_PROGRESS`, or when an employee changes the quote status to `DECLINED_BY_MERCHANT`, they can provide a reason why they performed that action. On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
+A quote reason is required when a customer changes the quote status from `OPEN` to `DECLINED` or `IN_PROGRESS`, and when an employee changes the quote status to `DECLINED_BY_MERCHANT`. When an employee changes the status to `IN_PROGRESS`, the reason is optional. For details, see [Quote decision reasons](quote.md#quote-decision-reasons). On the storefront, when a customer declines the quote, a request to the following endpoint is sent: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).
 
 {% hint style="warning" %}
 The following scope is granted to the customer group:
@@ -576,9 +606,9 @@ Each price object includes a `type` field that defines whether the object is an 
 * `INTERNAL` - Default behavior, the system looks up for price information using `priceId`.
 * `EXTERNAL` - Allows you to provide your own price details directly in the quote request.
 
-When using `EXTERNAL` pricing, you can send complete price details (for example, net and gross values) without storing them in Emporix.
+When using `EXTERNAL` pricing, you can send complete price details (for example, `unitPrice`, `totalNetValue`, and `tax`) without storing them in Emporix.
 
-To use external prices, the `cart.cart_manage_external_prices` scope is necessary. Without the scope, quote creation or updates containing external price data are rejected.
+To use external prices, either the `quote.quote_manage_external_prices` scope or the `cart.cart_manage_external_prices` scope is necessary. Without one of them, quote creation or updates containing external price data are rejected with the `403` status code. The scope is also required to replace or remove a stored external price.
 
 Example of an item in a quote request using an external price, where:
 
@@ -594,14 +624,17 @@ Example of an item in a quote request using an external price, where:
   },
   "price": {
     "type": "EXTERNAL",
-    "currency": "EUR",
-    "gross": 120.00,
-    "net": 100.00,
+    "unitPrice": 50.00,
+    "totalNetValue": 100.00,
     "tax": {
-      "rate": 20
+      "taxClass": "STANDARD",
+      "taxRate": 20
     }
   },
-  "quantity": 2
+  "quantity": {
+    "quantity": 2,
+    "unitCode": "piece"
+  }
 }
 ```
 
@@ -624,16 +657,27 @@ Example of an item in a quote request using an external product and price, where
   },
   "price": {
     "type": "EXTERNAL",
-    "currency": "USD",
-    "gross": 500.00,
-    "net": 420.00,
+    "unitPrice": 420.00,
+    "totalNetValue": 420.00,
     "tax": {
-      "rate": 20
+      "taxClass": "STANDARD",
+      "taxRate": 20
     }
   },
-  "quantity": 1
+  "quantity": {
+    "quantity": 1,
+    "unitCode": "piece"
+  }
 }
 ```
+
+### Items without a price
+
+You can add an item to a quote without a price. In the response, such an item has the `MISSING` price status and no `price` object, and the quote has `incompletePricing` set to `true`. The total values of the quote include only the items with a price.
+
+To add a price to such an item, send a `replace` operation on the `/items/{itemId}` path of the [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid) endpoint with a price, for example of the `EXTERNAL` type. To change only the net value of an existing price, use the `/items/{itemId}/price` path.
+
+The quote cannot be `OPEN` or `ACCEPTED` while it has an item without a price, and a change that would leave an `OPEN` quote incomplete is rejected in the same way. The request fails with the `400` status code and the `QUOTE_ITEMS_WITHOUT_PRICE` error code in the `errorCode` field of the response body. The same status code is returned with the `QUOTE_ADDRESS_MISSING` error code when the quote has no billing or shipping address, and with the `QUOTE_ITEMS_WITHOUT_TAX_CLASS` error code when an item with an external price or product has no tax class.
 
 ### Support for mixins and metadata
 
