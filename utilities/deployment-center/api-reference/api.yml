@@ -4133,12 +4133,13 @@ components:
                 - ARCHIVE_TOO_MANY_ENTRIES
                 - ARCHIVE_PART_TOO_LARGE
     ConflictCode:
-      description: 'Machine-readable reason of a 409 response. `SELF_TENANT_UNAVAILABLE`: the operator tenant''s own catalog entry is missing and could not be created from the developer portal; register the tenant on the Tenants page.'
+      description: 'Machine-readable reason of a 409 response. `ENVIRONMENT_REQUIRED`: a cloud function needs values for environment variables that the target does not have yet; `environment` names them. `SELF_TENANT_UNAVAILABLE`: the operator tenant''s own catalog entry is missing and could not be created from the developer portal; register the tenant on the Tenants page.'
       type: string
       enum:
         - ACTIVE_JOB_EXISTS
         - PROMOTION_BLOCKED
         - ACKNOWLEDGEMENT_REQUIRED
+        - ENVIRONMENT_REQUIRED
         - VERSION_CONFLICT
         - VERSION_NOT_PACKAGED
         - VERSION_NOT_DELETABLE
@@ -4170,11 +4171,28 @@ components:
               description: 'Requested version number that the parent step has not reached yet. Set with `PROMOTION_BLOCKED`.'
               type: integer
             itemIds:
-              description: 'Ids of the items that must be acknowledged, each in the form `{area}/{itemId}`, for example `schemas/product-extra`. Set with `ACKNOWLEDGEMENT_REQUIRED`.'
+              description: 'Ids of the items that must be acknowledged, each in the form `{area}/{itemId}`, for example `schemas/product-extra`. Set with `ACKNOWLEDGEMENT_REQUIRED`, and with `ENVIRONMENT_REQUIRED` (the cloud functions that need values).'
               type: array
               items:
                 type: string
                 pattern: '^(schemas|instances|indexes|agents|cloud-functions|hostings|vsm)/.+$'
+            environment:
+              description: 'Set with `ENVIRONMENT_REQUIRED`: each cloud function and the environment variables it needs a value for.'
+              type: array
+              items:
+                type: object
+                required:
+                  - itemId
+                  - keys
+                properties:
+                  itemId:
+                    description: 'Item id of the cloud function, `cloud-functions/{id}`.'
+                    type: string
+                  keys:
+                    description: Names of the variables without a value.
+                    type: array
+                    items:
+                      type: string
     IdResponse:
       description: Identifier of a resource that was created.
       type: object
@@ -5077,6 +5095,8 @@ components:
           items:
             type: string
             pattern: '^(schemas|instances|indexes|agents|cloud-functions|hostings|vsm)/.+$'
+        environment:
+          $ref: '#/components/schemas/EnvironmentValues'
       additionalProperties: false
       example:
         targetStepId: prod
@@ -5124,7 +5144,53 @@ components:
           items:
             type: string
             pattern: '^(schemas|instances|indexes|agents|cloud-functions|hostings|vsm)/.+$'
+        environment:
+          $ref: '#/components/schemas/EnvironmentValues'
       additionalProperties: false
+    EnvironmentValues:
+      description: |-
+        Values of environment variables of cloud functions for this run, keyed by the function's item id (`cloud-functions/{id}`), then by variable name. A push or install needs a value for every variable the function requires and the target does not have yet (see `environment` of the preview item); without them it is refused with `409 ENVIRONMENT_REQUIRED` and nothing is written. Variables the target already has keep their value unless a value is given here. The values are set on the target before the function's code is deployed.
+
+        The values are secrets: they are never stored, logged or returned. The job's `request` shows the variable names with every value as `***`.
+      type: object
+      additionalProperties:
+        type: object
+        additionalProperties:
+          type: string
+          maxLength: 32768
+      example:
+        cloud-functions/loyalty-points-calculator:
+          API_KEY: '<secret>'
+          POINTS_PER_EURO: '2'
+    EnvironmentNeed:
+      description: 'The environment variables of a cloud function that the run creates or updates: names only, values are never returned.'
+      type: object
+      required:
+        - required
+        - kept
+        - missing
+        - unused
+      properties:
+        required:
+          description: Variables the version of the function requires.
+          type: array
+          items:
+            type: string
+        kept:
+          description: 'Required variables the target already has a value for: kept, no value needed.'
+          type: array
+          items:
+            type: string
+        missing:
+          description: 'Required variables the target does not have: the push or install needs a value for each in `environment`.'
+          type: array
+          items:
+            type: string
+        unused:
+          description: 'Variables the target has that the version no longer requires: left on the target unchanged.'
+          type: array
+          items:
+            type: string
     AreaOutcome:
       description: Number of items of one area that succeeded and failed.
       type: object
@@ -5705,7 +5771,7 @@ components:
         - status
       properties:
         name:
-          description: 'Name of the phase. A push, release, local install or rollback uses `backup` (the rollback copy of the target), `definitions` (types and mixins), `records` (instances, indexes, agents, value streams), `archives` (code of cloud functions and hostings uploaded and their builds started), `awaiting-builds` (builds that ended), `deletes` and `skipped` (unchanged items). Clients must tolerate new names.'
+          description: 'Name of the phase. A push, release, local install or rollback uses `backup` (the rollback copy of the target), `definitions` (types and mixins), `records` (instances, indexes, agents, value streams), `archives` (code of cloud functions and hostings uploaded and their builds started; lists each of them in `items`), `awaiting-builds` (builds that ended), `vsm` (value streams, written once the code they call is live), `deletes` and `skipped` (unchanged items). Clients must tolerate new names.'
           type: string
         status:
           description: 'State of the phase. A job that knows its phases up front lists them all from the start, the ones it has not reached as `pending`; a phase it returns to is one entry that runs again.'
@@ -5721,6 +5787,64 @@ components:
         total:
           description: Number of items of the phase.
           type: integer
+        items:
+          description: 'The slow items of the phase, each with its own state. Only the `archives` phase of an install has them: one per cloud function or hosting.'
+          type: array
+          items:
+            $ref: '#/components/schemas/JobPhaseItem'
+    JobPhaseItem:
+      description: 'A cloud function or hosting of an install, from the upload of its code until it is live on the target.'
+      type: object
+      required:
+        - id
+        - name
+        - area
+        - status
+      properties:
+        id:
+          description: 'Job item id of the item, as in the job items (`cloud-functions/{id}`, `hostings/{name}`).'
+          type: string
+        name:
+          description: Display name of the item.
+          type: string
+        area:
+          description: Area of the item.
+          type: string
+          enum:
+            - cloud-functions
+            - hostings
+        status:
+          description: '`waiting`: not uploaded yet. `uploading`: its code is being uploaded. `building`: the target builds it. `live`: the build ended and it runs. `failed`: the upload or the build failed; `message` says why.'
+          type: string
+          enum:
+            - waiting
+            - uploading
+            - building
+            - live
+            - failed
+        step:
+          description: 'The build step it runs, as the build log names it, for example `deploy-to-firebase`.'
+          type: string
+        stepsDone:
+          description: 'Build steps finished. With `stepsTotal`, 0 until the build log names its steps.'
+          type: integer
+        stepsTotal:
+          description: Build steps in all.
+          type: integer
+        startedAt:
+          description: When its upload started.
+          type: string
+          format: date-time
+        endedAt:
+          description: When it became live or failed.
+          type: string
+          format: date-time
+        expectedSeconds:
+          description: 'How long such an item usually takes from upload to live, in seconds. A hint, not a promise.'
+          type: integer
+        message:
+          description: Why it failed.
+          type: string
     JobProgress:
       description: Overall progress of a job and the progress of each phase.
       type: object
@@ -6245,6 +6369,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DependencyRef'
+        environment:
+          description: 'For a cloud function the run creates or updates and that has environment variables: which ones the target has, and which need a value. `null` otherwise.'
+          oneOf:
+            - $ref: '#/components/schemas/EnvironmentNeed'
+            - $ref: '#/components/schemas/NullValue'
         requiresAcknowledgement:
           description: 'The item must be listed in `acknowledgedItemIds` to be pushed or installed.'
           type: boolean
