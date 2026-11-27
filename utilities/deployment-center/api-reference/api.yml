@@ -5705,10 +5705,10 @@ components:
         - status
       properties:
         name:
-          description: 'Name of the phase, for example `definitions` or `records`.'
+          description: 'Name of the phase. A push, release, local install or rollback uses `backup` (the rollback copy of the target), `definitions` (types and mixins), `records` (instances, indexes, agents, value streams), `archives` (code of cloud functions and hostings uploaded and their builds started), `awaiting-builds` (builds that ended), `deletes` and `skipped` (unchanged items). Clients must tolerate new names.'
           type: string
         status:
-          description: State of the phase.
+          description: 'State of the phase. A job that knows its phases up front lists them all from the start, the ones it has not reached as `pending`; a phase it returns to is one entry that runs again.'
           type: string
           enum:
             - pending
@@ -5739,10 +5739,44 @@ components:
           description: Number of items in the job.
           type: integer
         phases:
-          description: Progress of each phase.
+          description: Progress of each phase, in the order the job runs them.
           type: array
           items:
             $ref: '#/components/schemas/JobPhase'
+        current:
+          $ref: '#/components/schemas/JobActivity'
+    JobActivity:
+      description: 'What a running job is doing right now. Present while the job runs and the step is known; absent when the job has ended.'
+      type: object
+      required:
+        - step
+        - items
+        - since
+      properties:
+        step:
+          description: '`backup`: saving the rollback copy of the target. `writing`: writing the items named. `uploading`: uploading the code of the cloud functions and hostings named and starting their builds. `building`: waiting for the builds named. `finishing`: recording the unchanged items. Clients must tolerate new values.'
+          type: string
+        items:
+          description: Items the step works on.
+          type: array
+          items:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                description: Display name of the item.
+                type: string
+              detail:
+                description: 'What is known about the item''s own progress. For a build, the step it is at, for example `2/4 · build`.'
+                type: string
+        since:
+          description: 'Date and time when the step started. For `building`, when the first of the builds still running started.'
+          type: string
+          format: date-time
+        expectedSeconds:
+          description: 'How long the step usually takes, in seconds, as a hint for slow steps (builds). It is not a promise.'
+          type: integer
     JobCounts:
       description: 'Number of items by action and outcome, counted so far. The counts are final when the job ends.'
       type: object
