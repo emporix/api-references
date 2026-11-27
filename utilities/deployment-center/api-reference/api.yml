@@ -5705,7 +5705,7 @@ components:
         - status
       properties:
         name:
-          description: 'Name of the phase. A push, release, local install or rollback uses `backup` (the rollback copy of the target), `definitions` (types and mixins), `records` (instances, indexes, agents, value streams), `archives` (code of cloud functions and hostings uploaded and their builds started), `awaiting-builds` (builds that ended), `deletes` and `skipped` (unchanged items). Clients must tolerate new names.'
+          description: 'Name of the phase. A push, release, local install or rollback uses `backup` (the rollback copy of the target), `definitions` (types and mixins), `records` (instances, indexes, agents, value streams), `archives` (code of cloud functions and hostings uploaded and their builds started; lists each of them in `items`), `awaiting-builds` (builds that ended), `vsm` (value streams, written once the code they call is live), `deletes` and `skipped` (unchanged items). Clients must tolerate new names.'
           type: string
         status:
           description: 'State of the phase. A job that knows its phases up front lists them all from the start, the ones it has not reached as `pending`; a phase it returns to is one entry that runs again.'
@@ -5721,6 +5721,64 @@ components:
         total:
           description: Number of items of the phase.
           type: integer
+        items:
+          description: 'The slow items of the phase, each with its own state. Only the `archives` phase of an install has them: one per cloud function or hosting.'
+          type: array
+          items:
+            $ref: '#/components/schemas/JobPhaseItem'
+    JobPhaseItem:
+      description: 'A cloud function or hosting of an install, from the upload of its code until it is live on the target.'
+      type: object
+      required:
+        - id
+        - name
+        - area
+        - status
+      properties:
+        id:
+          description: 'Job item id of the item, as in the job items (`cloud-functions/{id}`, `hostings/{name}`).'
+          type: string
+        name:
+          description: Display name of the item.
+          type: string
+        area:
+          description: Area of the item.
+          type: string
+          enum:
+            - cloud-functions
+            - hostings
+        status:
+          description: '`waiting`: not uploaded yet. `uploading`: its code is being uploaded. `building`: the target builds it. `live`: the build ended and it runs. `failed`: the upload or the build failed; `message` says why.'
+          type: string
+          enum:
+            - waiting
+            - uploading
+            - building
+            - live
+            - failed
+        step:
+          description: 'The build step it runs, as the build log names it, for example `deploy-to-firebase`.'
+          type: string
+        stepsDone:
+          description: 'Build steps finished. With `stepsTotal`, 0 until the build log names its steps.'
+          type: integer
+        stepsTotal:
+          description: Build steps in all.
+          type: integer
+        startedAt:
+          description: When its upload started.
+          type: string
+          format: date-time
+        endedAt:
+          description: When it became live or failed.
+          type: string
+          format: date-time
+        expectedSeconds:
+          description: 'How long such an item usually takes from upload to live, in seconds. A hint, not a promise.'
+          type: integer
+        message:
+          description: Why it failed.
+          type: string
     JobProgress:
       description: Overall progress of a job and the progress of each phase.
       type: object
