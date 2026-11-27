@@ -513,6 +513,24 @@ curl -i -X PATCH \
   }'
 ```
 
+### Sending a pending quote to the customer
+
+An employee can send a quote that is in the `IN_PROGRESS` status to the customer in the notification email, with the quote pdf attached, without changing its status. It is useful when the quote cannot be `OPEN` yet, for example when it has no addresses or some items have no price. The quote is not changed and nothing is validated, so the quote can be incomplete.
+
+{% hint style="warning" %}
+The following scope is required:
+
+`quote.quote_manage`
+{% endhint %}
+
+```bash
+curl -i -X POST \
+  'https://api.emporix.io/quote/{tenant}/quotes/{quoteId}/send' \
+  -H 'Authorization: Bearer {{OAUTH2_ACCESS_TOKEN}}'
+```
+
+The request fails with the `400` status code when the quote is not in the `IN_PROGRESS` status.
+
 ### Accepting a quote by a customer
 
 When a customer accepts a quote on the storefront, or accepts a quote as an approver, the following endpoint is called: [Partially updating a quote](https://developer.emporix.io/api-documentation/api-guides/quotes/quote/api-reference/quote-management#patch-quote-tenant-quotes-quoteid).

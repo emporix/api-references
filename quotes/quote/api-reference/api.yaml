@@ -448,6 +448,68 @@ paths:
             - quote.quote_manage
             - quote.quote_manage_own
             - quote.quote_read
+  '/quote/{tenant}/quotes/{quoteId}/send':
+    post:
+      tags:
+        - Quote management
+      summary: Sending a quote to the customer
+      description: |
+        Sends the quote to the customer in the notification email, with the quote pdf attached, without changing the quote. Use it for a quote in the `IN_PROGRESS` status, for example when the quote cannot be moved to the `OPEN` status yet.
+
+        The quote is not modified: its status, items, prices and addresses stay as they are, and nothing is validated. A quote with items without a price or without addresses can be sent. The request has no body.
+
+        The request can be sent only by an employee. The quote must be in the `IN_PROGRESS` status; otherwise, the request fails with the `400` status code.
+
+        The email is sent to the customer of the quote. The pdf is required: if it cannot be generated, the email is not sent.
+        ***
+
+        ### **Additional scope information**
+        The `quote.quote_manage` scope is required.
+        ***
+      operationId: POST-quote-send-quote-to-customer
+      parameters:
+        - name: tenant
+          in: path
+          description: |
+            Your Emporix tenant name.
+
+            **Note**: The tenant name should always be written in lowercase.
+          required: true
+          schema:
+            type: string
+            example: saasdev2
+        - name: quoteId
+          in: path
+          description: |
+            Quote unique identifier generated when the quote is created.
+          required: true
+          schema:
+            type: string
+            example: 084bcaf5-66b8-4ddd-9489-65c5f6449e94
+      responses:
+        '204':
+          description: The request was successful. The request to send the quote to the customer was accepted; the quote is not changed.
+        '400':
+          description: The quote is not in the `IN_PROGRESS` status.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                Wrong status:
+                  value:
+                    code: 400
+                    status: Bad Request
+                    message: "Quote can be sent to the customer only in status 'IN_PROGRESS', but the status is 'OPEN'"
+        '401':
+          $ref: '#/components/responses/Unathorized_401'
+        '403':
+          $ref: '#/components/responses/Forbidden_403'
+        '404':
+          $ref: '#/components/responses/Not_Found_404'
+      security:
+        - OAuth2:
+            - quote.quote_manage
   '/quote/{tenant}/quotes/{quoteId}/history':
     get:
       tags:
